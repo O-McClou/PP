@@ -292,15 +292,18 @@ button:active{opacity:.75;}
 // Uses fetch() → blob URL so iOS Edge/Safari can load images from local HTML files.
 // Falls back to direct <img src> if fetch fails.
 
+// Relative paths work on GitHub Pages; CDN is fallback for local use
 const URLS = [
+  id => `Cards/card_${id}.jpg`,
+  id => `Cards/card_${id}.png`,
   id => `https://cdn.jsdelivr.net/gh/O-McClou/PP@3e8bc12b57fae22301e28250a1351dd677360f60/Cards/card_${id}.jpg`,
   id => `https://cdn.jsdelivr.net/gh/O-McClou/PP@3e8bc12b57fae22301e28250a1351dd677360f60/Cards/card_${id}.png`,
-  id => `https://raw.githubusercontent.com/O-McClou/PP/3e8bc12b57fae22301e28250a1351dd677360f60/Cards/card_${id}.jpg`,
 ];
 const BURLS = [
+  id => `Cards/card_back_${id}.jpg`,
+  id => `Cards/card_back_${id}.png`,
   id => `https://cdn.jsdelivr.net/gh/O-McClou/PP@3e8bc12b57fae22301e28250a1351dd677360f60/Cards/card_back_${id}.jpg`,
   id => `https://cdn.jsdelivr.net/gh/O-McClou/PP@3e8bc12b57fae22301e28250a1351dd677360f60/Cards/card_back_${id}.png`,
-  id => `https://raw.githubusercontent.com/O-McClou/PP/3e8bc12b57fae22301e28250a1351dd677360f60/Cards/card_back_${id}.jpg`,
 ];
 
 const blobCache = {};
