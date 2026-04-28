@@ -1,0 +1,1231 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pax Pamir – Wakhan KI Solo</title>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=IM+Fell+English:ital@0;1&display=swap');
+
+    :root {
+        --sand: #e8d5a3;
+        --dark: #1a1208;
+        --gold: #c9973a;
+        --gold2: #f0c96a;
+        --gold3: #ffe8a0;
+        --bg: #0e0b05;
+        --panel: rgba(26,18,8,0.88);
+        --border: rgba(201,151,58,0.5);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+        min-height: 100vh;
+        background-color: var(--bg);
+        background-image:
+            radial-gradient(ellipse at 15% 15%, #2e1c06 0%, transparent 55%),
+            radial-gradient(ellipse at 85% 85%, #1a0a02 0%, transparent 55%),
+            url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Cpath d='M30 0 L60 30 L30 60 L0 30 Z' fill='none' stroke='rgba(201,151,58,0.04)' stroke-width='1'/%3E%3C/svg%3E");
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 16px 10px 40px;
+        font-family: 'IM Fell English', Georgia, serif;
+        color: var(--sand);
+    }
+
+    /* ── HEADER ── */
+    header { text-align: center; margin-bottom: 18px; }
+    header h1 {
+        font-family: 'Cinzel', serif;
+        font-size: clamp(1.4rem, 5vw, 2.2rem);
+        color: var(--gold2);
+        letter-spacing: 0.12em;
+        text-shadow: 0 0 30px rgba(201,151,58,0.45);
+    }
+    header p { font-size: 0.85rem; color: #a08050; margin-top: 4px; font-style: italic; }
+    .divider {
+        width: 180px; height: 1px;
+        background: linear-gradient(90deg, transparent, var(--gold), transparent);
+        margin: 10px auto;
+    }
+
+    /* ── TWO-CARD DISPLAY ── */
+    .cards-row {
+        display: flex;
+        gap: 16px;
+        justify-content: center;
+        margin-bottom: 18px;
+        flex-wrap: wrap;
+    }
+    .card-slot {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+    }
+    .slot-label {
+        font-family: 'Cinzel', serif;
+        font-size: 0.65rem;
+        color: #998866;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        text-align: center;
+        max-width: 150px;
+    }
+    .card-frame {
+        width: 148px;
+        height: 207px;
+        border: 2px solid var(--gold);
+        border-radius: 10px;
+        background: #181008;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        overflow: hidden;
+        cursor: pointer;
+        transition: box-shadow 0.2s, border-color 0.2s;
+    }
+    .card-frame:hover { box-shadow: 0 0 18px rgba(201,151,58,0.35); }
+    .card-frame.active-a { border-color: var(--gold2); box-shadow: 0 0 20px rgba(240,201,106,0.3); }
+    .card-frame.active-b { border-color: #c07040; box-shadow: 0 0 14px rgba(192,112,64,0.25); }
+    .card-frame img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        display: block;
+    }
+    .card-frame .placeholder {
+        color: #555;
+        font-size: 0.8rem;
+        text-align: center;
+        padding: 10px;
+        line-height: 1.4;
+    }
+    .card-badge {
+        position: absolute;
+        bottom: 5px; right: 5px;
+        font-family: 'Cinzel', serif;
+        font-size: 0.65rem;
+        background: rgba(0,0,0,0.8);
+        color: var(--gold2);
+        padding: 2px 6px;
+        border-radius: 4px;
+        z-index: 2;
+    }
+    .card-count {
+        position: absolute;
+        top: 5px; left: 5px;
+        font-family: 'Cinzel', serif;
+        font-size: 0.65rem;
+        background: rgba(0,0,0,0.8);
+        color: #aaa;
+        padding: 2px 6px;
+        border-radius: 4px;
+        z-index: 2;
+    }
+    .arrow-indicator {
+        position: absolute;
+        top: 5px; right: 5px;
+        font-size: 1rem;
+        z-index: 3;
+        text-shadow: 0 0 6px #000;
+    }
+
+    /* ── BUTTONS ── */
+    button {
+        font-family: 'Cinzel', serif;
+        font-weight: 600;
+        cursor: pointer;
+        border: none;
+        border-radius: 5px;
+        transition: transform 0.1s, box-shadow 0.1s;
+    }
+    button:active { transform: translateY(1px); }
+
+    .btn-primary {
+        background: linear-gradient(135deg, var(--gold3) 0%, var(--gold) 100%);
+        color: var(--dark);
+        padding: 13px 20px;
+        font-size: 0.95rem;
+        box-shadow: 0 4px 14px rgba(201,151,58,0.4);
+        width: 100%;
+    }
+    .btn-primary:hover { box-shadow: 0 4px 20px rgba(201,151,58,0.6); }
+    .btn-secondary {
+        background: transparent;
+        color: var(--sand);
+        border: 1px solid var(--gold);
+        padding: 9px 14px;
+        flex: 1;
+        font-size: 0.8rem;
+    }
+    .btn-secondary:hover { background: rgba(201,151,58,0.15); }
+    .btn-danger {
+        background: transparent;
+        color: #c07060;
+        border: 1px solid #80403030;
+        padding: 9px 14px;
+        flex: 1;
+        font-size: 0.8rem;
+    }
+    .btn-danger:hover { background: rgba(180,60,40,0.12); }
+
+    /* ── CONTROLS ── */
+    .controls {
+        width: 100%;
+        max-width: 500px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    /* ── ACTION PANEL ── */
+    .action-panel {
+        background: var(--panel);
+        border: 1px solid var(--gold);
+        border-radius: 10px;
+        padding: 16px;
+        display: none;
+    }
+    .action-panel h3 {
+        font-family: 'Cinzel', serif;
+        color: var(--gold2);
+        text-align: center;
+        margin-bottom: 14px;
+        font-size: 0.95rem;
+        letter-spacing: 0.06em;
+    }
+
+    .domcheck-row {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 14px;
+        padding: 8px 12px;
+        background: rgba(255,255,255,0.04);
+        border-radius: 6px;
+        border: 1px solid rgba(255,200,80,0.15);
+        font-size: 0.88rem;
+    }
+    .domcheck-row input[type="checkbox"] { width: 16px; height: 16px; cursor: pointer; accent-color: var(--gold); }
+
+    .action-step-indicator {
+        display: flex;
+        gap: 6px;
+        justify-content: center;
+        margin-bottom: 12px;
+    }
+    .step-dot {
+        width: 8px; height: 8px;
+        border-radius: 50%;
+        background: #444;
+        transition: background 0.2s;
+    }
+    .step-dot.active { background: var(--gold2); }
+    .step-dot.done { background: var(--gold); opacity: 0.5; }
+
+    .action-text {
+        font-size: 1rem;
+        line-height: 1.55;
+        margin-bottom: 14px;
+        padding: 12px;
+        background: rgba(0,0,0,0.3);
+        border-radius: 6px;
+        border-left: 3px solid var(--gold);
+        min-height: 56px;
+    }
+    .action-text.radicalize-action { border-left-color: #e07040; }
+
+    .btn-group { display: flex; gap: 8px; }
+
+    /* ── RADICALIZE PANEL ── */
+    .radicalize-panel {
+        margin-top: 14px;
+        padding: 14px;
+        background: rgba(0,0,0,0.5);
+        border-radius: 8px;
+        border: 1px solid rgba(224,112,64,0.4);
+        display: none;
+    }
+    .radicalize-panel label { font-size: 0.85rem; color: #bba080; display: block; margin-bottom: 8px; }
+    .radicalize-panel .instructions {
+        font-size: 0.88rem; color: var(--gold2);
+        line-height: 1.4; margin-bottom: 12px;
+        font-style: italic;
+    }
+    .radicalize-input-row { display: flex; gap: 8px; align-items: center; margin-bottom: 8px; }
+    .radicalize-panel input[type="number"] {
+        padding: 8px;
+        width: 90px;
+        font-family: 'Cinzel', serif;
+        font-size: 0.9rem;
+        background: #1a1208;
+        color: #fff;
+        border: 1px solid var(--gold);
+        border-radius: 5px;
+    }
+    .radicalize-panel input[type="number"]::placeholder { color: #666; }
+
+    /* ── REGION PRIORITY ── */
+    .region-priority {
+        display: flex;
+        gap: 4px;
+        justify-content: center;
+        margin-top: 8px;
+        flex-wrap: wrap;
+    }
+    .region-badge {
+        padding: 3px 9px;
+        border-radius: 12px;
+        font-family: 'Cinzel', serif;
+        font-size: 0.65rem;
+        font-weight: 600;
+        border: 1px solid;
+        transition: opacity 0.15s;
+    }
+    .reg-herat    { background: rgba(100,160,80,0.15);  border-color: #60a050; color: #90d070; }
+    .reg-kabul    { background: rgba(80,130,200,0.15);  border-color: #5080c0; color: #80b0f0; }
+    .reg-kandahar { background: rgba(200,100,60,0.15);  border-color: #c06040; color: #e09070; }
+    .reg-persia   { background: rgba(160,80,200,0.15);  border-color: #9050c0; color: #c090f0; }
+    .reg-punjab   { background: rgba(200,170,60,0.15);  border-color: #c0a040; color: #f0d070; }
+    .reg-trans    { background: rgba(80,180,180,0.15);  border-color: #50b0b0; color: #80e0e0; }
+
+    /* ── COURT SECTION ── */
+    .court-container {
+        width: 100%;
+        max-width: 900px;
+        margin-top: 28px;
+    }
+    .section-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-bottom: 1px solid var(--gold);
+        padding-bottom: 6px;
+        margin-bottom: 14px;
+    }
+    .section-header h2 {
+        font-family: 'Cinzel', serif;
+        color: var(--gold2);
+        font-size: 1rem;
+        letter-spacing: 0.08em;
+    }
+    .court-add-row {
+        display: flex;
+        gap: 8px;
+        margin-bottom: 12px;
+        flex-wrap: wrap;
+    }
+    .court-add-row input[type="number"] {
+        padding: 7px 10px;
+        width: 100px;
+        font-family: 'Cinzel', serif;
+        font-size: 0.85rem;
+        background: #1a1208;
+        color: #fff;
+        border: 1px solid var(--gold);
+        border-radius: 5px;
+    }
+    .court-add-row button { padding: 7px 14px; font-size: 0.8rem; }
+    .court-scroll {
+        display: flex;
+        gap: 10px;
+        overflow-x: auto;
+        padding-bottom: 10px;
+        scrollbar-width: thin;
+        scrollbar-color: var(--gold) transparent;
+    }
+    .court-scroll::-webkit-scrollbar { height: 4px; }
+    .court-scroll::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 2px; }
+
+    .court-card {
+        flex: 0 0 auto;
+        width: 118px;
+        border-radius: 8px;
+        border: 1px solid var(--border);
+        cursor: pointer;
+        transition: transform 0.2s, border-color 0.2s;
+        overflow: hidden;
+        position: relative;
+        background: #181008;
+    }
+    .court-card:hover { transform: scale(1.06); border-color: var(--gold2); }
+    .court-card img {
+        width: 100%;
+        height: 165px;
+        object-fit: contain;
+        display: block;
+    }
+    .court-card-footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 3px 5px;
+        background: rgba(0,0,0,0.6);
+    }
+    .court-card-footer .cid {
+        font-family: 'Cinzel', serif;
+        font-size: 0.6rem;
+        color: var(--gold2);
+    }
+    .court-card-footer .remove-btn {
+        background: none;
+        border: none;
+        color: #804040;
+        font-size: 0.85rem;
+        cursor: pointer;
+        padding: 0 2px;
+        line-height: 1;
+        transition: color 0.15s;
+    }
+    .court-card-footer .remove-btn:hover { color: #e06060; }
+
+    /* ── RULES REFERENCE ── */
+    .rules-container {
+        width: 100%;
+        max-width: 900px;
+        margin-top: 28px;
+    }
+    .rules-toggle {
+        background: transparent;
+        border: 1px solid var(--border);
+        color: var(--sand);
+        padding: 10px 16px;
+        width: 100%;
+        text-align: left;
+        font-size: 0.9rem;
+        border-radius: 8px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .rules-toggle:hover { background: rgba(201,151,58,0.08); }
+    .rules-body {
+        display: none;
+        background: var(--panel);
+        border: 1px solid var(--border);
+        border-top: none;
+        border-radius: 0 0 8px 8px;
+        padding: 16px;
+        font-size: 0.85rem;
+        line-height: 1.6;
+        color: #c8b888;
+    }
+    .rules-body h4 {
+        font-family: 'Cinzel', serif;
+        color: var(--gold2);
+        margin: 14px 0 6px;
+        font-size: 0.82rem;
+        letter-spacing: 0.05em;
+    }
+    .rules-body h4:first-child { margin-top: 0; }
+    .rules-body ul { padding-left: 18px; }
+    .rules-body li { margin-bottom: 4px; }
+    .rules-body .priority-list {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+    }
+    .rules-body .priority-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 0.8rem;
+    }
+    .rules-body .priority-num {
+        width: 20px; height: 20px;
+        border-radius: 50%;
+        background: rgba(201,151,58,0.2);
+        border: 1px solid var(--gold);
+        display: flex; align-items: center; justify-content: center;
+        font-family: 'Cinzel', serif;
+        font-size: 0.65rem;
+        color: var(--gold2);
+        flex-shrink: 0;
+    }
+
+    /* ── ZOOM OVERLAY ── */
+    .zoom-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(0,0,0,0.93);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 1000;
+        cursor: pointer;
+        padding: 10px;
+        gap: 14px;
+        flex-wrap: wrap;
+    }
+    .zoom-overlay .zoom-side { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+    .zoom-overlay .zoom-label {
+        font-family: 'Cinzel', serif;
+        font-size: 0.7rem;
+        color: var(--gold);
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+    }
+    .zoom-overlay img {
+        max-width: min(420px, 90vw);
+        max-height: min(600px, 82vh);
+        border-radius: 10px;
+        border: 2px solid var(--gold2);
+        object-fit: contain;
+    }
+    .zoom-close {
+        position: fixed;
+        top: 14px; right: 16px;
+        font-size: 1.5rem;
+        color: var(--gold);
+        cursor: pointer;
+        z-index: 1001;
+        line-height: 1;
+    }
+
+    /* ── TOAST ── */
+    .toast {
+        position: fixed;
+        bottom: 24px;
+        left: 50%;
+        transform: translateX(-50%) translateY(80px);
+        background: rgba(30,20,8,0.96);
+        border: 1px solid var(--gold);
+        color: var(--sand);
+        padding: 10px 20px;
+        border-radius: 6px;
+        font-size: 0.85rem;
+        font-family: 'Cinzel', serif;
+        z-index: 2000;
+        transition: transform 0.35s ease;
+        pointer-events: none;
+        white-space: nowrap;
+    }
+    .toast.show { transform: translateX(-50%) translateY(0); }
+
+    /* ── MISC ── */
+    .hint-text { font-size: 0.75rem; color: #706050; text-align: center; margin-top: -6px; font-style: italic; }
+    .card-pair-connector {
+        display: flex; align-items: center; padding-top: 30px; color: var(--gold);
+        font-size: 1.2rem; opacity: 0.5;
+    }
+</style>
+</head>
+<body>
+
+<header>
+    <h1>✦ WAKHAN KI ✦</h1>
+    <p>Pax Pamir 2. Edition · Solo &amp; Duo Modus</p>
+    <div class="divider"></div>
+</header>
+
+<!-- ZWEI-KARTEN-ANZEIGE -->
+<div class="cards-row">
+
+    <!-- KARTE B: Rückseite des nächsten Stapels -->
+    <div class="card-slot">
+        <span class="slot-label">Karte B<br>Rückseite Nachziehstapel</span>
+        <div class="card-frame active-b" id="stackFrame" title="Karte B – Rückseite der obersten Stapelkarte" onclick="zoomCardB()">
+            <img id="stackBackImg" src="" alt="Stapel Rückseite" style="display:none;">
+            <div class="placeholder" id="stackPlaceholder">Kein Stapel</div>
+            <div class="card-count" id="stackCount">0</div>
+        </div>
+    </div>
+
+    <div class="card-pair-connector">+</div>
+
+    <!-- KARTE A: Vorderseite der gezogenen Karte -->
+    <div class="card-slot">
+        <span class="slot-label">Karte A<br>Gezogene Karte (Vorderseite)</span>
+        <div class="card-frame active-a" id="drawnFrame" title="Karte A – Vorderseite der aktuellen Karte" onclick="zoomCardA()">
+            <img id="drawnFaceImg" src="" alt="Gezogene Karte" style="display:none;">
+            <div class="placeholder" id="drawnPlaceholder">Noch keine Karte<br>gezogen</div>
+            <div class="card-badge" id="drawnBadge" style="display:none;"></div>
+            <div class="arrow-indicator" id="arrowIndicator" style="display:none;"></div>
+        </div>
+    </div>
+</div>
+
+<!-- Region-Priorität Anzeige -->
+<div class="region-priority" id="regionPriorityRow" style="display:none; margin-bottom:12px;"></div>
+<p class="hint-text" id="priorityHint" style="display:none;">Regionspriorität (links = höchste Priorität)</p>
+
+<!-- AKTIONS-STEUERUNG -->
+<div class="controls">
+    <button class="btn-primary" id="drawBtn" onclick="takeTurn()">▶ Wakhan Zug starten</button>
+
+    <div class="action-panel" id="actionPanel">
+        <h3>Aktionsphase</h3>
+
+        <div class="domcheck-row">
+            <input type="checkbox" id="domCheckMarket">
+            <label for="domCheckMarket">Dominanzcheck-Karte liegt im Markt aus</label>
+        </div>
+
+        <!-- Schritt-Indikatoren -->
+        <div class="action-step-indicator" id="stepIndicator"></div>
+
+        <div class="action-text" id="actionText"></div>
+
+        <div class="btn-group">
+            <button class="btn-secondary" onclick="resolveAction(true)">✓ Ausführen</button>
+            <button class="btn-danger" onclick="resolveAction(false)">✗ Überspringen</button>
+        </div>
+
+        <!-- Radikalisierungs-Unterpanel -->
+        <div class="radicalize-panel" id="radicalizePanel">
+            <div class="instructions" id="radicalizeInstructions"></div>
+            <label>Kartennummer der gekauften Hofkarte (1–116):</label>
+            <div class="radicalize-input-row">
+                <input type="number" id="boughtCardId" min="1" max="116" placeholder="Nr.">
+                <button class="btn-secondary" style="flex:1;" onclick="confirmRadicalize()">Dem Hof hinzufügen</button>
+            </div>
+            <button style="width:100%;margin-top:8px;padding:8px;background:transparent;border:1px solid #555;color:#888;font-family:Cinzel,serif;font-size:0.78rem;border-radius:5px;cursor:pointer;" onclick="skipRadicalize()">Nichts gekauft – überspringen</button>
+        </div>
+    </div>
+</div>
+
+<!-- WAKHANS HOF -->
+<div class="court-container">
+    <div class="section-header">
+        <h2>⚔ Wakhans Hof</h2>
+        <span style="font-size:0.75rem; color:#706050; font-style:italic;" id="courtCount">0 Karten</span>
+    </div>
+    <div class="court-add-row">
+        <input type="number" id="courtAddId" min="1" max="116" placeholder="Karten-Nr.">
+        <button class="btn-secondary" style="flex:none;" onclick="addCourtCard()">+ Hinzufügen</button>
+        <button class="btn-danger" style="flex:none;" onclick="clearCourt()">Hof leeren</button>
+    </div>
+    <div class="court-scroll" id="courtScroll">
+        <div style="color:#555; font-size:0.85rem; padding:20px;">Noch keine Hofkarten vorhanden.</div>
+    </div>
+</div>
+
+<!-- REGELREFERENZ -->
+<div class="rules-container">
+    <button class="rules-toggle" onclick="toggleRules()">
+        <span>📜 Regelreferenz – Wakhans Aktionen</span>
+        <span id="rulesChevron">▼</span>
+    </button>
+    <div class="rules-body" id="rulesBody">
+        <h4>Kartenpriorität (hoch → niedrig)</h4>
+        <div class="priority-list">
+            <div class="priority-item"><div class="priority-num">1</div> Karte eines Mitspielers (gegnerische Karte)</div>
+            <div class="priority-item"><div class="priority-num">2</div> Aktuelles Machtprinzip</div>
+            <div class="priority-item"><div class="priority-num">3</div> Patriot des dominanten Bündnisses</div>
+            <div class="priority-item"><div class="priority-num">4</div> Hat Belohnung, die mit dominantem Bündnis übereinstimmt</div>
+            <div class="priority-item"><div class="priority-num">5</div> Ein anderer Patriot</div>
+            <div class="priority-item"><div class="priority-num">6</div> Karte mit Schuldensymbol</div>
+            <div class="priority-item"><div class="priority-num">7</div> Höchste Platzierung (Rang)</div>
+            <div class="priority-item"><div class="priority-num">8</div> Höchste Kartennummer</div>
+        </div>
+
+        <h4>Abwerfpriorität (zuerst abwerfen)</h4>
+        <ul>
+            <li>Nicht-Politik-Karten</li>
+            <li>Nicht-Patrioten</li>
+            <li>Nicht kreditbehaftete Karten</li>
+            <li>Meiste Spione (mehr als Wakhan)</li>
+            <li>Wenigste Spione</li>
+            <li>Niedrigster Rang</li>
+            <li>Nicht aktuelles Machtprinzip</li>
+            <li>Niedrigste Kartennummer</li>
+        </ul>
+
+        <h4>Spione platzieren</h4>
+        <p>Auf Karten mit höchster Priorität – passend zur Region der ausgespielten Karte – auf der Wakhan nicht bereits die meisten Spione hat.</p>
+
+        <h4>Straßen platzieren</h4>
+        <p>An Grenzen nach Regionspriorität (KI-Karte, von links). Bei Übrig: von vorne beginnen.</p>
+
+        <h4>Kampf</h4>
+        <p>Wo ein anderer Spieler loyale Einheiten hat und Wakhan ≥ 1 Armee. Priorität der Zerstörung: Stämme → Armeen → Straßen.</p>
+
+        <h4>Steuern</h4>
+        <p>Immer Spieler vor Marktkarten besteuern. Spieler mit meisten Rupien zuerst. Bei Gleichstand: roter Pfeil entscheidet.</p>
+
+        <h4>Marschieren</h4>
+        <p>Nur Armeen (keine Straßen nötig). In Regionen mit feindlichen Stämmen bewegen, nur so viele wie Stämme vorhanden. Keine Bewegung wenn Vorherrschaft verloren ginge.</p>
+
+        <h4>Bauen</h4>
+        <p>In der am weitesten links auf der KI-Karte vermerkten Region mit Vorherrschaft. So viel Geld wie möglich ausgeben.</p>
+
+        <h4>Nachschub (wenn Einheiten erschöpft)</h4>
+        <p>Stämme → Armeen → Straßen → Spione. Regionen-Priorität für Stämme/Armeen/Straßen, Karten-Priorität für Spione.</p>
+    </div>
+</div>
+
+<!-- ZOOM OVERLAY -->
+<div class="zoom-overlay" id="zoomOverlay" onclick="closeZoom()">
+    <div class="zoom-close">✕</div>
+    <div class="zoom-side" id="zoomSideA">
+        <div class="zoom-label" id="zoomLabelA"></div>
+        <img id="zoomImgA" src="" alt="">
+    </div>
+    <div class="zoom-side" id="zoomSideB" style="display:none;">
+        <div class="zoom-label" id="zoomLabelB"></div>
+        <img id="zoomImgB" src="" alt="">
+    </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ==========================================
+// BILDER VIA jsDelivr CDN
+// ==========================================
+const CDN_BASE = 'https://cdn.jsdelivr.net/gh/O-McClou/PP@3e8bc12b57fae22301e28250a1351dd677360f60/Cards/';
+
+function getCardFaceUrl(id) { return CDN_BASE + 'card_' + id + '.jpg'; }
+function getCardBackUrl(id) { return CDN_BASE + 'card_back_' + id + '.jpg'; }
+
+function loadImg(el, url, fallbackEl) {
+    el.style.display = 'none';
+    const tmp = new Image();
+    tmp.onload = () => { el.src = url; el.style.display = 'block'; if (fallbackEl) fallbackEl.style.display = 'none'; };
+    tmp.onerror = () => {
+        if (el.dataset.tried) { el.style.display = 'none'; if (fallbackEl) fallbackEl.style.display = 'block'; return; }
+        el.dataset.tried = '1';
+        loadImg(el, url.replace('.jpg', '.png'), fallbackEl);
+    };
+    tmp.src = url;
+}
+
+// ==========================================
+// REGIONEN
+// ==========================================
+const REGIONS = [
+    { name: 'Herat',       cls: 'reg-herat' },
+    { name: 'Kabul',       cls: 'reg-kabul' },
+    { name: 'Kandahar',    cls: 'reg-kandahar' },
+    { name: 'Persien',     cls: 'reg-persia' },
+    { name: 'Punjab',      cls: 'reg-punjab' },
+    { name: 'Transox.',    cls: 'reg-trans' }
+];
+
+// ==========================================
+// WAKHAN KI KARTEN (117–140)
+// ==========================================
+const wakhanCards = [
+    { id: 117, actions: [
+        "Besteuerung.",
+        "Wenn Militärkarten bevorzugt werden: Radikalisiere die am höchsten eingestufte Militärkarte.",
+        "Radikalisierung."
+    ], redArrow: "bottom", priorities: [3,4,5,0,1,2] },
+    { id: 118, actions: [
+        "Wenn Politikkarten bevorzugt werden: Radikalisiere die am höchsten eingestufte Wirtschaftskarte.",
+        "Radikalisiere die am höchsten eingestufte Politikkarte.",
+        "Radikalisierung."
+    ], redArrow: "top", priorities: [4,5,0,1,2,3] },
+    { id: 119, actions: [
+        "Besteuerung.",
+        "Radikalisiere die am höchsten eingestufte Geheimdienstkarte.",
+        "Radikalisierung."
+    ], redArrow: "bottom", priorities: [2,3,4,5,0,1] },
+    { id: 120, actions: [
+        "Wenn Wakhan weniger als 2 Rupien hat: Radikalisiere die Karte, die die meisten Rupien einbringt.",
+        "Bauen.",
+        "Radikalisierung."
+    ], redArrow: "top", priorities: [1,2,3,4,5,0] },
+    { id: 121, actions: [
+        "Radikalisiere eine Karte, die Wakhan die Kontrolle über eine Region verschafft.",
+        "Kampf.",
+        "Radikalisierung."
+    ], redArrow: "top", priorities: [4,5,0,1,2,3] },
+    { id: 122, actions: [
+        "Radikalisiere eine Geheimdienstkarte.",
+        "Marschieren (Bewegen).",
+        "Radikalisierung."
+    ], redArrow: "top", priorities: [5,0,1,2,3,4] },
+    { id: 123, actions: [
+        "Bauen.",
+        "Marschieren (Bewegen).",
+        "Radikalisierung."
+    ], redArrow: "bottom", priorities: [1,2,3,4,5,0] },
+    { id: 124, actions: [
+        "Besteuerung.",
+        "Verrat.",
+        "Radikalisierung."
+    ], redArrow: "bottom", priorities: [1,2,3,4,5,0] },
+    { id: 125, actions: [
+        "Radikalisiere die Karte, die die meisten Armeen und/oder Straßen platziert.",
+        "Wenn keine Koalition Dominanz hat: Radikalisiere die Karte mit den meisten Spionen und/oder Stämmen.",
+        "Radikalisierung."
+    ], redArrow: "bottom", priorities: [0,1,2,3,4,5] },
+    { id: 126, actions: [
+        "Wenn Wakhan keine Karte mit Bewegungsaktion hat: Radikalisiere eine Karte mit Bewegungsaktion.",
+        "Marschieren (Bewegen).",
+        "Radikalisierung."
+    ], redArrow: "bottom", priorities: [5,0,1,2,3,4] },
+    { id: 127, actions: [
+        "Wenn keine Koalition Dominanz hat: Radikalisiere die Karte mit den meisten Spionen und/oder Stämmen.",
+        "Wenn Militärkarten bevorzugt werden: Radikalisiere die am höchsten eingestufte Militärkarte.",
+        "Radikalisierung."
+    ], redArrow: "bottom", priorities: [5,0,1,2,3,4] },
+    { id: 128, actions: [
+        "Marschieren (Bewegen).",
+        "Verrat.",
+        "Radikalisierung."
+    ], redArrow: "bottom", priorities: [1,2,3,4,5,0] },
+    { id: 129, actions: [
+        "Wenn eine Koalition Dominanz hat: Radikalisiere einen passenden Patrioten.",
+        "Wenn keine Koalition Dominanz hat: Radikalisiere die Karte mit den meisten Spionen und/oder Stämmen.",
+        "Radikalisierung."
+    ], redArrow: "top", priorities: [3,4,5,0,1,2] },
+    { id: 130, actions: [
+        "Kämpfe auf der ranghöchsten Hofkarte mit den meisten Spionen, auf der Wakhan mindestens einen Spion hat.",
+        "Kampf.",
+        "Radikalisierung."
+    ], redArrow: "top", priorities: [2,3,4,5,0,1] },
+    { id: 131, actions: [
+        "Marschieren (Bewegen).",
+        "Kampf.",
+        "Radikalisierung."
+    ], redArrow: "bottom", priorities: [3,4,5,0,1,2] },
+    { id: 132, actions: [
+        "Wenn keine Koalition Dominanz hat: Radikalisiere die Karte mit den meisten Spionen und/oder Stämmen.",
+        "Kämpfe auf der ranghöchsten Hofkarte mit den meisten Spionen, auf der Wakhan mindestens einen Spion hat.",
+        "Radikalisierung."
+    ], redArrow: "top", priorities: [0,1,2,3,4,5] },
+    { id: 133, actions: [
+        "Wenn Wakhans Hof sein Limit erreicht hat: Radikalisiere die am höchsten eingestufte Politikkarte.",
+        "Besteuerung.",
+        "Radikalisierung."
+    ], redArrow: "top", priorities: [5,0,1,2,3,4] },
+    { id: 134, actions: [
+        "Besteuerung.",
+        "Verrat.",
+        "Radikalisierung."
+    ], redArrow: "top", priorities: [2,3,4,5,0,1] },
+    { id: 135, actions: [
+        "Bauen.",
+        "Marschieren (Bewegen).",
+        "Radikalisierung."
+    ], redArrow: "top", priorities: [3,4,5,0,1,2] },
+    { id: 136, actions: [
+        "Wenn Wakhan weniger als 2 Rupien hat: Radikalisiere die Karte, die die meisten Rupien einbringt.",
+        "Bauen.",
+        "Radikalisierung."
+    ], redArrow: "bottom", priorities: [2,3,4,5,0,1] },
+    { id: 137, actions: [
+        "Radikalisiere eine Karte, die Wakhan die Kontrolle über eine Region verschafft.",
+        "Bauen.",
+        "Radikalisierung."
+    ], redArrow: "top", priorities: [0,1,2,3,4,5] },
+    { id: 138, actions: [
+        "Verrat.",
+        "Kämpfe auf der ranghöchsten Hofkarte mit den meisten Spionen, auf der Wakhan mindestens einen Spion hat.",
+        "Radikalisierung."
+    ], redArrow: "bottom", priorities: [0,1,2,3,4,5] },
+    { id: 139, actions: [
+        "Radikalisiere die am höchsten eingestufte Politikkarte.",
+        "Wenn Militärkarten bevorzugt werden: Radikalisiere die am höchsten eingestufte Militärkarte.",
+        "Radikalisierung."
+    ], redArrow: "bottom", priorities: [2,3,4,5,0,1] },
+    { id: 140, actions: [
+        "Wenn Wakhan weniger Spione hat als ein anderer Spieler: Radikalisiere die am höchsten eingestufte Geheimdienstkarte.",
+        "Kämpfe auf der ranghöchsten Hofkarte mit den meisten Spionen, auf der Wakhan mindestens einen Spion hat.",
+        "Radikalisierung."
+    ], redArrow: "bottom", priorities: [4,5,0,1,2,3] }
+];
+
+// ==========================================
+// APP STATE
+// ==========================================
+let drawPile = [];
+let discardPile = [];
+let currentDrawnCard = null;
+let currentActionIndex = 0;
+let actionsCompletedThisTurn = 0;
+let courtCardIds = [];
+
+// ==========================================
+// INITIALISIERUNG
+// ==========================================
+function initApp() {
+    drawPile = wakhanCards.map(c => c.id);
+    shuffleArray(drawPile);
+    discardPile = [];
+    courtCardIds = [];
+    currentDrawnCard = null;
+
+    updateStackDisplay();
+    updateCourtDisplay();
+    clearDrawnCard();
+    hideActionPanel();
+}
+
+function shuffleArray(arr) {
+    for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+}
+
+// ==========================================
+// STAPEL ANZEIGE
+// ==========================================
+function updateStackDisplay() {
+    const backImg = document.getElementById('stackBackImg');
+    const placeholder = document.getElementById('stackPlaceholder');
+    const countEl = document.getElementById('stackCount');
+
+    const total = drawPile.length;
+    countEl.textContent = total;
+
+    if (total > 0) {
+        const topId = drawPile[drawPile.length - 1];
+        delete backImg.dataset.tried;
+        loadImg(backImg, getCardBackUrl(topId), placeholder);
+    } else if (discardPile.length > 0) {
+        backImg.style.display = 'none';
+        placeholder.style.display = 'block';
+        placeholder.textContent = 'Stapel leer – wird neu gemischt';
+    } else {
+        backImg.style.display = 'none';
+        placeholder.style.display = 'block';
+        placeholder.textContent = 'Kein Stapel';
+    }
+}
+
+function clearDrawnCard() {
+    document.getElementById('drawnFaceImg').style.display = 'none';
+    document.getElementById('drawnPlaceholder').style.display = 'block';
+    document.getElementById('drawnBadge').style.display = 'none';
+    document.getElementById('arrowIndicator').style.display = 'none';
+    document.getElementById('regionPriorityRow').style.display = 'none';
+    document.getElementById('priorityHint').style.display = 'none';
+}
+
+function displayDrawnCard(card) {
+    const img = document.getElementById('drawnFaceImg');
+    const placeholder = document.getElementById('drawnPlaceholder');
+    const badge = document.getElementById('drawnBadge');
+    const arrow = document.getElementById('arrowIndicator');
+
+    img.src = getCardFaceUrl(card.id);
+    img.onerror = () => { img.style.display = 'none'; placeholder.style.display = 'block'; placeholder.textContent = 'Karte ' + card.id + ' (kein Bild)'; };
+    img.onload = () => { img.style.display = 'block'; placeholder.style.display = 'none'; };
+    img.style.display = 'block';
+    placeholder.style.display = 'none';
+
+    badge.textContent = '#' + card.id;
+    badge.style.display = 'block';
+
+    arrow.textContent = card.redArrow === 'top' ? '▲' : '▼';
+    arrow.style.color = card.redArrow === 'top' ? '#80c060' : '#e06040';
+    arrow.title = card.redArrow === 'top' ? 'Roter Pfeil: OBEN (links im Markt / links im Hof)' : 'Roter Pfeil: UNTEN (rechts im Markt / rechts im Hof)';
+    arrow.style.display = 'block';
+
+    // Regionen-Priorität anzeigen
+    showRegionPriority(card.priorities);
+}
+
+function showRegionPriority(priorities) {
+    const row = document.getElementById('regionPriorityRow');
+    const hint = document.getElementById('priorityHint');
+    row.innerHTML = '';
+
+    // priorities is an array of region indices in order [0..5], showing which region has which position
+    // We need to display in the ORDER defined, mapping index → region name
+    // priorities[i] = j means "position i has region j"
+    const ordered = priorities.map(idx => REGIONS[idx]);
+
+    ordered.forEach((region, pos) => {
+        const span = document.createElement('span');
+        span.className = 'region-badge ' + region.cls;
+        span.textContent = (pos + 1) + '. ' + region.name;
+        span.title = 'Priorität ' + (pos + 1);
+        row.appendChild(span);
+    });
+
+    row.style.display = 'flex';
+    hint.style.display = 'block';
+}
+
+// ==========================================
+// AKTIONS-PANEL
+// ==========================================
+function hideActionPanel() {
+    document.getElementById('actionPanel').style.display = 'none';
+    document.getElementById('radicalizePanel').style.display = 'none';
+    document.getElementById('drawBtn').disabled = false;
+    currentActionIndex = 0;
+    actionsCompletedThisTurn = 0;
+}
+
+function updateActionDisplay() {
+    const actionText = document.getElementById('actionText');
+    const stepInd = document.getElementById('stepIndicator');
+
+    // Step indicator (max 3 steps per card)
+    stepInd.innerHTML = '';
+    for (let i = 0; i < currentDrawnCard.actions.length; i++) {
+        const dot = document.createElement('div');
+        dot.className = 'step-dot' + (i < actionsCompletedThisTurn ? ' done' : '') + (i === actionsCompletedThisTurn ? ' active' : '');
+        stepInd.appendChild(dot);
+    }
+
+    if (currentActionIndex < currentDrawnCard.actions.length) {
+        const txt = currentDrawnCard.actions[currentActionIndex];
+        actionText.textContent = txt;
+        const isRad = txt.toLowerCase().includes('radikalisierung') || txt.toLowerCase().includes('radikalisiere');
+        actionText.className = 'action-text' + (isRad ? ' radicalize-action' : '');
+    }
+
+    document.getElementById('radicalizePanel').style.display = 'none';
+}
+
+function resolveAction(execute) {
+    if (!currentDrawnCard) return;
+
+    const txt = currentDrawnCard.actions[currentActionIndex];
+    const isRad = txt.toLowerCase().includes('radikalisierung') || txt.toLowerCase().includes('radikalisiere');
+
+    if (execute && isRad) {
+        document.getElementById('radicalizePanel').style.display = 'block';
+        document.getElementById('radicalizeInstructions').textContent = txt;
+        document.getElementById('boughtCardId').value = '';
+        return;
+    }
+
+    advanceAction(execute);
+}
+
+function advanceAction() {
+    // Count standard actions (radicalize counts as standard)
+    const txt = currentDrawnCard.actions[currentActionIndex];
+    // Standard action: count toward 2-action limit (bonus actions on active principle cards don't count, but here we just advance)
+    actionsCompletedThisTurn++;
+    currentActionIndex++;
+
+    if (currentActionIndex >= currentDrawnCard.actions.length) {
+        // Karte ist abgearbeitet
+        discardPile.push(currentDrawnCard.id);
+        hideActionPanel();
+        clearDrawnCard();
+        currentDrawnCard = null;
+        showToast('Zug abgeschlossen. Nächster Spieler.');
+        return;
+    }
+
+    updateActionDisplay();
+}
+
+function confirmRadicalize() {
+    const val = parseInt(document.getElementById('boughtCardId').value);
+    if (isNaN(val) || val < 1 || val > 116) {
+        showToast('Bitte gültige Karten-Nr. (1–116) eingeben.');
+        return;
+    }
+    if (!courtCardIds.includes(val)) {
+        courtCardIds.push(val);
+        updateCourtDisplay();
+        showToast('Hofkarte #' + val + ' hinzugefügt.');
+    } else {
+        showToast('Karte #' + val + ' ist bereits im Hof.');
+    }
+    document.getElementById('radicalizePanel').style.display = 'none';
+    advanceAction();
+}
+
+function skipRadicalize() {
+    document.getElementById('radicalizePanel').style.display = 'none';
+    advanceAction();
+}
+
+// ==========================================
+// WAKHAN ZUG
+// ==========================================
+function takeTurn() {
+    // Wenn Stapel leer → neu mischen
+    if (drawPile.length === 0) {
+        if (discardPile.length === 0) {
+            showToast('Kein Stapel vorhanden!');
+            return;
+        }
+        drawPile = [...discardPile];
+        discardPile = [];
+        shuffleArray(drawPile);
+        showToast('Ablagestapel neu gemischt!');
+        updateStackDisplay();
+        return;
+    }
+
+    const cardId = drawPile.pop();
+    currentDrawnCard = wakhanCards.find(c => c.id === cardId);
+    currentActionIndex = 0;
+    actionsCompletedThisTurn = 0;
+
+    updateStackDisplay();
+    displayDrawnCard(currentDrawnCard);
+
+    document.getElementById('actionPanel').style.display = 'block';
+    document.getElementById('drawBtn').disabled = true;
+    updateActionDisplay();
+}
+
+// ==========================================
+// HOF
+// ==========================================
+function addCourtCard() {
+    const val = parseInt(document.getElementById('courtAddId').value);
+    if (isNaN(val) || val < 1 || val > 116) {
+        showToast('Bitte gültige Hofkarten-Nr. (1–116) eingeben.');
+        return;
+    }
+    if (courtCardIds.includes(val)) {
+        showToast('Karte #' + val + ' bereits im Hof.');
+        return;
+    }
+    courtCardIds.push(val);
+    document.getElementById('courtAddId').value = '';
+    updateCourtDisplay();
+    showToast('Hofkarte #' + val + ' hinzugefügt.');
+}
+
+function removeCourtCard(id, evt) {
+    evt.stopPropagation();
+    courtCardIds = courtCardIds.filter(x => x !== id);
+    updateCourtDisplay();
+}
+
+function clearCourt() {
+    if (courtCardIds.length === 0) return;
+    courtCardIds = [];
+    updateCourtDisplay();
+    showToast('Hof geleert.');
+}
+
+function updateCourtDisplay() {
+    const scroll = document.getElementById('courtScroll');
+    const countEl = document.getElementById('courtCount');
+    scroll.innerHTML = '';
+    countEl.textContent = courtCardIds.length + ' Karte' + (courtCardIds.length !== 1 ? 'n' : '');
+
+    if (courtCardIds.length === 0) {
+        scroll.innerHTML = '<div style="color:#555;font-size:0.85rem;padding:20px;">Noch keine Hofkarten vorhanden.</div>';
+        return;
+    }
+
+    courtCardIds.forEach(id => {
+        const div = document.createElement('div');
+        div.className = 'court-card';
+        div.onclick = () => zoomSingleCard(id);
+
+        const img = document.createElement('img');
+        img.alt = 'Hofkarte #' + id;
+        img.loading = 'lazy';
+        delete img.dataset.tried;
+        loadImg(img, getCardFaceUrl(id), null);
+
+        const footer = document.createElement('div');
+        footer.className = 'court-card-footer';
+        footer.innerHTML = `<span class="cid">#${id}</span><button class="remove-btn" title="Entfernen" onclick="removeCourtCard(${id}, event)">✕</button>`;
+
+        div.appendChild(img);
+        div.appendChild(footer);
+        scroll.appendChild(div);
+    });
+}
+
+// ==========================================
+// ZOOM
+// ==========================================
+function zoomCardA() {
+    if (!currentDrawnCard) return;
+    const overlay = document.getElementById('zoomOverlay');
+    const imgA = document.getElementById('zoomImgA');
+    const lblA = document.getElementById('zoomLabelA');
+    const sideB = document.getElementById('zoomSideB');
+
+    imgA.src = getCardFaceUrl(currentDrawnCard.id);
+    imgA.onerror = () => {};
+    lblA.textContent = 'Karte A – Vorderseite #' + currentDrawnCard.id;
+    sideB.style.display = 'none';
+    overlay.style.display = 'flex';
+}
+
+function zoomCardB() {
+    if (drawPile.length === 0) return;
+    const topId = drawPile[drawPile.length - 1];
+    const overlay = document.getElementById('zoomOverlay');
+    const imgA = document.getElementById('zoomImgA');
+    const lblA = document.getElementById('zoomLabelA');
+    const sideB = document.getElementById('zoomSideB');
+
+    imgA.src = getCardBackUrl(topId);
+    imgA.onerror = () => {};
+    lblA.textContent = 'Karte B – Rückseite #' + topId;
+    sideB.style.display = 'none';
+    overlay.style.display = 'flex';
+}
+
+function zoomSingleCard(id) {
+    const overlay = document.getElementById('zoomOverlay');
+    const imgA = document.getElementById('zoomImgA');
+    const imgB = document.getElementById('zoomImgB');
+    const lblA = document.getElementById('zoomLabelA');
+    const lblB = document.getElementById('zoomLabelB');
+    const sideB = document.getElementById('zoomSideB');
+
+    imgA.src = getCardFaceUrl(id);
+    imgA.onerror = () => { imgA.src = getCardBackUrl(id); };
+    lblA.textContent = 'Hofkarte #' + id + ' – Vorderseite';
+
+    imgB.src = getCardBackUrl(id);
+    imgB.onerror = () => { sideB.style.display = 'none'; };
+    lblB.textContent = 'Hofkarte #' + id + ' – Rückseite';
+    sideB.style.display = 'flex';
+
+    overlay.style.display = 'flex';
+}
+
+function closeZoom() {
+    document.getElementById('zoomOverlay').style.display = 'none';
+}
+
+// ==========================================
+// REGELN TOGGLE
+// ==========================================
+function toggleRules() {
+    const body = document.getElementById('rulesBody');
+    const chev = document.getElementById('rulesChevron');
+    const open = body.style.display === 'block';
+    body.style.display = open ? 'none' : 'block';
+    chev.textContent = open ? '▼' : '▲';
+}
+
+// ==========================================
+// TOAST
+// ==========================================
+function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(t._timer);
+    t._timer = setTimeout(() => t.classList.remove('show'), 2800);
+}
+
+// ==========================================
+// KEYBOARD
+// ==========================================
+document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeZoom();
+    if (e.key === ' ' && !document.getElementById('actionPanel').style.display.includes('block')) {
+        e.preventDefault();
+        takeTurn();
+    }
+});
+
+// ==========================================
+// START
+// ==========================================
+initApp();
+</script>
+</body>
+</html>
