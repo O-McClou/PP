@@ -1,1705 +1,595 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <meta name="referrer" content="no-referrer">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>Wakhan KI – Pax Pamir 2</title>
-    <style>
-        :root {
-            --gold: #b8860b;
-            --gold2: #d4a017;
-            --sand: #f0e0b0;
-            --bg: #0d0a04;
-            --panel: #1a1208;
-            --card-bg: #121008;
-            --border: rgba(180, 130, 30, 0.35);
-            --border2: rgba(180, 130, 30, 0.6);
-            --text: #e8d5a0;
-            --text2: #a08858;
-            --text3: #686040;
-            --info: #4a90d9;
-            --warn: #d97a3a;
-            --success: #5a9a4a;
-            --danger: #c05050;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="referrer" content="no-referrer">
+<title>Wakhan KI – Pax Pamir 2</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --gold:#b8860b;--gold2:#d4a017;--sand:#f0e0b0;
+  --bg:#0d0a04;--panel:#1a1208;--card-bg:#121008;
+  --border:rgba(180,130,30,0.35);--border2:rgba(180,130,30,0.6);
+  --text:#e8d5a0;--text2:#a08858;--text3:#686040;
+}
+body{min-height:100vh;background:var(--bg);color:var(--text);
+  font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  display:flex;flex-direction:column;align-items:center;
+  padding:16px 12px 48px;font-size:14px;}
+h1{font-size:clamp(1.2rem,5vw,1.8rem);color:var(--gold2);letter-spacing:.1em;
+  text-align:center;margin-bottom:4px;font-weight:600;}
+.subtitle{font-size:.8rem;color:var(--text3);text-align:center;margin-bottom:16px;font-style:italic;}
+.divider{width:160px;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin:0 auto 20px;}
 
-        *,
-        *::before,
-        *::after {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-        body {
-            min-height: 100vh;
-            background: var(--bg);
-            color: var(--text);
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 12px 10px 60px;
-            font-size: 14px;
-            -webkit-tap-highlight-color: transparent;
-            user-select: none;
-            -webkit-user-select: none;
-        }
-        h1 {
-            font-size: clamp(1.1rem, 4vw, 1.6rem);
-            color: var(--gold2);
-            letter-spacing: .08em;
-            text-align: center;
-            margin-bottom: 2px;
-            font-weight: 600;
-        }
-        .subtitle {
-            font-size: .72rem;
-            color: var(--text3);
-            text-align: center;
-            margin-bottom: 10px;
-            font-style: italic;
-        }
-        .divider {
-            width: 140px;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, var(--gold), transparent);
-            margin: 0 auto 14px;
-        }
+/* KARTEN */
+.stage{display:flex;gap:10px;align-items:flex-start;width:100%;max-width:400px;margin-bottom:12px;}
+.slot{flex:1;display:flex;flex-direction:column;gap:5px;}
+.slot-lbl{font-size:.65rem;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;text-align:center;}
+.frame{width:100%;aspect-ratio:2/3;border:1.5px solid var(--border);border-radius:10px;
+  background:var(--card-bg);display:flex;align-items:center;justify-content:center;
+  overflow:hidden;position:relative;cursor:pointer;transition:border-color .2s;}
+.frame:hover{border-color:var(--gold2);}
+.frame.hl{border-color:var(--gold2);box-shadow:0 0 12px rgba(212,160,23,.2);}
+.frame img{width:100%;height:100%;object-fit:contain;display:none;}
+.frame .ph{font-size:.78rem;color:var(--text3);text-align:center;padding:10px;line-height:1.5;}
+.badge{position:absolute;bottom:5px;right:5px;font-size:.6rem;
+  background:rgba(0,0,0,.75);color:var(--gold2);border-radius:4px;padding:2px 5px;}
+.arr{position:absolute;top:5px;right:5px;font-size:.7rem;font-weight:700;
+  border-radius:4px;padding:2px 6px;display:none;}
+.arr.top{background:rgba(40,160,70,.85);color:#fff;}
+.arr.bot{background:rgba(200,70,30,.85);color:#fff;}
+.cnt{position:absolute;top:5px;left:5px;font-size:.6rem;
+  background:rgba(0,0,0,.75);color:#aaa;border-radius:4px;padding:2px 5px;}
+.loading-ring{width:28px;height:28px;border:3px solid var(--border);
+  border-top-color:var(--gold);border-radius:50%;animation:spin .8s linear infinite;display:none;}
+@keyframes spin{to{transform:rotate(360deg)}}
 
-        /* STATUS BAR */
-        .status-bar {
-            width: 100%;
-            max-width: 440px;
-            display: flex;
-            gap: 6px;
-            flex-wrap: wrap;
-            margin-bottom: 10px;
-            justify-content: center;
-        }
-        .stat {
-            font-size: .68rem;
-            padding: 5px 9px;
-            border-radius: 12px;
-            border: 1px solid var(--border);
-            background: var(--panel);
-            white-space: nowrap;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
-        .stat .lbl {
-            color: var(--text3);
-        }
-        .stat .val {
-            color: var(--text);
-            font-weight: 600;
-        }
-        .stat .val.gold {
-            color: var(--gold2);
-        }
-        .stat .fav {
-            width: 11px;
-            height: 11px;
-            border-radius: 3px;
-            display: inline-block;
-            flex-shrink: 0;
-        }
-        .fav.purple {
-            background: #7b5ea7;
-        }
-        .fav.yellow {
-            background: #d4a017;
-        }
-        .fav.red {
-            background: #c04040;
-        }
-        .fav.blue {
-            background: #4070c0;
-        }
-        .loyalty-badge {
-            font-weight: 700;
-            font-size: .7rem;
-            padding: 2px 7px;
-            border-radius: 8px;
-        }
-        .loyalty-badge.brit {
-            background: #3a2030;
-            color: #e8a0b0;
-        }
-        .loyalty-badge.russ {
-            background: #2a1a08;
-            color: #f0c060;
-        }
-        .loyalty-badge.afgh {
-            background: #0a2a1a;
-            color: #80d0a0;
-        }
+.plus-sep{display:flex;align-items:center;padding-top:28px;color:var(--text3);font-size:1.1rem;}
 
-        /* KARTEN */
-        .stage {
-            display: flex;
-            gap: 8px;
-            align-items: flex-start;
-            width: 100%;
-            max-width: 440px;
-            margin-bottom: 10px;
-        }
-        .slot {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-        }
-        .slot-lbl {
-            font-size: .6rem;
-            color: var(--text3);
-            text-transform: uppercase;
-            letter-spacing: .05em;
-            text-align: center;
-        }
-        .frame {
-            width: 100%;
-            aspect-ratio: 2/3;
-            border: 1.5px solid var(--border);
-            border-radius: 10px;
-            background: var(--card-bg);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            position: relative;
-            cursor: pointer;
-            transition: border-color .2s;
-        }
-        .frame:hover {
-            border-color: var(--gold2);
-        }
-        .frame.hl {
-            border-color: var(--gold2);
-            box-shadow: 0 0 14px rgba(212, 160, 23, .25);
-        }
-        .frame img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            display: none;
-        }
-        .frame .ph {
-            font-size: .72rem;
-            color: var(--text3);
-            text-align: center;
-            padding: 8px;
-            line-height: 1.4;
-        }
-        .badge {
-            position: absolute;
-            bottom: 5px;
-            right: 5px;
-            font-size: .58rem;
-            background: rgba(0, 0, 0, .8);
-            color: var(--gold2);
-            border-radius: 4px;
-            padding: 2px 5px;
-        }
-        .arr {
-            position: absolute;
-            top: 5px;
-            right: 5px;
-            font-size: .65rem;
-            font-weight: 700;
-            border-radius: 4px;
-            padding: 2px 6px;
-            display: none;
-        }
-        .arr.top {
-            background: rgba(40, 160, 70, .85);
-            color: #fff;
-        }
-        .arr.bot {
-            background: rgba(200, 70, 30, .85);
-            color: #fff;
-        }
-        .cnt {
-            position: absolute;
-            top: 5px;
-            left: 5px;
-            font-size: .58rem;
-            background: rgba(0, 0, 0, .8);
-            color: #aaa;
-            border-radius: 4px;
-            padding: 2px 5px;
-        }
-        .loading-ring {
-            width: 24px;
-            height: 24px;
-            border: 3px solid var(--border);
-            border-top-color: var(--gold);
-            border-radius: 50%;
-            animation: spin .8s linear infinite;
-            display: none;
-            position: absolute;
-            inset: 0;
-            margin: auto;
-        }
-        @keyframes spin {
-            to {
-                transform: rotate(360deg)
-            }
-        }
-        .plus-sep {
-            display: flex;
-            align-items: center;
-            padding-top: 24px;
-            color: var(--text3);
-            font-size: 1rem;
-        }
-        .regs {
-            display: flex;
-            gap: 3px;
-            flex-wrap: wrap;
-            width: 100%;
-            max-width: 440px;
-            margin-bottom: 10px;
-        }
-        .reg {
-            font-size: .6rem;
-            padding: 2px 7px;
-            border-radius: 10px;
-            border: 1px solid;
-            font-weight: 600;
-        }
-        .rH {
-            background: #173404;
-            border-color: #639922;
-            color: #c0dd97;
-        }
-        .rK {
-            background: #042c53;
-            border-color: #378add;
-            color: #b5d4f4;
-        }
-        .rKa {
-            background: #4a1b0c;
-            border-color: #d85a30;
-            color: #f0997b;
-        }
-        .rP {
-            background: #26215c;
-            border-color: #7f77dd;
-            color: #cecbf6;
-        }
-        .rPu {
-            background: #412402;
-            border-color: #ba7517;
-            color: #fac775;
-        }
-        .rT {
-            background: #04342c;
-            border-color: #1d9e75;
-            color: #9fe1cb;
-        }
+/* REGIONEN */
+.regs{display:flex;gap:4px;flex-wrap:wrap;width:100%;max-width:400px;margin-bottom:14px;}
+.reg{font-size:.65rem;padding:2px 8px;border-radius:10px;border:1px solid;font-weight:600;}
+.rH{background:#173404;border-color:#639922;color:#c0dd97;}
+.rK{background:#042c53;border-color:#378add;color:#b5d4f4;}
+.rKa{background:#4a1b0c;border-color:#d85a30;color:#f0997b;}
+.rP{background:#26215c;border-color:#7f77dd;color:#cecbf6;}
+.rPu{background:#412402;border-color:#ba7517;color:#fac775;}
+.rT{background:#04342c;border-color:#1d9e75;color:#9fe1cb;}
 
-        /* CONTROLS */
-        .controls {
-            width: 100%;
-            max-width: 440px;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-        button {
-            font-family: inherit;
-            cursor: pointer;
-            border-radius: 7px;
-            font-weight: 600;
-            transition: opacity .15s, background .15s;
-            border: none;
-            -webkit-tap-highlight-color: transparent;
-        }
-        button:active {
-            opacity: .7;
-        }
-        .btn-primary {
-            background: linear-gradient(135deg, #f0d070, var(--gold2));
-            color: #1a1000;
-            padding: 12px 16px;
-            font-size: .9rem;
-            width: 100%;
-            box-shadow: 0 3px 12px rgba(180, 130, 20, .35);
-        }
-        .btn-ok {
-            background: rgba(255, 255, 255, .08);
-            border: 1px solid var(--border2);
-            color: var(--text);
-            padding: 8px 12px;
-            flex: 1;
-            font-size: .78rem;
-        }
-        .btn-skip {
-            background: transparent;
-            border: 1px solid rgba(255, 255, 255, .1);
-            color: var(--text2);
-            padding: 8px 12px;
-            flex: 1;
-            font-size: .78rem;
-        }
-        .btn-sm {
-            background: rgba(255, 255, 255, .06);
-            border: 1px solid var(--border);
-            color: var(--text2);
-            padding: 6px 10px;
-            font-size: .7rem;
-            border-radius: 6px;
-        }
-        .btn-danger {
-            background: transparent;
-            border: 1px solid rgba(180, 60, 40, .4);
-            color: #c07060;
-            padding: 6px 10px;
-            font-size: .7rem;
-            border-radius: 6px;
-        }
-        .btn-setup {
-            background: rgba(100, 140, 200, .2);
-            border: 1px solid rgba(100, 140, 200, .4);
-            color: #8ab4e0;
-            padding: 6px 10px;
-            font-size: .7rem;
-        }
+/* CONTROLS */
+.controls{width:100%;max-width:400px;display:flex;flex-direction:column;gap:10px;}
+button{font-family:inherit;cursor:pointer;border-radius:7px;
+  font-weight:600;transition:opacity .15s;border:none;}
+button:active{opacity:.75;}
+.btn-primary{background:linear-gradient(135deg,#f0d070,var(--gold2));
+  color:#1a1000;padding:13px 16px;font-size:.95rem;width:100%;
+  box-shadow:0 3px 12px rgba(180,130,20,.35);}
+.btn-ok{background:rgba(255,255,255,.08);border:1px solid var(--border2);
+  color:var(--text);padding:9px 12px;flex:1;font-size:.8rem;}
+.btn-skip{background:transparent;border:1px solid rgba(255,255,255,.1);
+  color:var(--text2);padding:9px 12px;flex:1;font-size:.8rem;}
+.btn-sm{background:rgba(255,255,255,.06);border:1px solid var(--border);
+  color:var(--text2);padding:6px 10px;font-size:.75rem;border-radius:6px;}
+.btn-danger{background:transparent;border:1px solid rgba(180,60,40,.4);
+  color:#c07060;padding:6px 10px;font-size:.75rem;border-radius:6px;}
 
-        /* AKTIONSPANEL */
-        .apanel {
-            background: var(--panel);
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            padding: 12px;
-            display: none;
-            animation: fadeIn .2s;
-        }
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(-8px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        .apanel-title {
-            font-size: .68rem;
-            color: var(--text3);
-            text-transform: uppercase;
-            letter-spacing: .05em;
-            margin-bottom: 8px;
-        }
-        .steps {
-            display: flex;
-            gap: 4px;
-            margin-bottom: 8px;
-            flex-wrap: wrap;
-        }
-        .step {
-            width: 7px;
-            height: 7px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, .15);
-            flex-shrink: 0;
-        }
-        .step.act {
-            background: var(--gold2);
-        }
-        .step.done {
-            background: rgba(180, 130, 20, .4);
-        }
-        .abox {
-            background: rgba(0, 0, 0, .3);
-            border: 1px solid var(--border);
-            border-left: 3px solid var(--gold);
-            border-radius: 6px;
-            padding: 10px 12px;
-            font-size: .85rem;
-            line-height: 1.5;
-            color: var(--text);
-            min-height: 44px;
-            margin-bottom: 8px;
-        }
-        .abox.rad {
-            border-left-color: #c05020;
-        }
-        .abox .instr-detail {
-            font-size: .75rem;
-            color: var(--text2);
-            margin-top: 4px;
-            font-style: italic;
-        }
-        .btn-row {
-            display: flex;
-            gap: 6px;
-            flex-wrap: wrap;
-        }
+/* AKTIONS-PANEL */
+.apanel{background:var(--panel);border:1px solid var(--border);border-radius:10px;
+  padding:14px;display:none;}
+.apanel-title{font-size:.7rem;color:var(--text3);text-transform:uppercase;
+  letter-spacing:.06em;margin-bottom:10px;}
+.dom-row{display:flex;align-items:center;gap:8px;padding:7px 10px;
+  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);
+  border-radius:6px;margin-bottom:10px;font-size:.82rem;color:var(--text2);}
+.dom-row input{accent-color:var(--gold);width:15px;height:15px;}
+.steps{display:flex;gap:5px;margin-bottom:10px;}
+.step{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.15);}
+.step.act{background:var(--gold2);}
+.step.done{background:rgba(180,130,20,.4);}
+.abox{background:rgba(0,0,0,.3);border:1px solid var(--border);border-left:3px solid var(--gold);
+  border-radius:6px;padding:10px 12px;font-size:.88rem;line-height:1.55;
+  color:var(--text);min-height:50px;margin-bottom:10px;}
+.abox.rad{border-left-color:#c05020;}
+.btn-row{display:flex;gap:8px;}
 
-        /* PROMPT / MODAL */
-        .modal-overlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, .85);
-            z-index: 9990;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            padding: 16px;
-        }
-        .modal-overlay.on {
-            display: flex;
-        }
-        .modal {
-            background: #1a1208;
-            border: 1.5px solid var(--border2);
-            border-radius: 12px;
-            padding: 18px;
-            max-width: 400px;
-            width: 100%;
-            max-height: 85vh;
-            overflow-y: auto;
-            color: var(--text);
-        }
-        .modal h3 {
-            color: var(--gold2);
-            font-size: 1rem;
-            margin-bottom: 10px;
-        }
-        .modal label {
-            display: block;
-            font-size: .78rem;
-            color: var(--text2);
-            margin: 8px 0 4px;
-        }
-        .modal select,
-        .modal input {
-            width: 100%;
-            padding: 8px 10px;
-            font-family: inherit;
-            font-size: .85rem;
-            background: rgba(0, 0, 0, .4);
-            border: 1px solid var(--border2);
-            border-radius: 6px;
-            color: var(--text);
-            margin-bottom: 6px;
-        }
-        .modal .btn-row {
-            margin-top: 12px;
-        }
-        .modal-close {
-            position: absolute;
-            top: 8px;
-            right: 10px;
-            background: none;
-            border: none;
-            color: #aaa;
-            font-size: 1.2rem;
-            cursor: pointer;
-        }
+/* RADIKALISIERUNGS-PANEL */
+.radpanel{background:rgba(0,0,0,.4);border:1px solid rgba(200,100,40,.4);
+  border-radius:8px;padding:12px;margin-top:10px;display:none;}
+.radpanel .instr{font-size:.82rem;color:#e0a060;margin-bottom:10px;font-style:italic;line-height:1.4;}
+.radpanel label{font-size:.75rem;color:var(--text2);display:block;margin-bottom:6px;}
+.radpanel .row{display:flex;gap:8px;margin-bottom:8px;}
+.radpanel input{padding:7px 9px;width:90px;font-family:inherit;font-size:.85rem;
+  background:var(--panel);color:var(--text);border:1px solid var(--border2);border-radius:6px;}
 
-        /* PROMPT BAR */
-        .prompt-bar {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: #1a1208;
-            border-top: 1px solid var(--border2);
-            padding: 10px 14px;
-            z-index: 9980;
-            display: none;
-            flex-direction: column;
-            gap: 8px;
-            animation: slideUp .3s;
-        }
-        .prompt-bar.on {
-            display: flex;
-        }
-        @keyframes slideUp {
-            from {
-                transform: translateY(100%);
-            }
-            to {
-                transform: translateY(0);
-            }
-        }
-        .prompt-bar .prompt-msg {
-            font-size: .82rem;
-            color: var(--text);
-            line-height: 1.4;
-        }
-        .prompt-bar input {
-            padding: 9px 11px;
-            font-family: inherit;
-            font-size: .85rem;
-            background: rgba(0, 0, 0, .4);
-            border: 1px solid var(--border2);
-            border-radius: 6px;
-            color: var(--text);
-        }
-        .prompt-bar .btn-row {
-            display: flex;
-            gap: 6px;
-        }
+/* HOF */
+.court{width:100%;max-width:400px;margin-top:22px;}
+.sec-head{display:flex;align-items:center;justify-content:space-between;
+  border-bottom:1px solid var(--border);padding-bottom:8px;margin-bottom:12px;}
+.sec-head h2{font-size:1rem;color:var(--gold2);font-weight:600;}
+.sec-head span{font-size:.72rem;color:var(--text3);}
+.court-add{display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap;}
+.court-add input{padding:7px 9px;width:95px;font-family:inherit;font-size:.85rem;
+  background:var(--panel);color:var(--text);border:1px solid var(--border2);border-radius:6px;}
+.court-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(88px,1fr));gap:8px;}
+.ccard{background:var(--card-bg);border:1px solid var(--border);border-radius:8px;
+  overflow:hidden;cursor:pointer;transition:border-color .2s;}
+.ccard:hover{border-color:var(--gold2);}
+.ccard img{width:100%;aspect-ratio:2/3;object-fit:contain;display:block;background:var(--card-bg);}
+.ccard-foot{display:flex;align-items:center;justify-content:space-between;
+  padding:3px 6px;background:rgba(0,0,0,.5);}
+.ccard-foot span{font-size:.6rem;color:var(--gold2);}
+.ccard-foot button{background:none;border:none;color:#904040;font-size:.8rem;
+  cursor:pointer;padding:0 2px;line-height:1;}
+.cempty{font-size:.82rem;color:var(--text3);padding:16px 0;}
 
-        /* HOF */
-        .court {
-            width: 100%;
-            max-width: 440px;
-            margin-top: 18px;
-        }
-        .sec-head {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            border-bottom: 1px solid var(--border);
-            padding-bottom: 6px;
-            margin-bottom: 10px;
-        }
-        .sec-head h2 {
-            font-size: .95rem;
-            color: var(--gold2);
-            font-weight: 600;
-        }
-        .sec-head span {
-            font-size: .68rem;
-            color: var(--text3);
-        }
-        .court-add {
-            display: flex;
-            gap: 6px;
-            margin-bottom: 10px;
-            flex-wrap: wrap;
-        }
-        .court-add input {
-            padding: 7px 9px;
-            width: 80px;
-            font-family: inherit;
-            font-size: .8rem;
-            background: var(--panel);
-            color: var(--text);
-            border: 1px solid var(--border2);
-            border-radius: 6px;
-        }
-        .court-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(75px, 1fr));
-            gap: 6px;
-        }
-        .ccard {
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            overflow: hidden;
-            cursor: pointer;
-            transition: border-color .2s;
-            position: relative;
-        }
-        .ccard:hover {
-            border-color: var(--gold2);
-        }
-        .ccard.used {
-            opacity: .5;
-            border-color: rgba(100, 100, 100, .3);
-        }
-        .ccard img {
-            width: 100%;
-            aspect-ratio: 2/3;
-            object-fit: contain;
-            display: block;
-            background: var(--card-bg);
-        }
-        .ccard-foot {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 2px 5px;
-            background: rgba(0, 0, 0, .6);
-            font-size: .55rem;
-            color: var(--gold2);
-        }
-        .ccard-foot button {
-            background: none;
-            border: none;
-            color: #904040;
-            font-size: .7rem;
-            cursor: pointer;
-            padding: 0 2px;
-            line-height: 1;
-        }
-        .used-badge {
-            position: absolute;
-            top: 3px;
-            left: 3px;
-            background: rgba(200, 60, 40, .8);
-            color: #fff;
-            font-size: .55rem;
-            padding: 1px 4px;
-            border-radius: 3px;
-            display: none;
-        }
-        .ccard.used .used-badge {
-            display: block;
-        }
-        .cempty {
-            font-size: .78rem;
-            color: var(--text3);
-            padding: 14px 0;
-        }
+/* REGELN */
+.rules{width:100%;max-width:400px;margin-top:20px;}
+.rtoggle{background:transparent;border:1px solid var(--border);border-radius:8px;
+  color:var(--text2);padding:10px 14px;width:100%;text-align:left;
+  display:flex;justify-content:space-between;align-items:center;font-size:.82rem;}
+.rbody{display:none;background:var(--panel);border:1px solid var(--border);
+  border-top:none;border-radius:0 0 8px 8px;padding:14px;
+  font-size:.8rem;line-height:1.6;color:var(--text2);}
+.rbody h4{font-size:.78rem;color:var(--gold2);font-weight:600;margin:12px 0 4px;}
+.rbody h4:first-child{margin-top:0;}
+.rbody ul{padding-left:16px;}
+.rbody li{margin-bottom:2px;}
+.plist{display:flex;flex-direction:column;gap:3px;}
+.pitem{display:flex;align-items:center;gap:7px;font-size:.75rem;}
+.pnum{width:18px;height:18px;border-radius:50%;background:rgba(180,130,20,.15);
+  border:1px solid var(--border);display:flex;align-items:center;justify-content:center;
+  font-size:.62rem;color:var(--gold2);flex-shrink:0;}
 
-        /* TOAST */
-        .toast {
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%) translateY(80px);
-            background: var(--panel);
-            border: 1px solid var(--border2);
-            color: var(--text2);
-            padding: 8px 16px;
-            border-radius: 7px;
-            font-size: .78rem;
-            z-index: 9998;
-            transition: transform .3s;
-            pointer-events: none;
-            white-space: nowrap;
-            max-width: 90vw;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-        .toast.on {
-            transform: translateX(-50%) translateY(0);
-        }
+/* ZOOM */
+.zoom{position:fixed;inset:0;background:rgba(0,0,0,.93);display:none;
+  align-items:center;justify-content:center;gap:14px;flex-wrap:wrap;
+  padding:14px;z-index:9999;cursor:pointer;}
+.zoom.on{display:flex;}
+.zside{display:flex;flex-direction:column;align-items:center;gap:6px;}
+.zlbl{font-size:.68rem;color:#aaa;}
+.zoom img{max-width:min(320px,44vw);max-height:80vh;border-radius:9px;
+  border:1.5px solid var(--gold2);object-fit:contain;}
+.zclose{position:fixed;top:12px;right:14px;background:none;border:1px solid #777;
+  color:#ccc;border-radius:50%;width:30px;height:30px;font-size:.9rem;
+  cursor:pointer;z-index:10000;display:flex;align-items:center;justify-content:center;}
 
-        /* ZOOM */
-        .zoom {
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, .94);
-            display: none;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            flex-wrap: wrap;
-            padding: 12px;
-            z-index: 9999;
-            cursor: pointer;
-        }
-        .zoom.on {
-            display: flex;
-        }
-        .zside {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 4px;
-        }
-        .zlbl {
-            font-size: .62rem;
-            color: #aaa;
-        }
-        .zoom img {
-            max-width: min(280px, 42vw);
-            max-height: 75vh;
-            border-radius: 8px;
-            border: 1.5px solid var(--gold2);
-            object-fit: contain;
-        }
-        .zclose {
-            position: fixed;
-            top: 10px;
-            right: 12px;
-            background: none;
-            border: 1px solid #777;
-            color: #ccc;
-            border-radius: 50%;
-            width: 28px;
-            height: 28px;
-            font-size: .85rem;
-            cursor: pointer;
-            z-index: 10000;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+/* TOAST */
+.toast{position:fixed;bottom:20px;left:50%;
+  transform:translateX(-50%) translateY(60px);
+  background:var(--panel);border:1px solid var(--border2);color:var(--text2);
+  padding:8px 16px;border-radius:7px;font-size:.8rem;z-index:9998;
+  transition:transform .3s;pointer-events:none;white-space:nowrap;}
+.toast.on{transform:translateX(-50%) translateY(0);}
 
-        /* RESPONSIVE */
-        @media (max-width:360px) {
-            .status-bar {
-                gap: 3px;
-            }
-            .stat {
-                font-size: .6rem;
-                padding: 3px 6px;
-            }
-            .court-grid {
-                grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
-                gap: 4px;
-            }
-        }
-    </style>
+/* img loading spinner overlay */
+.spinner{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;display:none;}
+</style>
 </head>
 <body>
 
-    <h1>✦ WAKHAN KI ✦</h1>
-    <p class="subtitle">Pax Pamir 2. Edition · Spielführer für den Bot</p>
-    <div class="divider"></div>
+<h1>✦ WAKHAN KI ✦</h1>
+<p class="subtitle">Pax Pamir 2. Edition · Solo &amp; Duo Modus</p>
+<div class="divider"></div>
 
-    <!-- STATUS BAR -->
-    <div class="status-bar" id="statusBar">
-        <div class="stat"><span class="lbl">Prag. Loyalität:</span><span class="loyalty-badge brit" id="pragLoyBadge">—</span></div>
-        <div class="stat"><span class="lbl">Bevorzugte Farbe:</span><span class="fav purple" id="favColorDot"></span><span class="val" id="favColorName">Lila</span></div>
-        <div class="stat"><span class="lbl">Wakhan 💰:</span><span class="val gold" id="wakRupees">0</span></div>
+<div class="stage">
+  <div class="slot">
+    <div class="slot-lbl">B · Rückseite Stapel</div>
+    <div class="frame" id="fB" onclick="zoomB()">
+      <div class="loading-ring" id="ringB"></div>
+      <img id="imgB" alt="">
+      <div class="ph" id="phB">Stapel leer</div>
+      <div class="cnt" id="cntB">0</div>
     </div>
-
-    <!-- KARTEN -->
-    <div class="stage">
-        <div class="slot">
-            <div class="slot-lbl">B · Rückseite Stapel</div>
-            <div class="frame" id="fB" onclick="zoomB()">
-                <div class="loading-ring" id="ringB"></div>
-                <img id="imgB" alt="">
-                <div class="ph" id="phB">Stapel leer</div>
-                <div class="cnt" id="cntB">0</div>
-            </div>
-        </div>
-        <div class="plus-sep">+</div>
-        <div class="slot">
-            <div class="slot-lbl">A · Gezogene KI-Karte</div>
-            <div class="frame hl" id="fA" onclick="zoomA()">
-                <div class="loading-ring" id="ringA"></div>
-                <img id="imgA" alt="">
-                <div class="ph" id="phA">Karte<br>ziehen</div>
-                <div class="arr" id="arrA"></div>
-                <div class="badge" id="badgeA" style="display:none"></div>
-            </div>
-        </div>
+  </div>
+  <div class="plus-sep">+</div>
+  <div class="slot">
+    <div class="slot-lbl">A · Gezogene Karte</div>
+    <div class="frame hl" id="fA" onclick="zoomA()">
+      <div class="loading-ring" id="ringA"></div>
+      <img id="imgA" alt="">
+      <div class="ph" id="phA">Karte<br>ziehen</div>
+      <div class="arr" id="arrA"></div>
+      <div class="badge" id="badgeA" style="display:none"></div>
     </div>
-    <div class="regs" id="regs" style="display:none"></div>
+  </div>
+</div>
 
-    <!-- CONTROLS -->
-    <div class="controls">
-        <button class="btn-primary" id="drawBtn" onclick="takeTurn()">▶ Wakhan Zug starten</button>
-        <button class="btn-setup" id="setupBtn" onclick="openSetup()">⚙ Einrichtung / Setup</button>
+<div class="regs" id="regs" style="display:none"></div>
 
-        <div class="apanel" id="apanel">
-            <div class="apanel-title">Aktion <span id="actNum">1</span> von 2 <span id="bonusTag" style="display:none;color:#d4a017;">(Bonus)</span></div>
-            <div class="steps" id="steps"></div>
-            <div class="abox" id="abox"></div>
-            <div class="btn-row" id="actBtnRow">
-                <button class="btn-ok" onclick="resolveAction(true)">✓ Ausführen / Weiter</button>
-                <button class="btn-skip" onclick="resolveAction(false)">✗ Überspringen</button>
-            </div>
-            <div class="abox rad" id="radBox" style="display:none;"></div>
-            <div class="btn-row" id="radBtnRow" style="display:none;">
-                <button class="btn-sm" onclick="confirmRadManual()">Kartennummer eingeben</button>
-                <button class="btn-skip" onclick="skipRad()">Keine Karte gekauft</button>
-            </div>
-        </div>
+<div class="controls">
+  <button class="btn-primary" id="drawBtn" onclick="takeTurn()">▶ Wakhan Zug starten</button>
+
+  <div class="apanel" id="apanel">
+    <div class="apanel-title">Aktion <span id="actNum">1</span> von 2</div>
+    <div class="dom-row">
+      <input type="checkbox" id="domChk">
+      <label for="domChk">Dominanzcheck im Markt</label>
     </div>
-
-    <!-- HOF -->
-    <div class="court">
-        <div class="sec-head">
-            <h2>⚔ Wakhans Hof</h2>
-            <span id="courtCnt">0 Karten</span>
-        </div>
-        <div class="court-add">
-            <input type="number" id="courtIn" min="1" max="140" placeholder="Nr. 1–140">
-            <button class="btn-sm" onclick="addCourt()">+ Hinzufügen</button>
-            <button class="btn-sm" onclick="removeLastCourt()">Letzte entfernen</button>
-            <button class="btn-danger" onclick="clearCourt()">Leeren</button>
-        </div>
-        <div class="court-grid" id="courtGrid">
-            <div class="cempty">Noch keine Hofkarten.</div>
-        </div>
+    <div class="steps" id="steps"></div>
+    <div class="abox" id="abox"></div>
+    <div class="btn-row">
+      <button class="btn-ok" onclick="resolve(true)">✓ Ausführen</button>
+      <button class="btn-skip" onclick="resolve(false)">✗ Überspringen</button>
     </div>
-
-    <!-- ZOOM -->
-    <div class="zoom" id="zoom" onclick="closeZoom()">
-        <button class="zclose" onclick="closeZoom()">✕</button>
-        <div class="zside" id="zsideA"><div class="zlbl" id="zlblA"></div><img id="zimgA" src="" alt=""></div>
-        <div class="zside" id="zsideB" style="display:none"><div class="zlbl" id="zlblB"></div><img id="zimgB" src="" alt=""></div>
+    <div class="radpanel" id="radpanel">
+      <div class="instr" id="radinstr"></div>
+      <label>Hofkarten-Nr. der gekauften Karte (1–116):</label>
+      <div class="row">
+        <input type="number" id="radinput" min="1" max="116" placeholder="Nr.">
+        <button class="btn-sm" onclick="confirmRad()">Dem Hof hinzufügen</button>
+      </div>
+      <button class="btn-skip" style="width:100%;margin-top:6px;font-size:.75rem;" onclick="skipRad()">Nichts gekauft – überspringen</button>
     </div>
+  </div>
+</div>
 
-    <!-- TOAST -->
-    <div class="toast" id="toast"></div>
+<!-- HOF -->
+<div class="court">
+  <div class="sec-head">
+    <h2>⚔ Wakhans Hof</h2>
+    <span id="courtCnt">0 Karten</span>
+  </div>
+  <div class="court-add">
+    <input type="number" id="courtIn" min="1" max="116" placeholder="Nr. 1–116">
+    <button class="btn-sm" onclick="addCourt()">+ Hinzufügen</button>
+    <button class="btn-danger" onclick="clearCourt()">Leeren</button>
+  </div>
+  <div class="court-grid" id="courtGrid">
+    <div class="cempty">Noch keine Hofkarten.</div>
+  </div>
+</div>
 
-    <!-- PROMPT BAR -->
-    <div class="prompt-bar" id="promptBar">
-        <div class="prompt-msg" id="promptMsg"></div>
-        <input type="text" id="promptInput" placeholder="Antwort eingeben..." onkeydown="if(event.key==='Enter')submitPrompt()">
-        <div class="btn-row">
-            <button class="btn-ok" onclick="submitPrompt()">✓ OK</button>
-            <button class="btn-skip" onclick="cancelPrompt()">Abbrechen</button>
-        </div>
+<!-- REGELN -->
+<div class="rules">
+  <button class="rtoggle" onclick="toggleRules()">
+    <span>📜 Regelreferenz</span><span id="rchev">▼</span>
+  </button>
+  <div class="rbody" id="rbody">
+    <h4>Kartenpriorität (hoch → niedrig)</h4>
+    <div class="plist">
+      <div class="pitem"><div class="pnum">1</div>Karte eines Mitspielers</div>
+      <div class="pitem"><div class="pnum">2</div>Aktuelles Machtprinzip</div>
+      <div class="pitem"><div class="pnum">3</div>Patriot des dominanten Bündnisses</div>
+      <div class="pitem"><div class="pnum">4</div>Hat Belohnung des dominanten Bündnisses</div>
+      <div class="pitem"><div class="pnum">5</div>Ein anderer Patriot</div>
+      <div class="pitem"><div class="pnum">6</div>Karte mit Schuldensymbol</div>
+      <div class="pitem"><div class="pnum">7</div>Höchste Platzierung (Rang)</div>
+      <div class="pitem"><div class="pnum">8</div>Höchste Kartennummer</div>
     </div>
+    <h4>Abwerfpriorität (zuerst abwerfen)</h4>
+    <ul>
+      <li>Nicht-Politik-Karten</li><li>Nicht-Patrioten</li><li>Nicht kreditbehaftet</li>
+      <li>Meiste Spione (mehr als Wakhan)</li><li>Wenigste Spione</li>
+      <li>Niedrigster Rang</li><li>Nicht aktuelles Machtprinzip</li><li>Niedrigste Kartennummer</li>
+    </ul>
+    <h4>Kampf</h4>
+    <p>Wo ein Spieler loyale Einheiten hat und Wakhan ≥ 1 Armee. Zerstörung: Stämme → Armeen → Straßen.</p>
+    <h4>Steuern</h4>
+    <p>Spieler vor Marktkarten. Spieler mit meisten Rupien zuerst. Gleichstand → roter Pfeil.</p>
+    <h4>Marschieren</h4>
+    <p>Nur Armeen, keine Straßen nötig. In Regionen mit feindlichen Stämmen, max. Anzahl = Stämme. Keine Bewegung wenn Vorherrschaft verloren ginge.</p>
+    <h4>Bauen</h4>
+    <p>In der am weitesten links auf der KI-Karte vermerkten Region mit Vorherrschaft. So viel Geld wie möglich ausgeben.</p>
+    <h4>Radikalisierung</h4>
+    <p>Karte kaufen + sofort ausspielen = 1 Aktion. Roter Pfeil oben → links im Hof, unten → rechts im Hof.</p>
+    <h4>Bestechung</h4>
+    <p>Wakhan muss den Spieler mit Vorherrschaft in der Kartenregion bestechen können. Sonst wird die Karte abgeworfen.</p>
+  </div>
+</div>
 
-    <!-- SETUP MODAL -->
-    <div class="modal-overlay" id="setupModal">
-        <div class="modal">
-            <h3>⚙ Einrichtung</h3>
-            <label>Anzahl menschlicher Spieler:</label>
-            <select id="setupNumPlayers">
-                <option value="1">1 Spieler + Wakhan (Solo)</option>
-                <option value="2">2 Spieler + Wakhan</option>
-            </select>
-            <label>Spieler 1 Farbe:</label>
-            <select id="setupP1Color">
-                <option value="Rot">Rot</option><option value="Blau">Blau</option><option value="Schwarz">Schwarz</option><option value="Beige">Beige</option><option value="Grau">Grau</option>
-            </select>
-            <label id="setupP2Label" style="display:none;">Spieler 2 Farbe:</label>
-            <select id="setupP2Color" style="display:none;">
-                <option value="Blau">Blau</option><option value="Schwarz">Schwarz</option><option value="Beige">Beige</option><option value="Grau">Grau</option>
-            </select>
-            <label>Wakhans Farbe:</label>
-            <select id="setupWColor">
-                <option value="Grau">Grau</option><option value="Beige">Beige</option><option value="Schwarz">Schwarz</option>
-            </select>
-            <label>Spieler-Loyalitäten (für pragm. Loyalität):</label>
-            <div id="setupLoyalties"></div>
-            <div class="btn-row">
-                <button class="btn-ok" onclick="confirmSetup()">✓ Spiel starten / Aktualisieren</button>
-                <button class="btn-skip" onclick="closeSetup()">Schließen</button>
-            </div>
-        </div>
-    </div>
+<!-- ZOOM -->
+<div class="zoom" id="zoom" onclick="closeZoom()">
+  <button class="zclose" onclick="closeZoom()">✕</button>
+  <div class="zside" id="zsideA"><div class="zlbl" id="zlblA"></div><img id="zimgA" src="" alt=""></div>
+  <div class="zside" id="zsideB" style="display:none"><div class="zlbl" id="zlblB"></div><img id="zimgB" src="" alt=""></div>
+</div>
 
-    <script>
-        // ═══════════════════════════════════════════════════════════
-        // WAKHAN KI – VOLLSTÄNDIGER SPIELFÜHRER
-        // ═══════════════════════════════════════════════════════════
+<div class="toast" id="toast"></div>
 
-        // ─── IMAGE LOADING ───────────────────────────────────────
-        const URLS = [
-            id => `Cards/card_${id}.jpg`,
-            id => `Cards/card_${id}.png`,
-            id =>
-            `https://cdn.jsdelivr.net/gh/O-McClou/PP@3e8bc12b57fae22301e28250a1351dd677360f60/Cards/card_${id}.jpg`,
-            id =>
-            `https://cdn.jsdelivr.net/gh/O-McClou/PP@3e8bc12b57fae22301e28250a1351dd677360f60/Cards/card_${id}.png`,
-        ];
-        const BURLS = [
-            id => `Cards/card_back_${id}.jpg`,
-            id => `Cards/card_back_${id}.png`,
-            id =>
-            `https://cdn.jsdelivr.net/gh/O-McClou/PP@3e8bc12b57fae22301e28250a1351dd677360f60/Cards/card_back_${id}.jpg`,
-            id =>
-            `https://cdn.jsdelivr.net/gh/O-McClou/PP@3e8bc12b57fae22301e28250a1351dd677360f60/Cards/card_back_${id}.png`,
-        ];
+<script>
+// ─── IMAGE LOADING ───────────────────────────────────────────────────────────
+// Uses fetch() → blob URL so iOS Edge/Safari can load images from local HTML files.
+// Falls back to direct <img src> if fetch fails.
 
-        const blobCache = {};
-        async function tryFetch(url) {
-            if (blobCache[url]) return blobCache[url];
-            const r = await fetch(url, { mode: 'cors', cache: 'force-cache' });
-            if (!r.ok) throw new Error(r.status);
-            const blob = await r.blob();
-            if (!blob.type.startsWith('image/')) throw new Error('not image');
-            const objUrl = URL.createObjectURL(blob);
-            blobCache[url] = objUrl;
-            return objUrl;
-        }
-        async function tryImgSrc(url) {
-            return new Promise((res, rej) => {
-                const i = new Image();
-                i.crossOrigin = 'anonymous';
-                i.onload = () => res(url);
-                i.onerror = rej;
-                i.src = url;
-            });
-        }
-        async function loadImg(imgEl, phEl, ringEl, urlFns, id) {
-            if (ringEl) { ringEl.style.display = 'flex';
-                ringEl.style.position = 'absolute'; }
-            for (const fn of urlFns) {
-                const url = fn(id);
-                try { const src = await tryFetch(url);
-                    imgEl.src = src;
-                    imgEl.style.display = 'block'; if (phEl) phEl.style.display = 'none'; if (ringEl) ringEl
-                            .style.display = 'none'; return true; } catch {}
-                try { const src = await tryImgSrc(url);
-                    imgEl.src = src;
-                    imgEl.style.display = 'block'; if (phEl) phEl.style.display = 'none'; if (ringEl) ringEl
-                            .style.display = 'none'; return true; } catch {}
-            }
-            if (ringEl) ringEl.style.display = 'none';
-            imgEl.style.display = 'none';
-            if (phEl) phEl.style.display = 'flex';
-            return false;
-        }
+// Relative paths work on GitHub Pages; CDN is fallback for local use
+const URLS = [
+  id => `Cards/card_${id}.jpg`,
+  id => `Cards/card_${id}.png`,
+  id => `https://cdn.jsdelivr.net/gh/O-McClou/PP@3e8bc12b57fae22301e28250a1351dd677360f60/Cards/card_${id}.jpg`,
+  id => `https://cdn.jsdelivr.net/gh/O-McClou/PP@3e8bc12b57fae22301e28250a1351dd677360f60/Cards/card_${id}.png`,
+];
+const BURLS = [
+  id => `Cards/card_back_${id}.jpg`,
+  id => `Cards/card_back_${id}.png`,
+  id => `https://cdn.jsdelivr.net/gh/O-McClou/PP@3e8bc12b57fae22301e28250a1351dd677360f60/Cards/card_back_${id}.jpg`,
+  id => `https://cdn.jsdelivr.net/gh/O-McClou/PP@3e8bc12b57fae22301e28250a1351dd677360f60/Cards/card_back_${id}.png`,
+];
 
-        // ─── DATEN ──────────────────────────────────────────────
-        const REGS = [
-            { n: 'Herat', c: 'rH' }, { n: 'Kabul', c: 'rK' }, { n: 'Kandahar', c: 'rKa' },
-            { n: 'Persien', c: 'rP' }, { n: 'Punjab', c: 'rPu' }, { n: 'Transox.', c: 'rT' }
-        ];
-        const REGION_NAMES = ['Transcaspia', 'Kabul', 'Kandahar', 'Punjab', 'Herat', 'Persien'];
-        const REGION_INDEX_MAP = { 0: 'Transcaspia', 1: 'Kabul', 2: 'Kandahar', 3: 'Punjab', 4: 'Herat', 5: 'Persien' };
+const blobCache = {};
 
-        // Wakhan-Karten (erweiterte Daten aus Wahkan Cards.js)
-        const wakhanCardsFull = [
-            { id: 117, loyaltyOrder: ['Russisch', 'Afghanisch', 'Britisch'], loyaltyIcons: ['Bär', 'Adler', 'Löwe'],
-                action1_de: 'Besteuerung.', action2_de: 'Wenn Militär bevorzugt: Radikalisiere höchste Militärkarte.',
-                action3_de: 'Radikalisierung.', redArrow: 'bottom', priorities: [3, 4, 5, 0, 1, 2],
-            backTopLabel: 'Top (left)' },
-            { id: 118, loyaltyOrder: ['Afghanisch', 'Britisch', 'Russisch'], loyaltyIcons: ['Adler', 'Löwe', 'Bär'],
-                action1_de: 'Wenn Politik bevorzugt: Radikalisiere höchste Wirtschaftskarte.', action2_de: 'Radikalisiere höchste Politikkarte.',
-                action3_de: 'Radikalisierung.', redArrow: 'top', priorities: [4, 5, 0, 1, 2, 3],
-            backTopLabel: 'Bottom (right)' },
-            { id: 119, loyaltyOrder: ['Britisch', 'Russisch', 'Afghanisch'], loyaltyIcons: ['Löwe', 'Bär', 'Adler'],
-                action1_de: 'Besteuerung.', action2_de: 'Radikalisiere höchste Geheimdienstkarte.', action3_de: 'Radikalisierung.',
-                redArrow: 'bottom', priorities: [2, 3, 4, 5, 0, 1], backTopLabel: 'Top (left)' },
-            { id: 120, loyaltyOrder: ['Russisch', 'Afghanisch', 'Britisch'], loyaltyIcons: ['Bär', 'Adler', 'Löwe'],
-                action1_de: 'Wenn Wakhan < 2 Rupien: Radikalisiere Karte mit meisten Rupien.', action2_de: 'Bauen.',
-                action3_de: 'Radikalisierung.', redArrow: 'top', priorities: [1, 2, 3, 4, 5, 0], backTopLabel: 'Top (left)' },
-            { id: 121, loyaltyOrder: ['Britisch', 'Russisch', 'Afghanisch'], loyaltyIcons: ['Löwe', 'Bär', 'Adler'],
-                action1_de: 'Radikalisiere Karte, die Wakhan Kontrolle über eine Region verschafft.', action2_de: 'Kampf.',
-                action3_de: 'Radikalisierung.', redArrow: 'top', priorities: [4, 5, 0, 1, 2, 3], backTopLabel: 'Top (left)' },
-            { id: 122, loyaltyOrder: ['Britisch', 'Russisch', 'Afghanisch'], loyaltyIcons: ['Löwe', 'Bär', 'Adler'],
-                action1_de: 'Radikalisiere eine Geheimdienstkarte.', action2_de: 'Marschieren.', action3_de: 'Radikalisierung.',
-                redArrow: 'top', priorities: [5, 0, 1, 2, 3, 4], backTopLabel: 'Top (left)' },
-            { id: 123, loyaltyOrder: ['Afghanisch', 'Russisch', 'Britisch'], loyaltyIcons: ['Adler', 'Bär', 'Löwe'],
-                action1_de: 'Bauen.', action2_de: 'Marschieren.', action3_de: 'Radikalisierung.', redArrow: 'bottom',
-                priorities: [1, 2, 3, 4, 5, 0], backTopLabel: 'Bottom (right)' },
-            { id: 124, loyaltyOrder: ['Russisch', 'Afghanisch', 'Britisch'], loyaltyIcons: ['Bär', 'Adler', 'Löwe'],
-                action1_de: 'Besteuerung.', action2_de: 'Verrat.', action3_de: 'Radikalisierung.', redArrow: 'bottom',
-                priorities: [1, 2, 3, 4, 5, 0], backTopLabel: 'Bottom (right)' },
-            { id: 125, loyaltyOrder: ['Russisch', 'Britisch', 'Afghanisch'], loyaltyIcons: ['Bär', 'Löwe', 'Adler'],
-                action1_de: 'Radikalisiere Karte mit meisten Armeen und/oder Straßen.',
-                action2_de: 'Kein dominantes Bündnis: Radikalisiere Karte mit meisten Spionen und/oder Stämmen.',
-                action3_de: 'Radikalisierung.', redArrow: 'bottom', priorities: [0, 1, 2, 3, 4, 5], backTopLabel: 'Top (left)' },
-            { id: 126, loyaltyOrder: ['Afghanisch', 'Britisch', 'Russisch'], loyaltyIcons: ['Adler', 'Löwe', 'Bär'],
-                action1_de: 'Wakhan hat keine Bewegungskarte: Radikalisiere Karte mit Bewegungsaktion.', action2_de: 'Marschieren.',
-                action3_de: 'Radikalisierung.', redArrow: 'bottom', priorities: [5, 0, 1, 2, 3, 4],
-            backTopLabel: 'Bottom (right)' },
-            { id: 127, loyaltyOrder: ['Afghanisch', 'Russisch', 'Britisch'], loyaltyIcons: ['Adler', 'Bär', 'Löwe'],
-                action1_de: 'Kein dominantes Bündnis: Radikalisiere Karte mit meisten Spionen und/oder Stämmen.',
-                action2_de: 'Wenn Militär bevorzugt: Radikalisiere höchste Militärkarte.', action3_de: 'Radikalisierung.',
-                redArrow: 'bottom', priorities: [5, 0, 1, 2, 3, 4], backTopLabel: 'Top (left)' },
-            { id: 128, loyaltyOrder: ['Afghanisch', 'Russisch', 'Britisch'], loyaltyIcons: ['Adler', 'Bär', 'Löwe'],
-                action1_de: 'Marschieren.', action2_de: 'Verrat.', action3_de: 'Radikalisierung.', redArrow: 'bottom',
-                priorities: [1, 2, 3, 4, 5, 0], backTopLabel: 'Top (left)' },
-            { id: 129, loyaltyOrder: ['Afghanisch', 'Russisch', 'Britisch'], loyaltyIcons: ['Adler', 'Bär', 'Löwe'],
-                action1_de: 'Eine Koalition dominiert: Radikalisiere passenden Patrioten.',
-                action2_de: 'Kein dominantes Bündnis: Radikalisiere Karte mit meisten Spionen und/oder Stämmen.',
-                action3_de: 'Radikalisierung.', redArrow: 'top', priorities: [3, 4, 5, 0, 1, 2], backTopLabel: 'Top (left)' },
-            { id: 130, loyaltyOrder: ['Afghanisch', 'Russisch', 'Britisch'], loyaltyIcons: ['Adler', 'Bär', 'Löwe'],
-                action1_de: 'Kämpfe auf ranghöchster Karte mit meisten Spionen, auf der Wakhan einen Spion hat.',
-                action2_de: 'Kampf.', action3_de: 'Radikalisierung.', redArrow: 'top', priorities: [2, 3, 4, 5, 0, 1],
-                backTopLabel: 'Bottom (right)' },
-            { id: 131, loyaltyOrder: ['Russisch', 'Britisch', 'Afghanisch'], loyaltyIcons: ['Bär', 'Löwe', 'Adler'],
-                action1_de: 'Marschieren.', action2_de: 'Kampf.', action3_de: 'Radikalisierung.', redArrow: 'bottom',
-                priorities: [3, 4, 5, 0, 1, 2], backTopLabel: 'Bottom (right)' },
-            { id: 132, loyaltyOrder: ['Afghanisch', 'Britisch', 'Russisch'], loyaltyIcons: ['Adler', 'Löwe', 'Bär'],
-                action1_de: 'Kein dominantes Bündnis: Radikalisiere Karte mit meisten Spionen und/oder Stämmen.',
-                action2_de: 'Kämpfe auf ranghöchster Karte mit meisten Spionen, auf der Wakhan einen Spion hat.',
-                action3_de: 'Radikalisierung.', redArrow: 'top', priorities: [0, 1, 2, 3, 4, 5], backTopLabel: 'Top (left)' },
-            { id: 133, loyaltyOrder: ['Russisch', 'Afghanisch', 'Britisch'], loyaltyIcons: ['Bär', 'Adler', 'Löwe'],
-                action1_de: 'Wakhans Hof voll: Radikalisiere höchste Politikkarte.', action2_de: 'Besteuerung.',
-                action3_de: 'Radikalisierung.', redArrow: 'top', priorities: [5, 0, 1, 2, 3, 4],
-            backTopLabel: 'Bottom (right)' },
-            { id: 134, loyaltyOrder: ['Afghanisch', 'Russisch', 'Britisch'], loyaltyIcons: ['Adler', 'Bär', 'Löwe'],
-                action1_de: 'Besteuerung.', action2_de: 'Verrat.', action3_de: 'Radikalisierung.', redArrow: 'top',
-                priorities: [2, 3, 4, 5, 0, 1], backTopLabel: 'Top (left)' },
-            { id: 135, loyaltyOrder: ['Afghanisch', 'Britisch', 'Russisch'], loyaltyIcons: ['Adler', 'Löwe', 'Bär'],
-                action1_de: 'Bauen.', action2_de: 'Marschieren.', action3_de: 'Radikalisierung.', redArrow: 'top',
-                priorities: [3, 4, 5, 0, 1, 2], backTopLabel: 'Bottom (right)' },
-            { id: 136, loyaltyOrder: ['Russisch', 'Afghanisch', 'Britisch'], loyaltyIcons: ['Bär', 'Adler', 'Löwe'],
-                action1_de: 'Wenn Wakhan < 2 Rupien: Radikalisiere Karte mit meisten Rupien.', action2_de: 'Bauen.',
-                action3_de: 'Radikalisierung.', redArrow: 'bottom', priorities: [2, 3, 4, 5, 0, 1],
-            backTopLabel: 'Bottom (right)' },
-            { id: 137, loyaltyOrder: ['Afghanisch', 'Russisch', 'Britisch'], loyaltyIcons: ['Adler', 'Bär', 'Löwe'],
-                action1_de: 'Radikalisiere Karte, die Wakhan Kontrolle über eine Region verschafft.', action2_de: 'Bauen.',
-                action3_de: 'Radikalisierung.', redArrow: 'top', priorities: [0, 1, 2, 3, 4, 5],
-            backTopLabel: 'Bottom (right)' },
-            { id: 138, loyaltyOrder: ['Russisch', 'Afghanisch', 'Britisch'], loyaltyIcons: ['Bär', 'Adler', 'Löwe'],
-                action1_de: 'Verrat.',
-                action2_de: 'Kämpfe auf ranghöchster Karte mit meisten Spionen, auf der Wakhan einen Spion hat.',
-                action3_de: 'Radikalisierung.', redArrow: 'bottom', priorities: [0, 1, 2, 3, 4, 5],
-            backTopLabel: 'Bottom (right)' },
-            { id: 139, loyaltyOrder: ['Britisch', 'Russisch', 'Afghanisch'], loyaltyIcons: ['Löwe', 'Bär', 'Adler'],
-                action1_de: 'Radikalisiere höchste Politikkarte.', action2_de: 'Wenn Militär bevorzugt: Radikalisiere höchste Militärkarte.',
-                action3_de: 'Radikalisierung.', redArrow: 'bottom', priorities: [2, 3, 4, 5, 0, 1],
-            backTopLabel: 'Bottom (right)' },
-            { id: 140, loyaltyOrder: ['Afghanisch', 'Britisch', 'Russisch'], loyaltyIcons: ['Adler', 'Löwe', 'Bär'],
-                action1_de: 'Wenn Wakhan weniger Spione als Spieler: Radikalisiere höchste Geheimdienstkarte.',
-                action2_de: 'Kämpfe auf ranghöchster Karte mit meisten Spionen, auf der Wakhan einen Spion hat.',
-                action3_de: 'Radikalisierung.', redArrow: 'bottom', priorities: [4, 5, 0, 1, 2, 3], backTopLabel: 'Top (left)' },
-        ];
+async function tryFetch(url) {
+  if (blobCache[url]) return blobCache[url];
+  const r = await fetch(url, {mode:'cors', cache:'force-cache'});
+  if (!r.ok) throw new Error(r.status);
+  const blob = await r.blob();
+  if (!blob.type.startsWith('image/')) throw new Error('not image');
+  const objUrl = URL.createObjectURL(blob);
+  blobCache[url] = objUrl;
+  return objUrl;
+}
 
-        // Alias für Kompatibilität
-        const WC = wakhanCardsFull.map(c => ({
-            id: c.id,
-            act: [c.action1_de, c.action2_de, c.action3_de],
-            red: c.redArrow,
-            pri: c.priorities,
-            loyaltyOrder: c.loyaltyOrder,
-            loyaltyIcons: c.loyaltyIcons,
-            backTopLabel: c.backTopLabel,
-            priorities: c.priorities,
-        }));
+async function tryImgSrc(url) {
+  return new Promise((res, rej) => {
+    const i = new Image();
+    i.crossOrigin = 'anonymous';
+    i.onload = () => res(url);
+    i.onerror = rej;
+    i.src = url;
+  });
+}
 
-        // ─── HILFSFUNKTIONEN ────────────────────────────────────
-        function getCardById(id) { return wakhanCardsFull.find(c => c.id === id) || null; }
+async function loadImg(imgEl, phEl, ringEl, urlFns, id) {
+  if (ringEl) { ringEl.style.display = 'flex'; }
+  for (const fn of urlFns) {
+    const url = fn(id);
+    // Try fetch → blob first (works on iOS from file://)
+    try {
+      const src = await tryFetch(url);
+      imgEl.src = src; imgEl.style.display = 'block';
+      if (phEl) phEl.style.display = 'none';
+      if (ringEl) ringEl.style.display = 'none';
+      return true;
+    } catch {}
+    // Fallback: plain img src
+    try {
+      const src = await tryImgSrc(url);
+      imgEl.src = src; imgEl.style.display = 'block';
+      if (phEl) phEl.style.display = 'none';
+      if (ringEl) ringEl.style.display = 'none';
+      return true;
+    } catch {}
+  }
+  if (ringEl) ringEl.style.display = 'none';
+  imgEl.style.display = 'none';
+  if (phEl) phEl.style.display = 'flex';
+  return false;
+}
 
-        function getPragmaticLoyalty(card, playerLoyalties) {
-            if (!card || !card.loyaltyOrder) return 'Britisch';
-            for (const loyalty of card.loyaltyOrder) {
-                if (!playerLoyalties.includes(loyalty)) return loyalty;
-            }
-            return card.loyaltyOrder[0];
-        }
+// ─── DATEN ───────────────────────────────────────────────────────────────────
+const REGS = [
+  {n:'Herat',c:'rH'},{n:'Kabul',c:'rK'},{n:'Kandahar',c:'rKa'},
+  {n:'Persien',c:'rP'},{n:'Punjab',c:'rPu'},{n:'Transox.',c:'rT'}
+];
 
-        function getRedArrowDecision(drawnCard) {
-            return drawnCard.redArrow === 'top' ? { marketRow: 'oben', courtSide: 'links' } : { marketRow: 'unten',
-                courtSide: 'rechts' };
-        }
+const WC = [
+  {id:117,act:["Besteuerung.","Wenn Militär bevorzugt: Radikalisiere höchste Militärkarte.","Radikalisierung."],red:"bot",pri:[3,4,5,0,1,2]},
+  {id:118,act:["Wenn Politik bevorzugt: Radikalisiere höchste Wirtschaftskarte.","Radikalisiere höchste Politikkarte.","Radikalisierung."],red:"top",pri:[4,5,0,1,2,3]},
+  {id:119,act:["Besteuerung.","Radikalisiere höchste Geheimdienstkarte.","Radikalisierung."],red:"bot",pri:[2,3,4,5,0,1]},
+  {id:120,act:["Wenn Wakhan < 2 Rupien: Radikalisiere Karte mit meisten Rupien.","Bauen.","Radikalisierung."],red:"top",pri:[1,2,3,4,5,0]},
+  {id:121,act:["Radikalisiere Karte, die Wakhan Kontrolle über eine Region verschafft.","Kampf.","Radikalisierung."],red:"top",pri:[4,5,0,1,2,3]},
+  {id:122,act:["Radikalisiere eine Geheimdienstkarte.","Marschieren.","Radikalisierung."],red:"top",pri:[5,0,1,2,3,4]},
+  {id:123,act:["Bauen.","Marschieren.","Radikalisierung."],red:"bot",pri:[1,2,3,4,5,0]},
+  {id:124,act:["Besteuerung.","Verrat.","Radikalisierung."],red:"bot",pri:[1,2,3,4,5,0]},
+  {id:125,act:["Radikalisiere Karte mit meisten Armeen und/oder Straßen.","Kein dominantes Bündnis: Radikalisiere Karte mit meisten Spionen und/oder Stämmen.","Radikalisierung."],red:"bot",pri:[0,1,2,3,4,5]},
+  {id:126,act:["Wakhan hat keine Bewegungskarte: Radikalisiere Karte mit Bewegungsaktion.","Marschieren.","Radikalisierung."],red:"bot",pri:[5,0,1,2,3,4]},
+  {id:127,act:["Kein dominantes Bündnis: Radikalisiere Karte mit meisten Spionen und/oder Stämmen.","Wenn Militär bevorzugt: Radikalisiere höchste Militärkarte.","Radikalisierung."],red:"bot",pri:[5,0,1,2,3,4]},
+  {id:128,act:["Marschieren.","Verrat.","Radikalisierung."],red:"bot",pri:[1,2,3,4,5,0]},
+  {id:129,act:["Eine Koalition dominiert: Radikalisiere passenden Patrioten.","Kein dominantes Bündnis: Radikalisiere Karte mit meisten Spionen und/oder Stämmen.","Radikalisierung."],red:"top",pri:[3,4,5,0,1,2]},
+  {id:130,act:["Kämpfe auf ranghöchster Karte mit meisten Spionen, auf der Wakhan einen Spion hat.","Kampf.","Radikalisierung."],red:"top",pri:[2,3,4,5,0,1]},
+  {id:131,act:["Marschieren.","Kampf.","Radikalisierung."],red:"bot",pri:[3,4,5,0,1,2]},
+  {id:132,act:["Kein dominantes Bündnis: Radikalisiere Karte mit meisten Spionen und/oder Stämmen.","Kämpfe auf ranghöchster Karte mit meisten Spionen, auf der Wakhan einen Spion hat.","Radikalisierung."],red:"top",pri:[0,1,2,3,4,5]},
+  {id:133,act:["Wakhans Hof voll: Radikalisiere höchste Politikkarte.","Besteuerung.","Radikalisierung."],red:"top",pri:[5,0,1,2,3,4]},
+  {id:134,act:["Besteuerung.","Verrat.","Radikalisierung."],red:"top",pri:[2,3,4,5,0,1]},
+  {id:135,act:["Bauen.","Marschieren.","Radikalisierung."],red:"top",pri:[3,4,5,0,1,2]},
+  {id:136,act:["Wenn Wakhan < 2 Rupien: Radikalisiere Karte mit meisten Rupien.","Bauen.","Radikalisierung."],red:"bot",pri:[2,3,4,5,0,1]},
+  {id:137,act:["Radikalisiere Karte, die Wakhan Kontrolle über eine Region verschafft.","Bauen.","Radikalisierung."],red:"top",pri:[0,1,2,3,4,5]},
+  {id:138,act:["Verrat.","Kämpfe auf ranghöchster Karte mit meisten Spionen, auf der Wakhan einen Spion hat.","Radikalisierung."],red:"bot",pri:[0,1,2,3,4,5]},
+  {id:139,act:["Radikalisiere höchste Politikkarte.","Wenn Militär bevorzugt: Radikalisiere höchste Militärkarte.","Radikalisierung."],red:"bot",pri:[2,3,4,5,0,1]},
+  {id:140,act:["Wakhan hat weniger Spione als Spieler: Radikalisiere höchste Geheimdienstkarte.","Kämpfe auf ranghöchster Karte mit meisten Spionen, auf der Wakhan einen Spion hat.","Radikalisierung."],red:"bot",pri:[4,5,0,1,2,3]}
+];
 
-        function getMarketColumn(drawnCard, topDeckCard) {
-            if (!topDeckCard || !topDeckCard.priorities) return 2;
-            return drawnCard.redArrow === 'top' ? topDeckCard.priorities[0] : topDeckCard.priorities[5];
-        }
+// ─── ZUSTAND ──────────────────────────────────────────────────────────────────
+let pile=[], disc=[], cur=null, aIdx=0, aDone=0, court=[];
 
-        function getRegionPriorities(topDeckCard) {
-            if (!topDeckCard || !topDeckCard.priorities) return [4, 1, 2, 3, 5, 0]; // Default Herat,Kabul,Kandahar,Punjab,Persien,Transox.
-            const p = [...topDeckCard.priorities];
-            return topDeckCard.backTopLabel === 'Top (left)' ? p : p.reverse();
-        }
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}}
 
-        function shuffle(a) { for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1));
-                [a[i], a[j]] = [a[j], a[i]]; } }
+function init(){
+  pile=WC.map(c=>c.id); shuffle(pile); disc=[]; court=[]; cur=null;
+  updateStack(); updateCourt(); clearDrawn(); hidePanel();
+}
 
-        // ─── ZUSTAND ────────────────────────────────────────────
-        let pile = [],
-            disc = [],
-            curDrawn = null,
-            topDeckCard = null; // Karte A = curDrawn, Karte B = topDeckCard (oberste des Stapels)
-        let court = []; // Array von {id, usedThisTurn:bool}
-        let aIdx = 0,
-            aDone = 0,
-            nonBonusActionsDone = 0;
-        let bonusActionsRemaining = [];
-        let wakRupees = 0;
-        let favoredColor = 'Lila'; // Lila, Gelb, Rot, Blau
-        let numHumanPlayers = 1;
-        let playerLoyalties = ['Russisch']; // Default
-        let playerColors = ['Rot'];
-        let wakhanColor = 'Grau';
-        let pragmaticLoyalty = 'Britisch';
-        let pendingPromptCallback = null;
-        let activeEvents = []; // z.B. [{name:'Conflict Fatigue', threshold:2}, ...]
+// ─── STAPEL ───────────────────────────────────────────────────────────────────
+function updateStack(){
+  const n=pile.length;
+  document.getElementById('cntB').textContent=n;
+  const imgB=document.getElementById('imgB'), phB=document.getElementById('phB'), ringB=document.getElementById('ringB');
+  if(n>0){
+    phB.textContent='Lädt…'; phB.style.display='flex';
+    loadImg(imgB, phB, ringB, BURLS, pile[pile.length-1])
+      .then(ok=>{ if(!ok){ phB.textContent='Rückseite'; phB.style.display='flex'; }});
+  } else {
+    imgB.style.display='none'; phB.style.display='flex'; phB.textContent='Stapel leer';
+  }
+}
 
-        // ─── UI-UPDATES ─────────────────────────────────────────
-        function updateStatusBar() {
-            const badge = document.getElementById('pragLoyBadge');
-            badge.textContent = pragmaticLoyalty;
-            badge.className = 'loyalty-badge ' + (pragmaticLoyalty === 'Britisch' ? 'brit' : pragmaticLoyalty ===
-                'Russisch' ? 'russ' : 'afgh');
-            const favDot = document.getElementById('favColorDot');
-            favDot.className = 'fav ' + (favoredColor === 'Lila' ? 'purple' : favoredColor === 'Gelb' ? 'yellow' :
-                favoredColor === 'Rot' ? 'red' : 'blue');
-            document.getElementById('favColorName').textContent = favoredColor;
-            document.getElementById('wakRupees').textContent = wakRupees;
-        }
+function clearDrawn(){
+  document.getElementById('imgA').style.display='none';
+  document.getElementById('phA').style.display='flex'; document.getElementById('phA').textContent='Karte\nziehen';
+  document.getElementById('arrA').style.display='none';
+  document.getElementById('badgeA').style.display='none';
+  document.getElementById('regs').style.display='none';
+}
 
-        function updateStack() {
-            const n = pile.length;
-            document.getElementById('cntB').textContent = n;
-            const imgB = document.getElementById('imgB'),
-                phB = document.getElementById('phB'),
-                ringB = document.getElementById('ringB');
-            if (n > 0) {
-                topDeckCard = getCardById(pile[pile.length - 1]);
-                phB.textContent = 'Lädt…';
-                phB.style.display = 'flex';
-                loadImg(imgB, phB, ringB, BURLS, pile[pile.length - 1]).then(ok => { if (!ok) { phB.textContent =
-                            'Rückseite #' + pile[pile.length - 1];
-                        phB.style.display = 'flex'; } });
-            } else {
-                imgB.style.display = 'none';
-                phB.style.display = 'flex';
-                phB.textContent = 'Stapel leer';
-                topDeckCard = null;
-            }
-        }
+function showDrawn(card){
+  const imgA=document.getElementById('imgA'), phA=document.getElementById('phA'), ringA=document.getElementById('ringA');
+  phA.textContent='Lädt…'; phA.style.display='flex';
+  loadImg(imgA, phA, ringA, URLS, card.id)
+    .then(ok=>{ if(!ok){ phA.textContent='Karte #'+card.id; phA.style.display='flex'; }});
+  const arr=document.getElementById('arrA');
+  arr.className='arr '+(card.red==='top'?'top':'bot');
+  arr.textContent=card.red==='top'?'▲ OBEN':'▼ UNTEN';
+  arr.style.display='block';
+  const badge=document.getElementById('badgeA');
+  badge.textContent='#'+card.id; badge.style.display='block';
+  showRegs(card.pri);
+}
 
-        function clearDrawn() {
-            document.getElementById('imgA').style.display = 'none';
-            document.getElementById('phA').style.display = 'flex';
-            document.getElementById('phA').textContent = 'Karte\nziehen';
-            document.getElementById('arrA').style.display = 'none';
-            document.getElementById('badgeA').style.display = 'none';
-            document.getElementById('regs').style.display = 'none';
-            curDrawn = null;
-        }
+function showRegs(pri){
+  const row=document.getElementById('regs'); row.innerHTML='';
+  pri.forEach((idx,pos)=>{
+    const s=document.createElement('span');
+    s.className='reg '+REGS[idx].c;
+    s.textContent=(pos+1)+'. '+REGS[idx].n;
+    row.appendChild(s);
+  });
+  row.style.display='flex';
+}
 
-        function showDrawn(card) {
-            curDrawn = card;
-            const imgA = document.getElementById('imgA'),
-                phA = document.getElementById('phA'),
-                ringA = document.getElementById('ringA');
-            phA.textContent = 'Lädt…';
-            phA.style.display = 'flex';
-            loadImg(imgA, phA, ringA, URLS, card.id).then(ok => { if (!ok) { phA.textContent = 'Karte #' + card.id;
-                    phA.style.display = 'flex'; } });
-            const arr = document.getElementById('arrA');
-            arr.className = 'arr ' + (card.redArrow === 'top' ? 'top' : 'bot');
-            arr.textContent = card.redArrow === 'top' ? '▲ OBEN' : '▼ UNTEN';
-            arr.style.display = 'block';
-            const badge = document.getElementById('badgeA');
-            badge.textContent = '#' + card.id;
-            badge.style.display = 'block';
-            showRegs(card.priorities);
-        }
+// ─── AKTIONEN ─────────────────────────────────────────────────────────────────
+function hidePanel(){
+  document.getElementById('apanel').style.display='none';
+  document.getElementById('radpanel').style.display='none';
+  document.getElementById('drawBtn').disabled=false;
+  aIdx=0; aDone=0;
+}
 
-        function showRegs(pri) {
-            const row = document.getElementById('regs');
-            row.innerHTML = '';
-            if (!pri) return;
-            pri.forEach((idx, pos) => {
-                const s = document.createElement('span');
-                s.className = 'reg ' + REGS[idx].c;
-                s.textContent = (pos + 1) + '. ' + REGS[idx].n;
-                row.appendChild(s);
-            });
-            row.style.display = 'flex';
-        }
+function updatePanel(){
+  const box=document.getElementById('abox'), steps=document.getElementById('steps');
+  steps.innerHTML='';
+  cur.act.forEach((_,i)=>{
+    const d=document.createElement('div');
+    d.className='step'+(i<aDone?' done':i===aDone?' act':'');
+    steps.appendChild(d);
+  });
+  const txt=cur.act[aIdx];
+  box.textContent=txt;
+  box.className='abox'+(txt.toLowerCase().includes('radikalis')?' rad':'');
+  document.getElementById('actNum').textContent=aDone+1;
+  document.getElementById('radpanel').style.display='none';
+}
 
-        function updateCourt() {
-            const grid = document.getElementById('courtGrid');
-            document.getElementById('courtCnt').textContent = court.length + ' Karte' + (court.length !== 1 ? 'n' : '');
-            if (!court.length) { grid.innerHTML = '<div class="cempty">Noch keine Hofkarten.</div>'; return; }
-            grid.innerHTML = '';
-            court.forEach((entry, idx) => {
-                const div = document.createElement('div');
-                div.className = 'ccard' + (entry.usedThisTurn ? ' used' : '');
-                div.onclick = () => zoomSingle(entry.id);
-                const img = document.createElement('img');
-                img.alt = '#' + entry.id;
-                img.loading = 'lazy';
-                img.style.minHeight = '70px';
-                img.style.background = 'var(--card-bg)';
-                loadImg(img, null, null, URLS, entry.id);
-                const usedBadge = document.createElement('div');
-                usedBadge.className = 'used-badge';
-                usedBadge.textContent = 'genutzt';
-                const foot = document.createElement('div');
-                foot.className = 'ccard-foot';
-                foot.innerHTML = '<span>#' + entry.id + '</span><button onclick="removeCourtIdx(' + idx +
-                    ',event)" title="Entfernen">✕</button>';
-                div.appendChild(img);
-                div.appendChild(usedBadge);
-                div.appendChild(foot);
-                grid.appendChild(div);
-            });
-        }
+function takeTurn(){
+  if(pile.length===0){
+    if(disc.length===0){toast('Kein Stapel!');return;}
+    pile=[...disc]; disc=[]; shuffle(pile); toast('Stapel neu gemischt!'); updateStack(); return;
+  }
+  const id=pile.pop(); cur=WC.find(c=>c.id===id); aIdx=0; aDone=0;
+  updateStack(); showDrawn(cur);
+  document.getElementById('apanel').style.display='block';
+  document.getElementById('drawBtn').disabled=true;
+  updatePanel();
+}
 
-        function resetCourtUsage() {
-            court.forEach(c => c.usedThisTurn = false);
-            updateCourt();
-        }
+function resolve(exec){
+  if(!cur)return;
+  const txt=cur.act[aIdx];
+  const isRad=txt.toLowerCase().includes('radikalis');
+  if(exec&&isRad){
+    document.getElementById('radpanel').style.display='block';
+    document.getElementById('radinstr').textContent=txt;
+    document.getElementById('radinput').value='';
+    return;
+  }
+  advance();
+}
 
-        // ─── HOF ─────────────────────────────────────────────────
-        function addCourt() {
-            const v = parseInt(document.getElementById('courtIn').value);
-            if (isNaN(v) || v < 1 || v > 140) { toast('Bitte Nr. 1–140 eingeben.'); return; }
-            if (court.some(c => c.id === v)) { toast('Karte #' + v + ' bereits im Hof.'); return; }
-            court.push({ id: v, usedThisTurn: false });
-            document.getElementById('courtIn').value = '';
-            updateCourt();
-            toast('Hofkarte #' + v + ' hinzugefügt.');
-        }
+function advance(){
+  aDone++; aIdx++;
+  if(aIdx>=cur.act.length){
+    disc.push(cur.id); cur=null; hidePanel(); clearDrawn(); toast('Zug abgeschlossen.');
+  } else { updatePanel(); }
+}
 
-        function removeCourtIdx(idx, e) { if (e) e.stopPropagation();
-            court.splice(idx, 1);
-            updateCourt(); }
+function confirmRad(){
+  const v=parseInt(document.getElementById('radinput').value);
+  if(isNaN(v)||v<1||v>116){toast('Bitte Nr. 1–116 eingeben.');return;}
+  if(!court.includes(v)){court.push(v);updateCourt();toast('Hofkarte #'+v+' hinzugefügt.');}
+  else toast('Karte #'+v+' bereits im Hof.');
+  document.getElementById('radpanel').style.display='none'; advance();
+}
+function skipRad(){document.getElementById('radpanel').style.display='none'; advance();}
 
-        function removeLastCourt() { if (!court.length) return;
-            court.pop();
-            updateCourt();
-            toast('Letzte Hofkarte entfernt.'); }
+// ─── HOF ──────────────────────────────────────────────────────────────────────
+function addCourt(){
+  const v=parseInt(document.getElementById('courtIn').value);
+  if(isNaN(v)||v<1||v>116){toast('Bitte Nr. 1–116 eingeben.');return;}
+  if(court.includes(v)){toast('Karte #'+v+' bereits im Hof.');return;}
+  court.push(v); document.getElementById('courtIn').value=''; updateCourt(); toast('Hofkarte #'+v+' hinzugefügt.');
+}
+function removeCourt(id,e){e.stopPropagation();court=court.filter(x=>x!==id);updateCourt();}
+function clearCourt(){if(!court.length)return;court=[];updateCourt();toast('Hof geleert.');}
 
-        function clearCourt() { if (!court.length) return;
-            court = [];
-            updateCourt();
-            toast('Hof geleert.'); }
+function updateCourt(){
+  const grid=document.getElementById('courtGrid');
+  document.getElementById('courtCnt').textContent=court.length+' Karte'+(court.length!==1?'n':'');
+  if(!court.length){grid.innerHTML='<div class="cempty">Noch keine Hofkarten.</div>';return;}
+  grid.innerHTML='';
+  court.forEach(id=>{
+    const div=document.createElement('div');
+    div.className='ccard'; div.onclick=()=>zoomSingle(id);
+    const img=document.createElement('img');
+    img.alt='#'+id; img.loading='lazy';
+    img.style.minHeight='100px'; img.style.background='var(--card-bg)';
+    loadImg(img, null, null, URLS, id);
+    const foot=document.createElement('div');
+    foot.className='ccard-foot';
+    foot.innerHTML='<span>#'+id+'</span><button onclick="removeCourt('+id+',event)" title="Entfernen">✕</button>';
+    div.appendChild(img); div.appendChild(foot); grid.appendChild(div);
+  });
+}
 
-        // ─── ZOOM ────────────────────────────────────────────────
-        function setZoomImg(imgEl, urlFns, id) {
-            imgEl.src = '';
-            imgEl.style.opacity = '.5';
-            loadImg(imgEl, null, null, urlFns, id).then(() => imgEl.style.opacity = '1');
-        }
+// ─── ZOOM ─────────────────────────────────────────────────────────────────────
+function setZoomImg(imgEl, urlFns, id){
+  imgEl.src=''; imgEl.style.opacity='.5';
+  loadImg(imgEl, null, null, urlFns, id).then(()=>imgEl.style.opacity='1');
+}
+function zoomA(){
+  if(!cur)return;
+  setZoomImg(document.getElementById('zimgA'), URLS, cur.id);
+  document.getElementById('zlblA').textContent='Karte A – Vorderseite #'+cur.id;
+  document.getElementById('zsideB').style.display='none';
+  document.getElementById('zoom').className='zoom on';
+}
+function zoomB(){
+  if(!pile.length)return;
+  const topId=pile[pile.length-1];
+  setZoomImg(document.getElementById('zimgA'), BURLS, topId);
+  document.getElementById('zlblA').textContent='Karte B – Rückseite #'+topId;
+  document.getElementById('zsideB').style.display='none';
+  document.getElementById('zoom').className='zoom on';
+}
+function zoomSingle(id){
+  setZoomImg(document.getElementById('zimgA'), URLS, id);
+  document.getElementById('zlblA').textContent='Hofkarte #'+id+' – Vorderseite';
+  setZoomImg(document.getElementById('zimgB'), BURLS, id);
+  document.getElementById('zlblB').textContent='Hofkarte #'+id+' – Rückseite';
+  document.getElementById('zsideB').style.display='flex';
+  document.getElementById('zoom').className='zoom on';
+}
+function closeZoom(){document.getElementById('zoom').className='zoom';}
 
-        function zoomA() {
-            if (!curDrawn) return;
-            setZoomImg(document.getElementById('zimgA'), URLS, curDrawn.id);
-            document.getElementById('zlblA').textContent = 'Karte A – Vorderseite #' + curDrawn.id;
-            document.getElementById('zsideB').style.display = 'none';
-            document.getElementById('zoom').className = 'zoom on';
-        }
+// ─── REGELN ───────────────────────────────────────────────────────────────────
+function toggleRules(){
+  const b=document.getElementById('rbody'),c=document.getElementById('rchev');
+  const open=b.style.display==='block';
+  b.style.display=open?'none':'block'; c.textContent=open?'▼':'▲';
+}
 
-        function zoomB() {
-            if (!pile.length) return;
-            const topId = pile[pile.length - 1];
-            setZoomImg(document.getElementById('zimgA'), BURLS, topId);
-            document.getElementById('zlblA').textContent = 'Karte B – Rückseite #' + topId;
-            document.getElementById('zsideB').style.display = 'none';
-            document.getElementById('zoom').className = 'zoom on';
-        }
+// ─── TOAST ────────────────────────────────────────────────────────────────────
+let _t;
+function toast(msg){
+  const el=document.getElementById('toast');
+  el.textContent=msg; el.className='toast on';
+  clearTimeout(_t); _t=setTimeout(()=>el.className='toast',2500);
+}
 
-        function zoomSingle(id) {
-            setZoomImg(document.getElementById('zimgA'), URLS, id);
-            document.getElementById('zlblA').textContent = 'Hofkarte #' + id + ' – Vorderseite';
-            setZoomImg(document.getElementById('zimgB'), BURLS, id);
-            document.getElementById('zlblB').textContent = 'Hofkarte #' + id + ' – Rückseite';
-            document.getElementById('zsideB').style.display = 'flex';
-            document.getElementById('zoom').className = 'zoom on';
-        }
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape')closeZoom();
+  if(e.key===' '&&document.getElementById('apanel').style.display!=='block'){e.preventDefault();takeTurn();}
+});
 
-        function closeZoom() { document.getElementById('zoom').className = 'zoom'; }
-
-        // ─── TOAST ───────────────────────────────────────────────
-        let _t;
-
-        function toast(msg) {
-            const el = document.getElementById('toast');
-            el.textContent = msg;
-            el.className = 'toast on';
-            clearTimeout(_t);
-            _t = setTimeout(() => el.className = 'toast', 3000);
-        }
-
-        // ─── PROMPT SYSTEM ──────────────────────────────────────
-        function showPrompt(msg, callback) {
-            document.getElementById('promptMsg').textContent = msg;
-            document.getElementById('promptInput').value = '';
-            document.getElementById('promptBar').className = 'prompt-bar on';
-            pendingPromptCallback = callback;
-            document.getElementById('promptInput').focus();
-        }
-
-        function submitPrompt() {
-            const val = document.getElementById('promptInput').value.trim();
-            document.getElementById('promptBar').className = 'prompt-bar';
-            const cb = pendingPromptCallback;
-            pendingPromptCallback = null;
-            if (cb) cb(val);
-        }
-
-        function cancelPrompt() {
-            document.getElementById('promptBar').className = 'prompt-bar';
-            const cb = pendingPromptCallback;
-            pendingPromptCallback = null;
-            if (cb) cb(null);
-        }
-
-        // ─── SETUP ───────────────────────────────────────────────
-        function openSetup() {
-            document.getElementById('setupModal').className = 'modal-overlay on';
-            updateSetupUI();
-        }
-
-        function closeSetup() {
-            document.getElementById('setupModal').className = 'modal-overlay';
-        }
-
-        function updateSetupUI() {
-            const num = parseInt(document.getElementById('setupNumPlayers').value);
-            document.getElementById('setupP2Label').style.display = num >= 2 ? 'block' : 'none';
-            document.getElementById('setupP2Color').style.display = num >= 2 ? 'block' : 'none';
-            updateSetupLoyalties();
-        }
-
-        function updateSetupLoyalties() {
-            const num = parseInt(document.getElementById('setupNumPlayers').value);
-            const div = document.getElementById('setupLoyalties');
-            let html = '';
-            for (let i = 1; i <= num; i++) {
-                html += '<label>Spieler ' + i + ' Loyalität:</label>';
-                html += '<select id="setupLoy' + i + '">';
-                html += '<option value="Britisch">Britisch</option>';
-                html += '<option value="Russisch">Russisch</option>';
-                html += '<option value="Afghanisch">Afghanisch</option>';
-                html += '</select>';
-            }
-            div.innerHTML = html;
-        }
-
-        function confirmSetup() {
-            numHumanPlayers = parseInt(document.getElementById('setupNumPlayers').value);
-            playerColors = [document.getElementById('setupP1Color').value];
-            if (numHumanPlayers >= 2) playerColors.push(document.getElementById('setupP2Color').value);
-            wakhanColor = document.getElementById('setupWColor').value;
-            playerLoyalties = [];
-            for (let i = 1; i <= numHumanPlayers; i++) {
-                const sel = document.getElementById('setupLoy' + i);
-                if (sel) playerLoyalties.push(sel.value);
-            }
-            if (!curDrawn && pile.length > 0) {
-                topDeckCard = getCardById(pile[pile.length - 1]);
-            }
-            if (curDrawn) {
-                pragmaticLoyalty = getPragmaticLoyalty(curDrawn, playerLoyalties);
-            } else if (topDeckCard) {
-                pragmaticLoyalty = getPragmaticLoyalty(topDeckCard, playerLoyalties);
-            } else {
-                pragmaticLoyalty = 'Britisch';
-            }
-            updateStatusBar();
-            closeSetup();
-            toast('Setup aktualisiert. Pragm. Loyalität: ' + pragmaticLoyalty);
-        }
-
-        document.getElementById('setupNumPlayers').addEventListener('change', updateSetupUI);
-
-        // ─── INIT ────────────────────────────────────────────────
-        function init() {
-            pile = wakhanCardsFull.map(c => c.id);
-            shuffle(pile);
-            disc = [];
-            court = [];
-            curDrawn = null;
-            topDeckCard = null;
-            aIdx = 0;
-            aDone = 0;
-            nonBonusActionsDone = 0;
-            bonusActionsRemaining = [];
-            wakRupees = 0;
-            favoredColor = 'Lila';
-            pragmaticLoyalty = 'Britisch';
-            activeEvents = [];
-            updateStack();
-            updateCourt();
-            clearDrawn();
-            hidePanel();
-            updateStatusBar();
-            toast('Wakhan-Deck gemischt (' + pile.length + ' Karten).');
-        }
-
-        function hidePanel() {
-            document.getElementById('apanel').style.display = 'none';
-            document.getElementById('radBox').style.display = 'none';
-            document.getElementById('radBtnRow').style.display = 'none';
-            document.getElementById('actBtnRow').style.display = 'flex';
-            document.getElementById('bonusTag').style.display = 'none';
-            document.getElementById('drawBtn').disabled = false;
-            aIdx = 0;
-            aDone = 0;
-            nonBonusActionsDone = 0;
-            bonusActionsRemaining = [];
-        }
-
-        // ─── ZUG ─────────────────────────────────────────────────
-        function takeTurn() {
-            if (pile.length === 0) {
-                if (disc.length === 0) { toast('Kein Stapel! Mische Ablagestapel.'); return; }
-                pile = [...disc];
-                disc = [];
-                shuffle(pile);
-                toast('Stapel neu gemischt!');
-                updateStack();
-                return;
-            }
-            resetCourtUsage();
-            bonusActionsRemaining = [];
-            nonBonusActionsDone = 0;
-            const id = pile.pop();
-            disc.push(id);
-            curDrawn = getCardById(id);
-            topDeckCard = pile.length > 0 ? getCardById(pile[pile.length - 1]) : null;
-            aIdx = 0;
-            aDone = 0;
-            pragmaticLoyalty = getPragmaticLoyalty(curDrawn, playerLoyalties);
-            updateStack();
-            showDrawn(curDrawn);
-            updateStatusBar();
-            document.getElementById('apanel').style.display = 'block';
-            document.getElementById('drawBtn').disabled = true;
-            document.getElementById('bonusTag').style.display = 'none';
-            document.getElementById('actBtnRow').style.display = 'flex';
-            document.getElementById('radBox').style.display = 'none';
-            document.getElementById('radBtnRow').style.display = 'none';
-            processNextAction();
-        }
-
-        function processNextAction() {
-            if (!curDrawn) return;
-            const actions = [curDrawn.action1_de, curDrawn.action2_de, curDrawn.action3_de];
-            if (nonBonusActionsDone >= 2) {
-                // Keine Nicht-Bonus-Aktionen mehr, starte Bonusaktionen
-                startBonusActions();
-                return;
-            }
-            if (aIdx >= actions.length) {
-                // Alle 3 durch, aber weniger als 2 ausgeführt → von vorne
-                aIdx = 0;
-                if (nonBonusActionsDone === 0 && aDone >= actions.length) {
-                    // Keine der Aktionen war ausführbar, gehe zu Bonus
-                    startBonusActions();
-                    return;
-                }
-            }
-            const txt = actions[aIdx];
-            const isRad = txt.toLowerCase().includes('radikalis');
-            updatePanelDisplay(txt, isRad);
-            if (isRad) {
-                // Radikalisierung ist immer möglich
-                document.getElementById('radBox').style.display = 'block';
-                document.getElementById('radBox').textContent =
-                    'Radikalisierung: Kaufe eine Karte vom Markt und spiele sie aus. Befolge die Pfeil-Logik.';
-                document.getElementById('radBtnRow').style.display = 'flex';
-                document.getElementById('actBtnRow').style.display = 'none';
-            } else {
-                document.getElementById('radBox').style.display = 'none';
-                document.getElementById('radBtnRow').style.display = 'none';
-                document.getElementById('actBtnRow').style.display = 'flex';
-            }
-        }
-
-        function updatePanelDisplay(txt, isRad) {
-            const steps = document.getElementById('steps');
-            const actions = [curDrawn.action1_de, curDrawn.action2_de, curDrawn.action3_de];
-            steps.innerHTML = '';
-            actions.forEach((_, i) => {
-                const d = document.createElement('div');
-                d.className = 'step' + (i < aDone ? ' done' : i === aIdx ? ' act' : '');
-                steps.appendChild(d);
-            });
-            document.getElementById('abox').textContent = txt;
-            document.getElementById('abox').className = 'abox' + (isRad ? ' rad' : '');
-            document.getElementById('actNum').textContent = (nonBonusActionsDone + 1);
-            document.getElementById('bonusTag').style.display = 'none';
-        }
-
-        function resolveAction(executed) {
-            if (!curDrawn) return;
-            const txt = [curDrawn.action1_de, curDrawn.action2_de, curDrawn.action3_de][aIdx];
-            const isRad = txt.toLowerCase().includes('radikalis');
-            if (executed && !isRad) {
-                // Nicht-Radikalisierungs-Aktion wurde ausgeführt
-                nonBonusActionsDone++;
-                aDone++;
-                aIdx++;
-                processNextAction();
-                return;
-            }
-            if (!executed) {
-                // Übersprungen
-                aDone++;
-                aIdx++;
-                processNextAction();
-                return;
-            }
-            if (executed && isRad) {
-                // Radikalisierung – zeige Optionen
-                nonBonusActionsDone++;
-                document.getElementById('radBox').style.display = 'block';
-                document.getElementById('radBox').textContent = buildRadInstructions();
-                document.getElementById('radBtnRow').style.display = 'flex';
-                document.getElementById('actBtnRow').style.display = 'none';
-            }
-        }
-
-        function buildRadInstructions() {
-            if (!curDrawn) return 'Keine KI-Karte.';
-            const redDec = getRedArrowDecision(curDrawn);
-            const col = topDeckCard ? getMarketColumn(curDrawn, topDeckCard) : 2;
-            const txt = curDrawn.action1_de.toLowerCase().includes('radikalis') ? curDrawn.action1_de : (curDrawn
-                .action2_de.toLowerCase().includes('radikalis') ? curDrawn.action2_de : curDrawn.action3_de);
-            let instr = '';
-            if (txt.includes('Dominanz') || txt.includes('dominant') || txt.includes('Bündnis')) {
-                instr += '⚠ Prüfe zuerst: Liegt eine Dominanzcheck-Ereigniskarte im Markt?\n';
-                instr += 'Falls ja: Würde Wakhan beim Check die meisten Punkte machen? Dann kaufe diese.\n';
-                instr += 'Falls nein oder kein Dominanzcheck: Befolge die Anweisung: ' + txt + '\n';
-            }
-            instr += '\nStandard-Pfeil-Logik: \n';
-            instr += '• Roter Pfeil: ' + (curDrawn.redArrow === 'top' ? 'OBEN' : 'UNTEN') + ' → Marktreihe: ' + redDec
-                .marketRow + '\n';
-            instr += '• Schwarzer Pfeil: Spalte ' + col + ' (0=ganz rechts, 5=ganz links)\n';
-            instr += '• Karte in ' + redDec.marketRow + 'er Reihe, Spalte ' + col + ' wählen.\n';
-            instr += '• Falls nicht gültig: nächste Karte links. Falls Reihe ausgeschöpft: andere Reihe, selbe Spalte.\n';
-            instr += '• Nicht kaufbar: Karten, auf die Wakhan in diesem Zug Rupien gelegt hat.\n';
-            instr += '\nNach Kauf: Karte in Wakhans Hof legen – ' + redDec.courtSide + ' (weil Pfeil ' + (curDrawn
-                .redArrow === 'top' ? 'oben' : 'unten') + ').';
-            return instr;
-        }
-
-        function confirmRadManual() {
-            showPrompt(
-                'Welche Kartennummer hat Wakhan gekauft? (1–140)\nFalls keine Karte gekauft wurde, breche ab.',
-                (val) => {
-                    if (!val) return;
-                    const id = parseInt(val);
-                    if (isNaN(id) || id < 1 || id > 140) { toast('Ungültige Nummer.'); return; }
-                    finishRadicalization(id);
-                });
-        }
-
-        function skipRad() {
-            aDone++;
-            aIdx++;
-            document.getElementById('radBox').style.display = 'none';
-            document.getElementById('radBtnRow').style.display = 'none';
-            document.getElementById('actBtnRow').style.display = 'flex';
-            processNextAction();
-        }
-
-        function finishRadicalization(cardId) {
-            // Füge die Karte zum Hof hinzu
-            const redDec = getRedArrowDecision(curDrawn);
-            const entry = { id: cardId, usedThisTurn: false };
-            if (redDec.courtSide === 'links') {
-                court.unshift(entry);
-            } else {
-                court.push(entry);
-            }
-            updateCourt();
-            toast('Karte #' + cardId + ' ' + redDec.courtSide + ' in Wakhans Hof gelegt.');
-            // Frage nach Bestechungsgeld
-            showPrompt(
-                'Bestechungsgeld-Prüfung:\nBeherrscht ein anderer Spieler die Region der Karte #' + cardId +
-                '?\nFalls ja: Wie viele Stämme hat er dort?\nGib 0 ein, falls niemand die Region beherrscht oder Wakhan sie beherrscht.',
-                (val) => {
-                    const bribeStamme = parseInt(val) || 0;
-                    if (bribeStamme > 0) {
-                        const bribeCost = bribeStamme;
-                        if (wakRupees >= bribeCost) {
-                            wakRupees -= bribeCost;
-                            updateStatusBar();
-                            toast('Wakhan zahlt ' + bribeCost + ' Rupien Bestechungsgeld.');
-                            showPrompt(
-                                'Führe die Wirkungssymbole der Karte #' + cardId +
-                                ' aus (Spione, Straßen, Armeen etc.).\nHat die Karte die bevorzugte Farbe geändert? (ja/nein/Farbe)',
-                                (val2) => {
-                                    handleFavColorChange(val2);
-                                    finishActionStep();
-                                });
-                        } else {
-                            toast(
-                                '⚠ Wakhan kann Bestechungsgeld (' + bribeCost + ') nicht zahlen. Karte wird OHNE Wirkung ausgelegt.'
-                                );
-                            showPrompt(
-                                'Karte #' + cardId +
-                                ' ohne Wirkung in den Hof gelegt. Hat sie die bevorzugte Farbe geändert? (ja/nein/Farbe)',
-                                (val2) => {
-                                    handleFavColorChange(val2);
-                                    finishActionStep();
-                                });
-                        }
-                    } else {
-                        showPrompt(
-                            'Kein Bestechungsgeld nötig. Führe die Wirkungssymbole der Karte #' + cardId +
-                            ' aus.\nHat die Karte die bevorzugte Farbe geändert? (ja/nein/Farbe)',
-                            (val2) => {
-                                handleFavColorChange(val2);
-                                finishActionStep();
-                            });
-                    }
-                });
-        }
-
-        function handleFavColorChange(val) {
-            if (!val) return;
-            const v = val.toLowerCase().trim();
-            if (v === 'ja' || v === 'lila') { favoredColor = 'Lila'; } else if (v === 'gelb') { favoredColor = 'Gelb'; } else if (
-                v === 'rot') { favoredColor = 'Rot'; } else if (v === 'blau') { favoredColor = 'Blau'; }
-            updateStatusBar();
-        }
-
-        function finishActionStep() {
-            aDone++;
-            aIdx++;
-            document.getElementById('radBox').style.display = 'none';
-            document.getElementById('radBtnRow').style.display = 'none';
-            document.getElementById('actBtnRow').style.display = 'flex';
-            processNextAction();
-        }
-
-        // ─── BONUSAKTIONEN ──────────────────────────────────────
-        function startBonusActions() {
-            document.getElementById('bonusTag').style.display = 'inline';
-            document.getElementById('actNum').textContent = 'Bonus';
-            document.getElementById('actBtnRow').style.display = 'none';
-            document.getElementById('radBox').style.display = 'none';
-            document.getElementById('radBtnRow').style.display = 'none';
-            // Sammle alle Hofkarten der bevorzugten Farbe, die noch nicht genutzt wurden
-            const availableCourt = court.filter(c => !c.usedThisTurn);
-            if (availableCourt.length === 0) {
-                finishTurn();
-                return;
-            }
-            bonusActionsRemaining = [...availableCourt];
-            processNextBonusAction();
-        }
-
-        function processNextBonusAction() {
-            if (bonusActionsRemaining.length === 0) {
-                finishTurn();
-                return;
-            }
-            const entry = bonusActionsRemaining.shift();
-            const cardId = entry.id;
-            document.getElementById('abox').textContent =
-                'Bonusaktion: Hofkarte #' + cardId + ' (bevorzugte Farbe?). Führe die am weitesten links stehende, gültige Aktion dieser Karte aus.';
-            document.getElementById('abox').className = 'abox';
-            document.getElementById('steps').innerHTML =
-                '<div class="step act"></div><span style="font-size:.7rem;color:var(--text3)">Bonus – zählt nicht zum Limit</span>';
-            showPrompt(
-                'Bonusaktion von Hofkarte #' + cardId +
-                ':\nFühre die linkeste gültige Aktion aus.\nKarte wurde genutzt? (OK zum Bestätigen, Abbrechen zum Überspringen)',
-                (val) => {
-                    if (val !== null) {
-                        entry.usedThisTurn = true;
-                        const idx = court.findIndex(c => c.id === cardId);
-                        if (idx >= 0) court[idx].usedThisTurn = true;
-                        updateCourt();
-                    }
-                    processNextBonusAction();
-                });
-        }
-
-        function finishTurn() {
-            aDone = 0;
-            aIdx = 0;
-            nonBonusActionsDone = 0;
-            bonusActionsRemaining = [];
-            hidePanel();
-            updateCourt();
-            toast('Wakhan-Zug abgeschlossen. Führe die Verwaltungsphase durch.');
-            // Erinnere an Verwaltung
-            setTimeout(() => {
-                showPrompt(
-                    'Verwaltungsphase:\n1. Hat Wakhan mehr Hofkarten als erlaubt? Wirf Karten ab (Priorität: Nicht-Politik > Nicht-Patriot > Nicht-kreditbehaftet > Meiste Spione > Wenigste Spione > Niedrigster Rang > Nicht Machtprinzip > Niedrigste Nummer).\n2. Markt-Ereignisse abwerfen & auffüllen.\n\nGib "ok" ein wenn fertig.',
-                    (val) => {
-                        document.getElementById('drawBtn').disabled = false;
-                    });
-            }, 500);
-        }
-
-        // ─── KEYBOARD ────────────────────────────────────────────
-        document.addEventListener('keydown', e => {
-            if (e.key === 'Escape') {
-                closeZoom();
-                closeSetup();
-                if (pendingPromptCallback) cancelPrompt();
-            }
-            if (e.key === ' ' && document.getElementById('apanel').style.display !== 'block' && !pendingPromptCallback) {
-                e.preventDefault();
-                takeTurn();
-            }
-        });
-
-        // ─── INIT CALL ───────────────────────────────────────────
-        init();
-        updateStatusBar();
-    </script>
+init();
+</script>
 </body>
 </html>
