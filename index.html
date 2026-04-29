@@ -1149,334 +1149,1449 @@
     </style>
 </head>
 <body>
+
     <div class="modal-bg" id="setupModal">
         <div class="modal-box">
             <h2>✦ WAKHAN KI ✦ <span style="font-size:.8rem;display:block;color:var(--text3);margin-top:2px;">Pax Pamir 2. Edition – Spielaufbau</span></h2>
-            <div class="setup-step act" id="step1"><label>Wie viele menschliche Spieler?</label><div class="loy-btns"><button class="lbtn brit" onclick="setupPlayerCount(1)">Solo (1 Spieler)</button><button class="lbtn afg" onclick="setupPlayerCount(2)">Duo (2 Spieler)</button></div></div>
-            <div class="setup-step" id="step2"><label id="step2label">Loyalität Spieler 1:</label><div class="loy-btns" id="step2btns"><button class="lbtn brit" onclick="setPlayerLoy(0,'Britisch')">Britisch</button><button class="lbtn rus" onclick="setPlayerLoy(0,'Russisch')">Russisch</button><button class="lbtn afg" onclick="setPlayerLoy(0,'Afghanisch')">Afghanisch</button></div></div>
-            <div class="setup-step" id="step3"><label>Loyalität Spieler 2:</label><div class="loy-btns"><button class="lbtn brit" onclick="setPlayerLoy(1,'Britisch')">Britisch</button><button class="lbtn rus" onclick="setPlayerLoy(1,'Russisch')">Russisch</button><button class="lbtn afg" onclick="setPlayerLoy(1,'Afghanisch')">Afghanisch</button></div></div>
-            <div class="setup-step" id="step4"><p>Wakhans KI-Deck (Karten 117–140) wird virtuell gemischt. Die erste KI-Karte legt die pragmatische Loyalität fest.</p><button class="btn-primary" onclick="finishSetup()">▶ Spiel starten</button></div>
-        </div>
-    </div>
-    <div class="loy-bar" id="loyBar" style="display:none;"><div class="loy-group"><span class="loy-label">Spieler:</span><div id="playerPills"></div></div><div class="loy-group" id="wakPillar"><span class="loy-label">Wakhan:</span><span class="wak-loy" id="wakLoyDisplay">–</span></div><div class="pref-suit">Farbe: <span id="prefSuitDisplay">–</span></div></div>
-    <div class="main" id="mainApp" style="display:none;">
-        <h1>✦ WAKHAN KI ✦</h1><p class="subtitle">Pax Pamir 2. Edition · Solo &amp; Duo Modus</p><div class="divider"></div>
-        <div class="rupien-bar"><span class="rup-label">💰 Wakhans Rupien</span><span class="rup-count" id="rupCount">5</span><div class="rup-btns"><button class="rup-btn" onclick="changeRupien(-1)">−</button><button class="rup-btn" onclick="changeRupien(1)">+</button></div></div>
-        <div class="stage"><div class="slot"><div class="slot-lbl">B · Stapel-Rückseite</div><div class="frame" id="fB" onclick="zoomB()"><div class="loading-ring" id="ringB"></div><img id="imgB" alt=""><div class="ph" id="phB">Stapel leer</div><div class="cnt" id="cntB">0</div></div></div><div class="plus-sep">+</div><div class="slot"><div class="slot-lbl">A · Gezogene Karte</div><div class="frame hl" id="fA" onclick="zoomA()"><div class="loading-ring" id="ringA"></div><img id="imgA" alt=""><div class="ph" id="phA">Karte<br>ziehen</div><div class="arr" id="arrA"></div><div class="badge" id="badgeA" style="display:none"></div></div></div></div>
-        <div class="market-info" id="marketInfo"><div class="mi-row"><div class="mi-item"><div class="mi-label">Marktreihe</div><div class="mi-val" id="miRow">–</div></div><div class="mi-sep">|</div><div class="mi-item"><div class="mi-label">Spalte (0=rechts)</div><div class="mi-val" id="miCol">–</div></div><div class="mi-sep">|</div><div class="mi-item"><div class="mi-label">Hofseite</div><div class="mi-val" id="miSide">–</div></div></div></div>
-        <div class="priority-values" id="priorityValues"><div class="pv-title">📋 Rückseite (Prioritäten) – Beschriftung oben: <span id="pvLabel">–</span></div><div class="pv-grid" id="pvGrid"></div></div>
-        <div class="regs" id="regs" style="display:none"></div>
-        <button class="btn-primary" id="drawBtn" onclick="takeTurn()">▶ Wakhan Zug starten</button>
-        <div class="apanel" id="apanel">
-            <div class="apanel-title"><span>Aktion <span id="actNum">1</span> von 2</span><span id="actionsDoneSpan" style="color:var(--text3);font-size:.68rem;"></span></div>
-            <div class="dom-row"><input type="checkbox" id="domChk" onchange="onDomChkChange()"><label for="domChk">Dominanzcheck-Karte im Markt</label></div>
-            <div class="steps" id="steps"></div><div class="abox" id="abox"></div><div id="autoInfo" style="font-size:.72rem;color:#80b0d0;margin-bottom:6px;"></div>
-            <div class="btn-row"><button class="btn-ok" id="btnExec" onclick="resolve(true)">✓ Ausführen</button><button class="btn-skip" id="btnSkip" onclick="resolve(false)">✗ Überspringen</button></div>
-            <div class="radwiz" id="radwiz">
-                <div class="wiz-step act" id="rStep1"><div class="wi" id="rInstr">Radikalisierung-Aktion ausgeführt.</div><label>Liegt eine Dominanzcheck-Ereigniskarte im Markt?</label><div class="btn-row" style="margin-bottom:8px;"><button class="btn-ok" onclick="domCheckInMarket(true)">Ja</button><button class="btn-skip" onclick="domCheckInMarket(false)">Nein</button></div></div>
-                <div class="wiz-step" id="rStep1b"><div class="wi">Würde Wakhan beim Dominanzcheck die meisten Siegpunkte bekommen (oder Gleichstand um Platz 1)?</div><div class="btn-row" style="margin-bottom:8px;"><button class="btn-ok" onclick="wakhanWinsDom(true)">Ja – Wakhan kauft die Dom.-Karte</button><button class="btn-skip" onclick="wakhanWinsDom(false)">Nein – andere Karte kaufen</button></div></div>
-                <div class="wiz-step" id="rStep2"><div class="infobox" id="rMarketBox"></div><label>Kartennummer der gekauften Karte (1–116):</label><div style="display:flex;gap:8px;margin-bottom:8px;"><input type="number" id="rCardInput" min="1" max="116" placeholder="Nr."><button class="btn-sm" onclick="radCardChosen()">Weiter →</button></div><button class="btn-skip" style="width:100%;font-size:.75rem;" onclick="radNoCard()">Keine Karte verfügbar – überspringen</button></div>
-                <div class="wiz-step" id="rStep3"><div class="wi" id="rCardName"></div><div class="infobox" id="bribePromptContainer">Wer <strong>beherrscht die Region</strong> der gewählten Karte?<div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap;"><button class="btn-sm" onclick="setBestech('nobody')">Niemand / Wakhan</button><button class="btn-sm" onclick="setBestech('p1')">Spieler 1</button><button class="btn-sm" id="bestechP2Btn" onclick="setBestech('p2')" style="display:none">Spieler 2</button></div></div></div>
-                <div class="wiz-step" id="rStep3b"><div class="wi">Wie viele Stämme hat <span id="bRulerName">der Spieler</span> in dieser Region?</div><div style="display:flex;gap:8px;margin-bottom:8px;"><input type="number" id="bTribeInput" min="0" max="20" placeholder="Anzahl"><button class="btn-sm" onclick="calcBestech()">Berechnen</button></div></div>
-                <div class="wiz-step" id="rStep4"><div class="infobox" id="rResult"></div><div id="placementDetails"></div><button class="btn-ok" style="width:100%;margin-top:6px;" onclick="finishRad()">✓ Aktion abgeschlossen</button></div>
+            <div class="setup-step act" id="step1">
+                <label>Wie viele menschliche Spieler?</label>
+                <div class="loy-btns">
+                    <button class="lbtn brit" onclick="setupPlayerCount(1)">Solo (1 Spieler)</button>
+                    <button class="lbtn afg" onclick="setupPlayerCount(2)">Duo (2 Spieler)</button>
+                </div>
+            </div>
+            <div class="setup-step" id="step2">
+                <label id="step2label">Loyalität Spieler 1:</label>
+                <div class="loy-btns" id="step2btns">
+                    <button class="lbtn brit" onclick="setPlayerLoy(0,'Britisch')">Britisch</button>
+                    <button class="lbtn rus" onclick="setPlayerLoy(0,'Russisch')">Russisch</button>
+                    <button class="lbtn afg" onclick="setPlayerLoy(0,'Afghanisch')">Afghanisch</button>
+                </div>
+            </div>
+            <div class="setup-step" id="step3">
+                <label>Loyalität Spieler 2:</label>
+                <div class="loy-btns">
+                    <button class="lbtn brit" onclick="setPlayerLoy(1,'Britisch')">Britisch</button>
+                    <button class="lbtn rus" onclick="setPlayerLoy(1,'Russisch')">Russisch</button>
+                    <button class="lbtn afg" onclick="setPlayerLoy(1,'Afghanisch')">Afghanisch</button>
+                </div>
+            </div>
+            <div class="setup-step" id="step4">
+                <p>Wakhans KI-Deck (Karten 117–140) wird virtuell gemischt. Die erste KI-Karte legt die pragmatische Loyalität fest.</p>
+                <button class="btn-primary" onclick="finishSetup()">▶ Spiel starten</button>
             </div>
         </div>
-        <div class="bonus-panel" id="bonusPanel"><strong style="color:#80e090;">🌟 Bonusaktionen</strong><br><div id="bonusContent" style="margin-top:6px;"></div><div style="margin-top:10px;"><button class="btn-sm" onclick="finishTurn()">✓ Zug abschließen</button></div></div>
-        <div class="verwaltung" id="verwPanel"><h4>⚙ Verwaltungsphase – Wakhan</h4><span id="verwText"></span><div style="margin-top:10px;"><button class="btn-sm" onclick="document.getElementById('verwPanel').style.display='none';document.getElementById('drawBtn').disabled=false;toast('Zug abgeschlossen ✓')">✓ Verwaltung abgeschlossen</button></div></div>
-        <div class="court"><div class="sec-head"><h2>⚔ Wakhans Hof</h2><span id="courtCnt">0 Karten</span></div><div class="court-add"><input type="number" id="courtIn" min="1" max="116" placeholder="Nr. 1–116"><button class="btn-sm" onclick="addCourt()">+ Manuell</button><button class="btn-danger" onclick="clearCourt()">Leeren</button></div><div class="discard-hint" id="discardHint"><strong>⚠ Hof zu groß! Abwerfpriorität (zuerst abwerfen):</strong><ol><li>Nicht-Politik-Karten</li><li>Kein Patriot</li><li>Nicht kreditbehaftet</li><li>Meiste fremde Spione (mehr als Wakhan) <em>→ Spieler fragen</em></li><li>Wenigste eigene Spione <em>→ Spieler fragen</em></li><li>Niedrigster Rang</li><li>Entspricht nicht der bevorzugten Farbe</li><li>Niedrigste Kartennummer</li></ol></div><div class="court-grid" id="courtGrid"><div class="cempty">Noch keine Hofkarten.</div></div></div>
-        <div class="rules"><button class="rtoggle" onclick="toggleRules()"><span>📜 Regelreferenz</span><span id="rchev">▼</span></button><div class="rbody" id="rbody"><h4>Pragmatische Loyalität</h4><p>Erste Koalition in der Loyalitätsreihe der KI-Karte, die <em>kein</em> menschlicher Spieler besitzt.</p><h4>Kartenpriorität (hoch → niedrig)</h4><div class="plist"><div class="pitem"><div class="pnum">1</div>Karte eines Mitspielers</div><div class="pitem"><div class="pnum">2</div>Entspricht bevorzugter Farbe</div><div class="pitem"><div class="pnum">3</div>Patriot des dominanten Bündnisses</div><div class="pitem"><div class="pnum">4</div>Hat Beute des dominanten Bündnisses</div><div class="pitem"><div class="pnum">5</div>Ein anderer Patriot</div><div class="pitem"><div class="pnum">6</div>Fremdfinanziert</div><div class="pitem"><div class="pnum">7</div>Höchster Rang</div><div class="pitem"><div class="pnum">8</div>Höchste Kartennummer</div></div><h4>Abwerfpriorität (Verwaltung)</h4><ul><li>Nicht-politisch</li><li>Kein Patriot</li><li>Nicht-fremdfinanziert</li><li>Meiste Spieler-Spione (mehr als Wakhan)</li><li>Wenigste Spione</li><li>Der niedrigste Rang</li><li>Entspricht nicht dem bevorzugten Klima</li><li>Niedrigste Kartennummer</li></ul><h4>Kampf – Reihenfolge</h4><p>Wo Wakhan ≥ 1 Armee und anderer Spieler loyale Einheiten hat. Zerstörung: Stämme → Armeen → Straßen. Dann Spione auf Hofkarten (höchste Priorität).</p><h4>Steuern</h4><p>Spieler vor Marktkarten. Spieler mit meisten Rupien zuerst. Gleichstand → roter Pfeil.</p><h4>Marschieren</h4><p>Nur Armeen (keine Straßen nötig). In Regionen mit feindlichen Stämmen. Max. Armeen = Anzahl Stämme dort. Keine Bewegung wenn Herrschaft verloren ginge.</p><h4>Bauen</h4><p>In der am weitesten links auf der KI-Karte vermerkten Region mit Wakhan-Vorherrschaft. So viel Geld wie möglich ausgeben.</p><h4>Wakhans Nachschub</h4><p>Wenn Zylinder erschöpft: Stämme → Armeen → Straßen → Spione vom Spielplan nehmen. Regionen nach KI-Karte-Priorität für Stämme/Armeen/Straßen, Kartenpriorität für Spione.</p></div></div>
-        <div style="text-align:center;margin-top:12px;"><button class="btn-sm" onclick="resetGame()">↺ Neues Spiel</button></div>
     </div>
-    <div class="zoom" id="zoom" onclick="closeZoom()"><button class="zclose" onclick="closeZoom()">✕</button><div class="zside" id="zsideA"><div class="zlbl" id="zlblA"></div><img id="zimgA" src="" alt=""></div><div class="zside" id="zsideB" style="display:none"><div class="zlbl" id="zlblB"></div><img id="zimgB" src="" alt=""></div></div>
+
+    <div class="loy-bar" id="loyBar" style="display:none;">
+        <div class="loy-group">
+            <span class="loy-label">Spieler:</span>
+            <div id="playerPills"></div>
+        </div>
+        <div class="loy-group" id="wakPillar">
+            <span class="loy-label">Wakhan:</span>
+            <span class="wak-loy" id="wakLoyDisplay">–</span>
+        </div>
+        <div class="pref-suit">Farbe: <span id="prefSuitDisplay">–</span></div>
+    </div>
+
+    <div class="main" id="mainApp" style="display:none;">
+        <h1>✦ WAKHAN KI ✦</h1>
+        <p class="subtitle">Pax Pamir 2. Edition · Solo &amp; Duo Modus</p>
+        <div class="divider"></div>
+
+        <div class="rupien-bar">
+            <span class="rup-label">💰 Wakhans Rupien</span>
+            <span class="rup-count" id="rupCount">5</span>
+            <div class="rup-btns">
+                <button class="rup-btn" onclick="changeRupien(-1)">−</button>
+                <button class="rup-btn" onclick="changeRupien(1)">+</button>
+            </div>
+        </div>
+
+        <div class="stage">
+            <div class="slot">
+                <div class="slot-lbl">B · Stapel-Rückseite</div>
+                <div class="frame" id="fB" onclick="zoomB()">
+                    <div class="loading-ring" id="ringB"></div>
+                    <img id="imgB" alt="">
+                    <div class="ph" id="phB">Stapel leer</div>
+                    <div class="cnt" id="cntB">0</div>
+                </div>
+            </div>
+            <div class="plus-sep">+</div>
+            <div class="slot">
+                <div class="slot-lbl">A · Gezogene Karte</div>
+                <div class="frame hl" id="fA" onclick="zoomA()">
+                    <div class="loading-ring" id="ringA"></div>
+                    <img id="imgA" alt="">
+                    <div class="ph" id="phA">Karte<br>ziehen</div>
+                    <div class="arr" id="arrA"></div>
+                    <div class="badge" id="badgeA" style="display:none"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="market-info" id="marketInfo">
+            <div class="mi-row">
+                <div class="mi-item"><div class="mi-label">Marktreihe</div><div class="mi-val" id="miRow">–</div></div>
+                <div class="mi-sep">|</div>
+                <div class="mi-item"><div class="mi-label">Spalte (0=rechts)</div><div class="mi-val" id="miCol">–</div></div>
+                <div class="mi-sep">|</div>
+                <div class="mi-item"><div class="mi-label">Hofseite</div><div class="mi-val" id="miSide">–</div></div>
+            </div>
+        </div>
+        <div class="priority-values" id="priorityValues">
+            <div class="pv-title">📋 Rückseite (Prioritäten) – Beschriftung oben: <span id="pvLabel">–</span></div>
+            <div class="pv-grid" id="pvGrid"></div>
+        </div>
+        <div class="regs" id="regs" style="display:none"></div>
+
+        <button class="btn-primary" id="drawBtn" onclick="takeTurn()">▶ Wakhan Zug starten</button>
+
+        <div class="apanel" id="apanel">
+            <div class="apanel-title">
+                <span>Aktion <span id="actNum">1</span> von 2</span>
+                <span id="actionsDoneSpan" style="color:var(--text3);font-size:.68rem;"></span>
+            </div>
+            <div class="dom-row">
+                <input type="checkbox" id="domChk" onchange="onDomChkChange()">
+                <label for="domChk">Dominanzcheck-Karte im Markt</label>
+            </div>
+            <div class="steps" id="steps"></div>
+            <div class="abox" id="abox"></div>
+            <div id="autoInfo" style="font-size:.72rem;color:#80b0d0;margin-bottom:6px;"></div>
+            <div class="btn-row">
+                <button class="btn-ok" id="btnExec" onclick="resolve(true)">✓ Ausführen</button>
+                <button class="btn-skip" id="btnSkip" onclick="resolve(false)">✗ Überspringen</button>
+            </div>
+
+            <div class="radwiz" id="radwiz">
+                <div class="wiz-step act" id="rStep1">
+                    <div class="wi" id="rInstr">Radikalisierung-Aktion ausgeführt.</div>
+                    <label>Liegt eine Dominanzcheck-Ereigniskarte im Markt?</label>
+                    <div class="btn-row" style="margin-bottom:8px;">
+                        <button class="btn-ok" onclick="domCheckInMarket(true)">Ja</button>
+                        <button class="btn-skip" onclick="domCheckInMarket(false)">Nein</button>
+                    </div>
+                </div>
+                <div class="wiz-step" id="rStep1b">
+                    <div class="wi">Würde Wakhan beim Dominanzcheck die meisten Siegpunkte bekommen (oder Gleichstand um Platz 1)?</div>
+                    <div class="btn-row" style="margin-bottom:8px;">
+                        <button class="btn-ok" onclick="wakhanWinsDom(true)">Ja – Wakhan kauft die Dom.-Karte</button>
+                        <button class="btn-skip" onclick="wakhanWinsDom(false)">Nein – andere Karte kaufen</button>
+                    </div>
+                </div>
+                <div class="wiz-step" id="rStep2">
+                    <div class="infobox" id="rMarketBox"></div>
+                    <label>Kartennummer der gekauften Karte (1–116):</label>
+                    <div style="display:flex;gap:8px;margin-bottom:8px;">
+                        <input type="number" id="rCardInput" min="1" max="116" placeholder="Nr.">
+                        <button class="btn-sm" onclick="radCardChosen()">Weiter →</button>
+                    </div>
+                    <button class="btn-skip" style="width:100%;font-size:.75rem;" onclick="radNoCard()">Keine Karte verfügbar – überspringen</button>
+                </div>
+                <div class="wiz-step" id="rStep3">
+                    <div class="wi" id="rCardName"></div>
+                    <div class="infobox" id="bribePromptContainer">
+                        Wer <strong>beherrscht die Region</strong> der gewählten Karte?
+                        <div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap;">
+                            <button class="btn-sm" onclick="setBestech('nobody')">Niemand / Wakhan</button>
+                            <button class="btn-sm" onclick="setBestech('p1')">Spieler 1</button>
+                            <button class="btn-sm" id="bestechP2Btn" onclick="setBestech('p2')" style="display:none">Spieler 2</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="wiz-step" id="rStep3b">
+                    <div class="wi">Wie viele Stämme hat <span id="bRulerName">der Spieler</span> in dieser Region?</div>
+                    <div style="display:flex;gap:8px;margin-bottom:8px;">
+                        <input type="number" id="bTribeInput" min="0" max="20" placeholder="Anzahl" style="padding:7px 9px;width:90px;font-family:inherit;font-size:.85rem;background:var(--panel);color:var(--text);border:1px solid var(--border2);border-radius:6px;">
+                        <button class="btn-sm" onclick="calcBestech()">Berechnen</button>
+                    </div>
+                </div>
+                <div class="wiz-step" id="rStep4">
+                    <div class="infobox" id="rResult"></div>
+                    <div id="placementDetails"></div>
+                    <button class="btn-ok" style="width:100%;margin-top:6px;" onclick="finishRad()">✓ Aktion abgeschlossen</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="bonus-panel" id="bonusPanel">
+            <strong style="color:#80e090;">🌟 Bonusaktionen</strong><br>
+            <div id="bonusContent" style="margin-top:6px;"></div>
+            <div style="margin-top:10px;">
+                <button class="btn-sm" onclick="finishTurn()">✓ Zug abschließen</button>
+            </div>
+        </div>
+
+        <div class="verwaltung" id="verwPanel">
+            <h4>⚙ Verwaltungsphase – Wakhan</h4>
+            <span id="verwText"></span>
+            <div style="margin-top:10px;">
+                <button class="btn-sm" onclick="document.getElementById('verwPanel').style.display='none';document.getElementById('drawBtn').disabled=false;toast('Zug abgeschlossen ✓')">✓ Verwaltung abgeschlossen</button>
+            </div>
+        </div>
+
+        <div class="court">
+            <div class="sec-head">
+                <h2>⚔ Wakhans Hof</h2>
+                <span id="courtCnt">0 Karten</span>
+            </div>
+            <div class="court-add">
+                <input type="number" id="courtIn" min="1" max="116" placeholder="Nr. 1–116">
+                <button class="btn-sm" onclick="addCourt()">+ Manuell</button>
+                <button class="btn-danger" onclick="clearCourt()">Leeren</button>
+            </div>
+            <div class="discard-hint" id="discardHint">
+                <strong>⚠ Hof zu groß! Abwerfpriorität (zuerst abwerfen):</strong>
+                <ol>
+                    <li>Nicht-Politik-Karten</li>
+                    <li>Kein Patriot</li>
+                    <li>Nicht kreditbehaftet</li>
+                    <li>Meiste fremde Spione (mehr als Wakhan) <em>→ Spieler fragen</em></li>
+                    <li>Wenigste eigene Spione <em>→ Spieler fragen</em></li>
+                    <li>Niedrigster Rang</li>
+                    <li>Entspricht nicht der bevorzugten Farbe</li>
+                    <li>Niedrigste Kartennummer</li>
+                </ol>
+            </div>
+            <div class="court-grid" id="courtGrid">
+                <div class="cempty">Noch keine Hofkarten.</div>
+            </div>
+        </div>
+
+        <div class="rules">
+            <button class="rtoggle" onclick="toggleRules()">
+                <span>📜 Regelreferenz</span><span id="rchev">▼</span>
+            </button>
+            <div class="rbody" id="rbody">
+                <h4>Pragmatische Loyalität</h4>
+                <p>Erste Koalition in der Loyalitätsreihe der KI-Karte, die <em>kein</em> menschlicher Spieler besitzt.</p>
+                <h4>Kartenpriorität (hoch → niedrig)</h4>
+                <div class="plist">
+                    <div class="pitem"><div class="pnum">1</div>Karte eines Mitspielers</div>
+                    <div class="pitem"><div class="pnum">2</div>Entspricht bevorzugter Farbe</div>
+                    <div class="pitem"><div class="pnum">3</div>Patriot des dominanten Bündnisses</div>
+                    <div class="pitem"><div class="pnum">4</div>Hat Beute des dominanten Bündnisses</div>
+                    <div class="pitem"><div class="pnum">5</div>Ein anderer Patriot</div>
+                    <div class="pitem"><div class="pnum">6</div>Fremdfinanziert</div>
+                    <div class="pitem"><div class="pnum">7</div>Höchster Rang</div>
+                    <div class="pitem"><div class="pnum">8</div>Höchste Kartennummer</div>
+                </div>
+                <h4>Abwerfpriorität (Verwaltung)</h4>
+                <ul>
+                    <li>Nicht-politisch</li><li>Kein Patriot</li><li>Nicht-fremdfinanziert</li>
+                    <li>Meiste Spieler-Spione (mehr als Wakhan)</li><li>Wenigste Spione</li>
+                    <li>Der niedrigste Rang</li><li>Entspricht nicht dem bevorzugten Klima</li><li>Niedrigste Kartennummer</li>
+                </ul>
+                <h4>Kampf – Reihenfolge</h4>
+                <p>Wo Wakhan ≥ 1 Armee und anderer Spieler loyale Einheiten hat. Zerstörung: Stämme → Armeen → Straßen. Dann Spione auf Hofkarten (höchste Priorität).</p>
+                <h4>Steuern</h4>
+                <p>Spieler vor Marktkarten. Spieler mit meisten Rupien zuerst. Gleichstand → roter Pfeil.</p>
+                <h4>Marschieren</h4>
+                <p>Nur Armeen (keine Straßen nötig). In Regionen mit feindlichen Stämmen. Max. Armeen = Anzahl Stämme dort. Keine Bewegung wenn Herrschaft verloren ginge.</p>
+                <h4>Bauen</h4>
+                <p>In der am weitesten links auf der KI-Karte vermerkten Region mit Wakhan-Vorherrschaft. So viel Geld wie möglich ausgeben.</p>
+                <h4>Wakhans Nachschub</h4>
+                <p>Wenn Zylinder erschöpft: Stämme → Armeen → Straßen → Spione vom Spielplan nehmen. Regionen nach KI-Karte-Priorität für Stämme/Armeen/Straßen, Kartenpriorität für Spione.</p>
+            </div>
+        </div>
+
+        <div style="text-align:center;margin-top:12px;">
+            <button class="btn-sm" onclick="resetGame()">↺ Neues Spiel</button>
+        </div>
+    </div>
+
+    <div class="zoom" id="zoom" onclick="closeZoom()">
+        <button class="zclose" onclick="closeZoom()">✕</button>
+        <div class="zside" id="zsideA"><div class="zlbl" id="zlblA"></div><img id="zimgA" src="" alt=""></div>
+        <div class="zside" id="zsideB" style="display:none"><div class="zlbl" id="zlblB"></div><img id="zimgB" src="" alt=""></div>
+    </div>
+
     <div class="toast" id="toast"></div>
 
     <script>
-        // ─── HOFKARTEN (1-116) ──────────────────────────────────────────────────────
+        // ─── DATA INTEGRATION: HOFKARTEN & KI-KARTEN ──────────────────────────────────
         const RAW_CARDS = [
-            { id:1, name:"Mohan Lal", region:"Kabul", suit:"Geheimdienst", rank:3, impactIcons:["spy","spy","spy"], actions:["move"], patriot:null, prize:"Russisch", suitChange:null, specialAbility:"Unentbehrliche Berater: Deine Spione können in Kämpfen mit anderen Spionen nicht entfernt werden." },
-            { id:2, name:"Jan-Fishan Khan", region:"Kabul", suit:"Geheimdienst", rank:2, impactIcons:["spy","spy","army"], actions:["battle","move"], patriot:null, prize:"Russisch", suitChange:null, specialAbility:null },
-            { id:3, name:"Prinz Akbar Khan", region:"Kabul", suit:"Geheimdienst", rank:2, impactIcons:["spy","spy","army"], actions:["battle"], patriot:"Afghanisch", prize:null, suitChange:"Militär", specialAbility:"Aufstand: Nach einer Dominanzprüfung lege zwei afghanische Armeen in Kabul an." },
-            { id:4, name:"Charles Stoddart", region:"Kabul", suit:"Geheimdienst", rank:1, impactIcons:["spy"], actions:["gift","move"], patriot:null, prize:"Afghanisch", suitChange:null, specialAbility:"Wenn du dich bewegst, darfst du dich durch Regionen mit Stämmen eines anderen Spielers bewegen, als würdest du sie beherrschen." },
-            { id:5, name:"Shah Shujah Durrani", region:"Kabul", suit:"Politik", rank:1, impactIcons:["tribe"], actions:["build"], patriot:null, prize:"Afghanisch", suitChange:null, specialAbility:"Anspruch auf alte Abstammung: Wenn du die Steuer-Aktion ausführst, handle so, als würdest du jede Region beherrschen." },
-            { id:6, name:"Aminullah Khan Logari", region:"Kabul", suit:"Politik", rank:1, impactIcons:["spy","army","tribe"], actions:["build","battle"], patriot:"Afghanisch", prize:null, suitChange:null, specialAbility:"Unterstützung sammeln: Wenn du ein Geschenk machst, darfst du den Stamm in eine beliebige Region legen." },
-            { id:7, name:"Dost Mohammad", region:"Kabul", suit:"Politik", rank:2, impactIcons:["spy","army","tribe","tribe"], actions:[], patriot:null, prize:null, suitChange:null, specialAbility:null },
-            { id:8, name:"Kabul Bazaar", region:"Kabul", suit:"Wirtschaft", rank:2, impactIcons:["spy","road","road"], actions:["tax"], patriot:null, prize:null, suitChange:"Politik", specialAbility:"Marktplatz: Wenn du die Bau-Aktion ausführst, darfst du die Straße in eine beliebige an Kabul angrenzende Region legen." },
-            { id:9, name:"Afghanisches Kunsthandwerk", region:"Kabul", suit:"Wirtschaft", rank:1, impactIcons:["road"], actions:["tax","move"], patriot:null, prize:null, suitChange:null, specialAbility:"Heimindustrie: Du darfst Straßen bauen, ohne Karten von deiner Hand abzuwerfen." },
-            { id:10, name:"Arsenmine von Balkh", region:"Kabul", suit:"Wirtschaft", rank:1, impactIcons:["road"], actions:["build","betray"], patriot:null, prize:"Afghanisch", suitChange:"Militär", specialAbility:null },
-            { id:11, name:"Lapislazuli-Mine", region:"Kabul", suit:"Wirtschaft", rank:2, impactIcons:["road","road"], actions:["tax","gift"], patriot:"Afghanisch", prize:null, suitChange:null, specialAbility:null },
-            { id:12, name:"Stadt Ghazni", region:"Kabul", suit:"Wirtschaft", rank:3, impactIcons:["army","road","road","road"], actions:["gift"], patriot:null, prize:null, suitChange:null, specialAbility:null },
-            { id:13, name:"Ghilzai-Nomaden", region:"Kabul", suit:"Wirtschaft", rank:2, impactIcons:["road","road"], actions:["tax","move"], patriot:null, prize:"Russisch", suitChange:null, specialAbility:null },
-            { id:14, name:"Geldverleiher", region:"Kabul", suit:"Wirtschaft", rank:2, impactIcons:["road","road"], actions:["gift","build"], patriot:null, prize:null, suitChange:null, specialAbility:null },
-            { id:15, name:"Durrani-Königsgarde", region:"Kabul", suit:"Militär", rank:1, impactIcons:["army"], actions:["betray"], patriot:null, prize:null, suitChange:null, specialAbility:"Leibwächter: Deine politischen Karten können nicht Ziel der Verrat-Aktion sein." },
-            { id:16, name:"Bala Hissar", region:"Kabul", suit:"Militär", rank:1, impactIcons:["army"], actions:["tax","betray"], patriot:null, prize:null, suitChange:null, specialAbility:null },
-            { id:17, name:"Zitadelle von Ghazni", region:"Kabul", suit:"Militär", rank:1, impactIcons:["army"], actions:["build"], patriot:null, prize:null, suitChange:null, specialAbility:"Zitadelle: Deine Stämme in Kabul können nicht angegriffen werden." },
-            { id:18, name:"Harry Flashman", region:"Punjab", suit:"Geheimdienst", rank:1, impactIcons:["spy"], actions:["gift","betray"], patriot:null, prize:null, suitChange:null, specialAbility:null },
-            { id:19, name:"Eldred Pottinger", region:"Punjab", suit:"Geheimdienst", rank:2, impactIcons:["spy","spy"], actions:["move","betray"], patriot:"Britisch", prize:"Russisch", suitChange:"Wirtschaft", specialAbility:null },
-            { id:20, name:"Henry Rawlinson", region:"Punjab", suit:"Geheimdienst", rank:1, impactIcons:["spy"], actions:["gift","move"], patriot:"Britisch", prize:"Russisch", suitChange:"Wirtschaft", specialAbility:null },
-            { id:21, name:"Alexander Burnes", region:"Punjab", suit:"Geheimdienst", rank:2, impactIcons:["spy","spy"], actions:["move"], patriot:null, prize:"Afghanisch", suitChange:null, specialAbility:"Seltsame Bettgenossen: Für Spion-Bewegung behandelst du Karten, die eine Region teilen, als benachbart." },
-            { id:22, name:"George Hayward", region:"Punjab", suit:"Geheimdienst", rank:1, impactIcons:["spy"], actions:["move","gift"], patriot:"Britisch", prize:"Russisch", suitChange:"Politik", specialAbility:null },
-            { id:23, name:"Henry Pottinger", region:"Punjab", suit:"Geheimdienst", rank:1, impactIcons:["spy"], actions:["battle","move"], patriot:"Britisch", prize:"Russisch", suitChange:"Wirtschaft", specialAbility:null },
-            { id:24, name:"Ranjit Singh", region:"Punjab", suit:"Politik", rank:2, impactIcons:["army","tribe","tribe"], actions:["betray"], patriot:null, prize:null, suitChange:null, specialAbility:"Reform des öffentlichen Dienstes: Du zahlst keine Bestechungsgelder, wenn du Geiselaktionen ausführst." },
-            { id:25, name:"Josiah Harlan", region:"Punjab", suit:"Politik", rank:1, impactIcons:["tribe"], actions:["tax"], patriot:"Afghanisch", prize:"Britisch", suitChange:null, specialAbility:null },
-            { id:26, name:"Paolo Avitabile", region:"Punjab", suit:"Politik", rank:1, impactIcons:["army","tribe"], actions:["betray"], patriot:null, prize:"Afghanisch", suitChange:null, specialAbility:null },
-            { id:27, name:"Maqpon-Dynastie", region:"Punjab", suit:"Politik", rank:1, impactIcons:["tribe"], actions:["build"], patriot:null, prize:null, suitChange:null, specialAbility:null },
-            { id:28, name:"Anarkali-Basar", region:"Punjab", suit:"Wirtschaft", rank:1, impactIcons:["spy","road"], actions:["tax","build"], patriot:null, prize:"Afghanisch", suitChange:null, specialAbility:null },
-            { id:29, name:"Khyber-Pass", region:"Punjab", suit:"Wirtschaft", rank:2, impactIcons:["road","road"], actions:["tax","move"], patriot:null, prize:null, suitChange:null, specialAbility:null },
-            { id:30, name:"Sikh-Händler in Lahore", region:"Punjab", suit:"Wirtschaft", rank:1, impactIcons:["spy","road"], actions:["tax","gift"], patriot:null, prize:null, suitChange:null, specialAbility:null },
-            { id:31, name:"Kompaniewaffen", region:"Punjab", suit:"Militär", rank:1, impactIcons:["army"], actions:["tax","betray"], patriot:null, prize:null, suitChange:"Geheimdienst", specialAbility:null },
-            { id:32, name:"Armee des Indus", region:"Punjab", suit:"Militär", rank:3, impactIcons:["army","army","army"], actions:["move"], patriot:"Britisch", prize:"Afghanisch", suitChange:null, specialAbility:null },
-            { id:33, name:"Zorawar Singh Kahluria", region:"Punjab", suit:"Militär", rank:2, impactIcons:["army","army"], actions:["battle","gift"], patriot:null, prize:null, suitChange:null, specialAbility:null },
-            { id:34, name:"Sindhi-Krieger", region:"Punjab", suit:"Militär", rank:1, impactIcons:["army"], actions:["battle","move","betray"], patriot:null, prize:"Britisch", suitChange:"Wirtschaft", specialAbility:null },
-            { id:35, name:"Hari Singh Nalwa", region:"Punjab", suit:"Militär", rank:2, impactIcons:["army","army"], actions:["battle","move"], patriot:null, prize:null, suitChange:"Politik", specialAbility:null },
-            { id:36, name:"Bengalische Eingeboreneninfanterie", region:"Punjab", suit:"Militär", rank:1, impactIcons:["army"], actions:["battle","betray"], patriot:"Britisch", prize:"Afghanisch", suitChange:"Geheimdienst", specialAbility:null },
-            { id:37, name:"Seaforth Highlanders", region:"Punjab", suit:"Militär", rank:1, impactIcons:["army"], actions:["battle","move"], patriot:"Britisch", prize:"Afghanisch", suitChange:"Politik", specialAbility:null },
-            { id:38, name:"Akali-Sikhs", region:"Punjab", suit:"Militär", rank:2, impactIcons:["army","army"], actions:["battle"], patriot:null, prize:"Britisch", suitChange:null, specialAbility:null },
-            { id:39, name:"William Moorcroft", region:"Kandahar", suit:"Geheimdienst", rank:1, impactIcons:["spy"], actions:["move","battle"], patriot:null, prize:null, suitChange:null, specialAbility:null },
-            { id:40, name:"William Hay Macnaghten", region:"Kandahar", suit:"Geheimdienst", rank:2, impactIcons:["spy","spy"], actions:["tax","move"], patriot:"Britisch", prize:"Afghanisch", suitChange:null, specialAbility:null },
-            { id:41, name:"Charles Masson", region:"Kandahar", suit:"Geheimdienst", rank:2, impactIcons:["spy","spy"], actions:["build"], patriot:null, prize:null, suitChange:null, specialAbility:"Sicheres Haus: Wenn ein anderer Spieler deinen Spion im Kampf entfernt, darfst du ihn stattdessen auf diese Karte legen." },
-            { id:42, name:"Barakzai-Sadars", region:"Kandahar", suit:"Politik", rank:1, impactIcons:["tribe"], actions:["build"], patriot:"Afghanisch", prize:"Afghanisch", suitChange:"Wirtschaft", specialAbility:"Charismatische Höflinge: Du zahlst keine Bestechungsgelder, wenn du Karten ausspielst." },
-            { id:43, name:"Giljee-Adlige", region:"Kandahar", suit:"Politik", rank:1, impactIcons:["army","tribe"], actions:["battle"], patriot:null, prize:"Afghanisch", suitChange:null, specialAbility:"Erpressung: Zu Beginn des Zuges darfst du einen Spion auf eine beliebige Kandahar-Hofkarte ohne Spion legen." },
-            { id:44, name:"Baluchische Häuptlinge", region:"Kandahar", suit:"Politik", rank:1, impactIcons:["army","tribe"], actions:["build","tax"], patriot:null, prize:"Russisch", suitChange:null, specialAbility:null },
-            { id:45, name:"Haji Khan Kakar", region:"Kandahar", suit:"Politik", rank:1, impactIcons:["army","tribe"], actions:["betray","gift"], patriot:null, prize:null, suitChange:null, specialAbility:null },
-            { id:46, name:"Bank", region:"Kandahar", suit:"Wirtschaft", rank:2, impactIcons:["road","road"], actions:["gift"], patriot:null, prize:null, suitChange:"Geheimdienst", specialAbility:null },
-            { id:47, name:"Bolan-Pass", region:"Kandahar", suit:"Wirtschaft", rank:2, impactIcons:["army","road","road"], actions:["gift","move"], patriot:null, prize:"Russisch", suitChange:null, specialAbility:null },
-            { id:48, name:"Obstmärkte", region:"Kandahar", suit:"Wirtschaft", rank:1, impactIcons:["road"], actions:["move","build"], patriot:null, prize:null, suitChange:"Politik", specialAbility:null },
-            { id:49, name:"Kandahar-Märkte", region:"Kandahar", suit:"Wirtschaft", rank:1, impactIcons:["road"], actions:["tax","build"], patriot:null, prize:null, suitChange:"Politik", specialAbility:null },
-            { id:50, name:"Britische Linieninfanterie", region:"Kandahar", suit:"Militär", rank:2, impactIcons:["army","army"], actions:["battle","move"], patriot:"Britisch", prize:"Russisch", suitChange:null, specialAbility:null },
-            { id:51, name:"Sir John Keane", region:"Kandahar", suit:"Militär", rank:1, impactIcons:["army"], actions:["battle"], patriot:"Britisch", prize:"Russisch", suitChange:null, specialAbility:"Indische Vorräte: Deine Armeen dürfen sich ohne Straße bewegen." },
-            { id:52, name:"Paschtunischer Söldner", region:"Kandahar", suit:"Militär", rank:1, impactIcons:["army"], actions:["battle","tax"], patriot:null, prize:null, suitChange:"Politik", specialAbility:null },
-            { id:53, name:"Jezail-Scharfschützen", region:"Kandahar", suit:"Militär", rank:2, impactIcons:["spy","army","army"], actions:["betray"], patriot:null, prize:"Russisch", suitChange:null, specialAbility:null },
-            { id:54, name:"Heratische Banditen", region:"Herat", suit:"Geheimdienst", rank:1, impactIcons:["spy"], actions:["tax"], patriot:null, prize:null, suitChange:null, specialAbility:"Erpressung: Zu Beginn des Zuges darfst du einen Spion auf eine beliebige Herat-Hofkarte ohne Spion legen." },
-            { id:55, name:"Hazara-Häuptlinge", region:"Herat", suit:"Politik", rank:1, impactIcons:["army","tribe"], actions:["battle","tax","move"], patriot:null, prize:null, suitChange:null, specialAbility:null },
-            { id:56, name:"Yar Mohammad Alikozai", region:"Herat", suit:"Politik", rank:2, impactIcons:["tribe","tribe"], actions:["betray"], patriot:null, prize:"Afghanisch", suitChange:"Politik", specialAbility:"Gut vernetzt: Deine Spione dürfen bei der Bewegungsaktion ihre doppelte Reichweite nutzen." },
-            { id:57, name:"Exilierter Durrani-Adel", region:"Herat", suit:"Politik", rank:1, impactIcons:["tribe"], actions:["betray","move"], patriot:null, prize:"Britisch", suitChange:null, specialAbility:null },
-            { id:58, name:"Ishaqzai-Häuptlinge", region:"Herat", suit:"Politik", rank:1, impactIcons:["tribe"], actions:["gift","build"], patriot:"Afghanisch", prize:null, suitChange:"Wirtschaft", specialAbility:null },
-            { id:59, name:"Tadschikische Kriegsschar", region:"Herat", suit:"Militär", rank:2, impactIcons:["army","army"], actions:["betray","battle"], patriot:null, prize:null, suitChange:null, specialAbility:null },
-            { id:60, name:"Nomadischer Kriegsherr", region:"Herat", suit:"Militär", rank:1, impactIcons:["army"], actions:["tax","gift","battle"], patriot:null, prize:"Russisch", suitChange:null, specialAbility:null },
-            { id:61, name:"Karakulschafe", region:"Herat", suit:"Wirtschaft", rank:2, impactIcons:["road","road"], actions:["tax"], patriot:null, prize:null, suitChange:null, specialAbility:null },
-            { id:62, name:"Qanat-System", region:"Herat", suit:"Wirtschaft", rank:1, impactIcons:["road"], actions:["gift","build"], patriot:null, prize:null, suitChange:"Politik", specialAbility:null },
-            { id:63, name:"Farah-Straße", region:"Herat", suit:"Wirtschaft", rank:3, impactIcons:["road","road","road"], actions:["move"], patriot:null, prize:null, suitChange:null, specialAbility:null },
-            { id:64, name:"Opiumfelder", region:"Herat", suit:"Wirtschaft", rank:2, impactIcons:["spy","road","road"], actions:["tax"], patriot:null, prize:null, suitChange:"Militär", specialAbility:null },
-            { id:65, name:"Minarett von Jam", region:"Herat", suit:"Wirtschaft", rank:1, impactIcons:["army","road"], actions:["battle","tax","move"], patriot:null, prize:null, suitChange:null, specialAbility:null },
-            { id:66, name:"Baluchische Schmuggler", region:"Herat", suit:"Wirtschaft", rank:2, impactIcons:["army","road","road"], actions:["battle"], patriot:null, prize:"Afghanisch", suitChange:null, specialAbility:"Herat Einfluss: Du bezahlst nicht für Herat-Karten auf dem Markt." },
-            { id:67, name:"Weizenfelder", region:"Herat", suit:"Wirtschaft", rank:2, impactIcons:["road"], actions:["move","gift"], patriot:null, prize:null, suitChange:null, specialAbility:null },
-            { id:68, name:"Ghaem Magham Farahani", region:"Persien", suit:"Geheimdienst", rank:2, impactIcons:["army","spy","spy"], actions:["tax"], patriot:null, prize:null, suitChange:null, specialAbility:"Persischer Einfluss: Du bezahlst nicht für Persien-Karten auf dem Markt." },
-            { id:69, name:"Graf Ivan Simonich", region:"Persien", suit:"Geheimdienst", rank:2, impactIcons:["spy","spy"], actions:["battle","move"], patriot:"Russisch", prize:"Britisch", suitChange:null, specialAbility:null },
-            { id:70, name:"Alexander Griboyedov", region:"Persien", suit:"Geheimdienst", rank:2, impactIcons:["spy","spy"], actions:["move"], patriot:"Russisch", prize:"Afghanisch", suitChange:null, specialAbility:"Russischer Einfluss: Du bezahlst nicht für russische Patrioten auf dem Markt." },
-            { id:71, name:"Joseph Wolff", region:"Persien", suit:"Geheimdienst", rank:1, impactIcons:["spy"], actions:["move","gift"], patriot:"Britisch", prize:"Afghanisch", suitChange:null, specialAbility:null },
-            { id:72, name:"Claude Wade", region:"Persien", suit:"Geheimdienst", rank:2, impactIcons:["spy","spy"], actions:["move"], patriot:null, prize:"Russisch", suitChange:null, specialAbility:"Sicheres Haus: Wenn ein anderer Spieler deinen Spion im Kampf entfernt, darfst du ihn stattdessen auf diese Karte legen." },
-            { id:73, name:"Jean-François Allard", region:"Persien", suit:"Geheimdienst", rank:1, impactIcons:["spy"], actions:["build","battle"], patriot:null, prize:"Britisch", suitChange:"Militär", specialAbility:null },
-            { id:74, name:"Hajj Mirza Aghasi", region:"Persien", suit:"Politik", rank:1, impactIcons:["tribe"], actions:["betray","battle"], patriot:"Afghanisch", prize:"Russisch", suitChange:"Geheimdienst", specialAbility:null },
-            { id:75, name:"Abbas Mirza", region:"Persien", suit:"Politik", rank:1, impactIcons:["army","tribe"], actions:["tax","battle"], patriot:null, prize:null, suitChange:null, specialAbility:null },
-            { id:76, name:"Fath-Ali Shah", region:"Persien", suit:"Politik", rank:2, impactIcons:["tribe","tribe"], actions:[], patriot:null, prize:null, suitChange:"Geheimdienst", specialAbility:null },
-            { id:77, name:"Mohammad Shah", region:"Persien", suit:"Politik", rank:1, impactIcons:["army","tribe"], actions:["build","betray"], patriot:null, prize:null, suitChange:"Geheimdienst", specialAbility:null },
-            { id:78, name:"Städtische Verbesserungen", region:"Persien", suit:"Wirtschaft", rank:2, impactIcons:["road","road"], actions:["build"], patriot:null, prize:null, suitChange:"Geheimdienst", specialAbility:"Infrastruktur: Nachdem du die Bau-Aktion ausgeführt hast, platziere einen zusätzlichen Block auf ein erlaubtes Feld." },
-            { id:79, name:"Sklavenmärkte", region:"Persien", suit:"Wirtschaft", rank:1, impactIcons:["spy","road"], actions:["tax","move"], patriot:null, prize:"Britisch", suitChange:null, specialAbility:null },
-            { id:80, name:"Anglo-Persischer Handel", region:"Persien", suit:"Wirtschaft", rank:1, impactIcons:["road"], actions:["tax","build"], patriot:"Britisch", prize:"Russisch", suitChange:null, specialAbility:null },
-            { id:81, name:"Russo-Persischer Handel", region:"Persien", suit:"Wirtschaft", rank:2, impactIcons:["road","road"], actions:["tax","build"], patriot:"Russisch", prize:"Britisch", suitChange:null, specialAbility:null },
-            { id:82, name:"Persische Armee", region:"Persien", suit:"Militär", rank:2, impactIcons:["army","army"], actions:["gift","battle"], patriot:null, prize:null, suitChange:"Geheimdienst", specialAbility:null },
-            { id:83, name:"Leibgarde des Schahs", region:"Persien", suit:"Militär", rank:1, impactIcons:["spy","army"], actions:["tax"], patriot:null, prize:null, suitChange:null, specialAbility:"Leibwächter: Deine politischen Karten können nicht Ziel der Verrat-Aktion sein." },
-            { id:84, name:"Russische Linieninfanterie", region:"Persien", suit:"Militär", rank:2, impactIcons:["army","army"], actions:["battle"], patriot:"Russisch", prize:"Afghanisch", suitChange:"Wirtschaft", specialAbility:null },
-            { id:85, name:"Bucharische Juden", region:"Transkaspien", suit:"Geheimdienst", rank:1, impactIcons:["spy"], actions:["gift","build"], patriot:null, prize:"Britisch", suitChange:"Wirtschaft", specialAbility:null },
-            { id:86, name:"Jan Prosper Witkiewicz", region:"Transkaspien", suit:"Geheimdienst", rank:2, impactIcons:["spy","spy"], actions:["move","build"], patriot:"Russisch", prize:null, suitChange:null, specialAbility:null },
-            { id:87, name:"Imperiale Landvermesser", region:"Transkaspien", suit:"Geheimdienst", rank:1, impactIcons:["spy"], actions:["move","gift","build"], patriot:"Russisch", prize:null, suitChange:null, specialAbility:null },
-            { id:88, name:"Arthur Conolly", region:"Transkaspien", suit:"Geheimdienst", rank:1, impactIcons:["spy"], actions:["move","gift"], patriot:"Britisch", prize:null, suitChange:null, specialAbility:null },
-            { id:89, name:"Aga Mehdi", region:"Transkaspien", suit:"Geheimdienst", rank:1, impactIcons:["spy"], actions:["move","betray","battle"], patriot:"Russisch", prize:null, suitChange:null, specialAbility:null },
-            { id:90, name:"Nasrullah Khan", region:"Transkaspien", suit:"Politik", rank:1, impactIcons:["tribe"], actions:["tax","betray"], patriot:null, prize:"Britisch", suitChange:null, specialAbility:null },
-            { id:91, name:"Allah Quli Bahadur", region:"Transkaspien", suit:"Geheimdienst", rank:1, impactIcons:["spy","army","tribe"], actions:["betray"], patriot:null, prize:"Russisch", suitChange:null, specialAbility:"Gewiefter Operator: Diese Karte wird immer behandelt, als wäre sie in der bevorzugten Farbe." },
-            { id:92, name:"Mir Murad Beg", region:"Transkaspien", suit:"Politik", rank:1, impactIcons:["spy","tribe"], actions:["battle","tax","move"], patriot:null, prize:"Britisch", suitChange:"Militär", specialAbility:null },
-            { id:93, name:"Madali Khan", region:"Transkaspien", suit:"Politik", rank:2, impactIcons:["tribe","tribe"], actions:["battle","betray"], patriot:null, prize:"Britisch", suitChange:null, specialAbility:"Diese Karte wird immer behandelt, als wäre sie in der bevorzugten Farbe." },
-            { id:94, name:"Sklavenmärkte von Chiwa", region:"Transkaspien", suit:"Wirtschaft", rank:1, impactIcons:["spy","road"], actions:["tax","betray"], patriot:null, prize:"Britisch", suitChange:null, specialAbility:null },
-            { id:95, name:"Nachschub aus Orenburg", region:"Transkaspien", suit:"Wirtschaft", rank:1, impactIcons:["road"], actions:["tax","move"], patriot:"Russisch", prize:"Afghanisch", suitChange:null, specialAbility:null },
-            { id:96, name:"Panjdeh-Oase", region:"Transkaspien", suit:"Wirtschaft", rank:2, impactIcons:["road","road"], actions:["tax","move"], patriot:null, prize:"Britisch", suitChange:null, specialAbility:null },
-            { id:97, name:"Die Zitadelle von Buchara", region:"Transkaspien", suit:"Militär", rank:1, impactIcons:["army"], actions:["build"], patriot:null, prize:null, suitChange:"Geheimdienst", specialAbility:"Zitadelle: Deine Stämme in Transkaspien können nicht angegriffen werden." },
-            { id:98, name:"Europäische Kanonen", region:"Transkaspien", suit:"Militär", rank:3, impactIcons:["army","army","army"], actions:["gift"], patriot:null, prize:"Britisch", suitChange:null, specialAbility:null },
-            { id:99, name:"Kosaken", region:"Transkaspien", suit:"Militär", rank:1, impactIcons:["spy","army"], actions:["battle"], patriot:"Russisch", prize:"Britisch", suitChange:null, specialAbility:"Irreguläre: Diese Karte wird immer behandelt, als wäre sie in der bevorzugten Farbe." },
-            { id:100, name:"Graf Perovsky", region:"Transkaspien", suit:"Militär", rank:2, impactIcons:["army","army"], actions:["battle"], patriot:"Russisch", prize:"Britisch", suitChange:null, specialAbility:null },
-            { id:101, namePurchased:"Dominanzcheck", effectPurchased:"Führe einen Dominanzcheck durch. Wenn erfolgreich, werden alle Blöcke vom Spielplan entfernt." },
-            { id:102, namePurchased:"Dominanzcheck", effectPurchased:"Führe einen Dominanzcheck durch. Wenn erfolgreich, werden alle Blöcke vom Spielplan entfernt." },
-            { id:103, namePurchased:"Dominanzcheck", effectPurchased:"Führe einen Dominanzcheck durch. Wenn erfolgreich, werden alle Blöcke vom Spielplan entfernt." },
-            { id:104, namePurchased:"Dominanzcheck", effectPurchased:"Führe einen Dominanzcheck durch. Wenn erfolgreich, werden alle Blöcke vom Spielplan entfernt." },
-            { id:105, namePurchased:"Neue Taktiken", effectPurchased:"Gekauft: Militär wird bevorzugte Farbe." },
-            { id:106, namePurchased:"Koh-i-Noor zurückerlangt", effectPurchased:"Gekauft: Bestimmter Spieler wird zum KohINoorPlayer." },
-            { id:107, namePurchased:"Höfische Manieren", effectPurchased:"Gekauft: Ein bestimmter Spieler ist betroffen (keine Bestechungsgelder zahlen)." },
-            { id:108, namePurchased:"Gerücht", effectPurchased:"Gekauft: Ein bestimmter Spieler wird zum 'RumorPlayer'." },
-            { id:109, namePurchased:"Kriegsmüdigkeit", effectPurchased:"Gekauft: Dominanz-Block-Schwelle wird auf 2 reduziert." },
-            { id:110, namePurchased:"Nationalismus", effectPurchased:"Gekauft: Ein bestimmter Spieler ist betroffen." },
-            { id:111, namePurchased:"Öffentlicher Rückzug", effectPurchased:"Alle Rupien auf einem bestimmten Marktfeld werden entfernt." },
-            { id:112, namePurchased:"Staatenbildung", effectPurchased:"Gekauft: Ein bestimmter Spieler ist betroffen." },
-            { id:113, namePurchased:"Rückendeckung der persischen Aristokratie", effectPurchased:"Gekauft: Der kaufende Spieler erhält 3 Rupien." },
-            { id:114, namePurchased:"Andere Überzeugungsmethoden", effectPurchased:"Gekauft: Spieler tauschen die Hände." },
-            { id:115, namePurchased:"Paschtunwali-Werte", effectPurchased:"Gekauft: Ein bestimmter Spieler wählt eine Farbe, die solange bevorzugt bleibt, bis die Karte abgeworfen wird." },
-            { id:116, namePurchased:"Rüge", effectPurchased:"Gekauft: Alle Stämme und Armeen aus einer Region entfernen." }
+            { id: 1, name: "Mohan Lal", region: "Kabul", suit: "Geheimdienst", rank: 3, impactIcons: ["spy", "spy", "spy"], actions: ["move"], patriot: null, prize: "Russisch", suitChange: null, specialAbility: "Unentbehrliche Berater: Deine Spione können in Kämpfen mit anderen Spionen nicht entfernt werden." },
+            { id: 2, name: "Jan-Fishan Khan", region: "Kabul", suit: "Geheimdienst", rank: 2, impactIcons: ["spy", "spy", "army"], actions: ["battle", "move"], patriot: null, prize: "Russisch", suitChange: null, specialAbility: null },
+            { id: 3, name: "Prinz Akbar Khan", region: "Kabul", suit: "Geheimdienst", rank: 2, impactIcons: ["spy", "spy", "army"], actions: ["battle"], patriot: "Afghanisch", prize: null, suitChange: "Militär", specialAbility: "Aufstand: Nach einer Dominanzprüfung lege zwei afghanische Armeen in Kabul an." },
+            { id: 4, name: "Charles Stoddart", region: "Kabul", suit: "Geheimdienst", rank: 1, impactIcons: ["spy"], actions: ["gift", "move"], patriot: null, prize: "Afghanisch", suitChange: null, specialAbility: "Wenn du dich bewegst, darfst du dich durch Regionen mit Stämmen eines anderen Spielers bewegen, als würdest du sie beherrschen." },
+            { id: 5, name: "Shah Shujah Durrani", region: "Kabul", suit: "Politik", rank: 1, impactIcons: ["tribe"], actions: ["build"], patriot: null, prize: "Afghanisch", suitChange: null, specialAbility: "Anspruch auf alte Abstammung: Wenn du die Steuer-Aktion ausführst, handle so, als würdest du jede Region beherrschen." },
+            { id: 6, name: "Aminullah Khan Logari", region: "Kabul", suit: "Politik", rank: 1, impactIcons: ["spy", "army", "tribe"], actions: ["build", "battle"], patriot: "Afghanisch", prize: null, suitChange: null, specialAbility: "Unterstützung sammeln: Wenn du ein Geschenk machst, darfst du den Stamm in eine beliebige Region legen." },
+            { id: 7, name: "Dost Mohammad", region: "Kabul", suit: "Politik", rank: 2, impactIcons: ["spy", "army", "tribe", "tribe"], actions: [], patriot: null, prize: null, suitChange: null, specialAbility: null },
+            { id: 8, name: "Kabul Bazaar", region: "Kabul", suit: "Wirtschaft", rank: 2, impactIcons: ["spy", "road", "road"], actions: ["tax"], patriot: null, prize: null, suitChange: "Politik", specialAbility: "Marktplatz: Wenn du die Bau-Aktion ausführst, darfst du die Straße in eine beliebige an Kabul angrenzende Region legen." },
+            { id: 9, name: "Afghanisches Kunsthandwerk", region: "Kabul", suit: "Wirtschaft", rank: 1, impactIcons: ["road"], actions: ["tax", "move"], patriot: null, prize: null, suitChange: null, specialAbility: "Heimindustrie: Du darfst Straßen bauen, ohne Karten von deiner Hand abzuwerfen." },
+            { id: 10, name: "Arsenmine von Balkh", region: "Kabul", suit: "Wirtschaft", rank: 1, impactIcons: ["road"], actions: ["build", "betray"], patriot: null, prize: "Afghanisch", suitChange: "Militär", specialAbility: null },
+            { id: 11, name: "Lapislazuli-Mine", region: "Kabul", suit: "Wirtschaft", rank: 2, impactIcons: ["road", "road"], actions: ["tax", "gift"], patriot: "Afghanisch", prize: null, suitChange: null, specialAbility: null },
+            { id: 12, name: "Stadt Ghazni", region: "Kabul", suit: "Wirtschaft", rank: 3, impactIcons: ["army", "road", "road", "road"], actions: ["gift"], patriot: null, prize: null, suitChange: null, specialAbility: null },
+            { id: 13, name: "Ghilzai-Nomaden", region: "Kabul", suit: "Wirtschaft", rank: 2, impactIcons: ["road", "road"], actions: ["tax", "move"], patriot: null, prize: "Russisch", suitChange: null, specialAbility: null },
+            { id: 14, name: "Geldverleiher", region: "Kabul", suit: "Wirtschaft", rank: 2, impactIcons: ["road", "road"], actions: ["gift", "build"], patriot: null, prize: null, suitChange: null, specialAbility: null },
+            { id: 15, name: "Durrani-Königsgarde", region: "Kabul", suit: "Militär", rank: 1, impactIcons: ["army"], actions: ["betray"], patriot: null, prize: null, suitChange: null, specialAbility: "Leibwächter: Deine politischen Karten können nicht Ziel der Verrat-Aktion sein." },
+            { id: 16, name: "Bala Hissar", region: "Kabul", suit: "Militär", rank: 1, impactIcons: ["army"], actions: ["tax", "betray"], patriot: null, prize: null, suitChange: null, specialAbility: null },
+            { id: 17, name: "Zitadelle von Ghazni", region: "Kabul", suit: "Militär", rank: 1, impactIcons: ["army"], actions: ["build"], patriot: null, prize: null, suitChange: null, specialAbility: "Zitadelle: Deine Stämme in Kabul können nicht angegriffen werden." },
+            { id: 18, name: "Harry Flashman", region: "Punjab", suit: "Geheimdienst", rank: 1, impactIcons: ["spy"], actions: ["gift", "betray"], patriot: null, prize: null, suitChange: null, specialAbility: null },
+            { id: 19, name: "Eldred Pottinger", region: "Punjab", suit: "Geheimdienst", rank: 2, impactIcons: ["spy", "spy"], actions: ["move", "betray"], patriot: "Britisch", prize: "Russisch", suitChange: "Wirtschaft", specialAbility: null },
+            { id: 20, name: "Henry Rawlinson", region: "Punjab", suit: "Geheimdienst", rank: 1, impactIcons: ["spy"], actions: ["gift", "move"], patriot: "Britisch", prize: "Russisch", suitChange: "Wirtschaft", specialAbility: null },
+            { id: 21, name: "Alexander Burnes", region: "Punjab", suit: "Geheimdienst", rank: 2, impactIcons: ["spy", "spy"], actions: ["move"], patriot: null, prize: "Afghanisch", suitChange: null, specialAbility: "Seltsame Bettgenossen: Für Spion-Bewegung behandelst du Karten, die eine Region teilen, als benachbart." },
+            { id: 22, name: "George Hayward", region: "Punjab", suit: "Geheimdienst", rank: 1, impactIcons: ["spy"], actions: ["move", "gift"], patriot: "Britisch", prize: "Russisch", suitChange: "Politik", specialAbility: null },
+            { id: 23, name: "Henry Pottinger", region: "Punjab", suit: "Geheimdienst", rank: 1, impactIcons: ["spy"], actions: ["battle", "move"], patriot: "Britisch", prize: "Russisch", suitChange: "Wirtschaft", specialAbility: null },
+            { id: 24, name: "Ranjit Singh", region: "Punjab", suit: "Politik", rank: 2, impactIcons: ["army", "tribe", "tribe"], actions: ["betray"], patriot: null, prize: null, suitChange: null, specialAbility: "Reform des öffentlichen Dienstes: Du zahlst keine Bestechungsgelder, wenn du Geiselaktionen ausführst." },
+            { id: 25, name: "Josiah Harlan", region: "Punjab", suit: "Politik", rank: 1, impactIcons: ["tribe"], actions: ["tax"], patriot: "Afghanisch", prize: "Britisch", suitChange: null, specialAbility: null },
+            { id: 26, name: "Paolo Avitabile", region: "Punjab", suit: "Politik", rank: 1, impactIcons: ["army", "tribe"], actions: ["betray"], patriot: null, prize: "Afghanisch", suitChange: null, specialAbility: null },
+            { id: 27, name: "Maqpon-Dynastie", region: "Punjab", suit: "Politik", rank: 1, impactIcons: ["tribe"], actions: ["build"], patriot: null, prize: null, suitChange: null, specialAbility: null },
+            { id: 28, name: "Anarkali-Basar", region: "Punjab", suit: "Wirtschaft", rank: 1, impactIcons: ["spy", "road"], actions: ["tax", "build"], patriot: null, prize: "Afghanisch", suitChange: null, specialAbility: null },
+            { id: 29, name: "Khyber-Pass", region: "Punjab", suit: "Wirtschaft", rank: 2, impactIcons: ["road", "road"], actions: ["tax", "move"], patriot: null, prize: null, suitChange: null, specialAbility: null },
+            { id: 30, name: "Sikh-Händler in Lahore", region: "Punjab", suit: "Wirtschaft", rank: 1, impactIcons: ["spy", "road"], actions: ["tax", "gift"], patriot: null, prize: null, suitChange: null, specialAbility: null },
+            { id: 31, name: "Kompaniewaffen", region: "Punjab", suit: "Militär", rank: 1, impactIcons: ["army"], actions: ["tax", "betray"], patriot: null, prize: null, suitChange: "Geheimdienst", specialAbility: null },
+            { id: 32, name: "Armee des Indus", region: "Punjab", suit: "Militär", rank: 3, impactIcons: ["army", "army", "army"], actions: ["move"], patriot: "Britisch", prize: "Afghanisch", suitChange: null, specialAbility: null },
+            { id: 33, name: "Zorawar Singh Kahluria", region: "Punjab", suit: "Militär", rank: 2, impactIcons: ["army", "army"], actions: ["battle", "gift"], patriot: null, prize: null, suitChange: null, specialAbility: null },
+            { id: 34, name: "Sindhi-Krieger", region: "Punjab", suit: "Militär", rank: 1, impactIcons: ["army"], actions: ["battle", "move", "betray"], patriot: null, prize: "Britisch", suitChange: "Wirtschaft", specialAbility: null },
+            { id: 35, name: "Hari Singh Nalwa", region: "Punjab", suit: "Militär", rank: 2, impactIcons: ["army", "army"], actions: ["battle", "move"], patriot: null, prize: null, suitChange: "Politik", specialAbility: null },
+            { id: 36, name: "Bengalische Eingeboreneninfanterie", region: "Punjab", suit: "Militär", rank: 1, impactIcons: ["army"], actions: ["battle", "betray"], patriot: "Britisch", prize: "Afghanisch", suitChange: "Geheimdienst", specialAbility: null },
+            { id: 37, name: "Seaforth Highlanders", region: "Punjab", suit: "Militär", rank: 1, impactIcons: ["army"], actions: ["battle", "move"], patriot: "Britisch", prize: "Afghanisch", suitChange: "Politik", specialAbility: null },
+            { id: 38, name: "Akali-Sikhs", region: "Punjab", suit: "Militär", rank: 2, impactIcons: ["army", "army"], actions: ["battle"], patriot: null, prize: "Britisch", suitChange: null, specialAbility: null },
+            { id: 39, name: "William Moorcroft", region: "Kandahar", suit: "Geheimdienst", rank: 1, impactIcons: ["spy"], actions: ["move", "battle"], patriot: null, prize: null, suitChange: null, specialAbility: null },
+            { id: 40, name: "William Hay Macnaghten", region: "Kandahar", suit: "Geheimdienst", rank: 2, impactIcons: ["spy", "spy"], actions: ["tax", "move"], patriot: "Britisch", prize: "Afghanisch", suitChange: null, specialAbility: null },
+            { id: 41, name: "Charles Masson", region: "Kandahar", suit: "Geheimdienst", rank: 2, impactIcons: ["spy", "spy"], actions: ["build"], patriot: null, prize: null, suitChange: null, specialAbility: "Sicheres Haus: Wenn ein anderer Spieler deinen Spion im Kampf entfernt, darfst du ihn stattdessen auf diese Karte legen." },
+            { id: 42, name: "Barakzai-Sadars", region: "Kandahar", suit: "Politik", rank: 1, impactIcons: ["tribe"], actions: ["build"], patriot: "Afghanisch", prize: "Afghanisch", suitChange: "Wirtschaft", specialAbility: "Charismatische Höflinge: Du zahlst keine Bestechungsgelder, wenn du Karten ausspielst." },
+            { id: 43, name: "Giljee-Adlige", region: "Kandahar", suit: "Politik", rank: 1, impactIcons: ["army", "tribe"], actions: ["battle"], patriot: null, prize: "Afghanisch", suitChange: null, specialAbility: "Erpressung: Zu Beginn des Zuges darfst du einen Spion auf eine beliebige Kandahar-Hofkarte ohne Spion legen." },
+            { id: 44, name: "Baluchische Häuptlinge", region: "Kandahar", suit: "Politik", rank: 1, impactIcons: ["army", "tribe"], actions: ["build", "tax"], patriot: null, prize: "Russisch", suitChange: null, specialAbility: null },
+            { id: 45, name: "Haji Khan Kakar", region: "Kandahar", suit: "Politik", rank: 1, impactIcons: ["army", "tribe"], actions: ["betray", "gift"], patriot: null, prize: null, suitChange: null, specialAbility: null },
+            { id: 46, name: "Bank", region: "Kandahar", suit: "Wirtschaft", rank: 2, impactIcons: ["road", "road"], actions: ["gift"], patriot: null, prize: null, suitChange: "Geheimdienst", specialAbility: null },
+            { id: 47, name: "Bolan-Pass", region: "Kandahar", suit: "Wirtschaft", rank: 2, impactIcons: ["army", "road", "road"], actions: ["gift", "move"], patriot: null, prize: "Russisch", suitChange: null, specialAbility: null },
+            { id: 48, name: "Obstmärkte", region: "Kandahar", suit: "Wirtschaft", rank: 1, impactIcons: ["road"], actions: ["move", "build"], patriot: null, prize: null, suitChange: "Politik", specialAbility: null },
+            { id: 49, name: "Kandahar-Märkte", region: "Kandahar", suit: "Wirtschaft", rank: 1, impactIcons: ["road"], actions: ["tax", "build"], patriot: null, prize: null, suitChange: "Politik", specialAbility: null },
+            { id: 50, name: "Britische Linieninfanterie", region: "Kandahar", suit: "Militär", rank: 2, impactIcons: ["army", "army"], actions: ["battle", "move"], patriot: "Britisch", prize: "Russisch", suitChange: null, specialAbility: null },
+            { id: 51, name: "Sir John Keane", region: "Kandahar", suit: "Militär", rank: 1, impactIcons: ["army"], actions: ["battle"], patriot: "Britisch", prize: "Russisch", suitChange: null, specialAbility: "Indische Vorräte: Deine Armeen dürfen sich ohne Straße bewegen." },
+            { id: 52, name: "Paschtunischer Söldner", region: "Kandahar", suit: "Militär", rank: 1, impactIcons: ["army"], actions: ["battle", "tax"], patriot: null, prize: null, suitChange: "Politik", specialAbility: null },
+            { id: 53, name: "Jezail-Scharfschützen", region: "Kandahar", suit: "Militär", rank: 2, impactIcons: ["spy", "army", "army"], actions: ["betray"], patriot: null, prize: "Russisch", suitChange: null, specialAbility: null },
+            { id: 54, name: "Heratische Banditen", region: "Herat", suit: "Geheimdienst", rank: 1, impactIcons: ["spy"], actions: ["tax"], patriot: null, prize: null, suitChange: null, specialAbility: "Erpressung: Zu Beginn des Zuges darfst du einen Spion auf eine beliebige Herat-Hofkarte ohne Spion legen." },
+            { id: 55, name: "Hazara-Häuptlinge", region: "Herat", suit: "Politik", rank: 1, impactIcons: ["army", "tribe"], actions: ["battle", "tax", "move"], patriot: null, prize: null, suitChange: null, specialAbility: null },
+            { id: 56, name: "Yar Mohammad Alikozai", region: "Herat", suit: "Politik", rank: 2, impactIcons: ["tribe", "tribe"], actions: ["betray"], patriot: null, prize: "Afghanisch", suitChange: "Politik", specialAbility: "Gut vernetzt: Deine Spione dürfen bei der Bewegungsaktion ihre doppelte Reichweite nutzen." },
+            { id: 57, name: "Exilierter Durrani-Adel", region: "Herat", suit: "Politik", rank: 1, impactIcons: ["tribe"], actions: ["betray", "move"], patriot: null, prize: "Britisch", suitChange: null, specialAbility: null },
+            { id: 58, name: "Ishaqzai-Häuptlinge", region: "Herat", suit: "Politik", rank: 1, impactIcons: ["tribe"], actions: ["gift", "build"], patriot: "Afghanisch", prize: null, suitChange: "Wirtschaft", specialAbility: null },
+            { id: 59, name: "Tadschikische Kriegsschar", region: "Herat", suit: "Militär", rank: 2, impactIcons: ["army", "army"], actions: ["betray", "battle"], patriot: null, prize: null, suitChange: null, specialAbility: null },
+            { id: 60, name: "Nomadischer Kriegsherr", region: "Herat", suit: "Militär", rank: 1, impactIcons: ["army"], actions: ["tax", "gift", "battle"], patriot: null, prize: "Russisch", suitChange: null, specialAbility: null },
+            { id: 61, name: "Karakulschafe", region: "Herat", suit: "Wirtschaft", rank: 2, impactIcons: ["road", "road"], actions: ["tax"], patriot: null, prize: null, suitChange: null, specialAbility: null },
+            { id: 62, name: "Qanat-System", region: "Herat", suit: "Wirtschaft", rank: 1, impactIcons: ["road"], actions: ["gift", "build"], patriot: null, prize: null, suitChange: "Politik", specialAbility: null },
+            { id: 63, name: "Farah-Straße", region: "Herat", suit: "Wirtschaft", rank: 3, impactIcons: ["road", "road", "road"], actions: ["move"], patriot: null, prize: null, suitChange: null, specialAbility: null },
+            { id: 64, name: "Opiumfelder", region: "Herat", suit: "Wirtschaft", rank: 2, impactIcons: ["spy", "road", "road"], actions: ["tax"], patriot: null, prize: null, suitChange: "Militär", specialAbility: null },
+            { id: 65, name: "Minarett von Jam", region: "Herat", suit: "Wirtschaft", rank: 1, impactIcons: ["army", "road"], actions: ["battle", "tax", "move"], patriot: null, prize: null, suitChange: null, specialAbility: null },
+            { id: 66, name: "Baluchische Schmuggler", region: "Herat", suit: "Wirtschaft", rank: 2, impactIcons: ["army", "road", "road"], actions: ["battle"], patriot: null, prize: "Afghanisch", suitChange: null, specialAbility: "Herat Einfluss: Du bezahlst nicht für Herat-Karten auf dem Markt." },
+            { id: 67, name: "Weizenfelder", region: "Herat", suit: "Wirtschaft", rank: 2, impactIcons: ["road"], actions: ["move", "gift"], patriot: null, prize: null, suitChange: null, specialAbility: null },
+            { id: 68, name: "Ghaem Magham Farahani", region: "Persien", suit: "Geheimdienst", rank: 2, impactIcons: ["army", "spy", "spy"], actions: ["tax"], patriot: null, prize: null, suitChange: null, specialAbility: "Persischer Einfluss: Du bezahlst nicht für Persien-Karten auf dem Markt." },
+            { id: 69, name: "Graf Ivan Simonich", region: "Persien", suit: "Geheimdienst", rank: 2, impactIcons: ["spy", "spy"], actions: ["battle", "move"], patriot: "Russisch", prize: "Britisch", suitChange: null, specialAbility: null },
+            { id: 70, name: "Alexander Griboyedov", region: "Persien", suit: "Geheimdienst", rank: 2, impactIcons: ["spy", "spy"], actions: ["move"], patriot: "Russisch", prize: "Afghanisch", suitChange: null, specialAbility: "Russischer Einfluss: Du bezahlst nicht für russische Patrioten auf dem Markt." },
+            { id: 71, name: "Joseph Wolff", region: "Persien", suit: "Geheimdienst", rank: 1, impactIcons: ["spy"], actions: ["move", "gift"], patriot: "Britisch", prize: "Afghanisch", suitChange: null, specialAbility: null },
+            { id: 72, name: "Claude Wade", region: "Persien", suit: "Geheimdienst", rank: 2, impactIcons: ["spy", "spy"], actions: ["move"], patriot: null, prize: "Russisch", suitChange: null, specialAbility: "Sicheres Haus: Wenn ein anderer Spieler deinen Spion im Kampf entfernt, darfst du ihn stattdessen auf diese Karte legen." },
+            { id: 73, name: "Jean-François Allard", region: "Persien", suit: "Geheimdienst", rank: 1, impactIcons: ["spy"], actions: ["build", "battle"], patriot: null, prize: "Britisch", suitChange: "Militär", specialAbility: null },
+            { id: 74, name: "Hajj Mirza Aghasi", region: "Persien", suit: "Politik", rank: 1, impactIcons: ["tribe"], actions: ["betray", "battle"], patriot: "Afghanisch", prize: "Russisch", suitChange: "Geheimdienst", specialAbility: null },
+            { id: 75, name: "Abbas Mirza", region: "Persien", suit: "Politik", rank: 1, impactIcons: ["army", "tribe"], actions: ["tax", "battle"], patriot: null, prize: null, suitChange: null, specialAbility: null },
+            { id: 76, name: "Fath-Ali Shah", region: "Persien", suit: "Politik", rank: 2, impactIcons: ["tribe", "tribe"], actions: [], patriot: null, prize: null, suitChange: "Geheimdienst", specialAbility: null },
+            { id: 77, name: "Mohammad Shah", region: "Persien", suit: "Politik", rank: 1, impactIcons: ["army", "tribe"], actions: ["build", "betray"], patriot: null, prize: null, suitChange: "Geheimdienst", specialAbility: null },
+            { id: 78, name: "Städtische Verbesserungen", region: "Persien", suit: "Wirtschaft", rank: 2, impactIcons: ["road", "road"], actions: ["build"], patriot: null, prize: null, suitChange: "Geheimdienst", specialAbility: "Infrastruktur: Nachdem du die Bau-Aktion ausgeführt hast, platziere einen zusätzlichen Block auf ein erlaubtes Feld." },
+            { id: 79, name: "Sklavenmärkte", region: "Persien", suit: "Wirtschaft", rank: 1, impactIcons: ["spy", "road"], actions: ["tax", "move"], patriot: null, prize: "Britisch", suitChange: null, specialAbility: null },
+            { id: 80, name: "Anglo-Persischer Handel", region: "Persien", suit: "Wirtschaft", rank: 1, impactIcons: ["road"], actions: ["tax", "build"], patriot: "Britisch", prize: "Russisch", suitChange: null, specialAbility: null },
+            { id: 81, name: "Russo-Persischer Handel", region: "Persien", suit: "Wirtschaft", rank: 2, impactIcons: ["road", "road"], actions: ["tax", "build"], patriot: "Russisch", prize: "Britisch", suitChange: null, specialAbility: null },
+            { id: 82, name: "Persische Armee", region: "Persien", suit: "Militär", rank: 2, impactIcons: ["army", "army"], actions: ["gift", "battle"], patriot: null, prize: null, suitChange: "Geheimdienst", specialAbility: null },
+            { id: 83, name: "Leibgarde des Schahs", region: "Persien", suit: "Militär", rank: 1, impactIcons: ["spy", "army"], actions: ["tax"], patriot: null, prize: null, suitChange: null, specialAbility: "Leibwächter: Deine politischen Karten können nicht Ziel der Verrat-Aktion sein." },
+            { id: 84, name: "Russische Linieninfanterie", region: "Persien", suit: "Militär", rank: 2, impactIcons: ["army", "army"], actions: ["battle"], patriot: "Russisch", prize: "Afghanisch", suitChange: "Wirtschaft", specialAbility: null },
+            { id: 85, name: "Bucharische Juden", region: "Transkaspien", suit: "Geheimdienst", rank: 1, impactIcons: ["spy"], actions: ["gift", "build"], patriot: null, prize: "Britisch", suitChange: "Wirtschaft", specialAbility: null },
+            { id: 86, name: "Jan Prosper Witkiewicz", region: "Transkaspien", suit: "Geheimdienst", rank: 2, impactIcons: ["spy", "spy"], actions: ["move", "build"], patriot: "Russisch", prize: null, suitChange: null, specialAbility: null },
+            { id: 87, name: "Imperiale Landvermesser", region: "Transkaspien", suit: "Geheimdienst", rank: 1, impactIcons: ["spy"], actions: ["move", "gift", "build"], patriot: "Russisch", prize: null, suitChange: null, specialAbility: null },
+            { id: 88, name: "Arthur Conolly", region: "Transkaspien", suit: "Geheimdienst", rank: 1, impactIcons: ["spy"], actions: ["move", "gift"], patriot: "Britisch", prize: null, suitChange: null, specialAbility: null },
+            { id: 89, name: "Aga Mehdi", region: "Transkaspien", suit: "Geheimdienst", rank: 1, impactIcons: ["spy"], actions: ["move", "betray", "battle"], patriot: "Russisch", prize: null, suitChange: null, specialAbility: null },
+            { id: 90, name: "Nasrullah Khan", region: "Transkaspien", suit: "Politik", rank: 1, impactIcons: ["tribe"], actions: ["tax", "betray"], patriot: null, prize: "Britisch", suitChange: null, specialAbility: null },
+            { id: 91, name: "Allah Quli Bahadur", region: "Transkaspien", suit: "Geheimdienst", rank: 1, impactIcons: ["spy", "army", "tribe"], actions: ["betray"], patriot: null, prize: "Russisch", suitChange: null, specialAbility: "Gewiefter Operator: Diese Karte wird immer behandelt, als wäre sie in der bevorzugten Farbe." },
+            { id: 92, name: "Mir Murad Beg", region: "Transkaspien", suit: "Politik", rank: 1, impactIcons: ["spy", "tribe"], actions: ["battle", "tax", "move"], patriot: null, prize: "Britisch", suitChange: "Militär", specialAbility: null },
+            { id: 93, name: "Madali Khan", region: "Transkaspien", suit: "Politik", rank: 2, impactIcons: ["tribe", "tribe"], actions: ["battle", "betray"], patriot: null, prize: "Britisch", suitChange: null, specialAbility: "Diese Karte wird immer behandelt, als wäre sie in der bevorzugten Farbe." },
+            { id: 94, name: "Sklavenmärkte von Chiwa", region: "Transkaspien", suit: "Wirtschaft", rank: 1, impactIcons: ["spy", "road"], actions: ["tax", "betray"], patriot: null, prize: "Britisch", suitChange: null, specialAbility: null },
+            { id: 95, name: "Nachschub aus Orenburg", region: "Transkaspien", suit: "Wirtschaft", rank: 1, impactIcons: ["road"], actions: ["tax", "move"], patriot: "Russisch", prize: "Afghanisch", suitChange: null, specialAbility: null },
+            { id: 96, name: "Panjdeh-Oase", region: "Transkaspien", suit: "Wirtschaft", rank: 2, impactIcons: ["road", "road"], actions: ["tax", "move"], patriot: null, prize: "Britisch", suitChange: null, specialAbility: null },
+            { id: 97, name: "Die Zitadelle von Buchara", region: "Transkaspien", suit: "Militär", rank: 1, impactIcons: ["army"], actions: ["build"], patriot: null, prize: null, suitChange: "Geheimdienst", specialAbility: "Zitadelle: Deine Stämme in Transkaspien können nicht angegriffen werden." },
+            { id: 98, name: "Europäische Kanonen", region: "Transkaspien", suit: "Militär", rank: 3, impactIcons: ["army", "army", "army"], actions: ["gift"], patriot: null, prize: "Britisch", suitChange: null, specialAbility: null },
+            { id: 99, name: "Kosaken", region: "Transkaspien", suit: "Militär", rank: 1, impactIcons: ["spy", "army"], actions: ["battle"], patriot: "Russisch", prize: "Britisch", suitChange: null, specialAbility: "Irreguläre: Diese Karte wird immer behandelt, als wäre sie in der bevorzugten Farbe." },
+            { id: 100, name: "Graf Perovsky", region: "Transkaspien", suit: "Militär", rank: 2, impactIcons: ["army", "army"], actions: ["battle"], patriot: "Russisch", prize: "Britisch", suitChange: null, specialAbility: null },
+            { id: 101, namePurchased: "Dominanzcheck", effectPurchased: "Führe einen Dominanzcheck durch. Wenn erfolgreich, werden alle Blöcke vom Spielplan entfernt.", nameDiscarded: "Dominanzcheck", effectDiscarded: "Führe einen Dominanzcheck durch. Wenn erfolgreich, werden alle Blöcke vom Spielplan entfernt." },
+            { id: 102, namePurchased: "Dominanzcheck", effectPurchased: "Führe einen Dominanzcheck durch. Wenn erfolgreich, werden alle Blöcke vom Spielplan entfernt.", nameDiscarded: "Dominanzcheck", effectDiscarded: "Führe einen Dominanzcheck durch. Wenn erfolgreich, werden alle Blöcke vom Spielplan entfernt." },
+            { id: 103, namePurchased: "Dominanzcheck", effectPurchased: "Führe einen Dominanzcheck durch. Wenn erfolgreich, werden alle Blöcke vom Spielplan entfernt.", nameDiscarded: "Dominanzcheck", effectDiscarded: "Führe einen Dominanzcheck durch. Wenn erfolgreich, werden alle Blöcke vom Spielplan entfernt." },
+            { id: 104, namePurchased: "Dominanzcheck", effectPurchased: "Führe einen Dominanzcheck durch. Wenn erfolgreich, werden alle Blöcke vom Spielplan entfernt.", nameDiscarded: "Dominanzcheck", effectDiscarded: "Führe einen Dominanzcheck durch. Wenn erfolgreich, werden alle Blöcke vom Spielplan entfernt." },
+            { id: 105, namePurchased: "Neue Taktiken", effectPurchased: "Gekauft: Militär wird bevorzugte Farbe.", nameDiscarded: "Neue Taktiken", effectDiscarded: "Abgeworfen: Wechselt die bevorzugte Farbe zu Militär." },
+            { id: 106, namePurchased: "Koh-i-Noor zurückerlangt", effectPurchased: "Gekauft: Bestimmter Spieler wird zum KohINoorPlayer.", nameDiscarded: "Peinlichkeit des Reichtums", effectDiscarded: "Abgeworfen: Effekt 'EmbarrassmentOfRiches' aktiviert (Geschenke zählen nicht für Dominanz)." },
+            { id: 107, namePurchased: "Höfische Manieren", effectPurchased: "Gekauft: Ein bestimmter Spieler ist betroffen (keine Bestechungsgelder zahlen).", nameDiscarded: "Missachtung der Sitten", effectDiscarded: "Abgeworfen: Effekt 'Disregard for Customs' aktiviert." },
+            { id: 108, namePurchased: "Gerücht", effectPurchased: "Gekauft: Ein bestimmter Spieler wird zum 'RumorPlayer'.", nameDiscarded: "Fehlschlag", effectDiscarded: "Abgeworfen: Alle Loyalitätspreise werden abgeworfen." },
+            { id: 109, namePurchased: "Kriegsmüdigkeit", effectPurchased: "Gekauft: Dominanz-Block-Schwelle wird auf 2 reduziert.", nameDiscarded: "Aufstände im Punjab", effectDiscarded: "Abgeworfen: Entfernt alle Stämme und Armeen aus Punjab." },
+            { id: 110, namePurchased: "Nationalismus", effectPurchased: "Gekauft: Ein bestimmter Spieler ist betroffen.", nameDiscarded: "Aufstände in Herat", effectDiscarded: "Abgeworfen: Entfernt alle Stämme und Armeen aus Herat." },
+            { id: 111, namePurchased: "Öffentlicher Rückzug", effectPurchased: "Alle Rupien auf einem bestimmten Marktfeld werden entfernt.", nameDiscarded: "Kein Effekt", effectDiscarded: "Kein Effekt." },
+            { id: 112, namePurchased: "Staatenbildung", effectPurchased: "Gekauft: Ein bestimmter Spieler ist betroffen.", nameDiscarded: "Aufstände in Kabul", effectDiscarded: "Abgeworfen: Entfernt alle Stämme und Armeen aus Kabul." },
+            { id: 113, namePurchased: "Rückendeckung der persischen Aristokratie", effectPurchased: "Gekauft: Der kaufende Spieler erhält 3 Rupien.", nameDiscarded: "Aufstände in Persien", effectDiscarded: "Abgeworfen: Entfernt alle Stämme und Armeen aus Persien." },
+            { id: 114, namePurchased: "Andere Überzeugungsmethoden", effectPurchased: "Gekauft: Spieler tauschen die Hände.", nameDiscarded: "Vertrauensverlust", effectDiscarded: "Abgeworfen: Jeder Spieler mit 2+ Handkarten muss eine abwerfen." },
+            { id: 115, namePurchased: "Paschtunwali-Werte", effectPurchased: "Gekauft: Ein bestimmter Spieler wählt eine Farbe, die solange bevorzugt bleibt, bis die Karte abgeworfen wird.", nameDiscarded: "Paschtunwali-Werte", effectDiscarded: "Abgeworfen: Wechselt die bevorzugte Farbe zu Geheimdienst." },
+            { id: 116, namePurchased: "Rüge", effectPurchased: "Gekauft: Alle Stämme und Armeen aus einer Region entfernen.", nameDiscarded: "Rüge", effectDiscarded: "Abgeworfen: Wechselt die bevorzugte Farbe zu Politik." }
         ];
         const CD = {};
         RAW_CARDS.forEach(c => CD[c.id] = c);
 
-        // ─── WAKHAN KI-KARTEN (basierend auf CSV) ──────────────────────────────────
-        const WKC = [
-            { id:117, loyaltyOrder:["Russisch","Afghanisch","Britisch"], action1_de:"Besteuerung.", action2_de:"Wenn Militärkarten bevorzugt werden, radikalisiere die am höchsten eingestufte Militärkarte.", action3_de:"Radikalisierung.", redArrow:"bottom", blackArrow:3, priorities:[2,3,4,5,0,1], backTopLabel:"Top (left)" },
-            { id:118, loyaltyOrder:["Afghanisch","Britisch","Russisch"], action1_de:"Wenn Politikkarten bevorzugt werden, radikalisiere die am höchsten eingestufte Wirtschaftskarte.", action2_de:"Radikalisiere die am höchsten eingestufte Politikkarte.", action3_de:"Radikalisierung.", redArrow:"top", blackArrow:2, priorities:[3,4,5,0,1,2], backTopLabel:"Bottom (right)" },
-            { id:119, loyaltyOrder:["Britisch","Russisch","Afghanisch"], action1_de:"Besteuerung.", action2_de:"Radikalisiere die am höchsten eingestufte Geheimdienstkarte.", action3_de:"Radikalisierung.", redArrow:"bottom", blackArrow:4, priorities:[0,1,2,3,4,5], backTopLabel:"Bottom (right)" },
-            { id:120, loyaltyOrder:["Russisch","Afghanisch","Britisch"], action1_de:"Wenn Wakhan weniger als 2 Rupien hat, radikalisiere die Karte, die die meisten Rupien einbringt.", action2_de:"Bauen.", action3_de:"Radikalisierung.", redArrow:"top", blackArrow:5, priorities:[4,5,0,1,2,3], backTopLabel:"Top (left)" },
-            { id:121, loyaltyOrder:["Britisch","Russisch","Afghanisch"], action1_de:"Radikalisiere eine Karte, die Wakhan die Kontrolle über eine Region verschafft.", action2_de:"Kampf.", action3_de:"Radikalisierung.", redArrow:"top", blackArrow:2, priorities:[2,3,4,5,0,1], backTopLabel:"Bottom (right)" },
-            { id:122, loyaltyOrder:["Britisch","Russisch","Afghanisch"], action1_de:"Radikalisiere eine Geheimdienstkarte.", action2_de:"Bewegen.", action3_de:"Radikalisierung.", redArrow:"top", blackArrow:1, priorities:[0,1,2,3,4,5], backTopLabel:"Bottom (right)" },
-            { id:123, loyaltyOrder:["Afghanisch","Russisch","Britisch"], action1_de:"Bauen.", action2_de:"Bewegen.", action3_de:"Radikalisierung.", redArrow:"bottom", blackArrow:5, priorities:[1,2,3,4,5,0], backTopLabel:"Top (left)" },
-            { id:124, loyaltyOrder:["Russisch","Afghanisch","Britisch"], action1_de:"Besteuerung.", action2_de:"Verrat.", action3_de:"Radikalisierung.", redArrow:"bottom", blackArrow:5, priorities:[1,2,3,4,5,0], backTopLabel:"Top (left)" },
-            { id:125, loyaltyOrder:["Russisch","Britisch","Afghanisch"], action1_de:"Radikalisiere die Karte, die die meisten Armeen und/oder Straßen platziert.", action2_de:"Wenn keine Koalition Dominanz hat, radikalisiere die Karte, die die meisten Spione und/oder Stämme platziert.", action3_de:"Radikalisierung.", redArrow:"bottom", blackArrow:6, priorities:[1,2,3,4,5,0], backTopLabel:"Top (left)" },
-            { id:126, loyaltyOrder:["Afghanisch","Britisch","Russisch"], action1_de:"Wenn Wakhan keine Karte mit der Bewegungsaktion hat, radikalisiere eine Karte mit einer Bewegungsaktion.", action2_de:"Bewegen.", action3_de:"Radikalisierung.", redArrow:"bottom", blackArrow:1, priorities:[3,4,5,0,1,2], backTopLabel:"Top (left)" },
-            { id:127, loyaltyOrder:["Afghanisch","Russisch","Britisch"], action1_de:"Wenn keine Koalition Dominanz hat, radikalisiere die Karte, die die meisten Spione und/oder Stämme platziert.", action2_de:"Wenn Militärkarten bevorzugt werden, radikalisiere die am höchsten eingestufte Militärkarte.", action3_de:"Radikalisierung.", redArrow:"bottom", blackArrow:1, priorities:[4,5,0,1,2,3], backTopLabel:"Top (left)" },
-            { id:128, loyaltyOrder:["Afghanisch","Russisch","Britisch"], action1_de:"Bewegen.", action2_de:"Verrat.", action3_de:"Radikalisierung.", redArrow:"bottom", blackArrow:5, priorities:[4,5,0,1,2,3], backTopLabel:"Top (left)" },
-            { id:129, loyaltyOrder:["Afghanisch","Russisch","Britisch"], action1_de:"Wenn eine Koalition Dominanz hat, radikalisiere einen passenden Patrioten.", action2_de:"Wenn keine Koalition Dominanz hat, radikalisiere die Karte, die die meisten Spione und/oder Stämme platziert.", action3_de:"Radikalisierung.", redArrow:"top", blackArrow:3, priorities:[5,0,1,2,3,4], backTopLabel:"Bottom (right)" },
-            { id:130, loyaltyOrder:["Afghanisch","Russisch","Britisch"], action1_de:"Kämpfe auf der ranghöchsten Hofkarte mit den meisten Spionen, auf der Wakhan ebenfalls mindestens einen Spion hat.", action2_de:"Kampf.", action3_de:"Radikalisierung.", redArrow:"top", blackArrow:4, priorities:[5,0,1,2,3,4], backTopLabel:"Bottom (right)" },
-            { id:131, loyaltyOrder:["Russisch","Britisch","Afghanisch"], action1_de:"Bewegen.", action2_de:"Kampf.", action3_de:"Radikalisierung.", redArrow:"bottom", blackArrow:3, priorities:[1,2,3,4,5,0], backTopLabel:"Bottom (right)" },
-            { id:132, loyaltyOrder:["Afghanisch","Britisch","Russisch"], action1_de:"Wenn keine Koalition Dominanz hat, radikalisiere die Karte, die die meisten Spione und/oder Stämme platziert.", action2_de:"Kämpfe auf der ranghöchsten Hofkarte mit den meisten Spionen, auf der Wakhan ebenfalls mindestens einen Spion hat.", action3_de:"Radikalisierung.", redArrow:"top", blackArrow:6, priorities:[2,3,4,5,0,1], backTopLabel:"Bottom (right)" },
-            { id:133, loyaltyOrder:["Russisch","Afghanisch","Britisch"], action1_de:"Wenn Wakhans Hofgröße ihr Limit erreicht hat, radikalisiere die am höchsten eingestufte Politikkarte.", action2_de:"Besteuerung.", action3_de:"Radikalisierung.", redArrow:"top", blackArrow:1, priorities:[3,4,5,0,1,2], backTopLabel:"Top (left)" },
-            { id:134, loyaltyOrder:["Afghanisch","Russisch","Britisch"], action1_de:"Besteuerung.", action2_de:"Verrat.", action3_de:"Radikalisierung.", redArrow:"top", blackArrow:4, priorities:[0,1,2,3,4,5], backTopLabel:"Top (left)" },
-            { id:135, loyaltyOrder:["Afghanisch","Britisch","Russisch"], action1_de:"Bauen.", action2_de:"Bewegen.", action3_de:"Radikalisierung.", redArrow:"top", blackArrow:3, priorities:[0,1,2,3,4,5], backTopLabel:"Bottom (right)" },
-            { id:136, loyaltyOrder:["Russisch","Afghanisch","Britisch"], action1_de:"Wenn Wakhan weniger als 2 Rupien hat, radikalisiere die Karte, die die meisten Rupien einbringt.", action2_de:"Bauen.", action3_de:"Radikalisierung.", redArrow:"bottom", blackArrow:2, priorities:[3,4,5,0,1,2], backTopLabel:"Bottom (right)" },
-            { id:137, loyaltyOrder:["Afghanisch","Russisch","Britisch"], action1_de:"Radikalisiere eine Karte, die Wakhan die Kontrolle über eine Region verschafft.", action2_de:"Bauen.", action3_de:"Radikalisierung.", redArrow:"top", blackArrow:6, priorities:[3,4,5,0,1,2], backTopLabel:"Bottom (right)" },
-            { id:138, loyaltyOrder:["Russisch","Afghanisch","Britisch"], action1_de:"Verrat.", action2_de:"Kämpfe auf der ranghöchsten Hofkarte mit den meisten Spionen, auf der Wakhan ebenfalls mindestens einen Spion hat.", action3_de:"Radikalisierung.", redArrow:"bottom", blackArrow:6, priorities:[4,5,0,1,2,3], backTopLabel:"Top (left)" },
-            { id:139, loyaltyOrder:["Britisch","Russisch","Afghanisch"], action1_de:"Radikalisiere die am höchsten eingestufte Politikkarte.", action2_de:"Wenn Militärkarten bevorzugt werden, radikalisiere die am höchsten eingestufte Militärkarte.", action3_de:"Radikalisierung.", redArrow:"bottom", blackArrow:4, priorities:[2,3,4,5,0,1], backTopLabel:"Bottom (right)" },
-            { id:140, loyaltyOrder:["Afghanisch","Britisch","Russisch"], action1_de:"Wenn Wakhan weniger Spione hat als ein anderer Spieler, radikalisiere die am höchsten eingestufte Geheimdienstkarte.", action2_de:"Kämpfe auf der ranghöchsten Hofkarte mit den meisten Spionen, auf der Wakhan ebenfalls mindestens einen Spion hat.", action3_de:"Radikalisierung.", redArrow:"bottom", blackArrow:2, priorities:[0,1,2,3,4,5], backTopLabel:"Bottom (right)" }
+        // ─── WAKHAN KI-KARTEN (mit vollständigem backArray) ──────────────────────────
+        const WKC_RAW = [
+            { id: 117, loyaltyOrder: ["Russisch","Afghanisch","Britisch"], action1_de: "Besteuerung.", action2_de: "Wenn Militärkarten bevorzugt werden, radikalisiere die am höchsten eingestufte Militärkarte.", action3_de: "Radikalisierung.", redArrow: "bottom", blackArrow: 3, backTopLabel: "Top (left)", priorities: [2,3,4,5,0,1] },
+            { id: 118, loyaltyOrder: ["Afghanisch","Britisch","Russisch"], action1_de: "Wenn Politikkarten bevorzugt werden, radikalisiere die am höchsten eingestufte Wirtschaftskarte.", action2_de: "Radikalisiere die am höchsten eingestufte Politikkarte.", action3_de: "Radikalisierung.", redArrow: "top", blackArrow: 2, backTopLabel: "Bottom (right)", priorities: [3,4,5,0,1,2] },
+            { id: 119, loyaltyOrder: ["Britisch","Russisch","Afghanisch"], action1_de: "Besteuerung.", action2_de: "Radikalisiere die am höchsten eingestufte Geheimdienstkarte.", action3_de: "Radikalisierung.", redArrow: "bottom", blackArrow: 4, backTopLabel: "Bottom (right)", priorities: [0,1,2,3,4,5] },
+            { id: 120, loyaltyOrder: ["Russisch","Afghanisch","Britisch"], action1_de: "Wenn Wakhan weniger als 2 Rupien hat, radikalisiere die Karte, die die meisten Rupien einbringt.", action2_de: "Bauen.", action3_de: "Radikalisierung.", redArrow: "top", blackArrow: 5, backTopLabel: "Top (left)", priorities: [4,5,0,1,2,3] },
+            { id: 121, loyaltyOrder: ["Britisch","Russisch","Afghanisch"], action1_de: "Radikalisiere eine Karte, die Wakhan die Kontrolle über eine Region verschafft.", action2_de: "Kampf.", action3_de: "Radikalisierung.", redArrow: "top", blackArrow: 2, backTopLabel: "Bottom (right)", priorities: [2,3,4,5,0,1] },
+            { id: 122, loyaltyOrder: ["Britisch","Russisch","Afghanisch"], action1_de: "Radikalisiere eine Geheimdienstkarte.", action2_de: "Bewegen.", action3_de: "Radikalisierung.", redArrow: "top", blackArrow: 1, backTopLabel: "Bottom (right)", priorities: [0,1,2,3,4,5] },
+            { id: 123, loyaltyOrder: ["Afghanisch","Russisch","Britisch"], action1_de: "Bauen.", action2_de: "Bewegen.", action3_de: "Radikalisierung.", redArrow: "bottom", blackArrow: 5, backTopLabel: "Top (left)", priorities: [1,2,3,4,5,0] },
+            { id: 124, loyaltyOrder: ["Russisch","Afghanisch","Britisch"], action1_de: "Besteuerung.", action2_de: "Verrat.", action3_de: "Radikalisierung.", redArrow: "bottom", blackArrow: 5, backTopLabel: "Top (left)", priorities: [1,2,3,4,5,0] },
+            { id: 125, loyaltyOrder: ["Russisch","Britisch","Afghanisch"], action1_de: "Radikalisiere die Karte, die die meisten Armeen und/oder Straßen platziert.", action2_de: "Wenn keine Koalition Dominanz hat, radikalisiere die Karte, die die meisten Spione und/oder Stämme platziert.", action3_de: "Radikalisierung.", redArrow: "bottom", blackArrow: 6, backTopLabel: "Top (left)", priorities: [1,2,3,4,5,0] },
+            { id: 126, loyaltyOrder: ["Afghanisch","Britisch","Russisch"], action1_de: "Wenn Wakhan keine Karte mit der Bewegungsaktion hat, radikalisiere eine Karte mit einer Bewegungsaktion.", action2_de: "Bewegen.", action3_de: "Radikalisierung.", redArrow: "bottom", blackArrow: 1, backTopLabel: "Top (left)", priorities: [3,4,5,0,1,2] },
+            { id: 127, loyaltyOrder: ["Afghanisch","Russisch","Britisch"], action1_de: "Wenn keine Koalition Dominanz hat, radikalisiere die Karte, die die meisten Spione und/oder Stämme platziert.", action2_de: "Wenn Militärkarten bevorzugt werden, radikalisiere die am höchsten eingestufte Militärkarte.", action3_de: "Radikalisierung.", redArrow: "bottom", blackArrow: 1, backTopLabel: "Top (left)", priorities: [4,5,0,1,2,3] },
+            { id: 128, loyaltyOrder: ["Afghanisch","Russisch","Britisch"], action1_de: "Bewegen.", action2_de: "Verrat.", action3_de: "Radikalisierung.", redArrow: "bottom", blackArrow: 5, backTopLabel: "Top (left)", priorities: [4,5,0,1,2,3] },
+            { id: 129, loyaltyOrder: ["Afghanisch","Russisch","Britisch"], action1_de: "Wenn eine Koalition Dominanz hat, radikalisiere einen passenden Patrioten.", action2_de: "Wenn keine Koalition Dominanz hat, radikalisiere die Karte, die die meisten Spione und/oder Stämme platziert.", action3_de: "Radikalisierung.", redArrow: "top", blackArrow: 3, backTopLabel: "Bottom (right)", priorities: [5,0,1,2,3,4] },
+            { id: 130, loyaltyOrder: ["Afghanisch","Russisch","Britisch"], action1_de: "Kämpfe auf der ranghöchsten Hofkarte mit den meisten Spionen, auf der Wakhan ebenfalls mindestens einen Spion hat.", action2_de: "Kampf.", action3_de: "Radikalisierung.", redArrow: "top", blackArrow: 4, backTopLabel: "Bottom (right)", priorities: [5,0,1,2,3,4] },
+            { id: 131, loyaltyOrder: ["Russisch","Britisch","Afghanisch"], action1_de: "Bewegen.", action2_de: "Kampf.", action3_de: "Radikalisierung.", redArrow: "bottom", blackArrow: 3, backTopLabel: "Bottom (right)", priorities: [1,2,3,4,5,0] },
+            { id: 132, loyaltyOrder: ["Afghanisch","Britisch","Russisch"], action1_de: "Wenn keine Koalition Dominanz hat, radikalisiere die Karte, die die meisten Spione und/oder Stämme platziert.", action2_de: "Kämpfe auf der ranghöchsten Hofkarte mit den meisten Spionen, auf der Wakhan ebenfalls mindestens einen Spion hat.", action3_de: "Radikalisierung.", redArrow: "top", blackArrow: 6, backTopLabel: "Bottom (right)", priorities: [2,3,4,5,0,1] },
+            { id: 133, loyaltyOrder: ["Russisch","Afghanisch","Britisch"], action1_de: "Wenn Wakhans Hofgröße ihr Limit erreicht hat, radikalisiere die am höchsten eingestufte Politikkarte.", action2_de: "Besteuerung.", action3_de: "Radikalisierung.", redArrow: "top", blackArrow: 1, backTopLabel: "Top (left)", priorities: [3,4,5,0,1,2] },
+            { id: 134, loyaltyOrder: ["Afghanisch","Russisch","Britisch"], action1_de: "Besteuerung.", action2_de: "Verrat.", action3_de: "Radikalisierung.", redArrow: "top", blackArrow: 4, backTopLabel: "Top (left)", priorities: [0,1,2,3,4,5] },
+            { id: 135, loyaltyOrder: ["Afghanisch","Britisch","Russisch"], action1_de: "Bauen.", action2_de: "Bewegen.", action3_de: "Radikalisierung.", redArrow: "top", blackArrow: 3, backTopLabel: "Bottom (right)", priorities: [0,1,2,3,4,5] },
+            { id: 136, loyaltyOrder: ["Russisch","Afghanisch","Britisch"], action1_de: "Wenn Wakhan weniger als 2 Rupien hat, radikalisiere die Karte, die die meisten Rupien einbringt.", action2_de: "Bauen.", action3_de: "Radikalisierung.", redArrow: "bottom", blackArrow: 2, backTopLabel: "Bottom (right)", priorities: [3,4,5,0,1,2] },
+            { id: 137, loyaltyOrder: ["Afghanisch","Russisch","Britisch"], action1_de: "Radikalisiere eine Karte, die Wakhan die Kontrolle über eine Region verschafft.", action2_de: "Bauen.", action3_de: "Radikalisierung.", redArrow: "top", blackArrow: 6, backTopLabel: "Bottom (right)", priorities: [3,4,5,0,1,2] },
+            { id: 138, loyaltyOrder: ["Russisch","Afghanisch","Britisch"], action1_de: "Verrat.", action2_de: "Kämpfe auf der ranghöchsten Hofkarte mit den meisten Spionen, auf der Wakhan ebenfalls mindestens einen Spion hat.", action3_de: "Radikalisierung.", redArrow: "bottom", blackArrow: 6, backTopLabel: "Top (left)", priorities: [4,5,0,1,2,3] },
+            { id: 139, loyaltyOrder: ["Britisch","Russisch","Afghanisch"], action1_de: "Radikalisiere die am höchsten eingestufte Politikkarte.", action2_de: "Wenn Militärkarten bevorzugt werden, radikalisiere die am höchsten eingestufte Militärkarte.", action3_de: "Radikalisierung.", redArrow: "bottom", blackArrow: 4, backTopLabel: "Bottom (right)", priorities: [2,3,4,5,0,1] },
+            { id: 140, loyaltyOrder: ["Afghanisch","Britisch","Russisch"], action1_de: "Wenn Wakhan weniger Spione hat als ein anderer Spieler, radikalisiere die am höchsten eingestufte Geheimdienstkarte.", action2_de: "Kämpfe auf der ranghöchsten Hofkarte mit den meisten Spionen, auf der Wakhan ebenfalls mindestens einen Spion hat.", action3_de: "Radikalisierung.", redArrow: "bottom", blackArrow: 2, backTopLabel: "Bottom (right)", priorities: [0,1,2,3,4,5] }
         ];
 
-        const REGS=[{n:'Transcaspia',c:'rT',idx:0},{n:'Kabul',c:'rK',idx:1},{n:'Kandahar',c:'rKa',idx:2},{n:'Punjab',c:'rPu',idx:3},{n:'Herat',c:'rH',idx:4},{n:'Persien',c:'rP',idx:5}];
-        const REGION_BY_IDX={};
-        REGS.forEach(r=>REGION_BY_IDX[r.idx]=r);
+        // backArray bauen
+        const WKC = WKC_RAW.map(c => {
+            const oppLabel = c.backTopLabel === "Top (left)" ? "Bottom (right)" : "Top (left)";
+            return {
+                id: c.id,
+                loyaltyOrder: c.loyaltyOrder,
+                action1_de: c.action1_de,
+                action2_de: c.action2_de,
+                action3_de: c.action3_de,
+                redArrow: c.redArrow,
+                blackArrow: c.blackArrow,
+                backArray: [c.backTopLabel, ...c.priorities, oppLabel]
+            };
+        });
 
-        const URLS=[id=>`Cards/card_${id}.jpg`,id=>`Cards/card_${id}.png`,id=>`https://cdn.jsdelivr.net/gh/O-McClou/PP@3e8bc12b57fae22301e28250a1351dd677360f60/Cards/card_${id}.jpg`,id=>`https://cdn.jsdelivr.net/gh/O-McClou/PP@3e8bc12b57fae22301e28250a1351dd677360f60/Cards/card_${id}.png`];
-        const BURLS=[id=>`Cards/card_back_${id}.jpg`,id=>`Cards/card_back_${id}.png`,id=>`https://cdn.jsdelivr.net/gh/O-McClou/PP@3e8bc12b57fae22301e28250a1351dd677360f60/Cards/card_back_${id}.jpg`,id=>`https://cdn.jsdelivr.net/gh/O-McClou/PP@3e8bc12b57fae22301e28250a1351dd677360f60/Cards/card_back_${id}.png`];
-        const blobCache={};
-        async function tryFetch(u){if(blobCache[u])return blobCache[u];const r=await fetch(u,{mode:'cors',cache:'force-cache'});if(!r.ok)throw 0;const b=await r.blob();if(!b.type.startsWith('image/'))throw 0;const o=URL.createObjectURL(b);blobCache[u]=o;return o;}
-        async function tryImgSrc(u){return new Promise((r,j)=>{const i=new Image();i.crossOrigin='anonymous';i.onload=()=>r(u);i.onerror=j;i.src=u;});}
-        async function loadImg(el,ph,ring,fns,id){if(ring)ring.style.display='flex';for(const f of fns){const u=f(id);try{const s=await tryFetch(u);el.src=s;el.style.display='block';if(ph)ph.style.display='none';if(ring)ring.style.display='none';return true;}catch{}try{const s=await tryImgSrc(u);el.src=s;el.style.display='block';if(ph)ph.style.display='none';if(ring)ring.style.display='none';return true;}catch{}}
-        if(ring)ring.style.display='none';el.style.display='none';if(ph)ph.style.display='flex';return false;}
+        // ─── REGIONEN ──────────────────────────────────────────────────────────────────
+        const REGS = [
+            { n: 'Transcaspia', c: 'rT', idx: 0 }, { n: 'Kabul', c: 'rK', idx: 1 },
+            { n: 'Kandahar', c: 'rKa', idx: 2 }, { n: 'Punjab', c: 'rPu', idx: 3 },
+            { n: 'Herat', c: 'rH', idx: 4 }, { n: 'Persien', c: 'rP', idx: 5 }
+        ];
+        const REGION_BY_IDX = {};
+        REGS.forEach(r => REGION_BY_IDX[r.idx] = r);
 
-        let pile=[],disc=[],cur=null,topDeck=null,aIdx=0,aDone=0,aSkips=[],court=[],rupien=5,playerCount=1,playerLoyalties=['Britisch'],wakLoy='Russisch',preferredSuit='Politik',courtLimit=3,radCardId=null,radBriber=null,autoActionInfo='';
-
-        function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}}
-
-        let setupStep=0,tmpPlayerCount=1,tmpLoyalties=[];
-        function setupPlayerCount(n){tmpPlayerCount=n;tmpLoyalties=[];showSetupStep('step2');document.getElementById('step2label').textContent='Loyalität Spieler 1:';}
-        function setPlayerLoy(idx,loy){tmpLoyalties[idx]=loy;if(idx===0&&tmpPlayerCount===2){showSetupStep('step3');}else{showSetupStep('step4');}}
-        function showSetupStep(id){document.querySelectorAll('.setup-step').forEach(s=>s.classList.remove('act'));document.getElementById(id).classList.add('act');}
-        function finishSetup(){playerCount=tmpPlayerCount;playerLoyalties=tmpLoyalties;courtLimit=playerCount===1?3:4;document.getElementById('setupModal').style.display='none';document.getElementById('loyBar').style.display='flex';document.getElementById('mainApp').style.display='flex';initGame();}
-        function resetGame(){if(!confirm('Neues Spiel starten?'))return;document.getElementById('setupModal').style.display='flex';document.getElementById('loyBar').style.display='none';document.getElementById('mainApp').style.display='none';showSetupStep('step1');hidePanel();}
-
-        function calcWakLoy(){if(!cur)return wakLoy;for(const l of cur.loyaltyOrder){if(!playerLoyalties.includes(l))return l;}return cur.loyaltyOrder[0];}
-        function updateLoyBar(){wakLoy=calcWakLoy();document.getElementById('wakLoyDisplay').textContent=wakLoy;const map={Britisch:'brit',Russisch:'rus',Afghanisch:'afg'};const pills=document.getElementById('playerPills');pills.innerHTML='';playerLoyalties.forEach((l,i)=>{const sp=document.createElement('span');sp.className=`loy-pill ${map[l]||''} sel`;sp.textContent=`S${i+1}: ${l}`;sp.onclick=()=>cycleLoy(i);sp.title='Klicken um Loyalität zu wechseln';pills.appendChild(sp);});document.getElementById('prefSuitDisplay').textContent=preferredSuit;}
-        function cycleLoy(idx){const opts=['Britisch','Russisch','Afghanisch'];const curLoy=playerLoyalties[idx];const next=opts[(opts.indexOf(curLoy)+1)%opts.length];playerLoyalties[idx]=next;toast(`Spieler ${idx+1}: Loyalität → ${next}`);updateLoyBar();}
-
-        function initGame(){pile=WKC.map(c=>c.id);shuffle(pile);disc=[];court=[];cur=null;topDeck=null;aIdx=0;aDone=0;rupien=5;updateRupien();updateStack();updateCourt();clearDrawn();hidePanel();updateLoyBar();}
-
-        function updateStack(){const n=pile.length;document.getElementById('cntB').textContent=n;const imgB=document.getElementById('imgB'),phB=document.getElementById('phB'),ringB=document.getElementById('ringB');if(n>0){topDeck=WKC.find(c=>c.id===pile[pile.length-1]);phB.textContent='Lädt…';phB.style.display='flex';loadImg(imgB,phB,ringB,BURLS,pile[pile.length-1]).then(ok=>{if(!ok){phB.textContent='Rückseite';phB.style.display='flex';}});}else{topDeck=null;imgB.style.display='none';phB.style.display='flex';phB.textContent='Stapel leer';}updatePriorityDisplay();}
-        function clearDrawn(){['imgA','arrA','badgeA'].forEach(id=>{const el=document.getElementById(id);if(el)el.style.display='none';});const phA=document.getElementById('phA');if(phA){phA.style.display='flex';phA.textContent='Karte\nziehen';}document.getElementById('regs').style.display='none';document.getElementById('marketInfo').style.display='none';document.getElementById('priorityValues').style.display='none';}
-        function showDrawn(card){const imgA=document.getElementById('imgA'),phA=document.getElementById('phA'),ringA=document.getElementById('ringA');phA.textContent='Lädt…';phA.style.display='flex';loadImg(imgA,phA,ringA,URLS,card.id).then(ok=>{if(!ok){phA.textContent='Karte #'+card.id;phA.style.display='flex';}});const arr=document.getElementById('arrA');arr.className='arr '+(card.redArrow==='top'?'top':'bot');arr.textContent=card.redArrow==='top'?'▲ OBEN':'▼ UNTEN';arr.style.display='block';const badge=document.getElementById('badgeA');badge.textContent='#'+card.id+' ⬤'+card.blackArrow;badge.style.display='block';topDeck=pile.length>0?WKC.find(c=>c.id===pile[pile.length-1]):null;showRegsAndMarket(card,topDeck);updatePriorityDisplay();updateLoyBar();}
-
-        function getRegionPriorities(cardB){if(!cardB)return[0,1,2,3,4,5];const p=[...cardB.priorities];return cardB.backTopLabel!=='Top (left)'?p.reverse():p;}
-        function getMarketColumn(cardA,cardB){if(!cardB||!cardA.blackArrow)return'?';return cardB.priorities[cardA.blackArrow-1];}
-
-        function getRedArrowDecision(cardA,cardB){
-            if(!cardB||!cardA) return {marketRow:'?',courtSide:'?'};
-            const topLabel=cardB.backTopLabel;
-            const bottomLabel=topLabel==='Top (left)'?'Bottom (right)':'Top (left)';
-            const effectiveLabel=cardA.redArrow==='top'?topLabel:bottomLabel;
-            const row=effectiveLabel.startsWith('Top')?'OBEN':'UNTEN';
-            const side=effectiveLabel.includes('left')?'Links im Hof':'Rechts im Hof';
-            return {marketRow:row,courtSide:side,courtSideAbbr:side.includes('Links')?'L':'R'};
+        // ─── IMAGE URLS ───────────────────────────────────────────────────────────────
+        const URLS = [
+            id => `Cards/card_${id}.jpg`, id => `Cards/card_${id}.png`,
+            id => `https://cdn.jsdelivr.net/gh/O-McClou/PP@3e8bc12b57fae22301e28250a1351dd677360f60/Cards/card_${id}.jpg`,
+            id => `https://cdn.jsdelivr.net/gh/O-McClou/PP@3e8bc12b57fae22301e28250a1351dd677360f60/Cards/card_${id}.png`
+        ];
+        const BURLS = [
+            id => `Cards/card_back_${id}.jpg`, id => `Cards/card_back_${id}.png`,
+            id => `https://cdn.jsdelivr.net/gh/O-McClou/PP@3e8bc12b57fae22301e28250a1351dd677360f60/Cards/card_back_${id}.jpg`,
+            id => `https://cdn.jsdelivr.net/gh/O-McClou/PP@3e8bc12b57fae22301e28250a1351dd677360f60/Cards/card_back_${id}.png`
+        ];
+        const blobCache = {};
+        async function tryFetch(u) {
+            if (blobCache[u]) return blobCache[u];
+            const r = await fetch(u, { mode: 'cors', cache: 'force-cache' });
+            if (!r.ok) throw 0;
+            const b = await r.blob();
+            if (!b.type.startsWith('image/')) throw 0;
+            const o = URL.createObjectURL(b);
+            blobCache[u] = o;
+            return o;
+        }
+        async function tryImgSrc(u) {
+            return new Promise((r, j) => { const i = new Image();
+                i.crossOrigin = 'anonymous';
+                i.onload = () => r(u);
+                i.onerror = j;
+                i.src = u; });
+        }
+        async function loadImg(el, ph, ring, fns, id) {
+            if (ring) ring.style.display = 'flex';
+            for (const f of fns) { const u = f(id); try { const s = await tryFetch(u);
+                    el.src = s;
+                    el.style.display = 'block'; if (ph) ph.style.display = 'none'; if (ring) ring.style
+                        .display = 'none'; return true; } catch {} try { const s = await tryImgSrc(u);
+                    el.src = s;
+                    el.style.display = 'block'; if (ph) ph.style.display = 'none'; if (ring) ring.style
+                        .display = 'none'; return true; } catch {} }
+            if (ring) ring.style.display = 'none';
+            el.style.display = 'none'; if (ph) ph.style.display = 'flex'; return false;
         }
 
-        function showRegsAndMarket(cardA,cardB){
-            const regsEl=document.getElementById('regs');regsEl.innerHTML='';
-            const pris=getRegionPriorities(cardB);
-            pris.forEach((idx,pos)=>{const reg=REGION_BY_IDX[idx];if(!reg)return;const s=document.createElement('span');s.className='reg '+reg.c;s.textContent=(pos+1)+'. '+reg.n;regsEl.appendChild(s);});
-            regsEl.style.display='flex';
-            const col=getMarketColumn(cardA,cardB);
-            const {marketRow,courtSide}=getRedArrowDecision(cardA,cardB);
-            document.getElementById('miRow').textContent=marketRow;
-            document.getElementById('miCol').textContent=col;
-            document.getElementById('miSide').textContent=courtSide;
-            document.getElementById('marketInfo').style.display='block';
+        // ─── SPIELZUSTAND ─────────────────────────────────────────────────────────────
+        let pile = [],
+            disc = [],
+            cur = null,
+            topDeck = null;
+        let aIdx = 0,
+            aDone = 0,
+            aSkips = [];
+        let court = [];
+        let rupien = 5;
+        let playerCount = 1,
+            playerLoyalties = ['Britisch'],
+            wakLoy = 'Russisch';
+        let preferredSuit = 'Politik';
+        let courtLimit = 3;
+        let radCardId = null,
+            radBriber = null;
+        let autoActionInfo = '';
+
+        function shuffle(a) { for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i +
+                1));
+            [a[i], a[j]] = [a[j], a[i]]; } }
+
+        // ─── SETUP ────────────────────────────────────────────────────────────────────
+        let setupStep = 0,
+            tmpPlayerCount = 1,
+            tmpLoyalties = [];
+
+        function setupPlayerCount(n) {
+            tmpPlayerCount = n;
+            tmpLoyalties = [];
+            showSetupStep('step2');
+            document.getElementById('step2label').textContent = 'Loyalität Spieler 1:';
         }
 
-        function updatePriorityDisplay(){
-            const pvDiv=document.getElementById('priorityValues'),grid=document.getElementById('pvGrid'),labelEl=document.getElementById('pvLabel');
-            if(!topDeck||!cur){pvDiv.style.display='none';return;}
-            pvDiv.style.display='block';
-            const priorities=[...topDeck.priorities];
-            const activeIndex=cur.blackArrow-1;
-            const backLabel=topDeck.backTopLabel||'?';
-            labelEl.textContent=backLabel;
-            grid.innerHTML='';
-            priorities.forEach((val,idx)=>{
-                const region=REGION_BY_IDX[val];
-                const regionName=region?region.n:'?';
-                const item=document.createElement('div');
-                item.className='pv-item'+(idx===activeIndex?' active':'');
-                item.innerHTML=`<div class="pv-pos">Pos ${idx+1}</div><div class="pv-val">${val}</div><div class="pv-region">${regionName}</div>`;
-                if(idx===activeIndex) item.title='Schwarzer Pfeil zeigt auf diese Position → Spalte '+val;
+        function setPlayerLoy(idx, loy) {
+            tmpLoyalties[idx] = loy;
+            if (idx === 0 && tmpPlayerCount === 2) { showSetupStep('step3'); } else { showSetupStep('step4'); }
+        }
+
+        function showSetupStep(id) {
+            document.querySelectorAll('.setup-step').forEach(s => s.classList.remove('act'));
+            document.getElementById(id).classList.add('act');
+        }
+
+        function finishSetup() {
+            playerCount = tmpPlayerCount;
+            playerLoyalties = tmpLoyalties;
+            courtLimit = playerCount === 1 ? 3 : 4;
+            document.getElementById('setupModal').style.display = 'none';
+            document.getElementById('loyBar').style.display = 'flex';
+            document.getElementById('mainApp').style.display = 'flex';
+            document.getElementById('mainApp').style.flexDirection = 'column';
+            initGame();
+        }
+
+        function resetGame() {
+            if (!confirm('Neues Spiel starten?')) return;
+            document.getElementById('setupModal').style.display = 'flex';
+            document.getElementById('loyBar').style.display = 'none';
+            document.getElementById('mainApp').style.display = 'none';
+            showSetupStep('step1');
+            hidePanel();
+        }
+
+        // ─── LOYALITÄT ────────────────────────────────────────────────────────────────
+        function calcWakLoy() {
+            if (!cur) return wakLoy;
+            for (const l of cur.loyaltyOrder) {
+                if (!playerLoyalties.includes(l)) return l;
+            }
+            return cur.loyaltyOrder[0];
+        }
+
+        function updateLoyBar() {
+            wakLoy = calcWakLoy();
+            document.getElementById('wakLoyDisplay').textContent = wakLoy;
+            const map = { Britisch: 'brit', Russisch: 'rus', Afghanisch: 'afg' };
+            const pills = document.getElementById('playerPills');
+            pills.innerHTML = '';
+            playerLoyalties.forEach((l, i) => {
+                const sp = document.createElement('span');
+                sp.className = `loy-pill ${map[l]||''} sel`;
+                sp.textContent = `S${i+1}: ${l}`;
+                sp.onclick = () => cycleLoy(i);
+                sp.title = 'Klicken um Loyalität zu wechseln';
+                pills.appendChild(sp);
+            });
+            const prefEl = document.getElementById('prefSuitDisplay');
+            prefEl.textContent = preferredSuit;
+            prefEl.className = '';
+        }
+
+        function cycleLoy(idx) {
+            const opts = ['Britisch', 'Russisch', 'Afghanisch'];
+            const curLoy = playerLoyalties[idx];
+            const next = opts[(opts.indexOf(curLoy) + 1) % opts.length];
+            playerLoyalties[idx] = next;
+            toast(`Spieler ${idx+1}: Loyalität → ${next}`);
+            updateLoyBar();
+        }
+
+        // ─── INIT ─────────────────────────────────────────────────────────────────────
+        function initGame() {
+            pile = WKC.map(c => c.id);
+            shuffle(pile);
+            disc = [];
+            court = [];
+            cur = null;
+            topDeck = null;
+            aIdx = 0;
+            aDone = 0;
+            rupien = 5;
+            updateRupien();
+            updateStack();
+            updateCourt();
+            clearDrawn();
+            hidePanel();
+            updateLoyBar();
+        }
+
+        // ─── STAPEL ───────────────────────────────────────────────────────────────────
+        function updateStack() {
+            const n = pile.length;
+            document.getElementById('cntB').textContent = n;
+            const imgB = document.getElementById('imgB'),
+                phB = document.getElementById('phB'),
+                ringB = document.getElementById('ringB');
+            if (n > 0) {
+                topDeck = WKC.find(c => c.id === pile[pile.length - 1]);
+                phB.textContent = 'Lädt…';
+                phB.style.display = 'flex';
+                loadImg(imgB, phB, ringB, BURLS, pile[pile.length - 1]).then(ok => { if (!ok) { phB
+                        .textContent = 'Rückseite';
+                        phB.style.display = 'flex'; } });
+            } else {
+                topDeck = null;
+                imgB.style.display = 'none';
+                phB.style.display = 'flex';
+                phB.textContent = 'Stapel leer';
+            }
+            updatePriorityDisplay();
+        }
+
+        function clearDrawn() {
+            ['imgA', 'arrA', 'badgeA'].forEach(id => { const el = document.getElementById(id); if (el) { el.style
+                        .display = 'none'; } });
+            const phA = document.getElementById('phA'); if (phA) { phA.style.display = 'flex';
+                phA.textContent = 'Karte\nziehen'; }
+            document.getElementById('regs').style.display = 'none';
+            document.getElementById('marketInfo').style.display = 'none';
+            document.getElementById('priorityValues').style.display = 'none';
+        }
+
+        function showDrawn(card) {
+            const imgA = document.getElementById('imgA'),
+                phA = document.getElementById('phA'),
+                ringA = document.getElementById('ringA');
+            phA.textContent = 'Lädt…';
+            phA.style.display = 'flex';
+            loadImg(imgA, phA, ringA, URLS, card.id).then(ok => { if (!ok) { phA.textContent = 'Karte #' + card
+                        .id;
+                    phA.style.display = 'flex'; } });
+            const arr = document.getElementById('arrA');
+            arr.className = 'arr ' + (card.redArrow === 'top' ? 'top' : 'bot');
+            arr.textContent = card.redArrow === 'top' ? '▲ OBEN' : '▼ UNTEN';
+            arr.style.display = 'block';
+            const badge = document.getElementById('badgeA');
+            badge.textContent = '#' + card.id + ' ⬤' + card.blackArrow;
+            badge.style.display = 'block';
+            topDeck = pile.length > 0 ? WKC.find(c => c.id === pile[pile.length - 1]) : null;
+            showRegsAndMarket(card, topDeck);
+            updatePriorityDisplay();
+            updateLoyBar();
+        }
+
+        function getMarketColumn(cardA, cardB) {
+            if (!cardB || !cardA.blackArrow) return '?';
+            // Der schwarze Pfeil zeigt auf eine Position 1–6 im backArray (Index 1–6)
+            return cardB.backArray[cardA.blackArrow];
+        }
+
+        function getMarketRowAndSide(cardA, cardB) {
+            if (!cardB) return { row: '?', side: '?' };
+            const idx = cardA.redArrow === 'top' ? 0 : 7;
+            const label = cardB.backArray[idx].toLowerCase(); // "top (left)" or "bottom (right)"
+            const row = label.includes('top') ? 'OBEN' : 'UNTEN';
+            const side = label.includes('left') ? 'Links im Hof' : 'Rechts im Hof';
+            return { row, side };
+        }
+
+        function showRegsAndMarket(cardA, cardB) {
+            const regsEl = document.getElementById('regs');
+            regsEl.innerHTML = '';
+            if (cardB) {
+                // Zeige die sechs Prioritäten der Rückseite (Indizes 1–6)
+                for (let i = 1; i <= 6; i++) {
+                    const val = cardB.backArray[i];
+                    const reg = REGION_BY_IDX[val];
+                    if (!reg) continue;
+                    const s = document.createElement('span');
+                    s.className = 'reg ' + reg.c;
+                    s.textContent = `${i}. ${reg.n}`;
+                    regsEl.appendChild(s);
+                }
+                regsEl.style.display = 'flex';
+
+                const { row, side } = getMarketRowAndSide(cardA, cardB);
+                const col = getMarketColumn(cardA, cardB);
+                document.getElementById('miRow').textContent = row;
+                document.getElementById('miCol').textContent = col;
+                document.getElementById('miSide').textContent = side;
+                document.getElementById('marketInfo').style.display = 'block';
+            } else {
+                regsEl.style.display = 'none';
+                document.getElementById('marketInfo').style.display = 'none';
+            }
+        }
+
+        function updatePriorityDisplay() {
+            const pvDiv = document.getElementById('priorityValues');
+            const grid = document.getElementById('pvGrid');
+            const labelEl = document.getElementById('pvLabel');
+            if (!topDeck || !cur) {
+                pvDiv.style.display = 'none';
+                return;
+            }
+            pvDiv.style.display = 'block';
+            const backArray = topDeck.backArray;
+            const activeIndex = cur.blackArrow; // 1–6
+            const topLabel = backArray[0];
+            labelEl.textContent = topLabel;
+
+            grid.innerHTML = '';
+            for (let i = 1; i <= 6; i++) {
+                const val = backArray[i];
+                const region = REGION_BY_IDX[val];
+                const regionName = region ? region.n : '?';
+                const item = document.createElement('div');
+                item.className = 'pv-item' + (i === activeIndex ? ' active' : '');
+                item.innerHTML = `
+                    <div class="pv-pos">Pos ${i}</div>
+                    <div class="pv-val">${val}</div>
+                    <div class="pv-region">${regionName}</div>
+                `;
+                if (i === activeIndex) {
+                    item.title = 'Schwarzer Pfeil zeigt auf diese Position → Spalte ' + val;
+                }
                 grid.appendChild(item);
+            }
+        }
+
+        // ─── HOFKARTEN-ANALYSE (unverändert) ─────────────────────────────────────────
+        function getCourtCardsWithAction(actionType) {
+            return court.filter(c => {
+                if (c.usedThisTurn) return false;
+                const info = CD[c.id];
+                if (!info || !info.actions) return false;
+                return info.actions.includes(actionType);
             });
         }
 
-        function getCourtCardsWithAction(at){return court.filter(c=>{if(c.usedThisTurn)return false;const i=CD[c.id];return i&&i.actions&&i.actions.includes(at);});}
-        function getUnusedBonusCourtCards(){return court.filter(c=>{if(c.usedThisTurn)return false;const i=CD[c.id];if(!i)return false;if(i.suit===preferredSuit)return true;if(i.specialAbility&&i.specialAbility.includes('bevorzugten Farbe'))return true;return false;});}
-        function actionLabel(t){const l=t.toLowerCase();if(l.includes('radikalis'))return'rad';if(l.includes('kampf')||l.includes('kämpfe'))return'bat';if(l.includes('bauen'))return'bau';if(l.includes('besteuerung')||l.includes('steuern'))return'tax';if(l.includes('bewegen')||l.includes('marschieren'))return'mar';if(l.includes('verrat'))return'ver';if(l.includes('geschenk'))return'ges';return'';}
-        function canWakhanPerformAction(at){const lbl=actionLabel(at);if(lbl==='rad')return true;if(!lbl){const t=at.toLowerCase();if(t.includes('keine karte')||t.includes('weniger als')||t.includes('hofgröße')||t.includes('bevorzugt')||t.includes('dominanz')||t.includes('koalition')||t.includes('spione')||t.includes('kontrolle'))return'conditional';return true;}const matching=getCourtCardsWithAction(lbl);if(matching.length===0){const hasAny=court.some(c=>!c.usedThisTurn&&CD[c.id]&&CD[c.id].actions&&CD[c.id].actions.includes(lbl));if(!hasAny)return false;return'conditional';}return true;}
-        function getBestCourtCardForAction(at){const lbl=actionLabel(at);if(!lbl||lbl==='rad')return null;const candidates=getCourtCardsWithAction(lbl);if(!candidates.length)return null;const ranked=candidates.map(c=>{const i=CD[c.id];return{entry:c,info:i,priority:i?(i.suit===preferredSuit?0:(i.patriot?1:(i.prize?2:(i.rank||3)))):9};}).sort((a,b)=>a.priority!==b.priority?a.priority-b.priority:(b.info?.rank||0)-(a.info?.rank||0)||(b.info?.id||0)-(a.info?.id||0));return ranked[0]||null;}
+        function getUnusedBonusCourtCards() {
+            return court.filter(c => {
+                if (c.usedThisTurn) return false;
+                const info = CD[c.id];
+                if (!info) return false;
+                if (info.suit === preferredSuit) return true;
+                if (info.specialAbility && info.specialAbility.includes('bevorzugten Farbe')) return true;
+                return false;
+            });
+        }
 
-        function hidePanel(){['apanel','radwiz','bonusPanel','verwPanel'].forEach(id=>{const el=document.getElementById(id);if(el)el.style.display='none';});document.getElementById('drawBtn').disabled=false;aIdx=0;aDone=0;aSkips=[];court.forEach(c=>c.usedThisTurn=false);updateCourt();autoActionInfo='';document.getElementById('autoInfo').textContent='';}
-        function updatePanel(){if(!cur)return;const acts=[cur.action1_de,cur.action2_de,cur.action3_de];const steps=document.getElementById('steps');steps.innerHTML='';const currentActionText=acts[aIdx];const canDo=canWakhanPerformAction(currentActionText);const autoInfoEl=document.getElementById('autoInfo');autoInfoEl.innerHTML='';acts.forEach((_,i)=>{const d=document.createElement('div');let cls='step';if(i<aIdx)cls+=(aSkips[i]?' skip':' done');else if(i===aIdx)cls+=' act';d.className=cls;steps.appendChild(d);});const txt=currentActionText;const lbl=actionLabel(txt);const lblHtml=lbl?`<span class="act-type at-${lbl}">${lbl.toUpperCase()}</span>`:'';let boxClass='abox'+(lbl==='rad'?' rad':lbl==='ver'?' bonus':'');if(canDo===false){boxClass+=' warn';document.getElementById('abox').innerHTML=lblHtml+txt+'<div class="warn-msg">⚠ Keine passende, unbenutzte Hofkarte mit dieser Aktion gefunden. Aktion wird automatisch übersprungen.</div>';document.getElementById('abox').className=boxClass;document.getElementById('actNum').textContent=aDone+1;document.getElementById('actionsDoneSpan').textContent=`${aDone} von 2 ausgeführt`;document.getElementById('radwiz').style.display='none';document.getElementById('btnExec').style.display='none';document.getElementById('btnSkip').textContent='→ Überspringen';document.getElementById('btnSkip').style.flex='1';autoActionInfo='blocked';return;}else if(canDo==='conditional'){autoInfoEl.innerHTML='<div class="info-msg">ℹ Hofkarte vorhanden, aber Brettbedingungen müssen vom Spieler geprüft werden.</div>';}else if(lbl!=='rad'){const best=getBestCourtCardForAction(txt);if(best&&best.info)autoInfoEl.innerHTML=`<div class="info-msg">✅ Empfohlene Hofkarte: <strong>#${best.info.id} – ${best.info.name}</strong> (${best.info.suit}, Rang ${best.info.rank}) – Position: ${best.entry.pos}</div>`;}document.getElementById('abox').innerHTML=lblHtml+txt;document.getElementById('abox').className=boxClass;document.getElementById('actNum').textContent=aDone+1;document.getElementById('actionsDoneSpan').textContent=`${aDone} von 2 ausgeführt`;document.getElementById('radwiz').style.display='none';document.getElementById('btnExec').style.display='';document.getElementById('btnSkip').textContent='✗ Überspringen';document.getElementById('btnSkip').style.flex='1';document.getElementById('btnExec').style.flex='1';autoActionInfo=canDo==='conditional'?'conditional':'ok';}
+        function actionLabel(txt) {
+            const t = txt.toLowerCase();
+            if (t.includes('radikalis')) return 'rad';
+            if (t.includes('kampf') || t.includes('kämpfe')) return 'bat';
+            if (t.includes('bauen')) return 'bau';
+            if (t.includes('besteuerung') || t.includes('steuern')) return 'tax';
+            if (t.includes('bewegen') || t.includes('marschieren')) return 'mar';
+            if (t.includes('verrat')) return 'ver';
+            if (t.includes('geschenk')) return 'ges';
+            return '';
+        }
 
-        function takeTurn(){if(!pile.length){if(!disc.length){toast('Kein Stapel!');return;}pile=[...disc];disc=[];shuffle(pile);toast('KI-Stapel neu gemischt!');updateStack();return;}const id=pile.pop();cur=WKC.find(c=>c.id===id);aIdx=0;aDone=0;aSkips=[];court.forEach(c=>c.usedThisTurn=false);updateStack();showDrawn(cur);document.getElementById('apanel').style.display='block';document.getElementById('drawBtn').disabled=true;document.getElementById('btnExec').style.display='';document.getElementById('btnSkip').textContent='✗ Überspringen';updatePanel();}
-        function resolve(exec){if(!cur)return;const acts=[cur.action1_de,cur.action2_de,cur.action3_de];const txt=acts[aIdx];const isRad=txt.toLowerCase().includes('radikalis');if(exec){if(isRad){openRadWiz(txt);return;}if(autoActionInfo==='conditional'){if(!confirm('Sind alle Brett-Bedingungen für diese Aktion erfüllt?\n\n'+txt+'\n\nOK = Ja, Aktion ausführen\nAbbrechen = Nein, überspringen')){aSkips[aIdx]=true;advanceAction();return;}}aDone++;aSkips[aIdx]=false;markBestCardAsUsed(txt);}else{aSkips[aIdx]=true;}advanceAction();}
-        function markBestCardAsUsed(txt){const lbl=actionLabel(txt);if(!lbl||lbl==='rad')return;const best=getBestCourtCardForAction(txt);if(best?.entry){const c=court.find(cc=>cc.id===best.entry.id&&cc.pos===best.entry.pos);if(c)c.usedThisTurn=true;updateCourt();}}
-        function advanceAction(){aIdx++;if(aIdx>=3){if(aDone<2){aIdx=0;updatePanel();return;}showBonusPhase();return;}if(aDone>=2){showBonusPhase();return;}updatePanel();}
+        function canWakhanPerformAction(actionText) {
+            const lbl = actionLabel(actionText);
+            if (lbl === 'rad') return true;
+            if (!lbl) {
+                const t = actionText.toLowerCase();
+                if (t.includes('keine karte mit der bewegungsaktion') || t.includes('weniger als 2 rupien') ||
+                    t.includes('hofgröße') || t.includes('bevorzugt werden') || t.includes('dominanz hat') ||
+                    t.includes('koalition') || t.includes('weniger spione') || t.includes('kontrolle über eine region')) {
+                    return 'conditional';
+                }
+                return true;
+            }
+            const matchingCards = getCourtCardsWithAction(lbl);
+            if (matchingCards.length === 0) {
+                if (lbl === 'ges') return true;
+                if (lbl === 'bat') {
+                    const hasAnyBattleCard = court.some(c => !c.usedThisTurn && CD[c.id] && CD[c.id].actions && CD[
+                        c.id].actions.includes('battle'));
+                    if (!hasAnyBattleCard) return false;
+                    return 'conditional';
+                }
+                if (lbl === 'tax') {
+                    const hasAnyTaxCard = court.some(c => !c.usedThisTurn && CD[c.id] && CD[c.id].actions && CD[c.id]
+                        .actions.includes('tax'));
+                    if (!hasAnyTaxCard) return false;
+                    return 'conditional';
+                }
+                if (lbl === 'bau') {
+                    const hasAnyBuildCard = court.some(c => !c.usedThisTurn && CD[c.id] && CD[c.id].actions && CD[c.id]
+                        .actions.includes('build'));
+                    if (!hasAnyBuildCard) return false;
+                    return 'conditional';
+                }
+                if (lbl === 'mar') {
+                    const hasAnyMoveCard = court.some(c => !c.usedThisTurn && CD[c.id] && CD[c.id].actions && CD[c.id]
+                        .actions.includes('move'));
+                    if (!hasAnyMoveCard) return false;
+                    return 'conditional';
+                }
+                if (lbl === 'ver') {
+                    const hasAnyBetrayCard = court.some(c => !c.usedThisTurn && CD[c.id] && CD[c.id].actions && CD[c.id]
+                        .actions.includes('betray'));
+                    if (!hasAnyBetrayCard) return false;
+                    return 'conditional';
+                }
+                return false;
+            }
+            return true;
+        }
 
-        function showBonusPhase(){const bonusCards=getUnusedBonusCourtCards();const panel=document.getElementById('bonusPanel'),content=document.getElementById('bonusContent');panel.style.display='block';document.getElementById('apanel').style.display='none';if(!bonusCards.length){content.innerHTML='<p style="color:#80b080;">Keine unbenutzten Hofkarten der bevorzugten Farbe (<strong>'+preferredSuit+'</strong>) vorhanden.</p>';}else{let html='<p style="color:#80b080;">Unbenutzte Hofkarten der bevorzugten Farbe (<strong>'+preferredSuit+'</strong>):</p>';bonusCards.sort((a,b)=>a.pos==='L'&&b.pos==='R'?-1:a.pos==='R'&&b.pos==='L'?1:0).forEach(c=>{const i=CD[c.id];if(!i)return;const actions=i.actions||[];const firstAction=actions[0]||'keine';const map={tax:'Besteuerung',battle:'Kampf',build:'Bauen',move:'Bewegen',betray:'Verrat',gift:'Geschenk'};html+=`<div class="bonus-card-item"><span style="color:#aaa;">#${c.id}</span><span class="bc-name">${i.name}</span><span style="color:#888;">(${i.suit}, R${i.rank})</span><span class="bc-action">→ ${map[firstAction]||firstAction}</span><span style="color:#888;font-size:.7rem;">Pos: ${c.pos}</span></div>`;});html+='<p style="font-size:.7rem;color:#aaa;margin-top:8px;">▶ Führe die linke Aktion jeder Karte von links nach rechts aus.</p>';content.innerHTML=html;}disc.push(cur.id);}
-        function finishTurn(){document.getElementById('bonusPanel').style.display='none';showVerwaltung();}
-        function showVerwaltung(){const limit=courtLimit,over=court.length>limit;let txt=`Hofgröße: ${court.length}/${limit} Karten. `;if(over){txt+=`⚠ ${court.length-limit} Karte(n) abwerfen! Abwerfpriorität beachten.`;document.getElementById('discardHint').style.display='block';}else{txt+='Hof im Rahmen.';document.getElementById('discardHint').style.display='none';}txt+='<br>Handkarten entfällt.<br>Markt auffüllen (durch Mensch).';document.getElementById('verwText').innerHTML=txt;document.getElementById('verwPanel').style.display='block';}
+        function getBestCourtCardForAction(actionText) {
+            const lbl = actionLabel(actionText);
+            if (!lbl || lbl === 'rad') return null;
+            const candidates = getCourtCardsWithAction(lbl);
+            if (candidates.length === 0) return null;
+            const ranked = candidates.map(c => {
+                const info = CD[c.id];
+                return {
+                    entry: c,
+                    info: info,
+                    priority: info ? (info.suit === preferredSuit ? 0 : (info.patriot ? 1 : (info.prize ? 2 : (
+                        info.rank || 3)))) : 9
+                };
+            });
+            ranked.sort((a, b) => {
+                if (a.priority !== b.priority) return a.priority - b.priority;
+                if (a.info && b.info && a.info.rank !== b.info.rank) return (b.info.rank || 0) - (a.info.rank || 0);
+                return (b.info ? b.info.id || 0 : 0) - (a.info ? a.info.id || 0 : 0);
+            });
+            return ranked[0] || null;
+        }
 
-        let radSpecialText='';
-        function openRadWiz(actionText){radSpecialText=actionText;radCardId=null;radBriber=null;document.getElementById('radwiz').style.display='block';['rStep1','rStep1b','rStep2','rStep3','rStep3b','rStep4'].forEach(id=>document.getElementById(id).classList.remove('act'));document.getElementById('rStep1').classList.add('act');document.getElementById('placementDetails').innerHTML='';document.getElementById('rInstr').textContent=actionText.toLowerCase()==='radikalisierung.'?'Radikalisierung: Wakhan kauft eine Karte vom Markt und spielt sie sofort aus.':'Sonderanweisung: '+actionText;document.getElementById('bestechP2Btn').style.display=playerCount===2?'':'none';}
-        function showRStep(id){['rStep1','rStep1b','rStep2','rStep3','rStep3b','rStep4'].forEach(s=>document.getElementById(s).classList.remove('act'));document.getElementById(id).classList.add('act');}
-        function domCheckInMarket(yes){if(yes){showRStep('rStep1b');}else{goToMarketStep();}}
-        function wakhanWinsDom(yes){const box=document.getElementById('rMarketBox');if(yes){box.innerHTML='<strong>Wakhan kauft die Dominanzcheck-Karte!</strong><br>Zahle den Preis. Führe sofort den Dominanzcheck durch!<br>Kartennummer (101–104):';document.getElementById('rCardInput').min=101;document.getElementById('rCardInput').max=104;showRStep('rStep2');}else{box.innerHTML='<strong>Wakhan kauft NICHT die Dominanzcheck-Karte.</strong><br>Wähle stattdessen:<br>1. Billigsten Patrioten loyal zur dominanten Koalition.<br>2. Falls kein Patriot: Billigste Karte mit meisten Armeen/Straßen der dom. Koalition.<br>3. Falls kein dominantes Bündnis: Billigste Karte mit meisten Spionen/Stämmen.<br>Bei Gleichstand: höchste Kartennummer.<br><br>'+marketPfeilText();document.getElementById('rCardInput').min=1;document.getElementById('rCardInput').max=116;showRStep('rStep2');}}
-        function marketPfeilText(){if(!cur||!topDeck)return'';const row=cur.redArrow==='top'?'OBEREN':'UNTEREN';const col=getMarketColumn(cur,topDeck);return `<strong>Standard-Pfeil:</strong> ${row} Marktreihe, Spalte ${col} (0=rechts, 5=links).<br>Falls Karte nicht verfügbar: nächste links davon. Reihe leer → andere Reihe, gleiche Spalte.`;}
-        function goToMarketStep(){const box=document.getElementById('rMarketBox');const isStandard=radSpecialText.toLowerCase()==='radikalisierung.';let txt='';if(!isStandard)txt=`<strong>Sonderanweisung:</strong> ${radSpecialText}<br><br>`;txt+=marketPfeilText();txt+='<br><em>Keine Karte kaufen, auf die bereits eine Rupie gelegt wurde.</em>';box.innerHTML=txt;document.getElementById('rCardInput').min=1;document.getElementById('rCardInput').max=116;showRStep('rStep2');}
-        function radCardChosen(){const v=parseInt(document.getElementById('rCardInput').value);if(isNaN(v)||v<1||v>116){toast('Bitte Nr. 1–116 eingeben.');return;}radCardId=v;const info=CD[v];if(v>100){document.getElementById('rCardName').textContent=`Gewählt: ${info.namePurchased} (#${v})`;document.getElementById('bribePromptContainer').style.display='none';setBestech('nobody');return;}document.getElementById('bribePromptContainer').style.display='block';const name=info?info.name:'Karte #'+v;document.getElementById('rCardName').textContent=`Gewählt: ${name} (#${v}) – Region: ${info?.region||'?'}`;showRStep('rStep3');}
-        function radNoCard(){radDone(false,'Keine Karte verfügbar – Radikalisierung übersprungen.');}
-        function setBestech(who){radBriber=who;if(who==='nobody'){finalizeBribe(0);}else{document.getElementById('bRulerName').textContent=who==='p1'?'Spieler 1':'Spieler 2';showRStep('rStep3b');}}
-        function calcBestech(){const tribes=parseInt(document.getElementById('bTribeInput').value);if(isNaN(tribes)||tribes<0){toast('Bitte Stämme eingeben.');return;}finalizeBribe(tribes);}
-        function finalizeBribe(cost){const info=radCardId&&CD[radCardId]?CD[radCardId]:null;const isEvent=radCardId>100;const name=info?(isEvent?info.namePurchased:info.name):`Karte #${radCardId}`;const {courtSide,courtSideAbbr}=getRedArrowDecision(cur,topDeck);let result='';document.getElementById('placementDetails').innerHTML='';if(isEvent){result=`<strong>Ereignis-Karte #${radCardId} gekauft!</strong><br>Effekt: ${info.effectPurchased}<br>`;document.getElementById('rResult').innerHTML=result;showRStep('rStep4');return;}const cardAdded=cost<=rupien;if(cost>0){if(cardAdded){rupien-=cost;updateRupien();result=`<strong>Bestechung: Zahle ${cost} Rupien</strong><br>Lege <strong>${name}</strong> auf die <strong>${courtSide}</strong> (${courtSideAbbr}) von Wakhans Hof.<br><br>`+cardEffectText(radCardId);addCourtCard(radCardId,courtSideAbbr);}else{result=`<strong>Wakhan kann die Bestechung (${cost} Rupien) nicht zahlen!</strong><br>Karte wird abgeworfen.`;}}else{result=`Keine Bestechung nötig.<br>Lege <strong>${name}</strong> auf die <strong>${courtSide}</strong> (${courtSideAbbr}) von Wakhans Hof.<br><br>`+cardEffectText(radCardId);addCourtCard(radCardId,courtSideAbbr);}if(cardAdded&&!isEvent)buildPlacementDetails(info);document.getElementById('rResult').innerHTML=result;showRStep('rStep4');}
-        function cardEffectText(id){const info=id&&CD[id]?CD[id]:null;if(!info)return'Symbole der Karte ausführen.';let txt='<strong>Wirkung der Karte:</strong><br>';txt+=`• Region: <strong>${info.region}</strong> (Rang: ${info.rank}, Farbe: ${info.suit})<br>`;if(info.impactIcons?.length){const ic=info.impactIcons.map(i=>({spy:'Spion',army:'Armee',road:'Straße',tribe:'Stamm'})[i]||i).join(', ');txt+=`• Platzieren: <strong>${ic}</strong><br>`;}if(info.prize)txt+=`• Beute: <strong>${info.prize}</strong><br>`;if(info.patriot)txt+=`• Patriot: <strong>${info.patriot}</strong><br>`;if(info.specialAbility)txt+=`• 🌟 <strong>Fähigkeit:</strong> ${info.specialAbility}<br>`;if(info.suitChange)txt+=`• <span class="suit-change-alert">🔄 Bevorzugte Farbe ändert sich zu → <strong>${info.suitChange}</strong></span><br>`;return txt;}
-        function buildPlacementDetails(info){if(!info?.impactIcons)return;const container=document.getElementById('placementDetails');let html='<div class="placement-detail"><strong>📋 Platzierungs-Anweisungen:</strong><br>';const pris=getRegionPriorities(topDeck);const spies=info.impactIcons.filter(i=>i==='spy').length,armies=info.impactIcons.filter(i=>i==='army').length,roads=info.impactIcons.filter(i=>i==='road').length,tribes=info.impactIcons.filter(i=>i==='tribe').length;if(spies>0)html+=`<br>🕵️ <strong>${spies} Spion(e):</strong> Auf Hofkarten der Region <em>${info.region}</em> mit höchster Kartenpriorität, wo Wakhan <strong>nicht</strong> die meisten Spione hat.`;if(roads>0)html+=`<br>🛤️ <strong>${roads} Straße(n):</strong> An Grenzen gemäß Regionenpriorität, beginnend bei <em>${info.region}</em>.`;if(armies>0)html+=`<br>⚔️ <strong>${armies} Armee(n):</strong> Gemäß pragmatischer Loyalität (<strong>${wakLoy}</strong>) in der Kartenregion platzieren.`;if(tribes>0)html+=`<br>🏘️ <strong>${tribes} Stamm/Stämme:</strong> In der Kartenregion platzieren (Loyalität: <strong>${wakLoy}</strong>).`;html+='<br><em>🌐 Regionen-Priorität (höchste zuerst):</em> '+pris.map(idx=>REGION_BY_IDX[idx]?.n||'?').join(' → ')+'</div>';container.innerHTML=html;}
-        function finishRad(){if(radCardId&&radCardId<=100&&CD[radCardId]?.suitChange){preferredSuit=CD[radCardId].suitChange;const prefEl=document.getElementById('prefSuitDisplay');prefEl.textContent=preferredSuit;prefEl.className='changed';setTimeout(()=>{prefEl.className='';},3000);updateLoyBar();toast(`Bevorzugte Farbe → ${preferredSuit}`);}aDone++;aSkips[aIdx]=false;document.getElementById('radwiz').style.display='none';advanceAction();}
-        function radDone(cardAdded,msg){document.getElementById('rResult').innerHTML=msg||'Radikalisierung abgeschlossen.';showRStep('rStep4');}
+        // ─── AKTIONEN ─────────────────────────────────────────────────────────────────
+        function hidePanel() {
+            ['apanel', 'radwiz', 'bonusPanel', 'verwPanel'].forEach(id => {
+                const el = document.getElementById(id); if (el) el.style.display = 'none';
+            });
+            document.getElementById('drawBtn').disabled = false;
+            aIdx = 0;
+            aDone = 0;
+            aSkips = [];
+            court.forEach(c => c.usedThisTurn = false);
+            updateCourt();
+            autoActionInfo = '';
+            document.getElementById('autoInfo').textContent = '';
+        }
 
-        function addCourtCard(id,pos){if(court.find(c=>c.id===id)){toast('Karte #'+id+' bereits im Hof.');return;}court.push({id,pos:pos||'R',usedThisTurn:true});updateCourt();}
-        function addCourt(){const v=parseInt(document.getElementById('courtIn').value);if(isNaN(v)||v<1||v>116){toast('Bitte Nr. 1–116 eingeben.');return;}if(court.find(c=>c.id===v)){toast('Karte #'+v+' bereits im Hof.');return;}const pos=confirm('Linke Seite des Hofes? (Abbrechen = Rechts)')?'L':'R';court.push({id:v,pos,usedThisTurn:false});document.getElementById('courtIn').value='';updateCourt();toast('Hofkarte #'+v+' hinzugefügt ('+pos+').');}
-        function removeCourt(id,e){e.stopPropagation();court=court.filter(c=>c.id!==id);updateCourt();}
-        function toggleUsed(id){const c=court.find(c=>c.id===id);if(c)c.usedThisTurn=!c.usedThisTurn;updateCourt();}
-        function clearCourt(){if(!court.length)return;if(!confirm('Hof leeren?'))return;court=[];updateCourt();toast('Hof geleert.');}
-        function updateCourt(){const grid=document.getElementById('courtGrid'),cnt=court.length;document.getElementById('courtCnt').textContent=cnt+' Karte'+(cnt!==1?'n':'');document.getElementById('discardHint').style.display=cnt>courtLimit?'block':'none';if(!cnt){grid.innerHTML='<div class="cempty">Noch keine Hofkarten.</div>';return;}grid.innerHTML='';court.forEach(entry=>{const{id,pos,usedThisTurn}=entry;const info=CD[id]||{name:'#'+id,suit:'?',rank:'?'};const div=document.createElement('div');div.className='ccard'+(usedThisTurn?' used':'');div.onclick=()=>zoomSingle(id);if(usedThisTurn){const overlay=document.createElement('div');overlay.className='used-overlay';overlay.textContent='✓';overlay.style.pointerEvents='none';div.appendChild(overlay);}const top=document.createElement('div');top.className='ccard-top';top.style.zIndex='3';top.innerHTML=`<span class="pos-badge pos-${pos}">${pos}</span>${usedThisTurn?'<span class="used-badge">verwendet</span>':''}`;const img=document.createElement('img');img.alt='#'+id;img.loading='lazy';img.style.minHeight='100px';img.style.background='var(--card-bg)';loadImg(img,null,null,URLS,id);const foot=document.createElement('div');foot.className='ccard-foot';foot.innerHTML=`<span title="${info.name}">#${id} R${info.rank}</span><button onclick="removeCourt(${id},event)" title="Entfernen">✕</button>`;div.appendChild(top);div.appendChild(img);div.appendChild(foot);div.addEventListener('contextmenu',e=>{e.preventDefault();toggleUsed(id);});grid.appendChild(div);});const note=document.createElement('div');note.style.cssText='font-size:.65rem;color:var(--text3);padding:4px 0;';note.textContent='L=Links, R=Rechts. Rechtsklick = als verwendet markieren.';grid.appendChild(note);}
+        function updatePanel() {
+            if (!cur) return;
+            const acts = [cur.action1_de, cur.action2_de, cur.action3_de];
+            const steps = document.getElementById('steps');
+            steps.innerHTML = '';
+            const currentActionText = acts[aIdx];
+            const canDo = canWakhanPerformAction(currentActionText);
+            const autoInfoEl = document.getElementById('autoInfo');
+            autoInfoEl.innerHTML = '';
 
-        function changeRupien(d){rupien=Math.max(0,rupien+d);updateRupien();}
-        function updateRupien(){document.getElementById('rupCount').textContent=rupien;}
+            acts.forEach((_, i) => {
+                const d = document.createElement('div');
+                let cls = 'step';
+                if (i < aIdx) cls += (aSkips[i] ? ' skip' : ' done');
+                else if (i === aIdx) cls += ' act';
+                d.className = cls;
+                steps.appendChild(d);
+            });
 
-        function setZoomImg(el,fns,id){el.src='';el.style.opacity='.5';loadImg(el,null,null,fns,id).then(()=>el.style.opacity='1');}
-        function zoomA(){if(!cur)return;setZoomImg(document.getElementById('zimgA'),URLS,cur.id);document.getElementById('zlblA').textContent='Karte A – Vorderseite #'+cur.id;document.getElementById('zsideB').style.display='none';document.getElementById('zoom').className='zoom on';}
-        function zoomB(){if(!pile.length)return;const tid=pile[pile.length-1];setZoomImg(document.getElementById('zimgA'),BURLS,tid);document.getElementById('zlblA').textContent='Karte B – Rückseite #'+tid;document.getElementById('zsideB').style.display='none';document.getElementById('zoom').className='zoom on';}
-        function zoomSingle(id){setZoomImg(document.getElementById('zimgA'),URLS,id);document.getElementById('zlblA').textContent='Hofkarte #'+id+' – Vorderseite';setZoomImg(document.getElementById('zimgB'),BURLS,id);document.getElementById('zlblB').textContent='Hofkarte #'+id+' – Rückseite';document.getElementById('zsideB').style.display='flex';document.getElementById('zoom').className='zoom on';}
-        function closeZoom(){document.getElementById('zoom').className='zoom';}
+            const txt = currentActionText;
+            const lbl = actionLabel(txt);
+            const lblHtml = lbl ? `<span class="act-type at-${lbl}">${lbl.toUpperCase()}</span>` : '';
+            let boxClass = 'abox' + (lbl === 'rad' ? ' rad' : lbl === 'ver' ? ' bonus' : '');
 
-        function toggleRules(){const b=document.getElementById('rbody'),c=document.getElementById('rchev');const open=b.style.display==='block';b.style.display=open?'none':'block';c.textContent=open?'▼':'▲';}
+            if (canDo === false) {
+                boxClass += ' warn';
+                document.getElementById('abox').innerHTML = lblHtml + txt +
+                    '<div class="warn-msg">⚠ Keine passende, unbenutzte Hofkarte mit dieser Aktion gefunden. Aktion wird automatisch übersprungen.</div>';
+                document.getElementById('abox').className = boxClass;
+                document.getElementById('actNum').textContent = aDone + 1;
+                document.getElementById('actionsDoneSpan').textContent = `${aDone} von 2 ausgeführt`;
+                document.getElementById('radwiz').style.display = 'none';
+                document.getElementById('btnExec').style.display = 'none';
+                document.getElementById('btnSkip').textContent = '→ Überspringen';
+                document.getElementById('btnSkip').style.flex = '1';
+                autoActionInfo = 'blocked';
+                return;
+            } else if (canDo === 'conditional') {
+                autoInfoEl.innerHTML =
+                    '<div class="info-msg">ℹ Hofkarte vorhanden, aber Brettbedingungen müssen vom Spieler geprüft werden.</div>';
+            } else if (lbl !== 'rad') {
+                const best = getBestCourtCardForAction(txt);
+                if (best && best.info) {
+                    autoInfoEl.innerHTML =
+                        `<div class="info-msg">✅ Empfohlene Hofkarte: <strong>#${best.info.id} – ${best.info.name}</strong> (${best.info.suit}, Rang ${best.info.rank}) – Position: ${best.entry.pos}</div>`;
+                }
+            }
 
+            document.getElementById('abox').innerHTML = lblHtml + txt;
+            document.getElementById('abox').className = boxClass;
+            document.getElementById('actNum').textContent = aDone + 1;
+            document.getElementById('actionsDoneSpan').textContent = `${aDone} von 2 ausgeführt`;
+            document.getElementById('radwiz').style.display = 'none';
+            document.getElementById('btnExec').style.display = '';
+            document.getElementById('btnSkip').textContent = '✗ Überspringen';
+            document.getElementById('btnSkip').style.flex = '1';
+            document.getElementById('btnExec').style.flex = '1';
+            autoActionInfo = canDo === 'conditional' ? 'conditional' : 'ok';
+        }
+
+        function takeTurn() {
+            if (pile.length === 0) {
+                if (disc.length === 0) { toast('Kein Stapel!'); return; }
+                pile = [...disc];
+                disc = [];
+                shuffle(pile);
+                toast('KI-Stapel neu gemischt!');
+                updateStack();
+                return;
+            }
+            const id = pile.pop();
+            cur = WKC.find(c => c.id === id);
+            aIdx = 0;
+            aDone = 0;
+            aSkips = [];
+            court.forEach(c => c.usedThisTurn = false);
+            updateStack();
+            showDrawn(cur);
+            document.getElementById('apanel').style.display = 'block';
+            document.getElementById('drawBtn').disabled = true;
+            document.getElementById('btnExec').style.display = '';
+            document.getElementById('btnSkip').textContent = '✗ Überspringen';
+            updatePanel();
+        }
+
+        function resolve(exec) {
+            if (!cur) return;
+            const acts = [cur.action1_de, cur.action2_de, cur.action3_de];
+            const txt = acts[aIdx];
+            const isRad = txt.toLowerCase().includes('radikalis');
+            if (exec) {
+                if (isRad) {
+                    openRadWiz(txt);
+                    return;
+                }
+                if (autoActionInfo === 'conditional') {
+                    const confirmed = confirm(
+                        'Sind alle Brett-Bedingungen für diese Aktion erfüllt?\n\n' + txt +
+                        '\n\nOK = Ja, Aktion ausführen\nAbbrechen = Nein, überspringen');
+                    if (!confirmed) {
+                        aSkips[aIdx] = true;
+                        advanceAction();
+                        return;
+                    }
+                }
+                aDone++;
+                aSkips[aIdx] = false;
+                markBestCardAsUsed(txt);
+            } else {
+                aSkips[aIdx] = true;
+            }
+            advanceAction();
+        }
+
+        function markBestCardAsUsed(actionText) {
+            const lbl = actionLabel(actionText);
+            if (!lbl || lbl === 'rad') return;
+            const best = getBestCourtCardForAction(actionText);
+            if (best && best.entry) {
+                const c = court.find(cc => cc.id === best.entry.id && cc.pos === best.entry.pos);
+                if (c) c.usedThisTurn = true;
+                updateCourt();
+            }
+        }
+
+        function advanceAction() {
+            aIdx++;
+            if (aIdx >= 3) {
+                if (aDone < 2) { aIdx = 0;
+                    updatePanel(); return; }
+                showBonusPhase();
+                return;
+            }
+            if (aDone >= 2) { showBonusPhase(); return; }
+            updatePanel();
+        }
+
+        function showBonusPhase() {
+            const bonusCards = getUnusedBonusCourtCards();
+            const panel = document.getElementById('bonusPanel');
+            const content = document.getElementById('bonusContent');
+            panel.style.display = 'block';
+            document.getElementById('apanel').style.display = 'none';
+
+            if (bonusCards.length === 0) {
+                content.innerHTML =
+                    '<p style="color:#80b080;">Keine unbenutzten Hofkarten der bevorzugten Farbe (<strong>' +
+                    preferredSuit + '</strong>) vorhanden. Keine Bonusaktionen.</p>';
+            } else {
+                let html = '<p style="color:#80b080;">Unbenutzte Hofkarten der bevorzugten Farbe (<strong>' +
+                    preferredSuit + '</strong>):</p>';
+                bonusCards.sort((a, b) => {
+                    if (a.pos === 'L' && b.pos === 'R') return -1;
+                    if (a.pos === 'R' && b.pos === 'L') return 1;
+                    return 0;
+                });
+                bonusCards.forEach(c => {
+                    const info = CD[c.id];
+                    if (!info) return;
+                    const actions = info.actions || [];
+                    const firstAction = actions.length > 0 ? actions[0] : 'keine';
+                    const actionLabelMap = {
+                        'tax': 'Besteuerung',
+                        'battle': 'Kampf',
+                        'build': 'Bauen',
+                        'move': 'Bewegen',
+                        'betray': 'Verrat',
+                        'gift': 'Geschenk'
+                    };
+                    const actionName = actionLabelMap[firstAction] || firstAction;
+                    html += `<div class="bonus-card-item">
+                        <span style="color:#aaa;">#${c.id}</span>
+                        <span class="bc-name">${info.name}</span>
+                        <span style="color:#888;">(${info.suit}, R${info.rank})</span>
+                        <span class="bc-action">→ ${actionName}</span>
+                        <span style="color:#888;font-size:.7rem;">Pos: ${c.pos}</span>
+                    </div>`;
+                    if (actions.length > 1) {
+                        html +=
+                            `<div style="font-size:.68rem;color:#8a8;margin-left:20px;">Weitere Aktionen: ${actions.slice(1).map(a=>actionLabelMap[a]||a).join(', ')}</div>`;
+                    }
+                });
+                html +=
+                    '<p style="font-size:.7rem;color:#aaa;margin-top:8px;">▶ Führe die linke Aktion jeder Karte von links nach rechts aus. Überspringe ungültige Aktionen.</p>';
+                content.innerHTML = html;
+            }
+            disc.push(cur.id);
+        }
+
+        function finishTurn() {
+            document.getElementById('bonusPanel').style.display = 'none';
+            showVerwaltung();
+        }
+
+        function showVerwaltung() {
+            const limit = courtLimit;
+            const over = court.length > limit;
+            let txt = `Hofgröße: ${court.length}/${limit} Karten. `;
+            if (over) {
+                txt +=
+                    `⚠ ${court.length-limit} Karte(n) abwerfen! Abwerfpriorität beachten (Hinweis im Hof).`;
+                document.getElementById('discardHint').style.display = 'block';
+            } else {
+                txt += 'Hof im Rahmen – kein Abwerfen nötig.';
+                document.getElementById('discardHint').style.display = 'none';
+            }
+            txt +=
+                '<br>Handkarten: Wakhan hat keine Handkarten (entfällt).<br>Markt auffüllen: Ereigniskarten abwerfen und Markt neu befüllen (durch Mensch).';
+            document.getElementById('verwText').innerHTML = txt;
+            document.getElementById('verwPanel').style.display = 'block';
+        }
+
+        // ─── RADIKALISIERUNG WIZARD (angepasst mit backArray-Logik) ─────────────────
+        let radSpecialText = '';
+
+        function openRadWiz(actionText) {
+            radSpecialText = actionText;
+            radCardId = null;
+            radBriber = null;
+            document.getElementById('radwiz').style.display = 'block';
+            ['rStep1', 'rStep1b', 'rStep2', 'rStep3', 'rStep3b', 'rStep4'].forEach(id => document.getElementById(
+                id).classList.remove('act'));
+            document.getElementById('rStep1').classList.add('act');
+            document.getElementById('placementDetails').innerHTML = '';
+            const isStandard = actionText.toLowerCase() === 'radikalisierung.';
+            document.getElementById('rInstr').textContent = isStandard ?
+                'Radikalisierung: Wakhan kauft eine Karte vom Markt und spielt sie sofort aus.' :
+                'Sonderanweisung: ' + actionText;
+            if (playerCount === 2) document.getElementById('bestechP2Btn').style.display = '';
+            else document.getElementById('bestechP2Btn').style.display = 'none';
+        }
+
+        function showRStep(id) {
+            ['rStep1', 'rStep1b', 'rStep2', 'rStep3', 'rStep3b', 'rStep4'].forEach(s => document.getElementById(s)
+                .classList.remove('act'));
+            document.getElementById(id).classList.add('act');
+        }
+
+        function domCheckInMarket(yes) {
+            if (yes) { showRStep('rStep1b'); } else { goToMarketStep(); }
+        }
+
+        function wakhanWinsDom(yes) {
+            if (yes) {
+                const box = document.getElementById('rMarketBox');
+                box.innerHTML =
+                    '<strong>Wakhan kauft die Dominanzcheck-Karte!</strong><br>Zahle den Preis. Führe sofort den Dominanzcheck durch! Dann:<br>Dominanzcheck-Kartennummer eingeben (101–104):';
+                document.getElementById('rCardInput').min = 101;
+                document.getElementById('rCardInput').max = 116;
+                showRStep('rStep2');
+            } else {
+                const box = document.getElementById('rMarketBox');
+                box.innerHTML =
+                    '<strong>Wakhan kauft NICHT die Dominanzcheck-Karte.</strong><br>Wähle stattdessen:<br>1. Billigsten Patrioten loyal zur dominanten Koalition.<br>2. Falls kein Patriot: Billigste Karte mit meisten Armeen/Straßen der dom. Koalition.<br>3. Falls kein dominantes Bündnis: Billigste Karte mit meisten Spionen/Stämmen.<br>Bei Gleichstand: höchste Kartennummer.<br><br>' +
+                    marketPfeilText();
+                document.getElementById('rCardInput').min = 1;
+                document.getElementById('rCardInput').max = 116;
+                showRStep('rStep2');
+            }
+        }
+
+        function marketPfeilText() {
+            if (!cur || !topDeck) return '';
+            const { row } = getMarketRowAndSide(cur, topDeck);
+            const col = getMarketColumn(cur, topDeck);
+            return `<strong>Standard-Pfeil:</strong> ${row} Marktreihe, Spalte ${col} (0=rechts, 5=links).<br>Falls Karte nicht verfügbar: nächste links davon. Reihe leer → andere Reihe, gleiche Spalte.`;
+        }
+
+        function goToMarketStep() {
+            const box = document.getElementById('rMarketBox');
+            const isStandard = radSpecialText.toLowerCase() === 'radikalisierung.';
+            let txt = '';
+            if (!isStandard) {
+                txt = `<strong>Sonderanweisung:</strong> ${radSpecialText}<br><br>`;
+            }
+            txt += marketPfeilText();
+            txt += '<br><em>Beachte: Keine Karte kaufen, auf die bereits eine Rupie gelegt wurde.</em>';
+            box.innerHTML = txt;
+            document.getElementById('rCardInput').min = 1;
+            document.getElementById('rCardInput').max = 116;
+            showRStep('rStep2');
+        }
+
+        function radCardChosen() {
+            const v = parseInt(document.getElementById('rCardInput').value);
+            if (isNaN(v) || v < 1 || v > 116) { toast('Bitte Nr. 1–116 eingeben.'); return; }
+            radCardId = v;
+            const info = CD[v];
+            if (v > 100) {
+                document.getElementById('rCardName').textContent = `Gewählt: ${info.namePurchased} (#${v})`;
+                document.getElementById('bribePromptContainer').style.display = 'none';
+                setBestech('nobody');
+                return;
+            }
+            document.getElementById('bribePromptContainer').style.display = 'block';
+            const name = info ? info.name : 'Karte #' + v;
+            const region = info ? info.region : '?';
+            document.getElementById('rCardName').textContent = `Gewählt: ${name} (#${v}) – Region: ${region}`;
+            showRStep('rStep3');
+        }
+
+        function radNoCard() {
+            radDone(false, 'Keine Karte verfügbar – Radikalisierung übersprungen.');
+        }
+
+        function setBestech(who) {
+            radBriber = who;
+            if (who === 'nobody') {
+                finalizeBribe(0);
+            } else {
+                document.getElementById('bRulerName').textContent = who === 'p1' ? 'Spieler 1' : 'Spieler 2';
+                showRStep('rStep3b');
+            }
+        }
+
+        function calcBestech() {
+            const tribes = parseInt(document.getElementById('bTribeInput').value);
+            if (isNaN(tribes) || tribes < 0) { toast('Bitte Stämme eingeben.'); return; }
+            finalizeBribe(tribes);
+        }
+
+        function finalizeBribe(cost) {
+            const info = radCardId && CD[radCardId] ? CD[radCardId] : null;
+            const isEvent = radCardId > 100;
+            const name = info ? (isEvent ? info.namePurchased : info.name) : `Karte #${radCardId}`;
+            const { side } = getMarketRowAndSide(cur, topDeck);
+            const sideAbbr = side.includes('Links') ? 'L' : 'R';
+            let result = '';
+            document.getElementById('placementDetails').innerHTML = '';
+            if (isEvent) {
+                result = `<strong>Ereignis-Karte #${radCardId} gekauft!</strong><br>`;
+                result += `Effekt: ${info.effectPurchased}<br>`;
+                document.getElementById('rResult').innerHTML = result;
+                showRStep('rStep4');
+                return;
+            }
+            const cardAdded = cost <= rupien;
+            if (cost > 0) {
+                if (cardAdded) {
+                    rupien -= cost;
+                    updateRupien();
+                    result =
+                        `<strong>Bestechung: Zahle ${cost} Rupien</strong> an den Herrscher der Region.<br>`;
+                    result +=
+                        `Lege <strong>${name}</strong> auf die <strong>${side}</strong> von Wakhans Hof (automatisch Position: ${sideAbbr}).<br><br>`;
+                    result += cardEffectText(radCardId);
+                    addCourtCard(radCardId, sideAbbr);
+                } else {
+                    result =
+                        `<strong>Wakhan kann die Bestechung (${cost} Rupien) nicht zahlen!</strong><br>`;
+                    result += `Die Karte wird <strong>abgeworfen</strong> und nicht in den Hof gelegt. Kein Effekt.`;
+                }
+            } else {
+                result = `Keine Bestechung nötig. Zahle 0 Rupien.<br>`;
+                result +=
+                    `Lege <strong>${name}</strong> auf die <strong>${side}</strong> von Wakhans Hof (automatisch Position: ${sideAbbr}).<br><br>`;
+                result += cardEffectText(radCardId);
+                addCourtCard(radCardId, sideAbbr);
+            }
+            if (cardAdded && !isEvent) {
+                buildPlacementDetails(info);
+            }
+            document.getElementById('rResult').innerHTML = result;
+            showRStep('rStep4');
+        }
+
+        function cardEffectText(id) {
+            const info = id && CD[id] ? CD[id] : null;
+            if (!info) return 'Symbole der Karte ausführen.';
+            let txt = '<strong>Wirkung der Karte:</strong><br>';
+            txt += `• Region: <strong>${info.region}</strong> (Rang: ${info.rank}, Farbe: ${info.suit})<br>`;
+            if (info.impactIcons && info.impactIcons.length > 0) {
+                const ic = info.impactIcons.map(i => {
+                    if (i === 'spy') return 'Spion';
+                    if (i === 'army') return 'Armee';
+                    if (i === 'road') return 'Straße';
+                    if (i === 'tribe') return 'Stamm';
+                    return i;
+                }).join(', ');
+                txt += `• Platzieren: <strong>${ic}</strong><br>`;
+            }
+            if (info.prize) txt += `• Beute: <strong>${info.prize}</strong><br>`;
+            if (info.patriot) txt += `• Patriot: <strong>${info.patriot}</strong><br>`;
+            if (info.specialAbility) txt += `• 🌟 <strong>Fähigkeit:</strong> ${info.specialAbility}<br>`;
+            if (info.suitChange) {
+                txt +=
+                    `• <span class="suit-change-alert" style="display:inline-block;padding:2px 8px;margin-top:4px;">🔄 Bevorzugte Farbe ändert sich zu → <strong>${info.suitChange}</strong></span><br>`;
+            }
+            return txt;
+        }
+
+        function buildPlacementDetails(info) {
+            if (!info || !info.impactIcons) return;
+            const container = document.getElementById('placementDetails');
+            let html = '<div class="placement-detail"><strong>📋 Platzierungs-Anweisungen:</strong><br>';
+            const pris = getRegionPriorities(topDeck);
+            const spies = info.impactIcons.filter(i => i === 'spy').length;
+            const armies = info.impactIcons.filter(i => i === 'army').length;
+            const roads = info.impactIcons.filter(i => i === 'road').length;
+            const tribes = info.impactIcons.filter(i => i === 'tribe').length;
+            if (spies > 0) {
+                html +=
+                    `<br>🕵️ <strong>${spies} Spion(e):</strong> Auf Hofkarten der Region <em>${info.region}</em> mit höchster Kartenpriorität, wo Wakhan <strong>nicht</strong> die meisten Spione hat.`;
+            }
+            if (roads > 0) {
+                html +=
+                    `<br>🛤️ <strong>${roads} Straße(n):</strong> An Grenzen gemäß Regionenpriorität (siehe oben), beginnend bei Region <em>${info.region}</em>. Ungültige Grenzen überspringen.`;
+            }
+            if (armies > 0) {
+                html +=
+                    `<br>⚔️ <strong>${armies} Armee(n):</strong> Gemäß pragmatischer Loyalität (<strong>${wakLoy}</strong>) in der Kartenregion platzieren.`;
+            }
+            if (tribes > 0) {
+                html +=
+                    `<br>🏘️ <strong>${tribes} Stamm/Stämme:</strong> In der Kartenregion platzieren (gemäß pragmatischer Loyalität: <strong>${wakLoy}</strong>).`;
+            }
+            html += '<br><em>🌐 Regionen-Priorität (höchste zuerst):</em> ';
+            html += pris.map(idx => REGION_BY_IDX[idx] ? REGION_BY_IDX[idx].n : '?').join(' → ');
+            html += '</div>';
+            container.innerHTML = html;
+        }
+
+        function getRegionPriorities(cardB) {
+            if (!cardB) return [0,1,2,3,4,5];
+            // Die Prioritäten sind in backArray Indizes 1–6 in der auf der Karte sichtbaren Reihenfolge
+            return cardB.backArray.slice(1, 7);
+        }
+
+        function finishRad() {
+            if (radCardId && radCardId <= 100 && CD[radCardId] && CD[radCardId].suitChange) {
+                preferredSuit = CD[radCardId].suitChange;
+                const prefEl = document.getElementById('prefSuitDisplay');
+                prefEl.textContent = preferredSuit;
+                prefEl.className = 'changed';
+                setTimeout(() => { prefEl.className = ''; }, 3000);
+                updateLoyBar();
+                toast(`Bevorzugte Farbe → ${preferredSuit}`);
+            }
+            aDone++;
+            aSkips[aIdx] = false;
+            document.getElementById('radwiz').style.display = 'none';
+            advanceAction();
+        }
+
+        function radDone(cardAdded, msg) {
+            const el = document.getElementById('rResult');
+            el.innerHTML = msg || 'Radikalisierung abgeschlossen.';
+            showRStep('rStep4');
+        }
+
+        // ─── HOF ──────────────────────────────────────────────────────────────────────
+        function addCourtCard(id, pos) {
+            if (court.find(c => c.id === id)) { toast('Karte #' + id + ' bereits im Hof.'); return; }
+            court.push({ id, pos: pos || 'R', usedThisTurn: true });
+            updateCourt();
+        }
+
+        function addCourt() {
+            const v = parseInt(document.getElementById('courtIn').value);
+            if (isNaN(v) || v < 1 || v > 116) { toast('Bitte Nr. 1–116 eingeben.'); return; }
+            if (court.find(c => c.id === v)) { toast('Karte #' + v + ' bereits im Hof.'); return; }
+            const pos = confirm('Linke Seite des Hofes? (Abbrechen = Rechts)') ? 'L' : 'R';
+            court.push({ id: v, pos, usedThisTurn: false });
+            document.getElementById('courtIn').value = '';
+            updateCourt();
+            toast('Hofkarte #' + v + ' hinzugefügt (' + pos + ').');
+        }
+
+        function removeCourt(id, e) {
+            e.stopPropagation();
+            court = court.filter(c => c.id !== id);
+            updateCourt();
+        }
+
+        function toggleUsed(id) {
+            const c = court.find(c => c.id === id);
+            if (c) c.usedThisTurn = !c.usedThisTurn;
+            updateCourt();
+        }
+
+        function clearCourt() { if (!court.length) return; if (!confirm('Hof leeren?')) return;
+            court = [];
+            updateCourt();
+            toast('Hof geleert.'); }
+
+        function updateCourt() {
+            const grid = document.getElementById('courtGrid');
+            const cnt = court.length;
+            document.getElementById('courtCnt').textContent = cnt + ' Karte' + (cnt !== 1 ? 'n' : '');
+            document.getElementById('discardHint').style.display = cnt > courtLimit ? 'block' : 'none';
+            if (!cnt) { grid.innerHTML = '<div class="cempty">Noch keine Hofkarten.</div>'; return; }
+            grid.innerHTML = '';
+            court.forEach(entry => {
+                const { id, pos, usedThisTurn } = entry;
+                const info = CD[id] || { name: '#' + id, suit: '?', rank: '?' };
+                const div = document.createElement('div');
+                div.className = 'ccard' + (usedThisTurn ? ' used' : '');
+                div.onclick = () => zoomSingle(id);
+                if (usedThisTurn) {
+                    const overlay = document.createElement('div');
+                    overlay.className = 'used-overlay';
+                    overlay.textContent = '✓';
+                    overlay.style.pointerEvents = 'none';
+                    div.appendChild(overlay);
+                }
+                const top = document.createElement('div');
+                top.className = 'ccard-top';
+                top.style.zIndex = '3';
+                top.innerHTML =
+                    `<span class="pos-badge pos-${pos}">${pos}</span>${usedThisTurn?'<span class="used-badge">verwendet</span>':''}`;
+                const img = document.createElement('img');
+                img.alt = '#' + id;
+                img.loading = 'lazy';
+                img.style.minHeight = '100px';
+                img.style.background = 'var(--card-bg)';
+                loadImg(img, null, null, URLS, id);
+                const foot = document.createElement('div');
+                foot.className = 'ccard-foot';
+                foot.innerHTML =
+                    `<span title="${info.name}">#${id} R${info.rank}</span><button onclick="removeCourt(${id},event)" title="Entfernen">✕</button>`;
+                div.appendChild(top);
+                div.appendChild(img);
+                div.appendChild(foot);
+                div.addEventListener('contextmenu', e => { e.preventDefault();
+                    toggleUsed(id); });
+                grid.appendChild(div);
+            });
+            const note = document.createElement('div');
+            note.style.cssText = 'font-size:.65rem;color:var(--text3);padding:4px 0;';
+            note.textContent = 'L=Links, R=Rechts. Rechtsklick = als verwendet markieren. ✓-Overlay = bereits genutzt.';
+            grid.appendChild(note);
+        }
+
+        // ─── RUPIEN ───────────────────────────────────────────────────────────────────
+        function changeRupien(d) { rupien = Math.max(0, rupien + d);
+            updateRupien(); }
+
+        function updateRupien() { document.getElementById('rupCount').textContent = rupien; }
+
+        // ─── ZOOM ─────────────────────────────────────────────────────────────────────
+        function setZoomImg(el, fns, id) { el.src = '';
+            el.style.opacity = '.5';
+            loadImg(el, null, null, fns, id).then(() => el.style.opacity = '1'); }
+
+        function zoomA() { if (!cur) return;
+            setZoomImg(document.getElementById('zimgA'), URLS, cur.id);
+            document.getElementById('zlblA').textContent = 'Karte A – Vorderseite #' + cur.id;
+            document.getElementById('zsideB').style.display = 'none';
+            document.getElementById('zoom').className = 'zoom on'; }
+
+        function zoomB() { if (!pile.length) return;
+            const tid = pile[pile.length - 1];
+            setZoomImg(document.getElementById('zimgA'), BURLS, tid);
+            document.getElementById('zlblA').textContent = 'Karte B – Rückseite #' + tid;
+            document.getElementById('zsideB').style.display = 'none';
+            document.getElementById('zoom').className = 'zoom on'; }
+
+        function zoomSingle(id) { setZoomImg(document.getElementById('zimgA'), URLS, id);
+            document.getElementById('zlblA').textContent = 'Hofkarte #' + id + ' – Vorderseite';
+            setZoomImg(document.getElementById('zimgB'), BURLS, id);
+            document.getElementById('zlblB').textContent = 'Hofkarte #' + id + ' – Rückseite';
+            document.getElementById('zsideB').style.display = 'flex';
+            document.getElementById('zoom').className = 'zoom on'; }
+
+        function closeZoom() { document.getElementById('zoom').className = 'zoom'; }
+
+        // ─── REGELN ───────────────────────────────────────────────────────────────────
+        function toggleRules() { const b = document.getElementById('rbody'),
+                c = document.getElementById('rchev');
+            const open = b.style.display === 'block';
+            b.style.display = open ? 'none' : 'block';
+            c.textContent = open ? '▼' : '▲'; }
+
+        // ─── TOAST ────────────────────────────────────────────────────────────────────
         let _t;
-        function toast(msg){const el=document.getElementById('toast');el.textContent=msg;el.className='toast on';clearTimeout(_t);_t=setTimeout(()=>el.className='toast',2500);}
-        function onDomChkChange(){}
-        document.addEventListener('keydown',e=>{if(e.key==='Escape')closeZoom();if(e.key===' '&&document.getElementById('apanel').style.display!=='block'){e.preventDefault();takeTurn();}});
+
+        function toast(msg) { const el = document.getElementById('toast');
+            el.textContent = msg;
+            el.className = 'toast on';
+            clearTimeout(_t);
+            _t = setTimeout(() => el.className = 'toast', 2500); }
+
+        // ─── DOM CHECK STATE ──────────────────────────────────────────────────────────
+        function onDomChkChange() {}
+
+        // ─── KEYBOARD ─────────────────────────────────────────────────────────────────
+        document.addEventListener('keydown', e => {
+            if (e.key === 'Escape') closeZoom();
+            if (e.key === ' ' && document.getElementById('apanel').style.display !== 'block') { e
+                    .preventDefault();
+                takeTurn(); }
+        });
     </script>
 </body>
 </html>
