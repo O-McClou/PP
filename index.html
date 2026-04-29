@@ -8,1144 +8,92 @@
     <meta name="referrer" content="no-referrer">
     <title>Wakhan KI – Pax Pamir 2</title>
     <style>
-        *,
-        *::before,
-        *::after {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0
-        }
+        /* ... (Dein gesamtes, unverändertes CSS aus der ersten index.html) ... */
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0 }
         :root {
-            --gold: #b8860b;
-            --gold2: #d4a017;
-            --sand: #f0e0b0;
-            --bg: #0d0a04;
-            --panel: #1a1208;
-            --card-bg: #121008;
-            --border: rgba(180, 130, 30, 0.35);
-            --border2: rgba(180, 130, 30, 0.6);
-            --text: #e8d5a0;
-            --text2: #a08858;
-            --text3: #686040;
-            --brit: #3a7abf;
-            --rus: #8b2020;
-            --afg: #2a7a2a;
-        }
-        body {
-            min-height: 100vh;
-            background: var(--bg);
-            color: var(--text);
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 0 0 56px;
-            font-size: 14px;
-            -webkit-tap-highlight-color: transparent;
-            -webkit-user-select: none;
-            user-select: none;
-        }
-        .modal-bg {
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, .92);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 9000;
-            padding: 16px;
-        }
-        .modal-box {
-            background: var(--panel);
-            border: 1px solid var(--border2);
-            border-radius: 14px;
-            padding: 22px 20px;
-            width: 100%;
-            max-width: 380px;
-            display: flex;
-            flex-direction: column;
-            gap: 14px;
-        }
-        .modal-box h2 {
-            font-size: 1.1rem;
-            color: var(--gold2);
-            text-align: center;
-            font-weight: 600;
-        }
-        .modal-box p {
-            font-size: .82rem;
-            color: var(--text2);
-            line-height: 1.5;
-        }
-        .modal-box label {
-            font-size: .78rem;
-            color: var(--text2);
-            display: block;
-            margin-bottom: 5px;
-        }
-        .modal-box .sep {
-            font-size: .68rem;
-            color: var(--text3);
-            text-align: center;
-            margin: 4px 0;
-        }
-        .loy-btns {
-            display: flex;
-            gap: 8px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-        .lbtn {
-            padding: 8px 16px;
-            border-radius: 8px;
-            border: 2px solid;
-            font-family: inherit;
-            font-size: .82rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all .2s;
-            background: transparent;
-        }
-        .lbtn.brit {
-            border-color: var(--brit);
-            color: var(--brit);
-        }
-        .lbtn.brit.sel {
-            background: var(--brit);
-            color: #fff;
-        }
-        .lbtn.rus {
-            border-color: var(--rus);
-            color: var(--rus);
-        }
-        .lbtn.rus.sel {
-            background: var(--rus);
-            color: #fff;
-        }
-        .lbtn.afg {
-            border-color: var(--afg);
-            color: var(--afg);
-        }
-        .lbtn.afg.sel {
-            background: var(--afg);
-            color: #fff;
-        }
-        .setup-step {
-            display: none;
-        }
-        .setup-step.act {
-            display: block;
-        }
-
-        .loy-bar {
-            width: 100%;
-            background: rgba(0, 0, 0, .4);
-            border-bottom: 1px solid var(--border);
-            padding: 8px 12px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 8px;
-            flex-wrap: wrap;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-        .loy-group {
-            display: flex;
-            align-items: center;
-            gap: 7px;
-            flex-wrap: wrap;
-        }
-        .loy-label {
-            font-size: .65rem;
-            color: var(--text3);
-            text-transform: uppercase;
-            letter-spacing: .05em;
-        }
-        .loy-pill {
-            font-size: .72rem;
-            font-weight: 700;
-            padding: 3px 10px;
-            border-radius: 12px;
-            border: 1.5px solid;
-            cursor: pointer;
-            transition: all .2s;
-        }
-        .loy-pill.brit {
-            border-color: var(--brit);
-            color: var(--brit);
-        }
-        .loy-pill.brit.sel {
-            background: var(--brit);
-            color: #fff;
-        }
-        .loy-pill.rus {
-            border-color: var(--rus);
-            color: var(--rus);
-        }
-        .loy-pill.rus.sel {
-            background: var(--rus);
-            color: #fff;
-        }
-        .loy-pill.afg {
-            border-color: var(--afg);
-            color: var(--afg);
-        }
-        .loy-pill.afg.sel {
-            background: var(--afg);
-            color: #fff;
-        }
-        .wak-loy {
-            font-size: .75rem;
-            font-weight: 700;
-            padding: 3px 10px;
-            border-radius: 12px;
-            background: rgba(180, 130, 20, .15);
-            border: 1.5px solid var(--gold2);
-            color: var(--gold2);
-        }
-        .pref-suit {
-            font-size: .7rem;
-            color: var(--text3);
-        }
-        .pref-suit span {
-            color: var(--text2);
-            font-weight: 600;
-        }
-        .pref-suit .changed {
-            animation: highlightPulse 2s ease-in-out;
-            color: var(--gold2);
-        }
-        @keyframes highlightPulse {
-            0%,
-            100% {
-                color: var(--text2);
-            }
-            50% {
-                color: var(--gold2);
-            }
-        }
-
-        .main {
-            width: 100%;
-            max-width: 420px;
-            padding: 14px 12px;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-        h1 {
-            font-size: clamp(1.2rem, 5vw, 1.7rem);
-            color: var(--gold2);
-            letter-spacing: .1em;
-            text-align: center;
-            font-weight: 600;
-        }
-        .subtitle {
-            font-size: .78rem;
-            color: var(--text3);
-            text-align: center;
-            font-style: italic;
-        }
-        .divider {
-            width: 140px;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, var(--gold), transparent);
-            margin: 0 auto;
-        }
-
-        .stage {
-            display: flex;
-            gap: 10px;
-            align-items: flex-start;
-        }
-        .slot {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-        }
-        .slot-lbl {
-            font-size: .65rem;
-            color: var(--text3);
-            text-transform: uppercase;
-            letter-spacing: .06em;
-            text-align: center;
-        }
-        .frame {
-            width: 100%;
-            aspect-ratio: 2/3;
-            border: 1.5px solid var(--border);
-            border-radius: 10px;
-            background: var(--card-bg);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            position: relative;
-            cursor: pointer;
-            transition: border-color .2s;
-        }
-        .frame:hover {
-            border-color: var(--gold2);
-        }
-        .frame.hl {
-            border-color: var(--gold2);
-            box-shadow: 0 0 12px rgba(212, 160, 23, .2);
-        }
-        .frame img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            display: none;
-        }
-        .frame .ph {
-            font-size: .78rem;
-            color: var(--text3);
-            text-align: center;
-            padding: 10px;
-            line-height: 1.5;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 100%;
-        }
-        .badge {
-            position: absolute;
-            bottom: 5px;
-            right: 5px;
-            font-size: .6rem;
-            background: rgba(0, 0, 0, .75);
-            color: var(--gold2);
-            border-radius: 4px;
-            padding: 2px 5px;
-        }
-        .arr {
-            position: absolute;
-            top: 5px;
-            right: 5px;
-            font-size: .7rem;
-            font-weight: 700;
-            border-radius: 4px;
-            padding: 2px 6px;
-            display: none;
-        }
-        .arr.top {
-            background: rgba(40, 160, 70, .85);
-            color: #fff;
-        }
-        .arr.bot {
-            background: rgba(200, 70, 30, .85);
-            color: #fff;
-        }
-        .cnt {
-            position: absolute;
-            top: 5px;
-            left: 5px;
-            font-size: .6rem;
-            background: rgba(0, 0, 0, .75);
-            color: #aaa;
-            border-radius: 4px;
-            padding: 2px 5px;
-        }
-        .loading-ring {
-            width: 28px;
-            height: 28px;
-            border: 3px solid var(--border);
-            border-top-color: var(--gold);
-            border-radius: 50%;
-            animation: spin .8s linear infinite;
-            display: none;
-        }
-        @keyframes spin {
-            to {
-                transform: rotate(360deg)
-            }
-        }
-        .plus-sep {
-            display: flex;
-            align-items: center;
-            padding-top: 28px;
-            color: var(--text3);
-            font-size: 1.1rem;
-        }
-
-        .market-info {
-            background: rgba(0, 0, 0, .3);
-            border: 1px solid rgba(180, 130, 30, .25);
-            border-radius: 8px;
-            padding: 8px 12px;
-            display: none;
-        }
-        .market-info .mi-row {
-            display: flex;
-            gap: 12px;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-        .mi-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 2px;
-        }
-        .mi-label {
-            font-size: .6rem;
-            color: var(--text3);
-            text-transform: uppercase;
-        }
-        .mi-val {
-            font-size: .9rem;
-            font-weight: 700;
-            color: var(--gold2);
-        }
-        .mi-sep {
-            color: var(--text3);
-            font-size: 1.2rem;
-        }
-
-        .priority-values {
-            background: rgba(0, 0, 0, .3);
-            border: 1px solid rgba(180, 130, 30, .25);
-            border-radius: 8px;
-            padding: 8px 12px;
-            display: none;
-            font-size: .72rem;
-            color: var(--text2);
-        }
-        .priority-values .pv-title {
-            font-size: .65rem;
-            color: var(--text3);
-            text-transform: uppercase;
-            margin-bottom: 6px;
-        }
-        .priority-values .pv-grid {
-            display: flex;
-            gap: 4px;
-            justify-content: space-around;
-            flex-wrap: wrap;
-        }
-        .priority-values .pv-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            background: rgba(255, 255, 255, .03);
-            border: 1px solid rgba(255, 255, 255, .08);
-            border-radius: 6px;
-            padding: 4px 6px;
-            min-width: 36px;
-            transition: all .2s;
-        }
-        .priority-values .pv-item.active {
-            background: rgba(212, 160, 23, .2);
-            border-color: var(--gold2);
-            box-shadow: 0 0 8px rgba(212, 160, 23, .3);
-        }
-        .priority-values .pv-pos {
-            font-size: .55rem;
-            color: var(--text3);
-            margin-bottom: 2px;
-        }
-        .priority-values .pv-val {
-            font-size: .8rem;
-            font-weight: 700;
-            color: var(--text);
-        }
-        .priority-values .pv-item.active .pv-val {
-            color: var(--gold2);
-        }
-        .priority-values .pv-region {
-            font-size: .5rem;
-            color: var(--text3);
-            margin-top: 2px;
-            text-align: center;
-            line-height: 1.1;
-        }
-
-        .regs {
-            display: flex;
-            gap: 4px;
-            flex-wrap: wrap;
-        }
-        .reg {
-            font-size: .62rem;
-            padding: 2px 7px;
-            border-radius: 10px;
-            border: 1px solid;
-            font-weight: 600;
-        }
-        .rH {
-            background: #173404;
-            border-color: #639922;
-            color: #c0dd97;
-        }
-        .rK {
-            background: #042c53;
-            border-color: #378add;
-            color: #b5d4f4;
-        }
-        .rKa {
-            background: #4a1b0c;
-            border-color: #d85a30;
-            color: #f0997b;
-        }
-        .rP {
-            background: #26215c;
-            border-color: #7f77dd;
-            color: #cecbf6;
-        }
-        .rPu {
-            background: #412402;
-            border-color: #ba7517;
-            color: #fac775;
-        }
-        .rT {
-            background: #04342c;
-            border-color: #1d9e75;
-            color: #9fe1cb;
-        }
-
-        button {
-            font-family: inherit;
-            cursor: pointer;
-            border-radius: 7px;
-            font-weight: 600;
-            transition: opacity .15s;
-            border: none;
-        }
-        button:active {
-            opacity: .75;
-        }
-        .btn-primary {
-            background: linear-gradient(135deg, #f0d070, var(--gold2));
-            color: #1a1000;
-            padding: 13px 16px;
-            font-size: .95rem;
-            width: 100%;
-            box-shadow: 0 3px 12px rgba(180, 130, 20, .35);
-        }
-        .btn-ok {
-            background: rgba(255, 255, 255, .08);
-            border: 1px solid var(--border2);
-            color: var(--text);
-            padding: 9px 12px;
-            flex: 1;
-            font-size: .8rem;
-        }
-        .btn-skip {
-            background: transparent;
-            border: 1px solid rgba(255, 255, 255, .1);
-            color: var(--text2);
-            padding: 9px 12px;
-            flex: 1;
-            font-size: .8rem;
-        }
-        .btn-sm {
-            background: rgba(255, 255, 255, .06);
-            border: 1px solid var(--border);
-            color: var(--text2);
-            padding: 6px 10px;
-            font-size: .75rem;
-            border-radius: 6px;
-        }
-        .btn-danger {
-            background: transparent;
-            border: 1px solid rgba(180, 60, 40, .4);
-            color: #c07060;
-            padding: 6px 10px;
-            font-size: .75rem;
-            border-radius: 6px;
-        }
-        .btn-row {
-            display: flex;
-            gap: 8px;
-        }
-
-        .apanel {
-            background: var(--panel);
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            padding: 14px;
-            display: none;
-        }
-        .apanel-title {
-            font-size: .7rem;
-            color: var(--text3);
-            text-transform: uppercase;
-            letter-spacing: .06em;
-            margin-bottom: 8px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .dom-row {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 7px 10px;
-            background: rgba(255, 255, 255, .04);
-            border: 1px solid rgba(255, 255, 255, .07);
-            border-radius: 6px;
-            margin-bottom: 8px;
-            font-size: .82rem;
-            color: var(--text2);
-        }
-        .dom-row input {
-            accent-color: var(--gold);
-            width: 15px;
-            height: 15px;
-        }
-        .steps {
-            display: flex;
-            gap: 5px;
-            margin-bottom: 8px;
-        }
-        .step {
-            width: 7px;
-            height: 7px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, .15);
-        }
-        .step.act {
-            background: var(--gold2);
-        }
-        .step.done {
-            background: rgba(180, 130, 20, .4);
-        }
-        .step.skip {
-            background: rgba(255, 255, 255, .08);
-        }
-        .step.blocked {
-            background: rgba(200, 60, 40, .6);
-        }
-        .abox {
-            background: rgba(0, 0, 0, .3);
-            border: 1px solid var(--border);
-            border-left: 3px solid var(--gold);
-            border-radius: 6px;
-            padding: 10px 12px;
-            font-size: .88rem;
-            line-height: 1.55;
-            color: var(--text);
-            min-height: 48px;
-            margin-bottom: 8px;
-        }
-        .abox.rad {
-            border-left-color: #c05020;
-        }
-        .abox.bonus {
-            border-left-color: #3a8a5a;
-        }
-        .abox.warn {
-            border-left-color: #c04040;
-            background: rgba(180, 30, 30, .12);
-        }
-        .warn-msg {
-            font-size: .72rem;
-            color: #e08070;
-            margin-top: 4px;
-            font-style: italic;
-        }
-        .info-msg {
-            font-size: .72rem;
-            color: #80b0d0;
-            margin-top: 4px;
-        }
-
-        .radwiz {
-            background: rgba(0, 0, 0, .4);
-            border: 1px solid rgba(200, 100, 40, .4);
-            border-radius: 8px;
-            padding: 12px;
-            margin-top: 8px;
-            display: none;
-        }
-        .radwiz .wiz-step {
-            display: none;
-        }
-        .radwiz .wiz-step.act {
-            display: block;
-        }
-        .radwiz .wi {
-            font-size: .82rem;
-            color: #e0a060;
-            margin-bottom: 10px;
-            line-height: 1.4;
-        }
-        .radwiz label {
-            font-size: .75rem;
-            color: var(--text2);
-            display: block;
-            margin-bottom: 5px;
-        }
-        .radwiz input[type=number] {
-            padding: 7px 9px;
-            width: 90px;
-            font-family: inherit;
-            font-size: .85rem;
-            background: var(--panel);
-            color: var(--text);
-            border: 1px solid var(--border2);
-            border-radius: 6px;
-        }
-        .radwiz .infobox {
-            background: rgba(180, 130, 20, .08);
-            border: 1px solid rgba(180, 130, 20, .25);
-            border-radius: 6px;
-            padding: 10px 12px;
-            font-size: .82rem;
-            color: var(--text2);
-            line-height: 1.5;
-            margin-bottom: 10px;
-        }
-        .radwiz .infobox strong {
-            color: var(--gold2);
-        }
-        .placement-detail {
-            background: rgba(40, 100, 180, .1);
-            border: 1px solid rgba(40, 100, 180, .3);
-            border-radius: 6px;
-            padding: 10px 12px;
-            font-size: .8rem;
-            color: #b0c8e8;
-            line-height: 1.5;
-            margin-top: 8px;
-        }
-        .placement-detail strong {
-            color: #80b0f0;
-        }
-
-        .bonus-panel {
-            background: rgba(0, 50, 10, .25);
-            border: 1px solid rgba(60, 160, 80, .25);
-            border-radius: 8px;
-            padding: 10px 12px;
-            display: none;
-            font-size: .82rem;
-            color: #9fe0b0;
-            line-height: 1.5;
-        }
-        .bonus-card-item {
-            background: rgba(60, 160, 80, .1);
-            border: 1px solid rgba(60, 160, 80, .3);
-            border-radius: 6px;
-            padding: 8px 10px;
-            margin: 4px 0;
-            font-size: .78rem;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .bonus-card-item .bc-name {
-            font-weight: 700;
-            color: #c0ffc0;
-        }
-        .bonus-card-item .bc-action {
-            color: #90d090;
-        }
-        .verwaltung {
-            background: rgba(30, 0, 0, .4);
-            border: 1px solid rgba(180, 50, 30, .35);
-            border-radius: 8px;
-            padding: 12px;
-            display: none;
-            font-size: .82rem;
-            color: #e0a090;
-            line-height: 1.6;
-        }
-        .verwaltung h4 {
-            font-size: .78rem;
-            color: #f06040;
-            font-weight: 700;
-            margin-bottom: 6px;
-        }
-
-        .rupien-bar {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            background: rgba(0, 0, 0, .3);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 8px 12px;
-        }
-        .rup-label {
-            font-size: .72rem;
-            color: var(--text3);
-            text-transform: uppercase;
-        }
-        .rup-count {
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: var(--gold2);
-            min-width: 28px;
-            text-align: center;
-        }
-        .rup-btns {
-            display: flex;
-            gap: 5px;
-            margin-left: auto;
-        }
-        .rup-btn {
-            width: 28px;
-            height: 28px;
-            border-radius: 6px;
-            border: 1px solid var(--border2);
-            background: rgba(255, 255, 255, .06);
-            color: var(--text);
-            font-size: 1rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-        }
-
-        .court {
-            margin-top: 4px;
-        }
-        .sec-head {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            border-bottom: 1px solid var(--border);
-            padding-bottom: 8px;
-            margin-bottom: 10px;
-        }
-        .sec-head h2 {
-            font-size: 1rem;
-            color: var(--gold2);
-            font-weight: 600;
-        }
-        .sec-head span {
-            font-size: .72rem;
-            color: var(--text3);
-        }
-        .court-add {
-            display: flex;
-            gap: 8px;
-            margin-bottom: 10px;
-            flex-wrap: wrap;
-            align-items: center;
-        }
-        .court-add input {
-            padding: 7px 9px;
-            width: 90px;
-            font-family: inherit;
-            font-size: .85rem;
-            background: var(--panel);
-            color: var(--text);
-            border: 1px solid var(--border2);
-            border-radius: 6px;
-        }
-        .court-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
-            gap: 8px;
-        }
-        .ccard {
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            overflow: hidden;
-            cursor: pointer;
-            transition: border-color .2s;
-            position: relative;
-        }
-        .ccard:hover {
-            border-color: var(--gold2);
-        }
-        .ccard.used {
-            opacity: .55;
-            border-style: dashed;
-        }
-        .ccard.used .used-overlay {
-            position: absolute;
-            inset: 0;
-            background: rgba(0, 0, 0, .3);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            color: #888;
-            pointer-events: none;
-            z-index: 5;
-        }
-        .ccard img {
-            width: 100%;
-            aspect-ratio: 2/3;
-            object-fit: contain;
-            display: block;
-            background: var(--card-bg);
-        }
-        .ccard-top {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            padding: 3px 5px;
-            z-index: 2;
-        }
-        .pos-badge {
-            font-size: .62rem;
-            font-weight: 700;
-            padding: 1px 5px;
-            border-radius: 0 0 5px 5px;
-            color: #fff;
-        }
-        .pos-L {
-            background: rgba(60, 120, 200, .9);
-        }
-        .pos-R {
-            background: rgba(200, 60, 60, .9);
-        }
-        .used-badge {
-            font-size: .55rem;
-            background: rgba(0, 0, 0, .7);
-            color: #aaa;
-            padding: 1px 4px;
-            border-radius: 3px;
-        }
-        .ccard-foot {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 3px 6px;
-            background: rgba(0, 0, 0, .5);
-        }
-        .ccard-foot span {
-            font-size: .58rem;
-            color: var(--gold2);
-        }
-        .ccard-foot button {
-            background: none;
-            border: none;
-            color: #904040;
-            font-size: .8rem;
-            cursor: pointer;
-            padding: 0 2px;
-            line-height: 1;
-        }
-        .cempty {
-            font-size: .82rem;
-            color: var(--text3);
-            padding: 16px 0;
-        }
-        .discard-hint {
-            background: rgba(180, 50, 30, .1);
-            border: 1px dashed rgba(180, 50, 30, .4);
-            border-radius: 6px;
-            padding: 8px 10px;
-            font-size: .75rem;
-            color: #c08070;
-            line-height: 1.5;
-            margin-top: 6px;
-            display: none;
-        }
-        .discard-hint ol {
-            padding-left: 14px;
-        }
-        .discard-hint li {
-            margin-bottom: 2px;
-        }
-
-        .rules {
-            margin-top: 6px;
-        }
-        .rtoggle {
-            background: transparent;
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            color: var(--text2);
-            padding: 10px 14px;
-            width: 100%;
-            text-align: left;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: .82rem;
-        }
-        .rbody {
-            display: none;
-            background: var(--panel);
-            border: 1px solid var(--border);
-            border-top: none;
-            border-radius: 0 0 8px 8px;
-            padding: 14px;
-            font-size: .8rem;
-            line-height: 1.6;
-            color: var(--text2);
-        }
-        .rbody h4 {
-            font-size: .78rem;
-            color: var(--gold2);
-            font-weight: 600;
-            margin: 12px 0 4px;
-        }
-        .rbody h4:first-child {
-            margin-top: 0;
-        }
-        .rbody ul {
-            padding-left: 16px;
-        }
-        .rbody li {
-            margin-bottom: 2px;
-        }
-        .plist {
-            display: flex;
-            flex-direction: column;
-            gap: 3px;
-        }
-        .pitem {
-            display: flex;
-            align-items: center;
-            gap: 7px;
-            font-size: .75rem;
-        }
-        .pnum {
-            width: 18px;
-            height: 18px;
-            border-radius: 50%;
-            background: rgba(180, 130, 20, .15);
-            border: 1px solid var(--border);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: .62rem;
-            color: var(--gold2);
-            flex-shrink: 0;
-        }
-
-        .zoom {
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, .93);
-            display: none;
-            align-items: center;
-            justify-content: center;
-            gap: 14px;
-            flex-wrap: wrap;
-            padding: 14px;
-            z-index: 9999;
-            cursor: pointer;
-        }
-        .zoom.on {
-            display: flex;
-        }
-        .zside {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 6px;
-        }
-        .zlbl {
-            font-size: .68rem;
-            color: #aaa;
-        }
-        .zoom img {
-            max-width: min(320px, 44vw);
-            max-height: 80vh;
-            border-radius: 9px;
-            border: 1.5px solid var(--gold2);
-            object-fit: contain;
-        }
-        .zclose {
-            position: fixed;
-            top: 12px;
-            right: 14px;
-            background: none;
-            border: 1px solid #777;
-            color: #ccc;
-            border-radius: 50%;
-            width: 30px;
-            height: 30px;
-            font-size: .9rem;
-            cursor: pointer;
-            z-index: 10000;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .toast {
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%) translateY(60px);
-            background: var(--panel);
-            border: 1px solid var(--border2);
-            color: var(--text2);
-            padding: 8px 16px;
-            border-radius: 7px;
-            font-size: .8rem;
-            z-index: 9998;
-            transition: transform .3s;
-            pointer-events: none;
-            white-space: nowrap;
-        }
-        .toast.on {
-            transform: translateX(-50%) translateY(0);
-        }
-
-        .act-type {
-            display: inline-block;
-            font-size: .62rem;
-            font-weight: 700;
-            padding: 1px 6px;
-            border-radius: 4px;
-            margin-right: 5px;
-            vertical-align: middle;
-        }
-        .at-rad {
-            background: rgba(200, 80, 30, .25);
-            color: #f0804a;
-            border: 1px solid rgba(200, 80, 30, .4);
-        }
-        .at-bat {
-            background: rgba(180, 40, 40, .25);
-            color: #f08080;
-            border: 1px solid rgba(180, 40, 40, .4);
-        }
-        .at-bau {
-            background: rgba(40, 100, 180, .25);
-            color: #80b0f0;
-            border: 1px solid rgba(40, 100, 180, .4);
-        }
-        .at-tax {
-            background: rgba(180, 150, 20, .25);
-            color: #f0d060;
-            border: 1px solid rgba(180, 150, 20, .4);
-        }
-        .at-mar {
-            background: rgba(80, 160, 80, .25);
-            color: #80d080;
-            border: 1px solid rgba(80, 160, 80, .4);
-        }
-        .at-ver {
-            background: rgba(120, 40, 120, .25);
-            color: #c080c0;
-            border: 1px solid rgba(120, 40, 120, .4);
-        }
-        .at-ges {
-            background: rgba(180, 100, 20, .25);
-            color: #f0b060;
-            border: 1px solid rgba(180, 100, 20, .4);
-        }
-        .suit-change-alert {
-            background: rgba(180, 130, 20, .2);
-            border: 1px solid var(--gold2);
-            border-radius: 6px;
-            padding: 8px 12px;
-            margin-top: 6px;
-            font-size: .78rem;
-            color: var(--gold2);
-            text-align: center;
-            font-weight: 600;
-            animation: highlightPulse 2s ease-in-out 3;
-        }
+            --gold: #b8860b; --gold2: #d4a017; --sand: #f0e0b0; --bg: #0d0a04; --panel: #1a1208;
+            --card-bg: #121008; --border: rgba(180, 130, 30, 0.35); --border2: rgba(180, 130, 30, 0.6);
+            --text: #e8d5a0; --text2: #a08858; --text3: #686040; --brit: #3a7abf; --rus: #8b2020; --afg: #2a7a2a;
+        }
+        body { min-height: 100vh; background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; display: flex; flex-direction: column; align-items: center; padding: 0 0 56px; font-size: 14px; -webkit-tap-highlight-color: transparent; -webkit-user-select: none; user-select: none; }
+        .modal-bg { position: fixed; inset: 0; background: rgba(0, 0, 0, .92); display: flex; align-items: center; justify-content: center; z-index: 9000; padding: 16px; }
+        .modal-box { background: var(--panel); border: 1px solid var(--border2); border-radius: 14px; padding: 22px 20px; width: 100%; max-width: 380px; display: flex; flex-direction: column; gap: 14px; }
+        .modal-box h2 { font-size: 1.1rem; color: var(--gold2); text-align: center; font-weight: 600; }
+        .modal-box p { font-size: .82rem; color: var(--text2); line-height: 1.5; }
+        .modal-box label { font-size: .78rem; color: var(--text2); display: block; margin-bottom: 5px; }
+        .modal-box .sep { font-size: .68rem; color: var(--text3); text-align: center; margin: 4px 0; }
+        .loy-btns { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
+        .lbtn { padding: 8px 16px; border-radius: 8px; border: 2px solid; font-family: inherit; font-size: .82rem; font-weight: 600; cursor: pointer; transition: all .2s; background: transparent; }
+        .lbtn.brit { border-color: var(--brit); color: var(--brit); } .lbtn.brit.sel { background: var(--brit); color: #fff; }
+        .lbtn.rus { border-color: var(--rus); color: var(--rus); } .lbtn.rus.sel { background: var(--rus); color: #fff; }
+        .lbtn.afg { border-color: var(--afg); color: var(--afg); } .lbtn.afg.sel { background: var(--afg); color: #fff; }
+        .setup-step { display: none; } .setup-step.act { display: block; }
+        .loy-bar { width: 100%; background: rgba(0, 0, 0, .4); border-bottom: 1px solid var(--border); padding: 8px 12px; display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap; position: sticky; top: 0; z-index: 100; }
+        .loy-group { display: flex; align-items: center; gap: 7px; flex-wrap: wrap; }
+        .loy-label { font-size: .65rem; color: var(--text3); text-transform: uppercase; letter-spacing: .05em; }
+        .loy-pill { font-size: .72rem; font-weight: 700; padding: 3px 10px; border-radius: 12px; border: 1.5px solid; cursor: pointer; transition: all .2s; }
+        .loy-pill.brit { border-color: var(--brit); color: var(--brit); } .loy-pill.brit.sel { background: var(--brit); color: #fff; }
+        .loy-pill.rus { border-color: var(--rus); color: var(--rus); } .loy-pill.rus.sel { background: var(--rus); color: #fff; }
+        .loy-pill.afg { border-color: var(--afg); color: var(--afg); } .loy-pill.afg.sel { background: var(--afg); color: #fff; }
+        .wak-loy { font-size: .75rem; font-weight: 700; padding: 3px 10px; border-radius: 12px; background: rgba(180, 130, 20, .15); border: 1.5px solid var(--gold2); color: var(--gold2); }
+        .pref-suit { font-size: .7rem; color: var(--text3); } .pref-suit span { color: var(--text2); font-weight: 600; } .pref-suit .changed { animation: highlightPulse 2s ease-in-out; color: var(--gold2); }
+        @keyframes highlightPulse { 0%, 100% { color: var(--text2); } 50% { color: var(--gold2); } }
+        .main { width: 100%; max-width: 420px; padding: 14px 12px; display: flex; flex-direction: column; gap: 12px; }
+        h1 { font-size: clamp(1.2rem, 5vw, 1.7rem); color: var(--gold2); letter-spacing: .1em; text-align: center; font-weight: 600; }
+        .subtitle { font-size: .78rem; color: var(--text3); text-align: center; font-style: italic; }
+        .divider { width: 140px; height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); margin: 0 auto; }
+        .stage { display: flex; gap: 10px; align-items: flex-start; }
+        .slot { flex: 1; display: flex; flex-direction: column; gap: 5px; }
+        .slot-lbl { font-size: .65rem; color: var(--text3); text-transform: uppercase; letter-spacing: .06em; text-align: center; }
+        .frame { width: 100%; aspect-ratio: 2/3; border: 1.5px solid var(--border); border-radius: 10px; background: var(--card-bg); display: flex; align-items: center; justify-content: center; overflow: hidden; position: relative; cursor: pointer; transition: border-color .2s; }
+        .frame:hover { border-color: var(--gold2); } .frame.hl { border-color: var(--gold2); box-shadow: 0 0 12px rgba(212, 160, 23, .2); }
+        .frame img { width: 100%; height: 100%; object-fit: contain; display: none; }
+        .frame .ph { font-size: .78rem; color: var(--text3); text-align: center; padding: 10px; line-height: 1.5; display: flex; align-items: center; justify-content: center; height: 100%; }
+        .badge { position: absolute; bottom: 5px; right: 5px; font-size: .6rem; background: rgba(0, 0, 0, .75); color: var(--gold2); border-radius: 4px; padding: 2px 5px; }
+        .arr { position: absolute; top: 5px; right: 5px; font-size: .7rem; font-weight: 700; border-radius: 4px; padding: 2px 6px; display: none; }
+        .arr.top { background: rgba(40, 160, 70, .85); color: #fff; } .arr.bot { background: rgba(200, 70, 30, .85); color: #fff; }
+        .cnt { position: absolute; top: 5px; left: 5px; font-size: .6rem; background: rgba(0, 0, 0, .75); color: #aaa; border-radius: 4px; padding: 2px 5px; }
+        .loading-ring { width: 28px; height: 28px; border: 3px solid var(--border); border-top-color: var(--gold); border-radius: 50%; animation: spin .8s linear infinite; display: none; }
+        @keyframes spin { to { transform: rotate(360deg) } }
+        .plus-sep { display: flex; align-items: center; padding-top: 28px; color: var(--text3); font-size: 1.1rem; }
+        .market-info { background: rgba(0, 0, 0, .3); border: 1px solid rgba(180, 130, 30, .25); border-radius: 8px; padding: 8px 12px; display: none; }
+        .market-info .mi-row { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+        .mi-item { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+        .mi-label { font-size: .6rem; color: var(--text3); text-transform: uppercase; } .mi-val { font-size: .9rem; font-weight: 700; color: var(--gold2); } .mi-sep { color: var(--text3); font-size: 1.2rem; }
+        .priority-values { background: rgba(0, 0, 0, .3); border: 1px solid rgba(180, 130, 30, .25); border-radius: 8px; padding: 8px 12px; display: none; font-size: .72rem; color: var(--text2); }
+        .priority-values .pv-title { font-size: .65rem; color: var(--text3); text-transform: uppercase; margin-bottom: 6px; }
+        .priority-values .pv-grid { display: flex; gap: 4px; justify-content: space-around; flex-wrap: wrap; }
+        .priority-values .pv-item { display: flex; flex-direction: column; align-items: center; background: rgba(255, 255, 255, .03); border: 1px solid rgba(255, 255, 255, .08); border-radius: 6px; padding: 4px 6px; min-width: 36px; transition: all .2s; }
+        .priority-values .pv-item.active { background: rgba(212, 160, 23, .2); border-color: var(--gold2); box-shadow: 0 0 8px rgba(212, 160, 23, .3); }
+        .priority-values .pv-pos { font-size: .55rem; color: var(--text3); margin-bottom: 2px; } .priority-values .pv-val { font-size: .8rem; font-weight: 700; color: var(--text); } .priority-values .pv-item.active .pv-val { color: var(--gold2); } .priority-values .pv-region { font-size: .5rem; color: var(--text3); margin-top: 2px; text-align: center; line-height: 1.1; }
+        .regs { display: flex; gap: 4px; flex-wrap: wrap; } .reg { font-size: .62rem; padding: 2px 7px; border-radius: 10px; border: 1px solid; font-weight: 600; }
+        .rH { background: #173404; border-color: #639922; color: #c0dd97; } .rK { background: #042c53; border-color: #378add; color: #b5d4f4; } .rKa { background: #4a1b0c; border-color: #d85a30; color: #f0997b; } .rP { background: #26215c; border-color: #7f77dd; color: #cecbf6; } .rPu { background: #412402; border-color: #ba7517; color: #fac775; } .rT { background: #04342c; border-color: #1d9e75; color: #9fe1cb; }
+        button { font-family: inherit; cursor: pointer; border-radius: 7px; font-weight: 600; transition: opacity .15s; border: none; } button:active { opacity: .75; }
+        .btn-primary { background: linear-gradient(135deg, #f0d070, var(--gold2)); color: #1a1000; padding: 13px 16px; font-size: .95rem; width: 100%; box-shadow: 0 3px 12px rgba(180, 130, 20, .35); }
+        .btn-ok { background: rgba(255, 255, 255, .08); border: 1px solid var(--border2); color: var(--text); padding: 9px 12px; flex: 1; font-size: .8rem; }
+        .btn-skip { background: transparent; border: 1px solid rgba(255, 255, 255, .1); color: var(--text2); padding: 9px 12px; flex: 1; font-size: .8rem; }
+        .btn-sm { background: rgba(255, 255, 255, .06); border: 1px solid var(--border); color: var(--text2); padding: 6px 10px; font-size: .75rem; border-radius: 6px; }
+        .btn-danger { background: transparent; border: 1px solid rgba(180, 60, 40, .4); color: #c07060; padding: 6px 10px; font-size: .75rem; border-radius: 6px; }
+        .btn-row { display: flex; gap: 8px; }
+        .apanel { background: var(--panel); border: 1px solid var(--border); border-radius: 10px; padding: 14px; }
+        .apanel-title { font-size: .7rem; color: var(--text3); text-transform: uppercase; letter-spacing: .06em; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; }
+        .dom-row { display: flex; align-items: center; gap: 8px; padding: 7px 10px; background: rgba(255, 255, 255, .04); border: 1px solid rgba(255, 255, 255, .07); border-radius: 6px; margin-bottom: 8px; font-size: .82rem; color: var(--text2); } .dom-row input { accent-color: var(--gold); width: 15px; height: 15px; }
+        .steps { display: flex; gap: 5px; margin-bottom: 8px; }
+        .step { width: 7px; height: 7px; border-radius: 50%; background: rgba(255, 255, 255, .15); } .step.act { background: var(--gold2); } .step.done { background: rgba(180, 130, 20, .4); } .step.skip { background: rgba(255, 255, 255, .08); } .step.blocked { background: rgba(200, 60, 40, .6); }
+        .abox { background: rgba(0, 0, 0, .3); border: 1px solid var(--border); border-left: 3px solid var(--gold); border-radius: 6px; padding: 10px 12px; font-size: .88rem; line-height: 1.55; color: var(--text); min-height: 48px; margin-bottom: 8px; } .abox.rad { border-left-color: #c05020; } .abox.bonus { border-left-color: #3a8a5a; } .abox.warn { border-left-color: #c04040; background: rgba(180, 30, 30, .12); }
+        .warn-msg { font-size: .72rem; color: #e08070; margin-top: 4px; font-style: italic; } .info-msg { font-size: .72rem; color: #80b0d0; margin-top: 4px; }
+        .radwiz { background: rgba(0, 0, 0, .4); border: 1px solid rgba(200, 100, 40, .4); border-radius: 8px; padding: 12px; margin-top: 8px; display: none; } .radwiz .wiz-step { display: none; } .radwiz .wiz-step.act { display: block; } .radwiz .wi { font-size: .82rem; color: #e0a060; margin-bottom: 10px; line-height: 1.4; } .radwiz label { font-size: .75rem; color: var(--text2); display: block; margin-bottom: 5px; } .radwiz input[type=number] { padding: 7px 9px; width: 90px; font-family: inherit; font-size: .85rem; background: var(--panel); color: var(--text); border: 1px solid var(--border2); border-radius: 6px; } .radwiz .infobox { background: rgba(180, 130, 20, .08); border: 1px solid rgba(180, 130, 20, .25); border-radius: 6px; padding: 10px 12px; font-size: .82rem; color: var(--text2); line-height: 1.5; margin-bottom: 10px; } .radwiz .infobox strong { color: var(--gold2); }
+        .placement-detail { background: rgba(40, 100, 180, .1); border: 1px solid rgba(40, 100, 180, .3); border-radius: 6px; padding: 10px 12px; font-size: .8rem; color: #b0c8e8; line-height: 1.5; margin-top: 8px; } .placement-detail strong { color: #80b0f0; }
+        .bonus-panel { background: rgba(0, 50, 10, .25); border: 1px solid rgba(60, 160, 80, .25); border-radius: 8px; padding: 10px 12px; display: none; font-size: .82rem; color: #9fe0b0; line-height: 1.5; } .bonus-card-item { background: rgba(60, 160, 80, .1); border: 1px solid rgba(60, 160, 80, .3); border-radius: 6px; padding: 8px 10px; margin: 4px 0; font-size: .78rem; display: flex; align-items: center; gap: 8px; } .bonus-card-item .bc-name { font-weight: 700; color: #c0ffc0; } .bonus-card-item .bc-action { color: #90d090; }
+        .verwaltung { background: rgba(30, 0, 0, .4); border: 1px solid rgba(180, 50, 30, .35); border-radius: 8px; padding: 12px; display: none; font-size: .82rem; color: #e0a090; line-height: 1.6; } .verwaltung h4 { font-size: .78rem; color: #f06040; font-weight: 700; margin-bottom: 6px; }
+        .rupien-bar { display: flex; align-items: center; gap: 10px; background: rgba(0, 0, 0, .3); border: 1px solid var(--border); border-radius: 8px; padding: 8px 12px; } .rup-label { font-size: .72rem; color: var(--text3); text-transform: uppercase; } .rup-count { font-size: 1.2rem; font-weight: 700; color: var(--gold2); min-width: 28px; text-align: center; } .rup-btns { display: flex; gap: 5px; margin-left: auto; } .rup-btn { width: 28px; height: 28px; border-radius: 6px; border: 1px solid var(--border2); background: rgba(255, 255, 255, .06); color: var(--text); font-size: 1rem; display: flex; align-items: center; justify-content: center; cursor: pointer; }
+        .court { margin-top: 4px; } .sec-head { display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border); padding-bottom: 8px; margin-bottom: 10px; } .sec-head h2 { font-size: 1rem; color: var(--gold2); font-weight: 600; } .sec-head span { font-size: .72rem; color: var(--text3); }
+        .court-add { display: flex; gap: 8px; margin-bottom: 10px; flex-wrap: wrap; align-items: center; } .court-add input { padding: 7px 9px; width: 90px; font-family: inherit; font-size: .85rem; background: var(--panel); color: var(--text); border: 1px solid var(--border2); border-radius: 6px; }
+        .court-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); gap: 8px; } .ccard { background: var(--card-bg); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; cursor: pointer; transition: border-color .2s; position: relative; } .ccard:hover { border-color: var(--gold2); } .ccard.used { opacity: .55; border-style: dashed; } .ccard.used .used-overlay { position: absolute; inset: 0; background: rgba(0, 0, 0, .3); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; color: #888; pointer-events: none; z-index: 5; } .ccard img { width: 100%; aspect-ratio: 2/3; object-fit: contain; display: block; background: var(--card-bg); } .ccard-top { position: absolute; top: 0; left: 0; right: 0; display: flex; justify-content: space-between; align-items: flex-start; padding: 3px 5px; z-index: 2; } .pos-badge { font-size: .62rem; font-weight: 700; padding: 1px 5px; border-radius: 0 0 5px 5px; color: #fff; } .pos-L { background: rgba(60, 120, 200, .9); } .pos-R { background: rgba(200, 60, 60, .9); } .used-badge { font-size: .55rem; background: rgba(0, 0, 0, .7); color: #aaa; padding: 1px 4px; border-radius: 3px; } .ccard-foot { display: flex; align-items: center; justify-content: space-between; padding: 3px 6px; background: rgba(0, 0, 0, .5); } .ccard-foot span { font-size: .58rem; color: var(--gold2); } .ccard-foot button { background: none; border: none; color: #904040; font-size: .8rem; cursor: pointer; padding: 0 2px; line-height: 1; } .cempty { font-size: .82rem; color: var(--text3); padding: 16px 0; } .discard-hint { background: rgba(180, 50, 30, .1); border: 1px dashed rgba(180, 50, 30, .4); border-radius: 6px; padding: 8px 10px; font-size: .75rem; color: #c08070; line-height: 1.5; margin-top: 6px; display: none; } .discard-hint ol { padding-left: 14px; } .discard-hint li { margin-bottom: 2px; }
+        .rules { margin-top: 6px; } .rtoggle { background: transparent; border: 1px solid var(--border); border-radius: 8px; color: var(--text2); padding: 10px 14px; width: 100%; text-align: left; display: flex; justify-content: space-between; align-items: center; font-size: .82rem; } .rbody { display: none; background: var(--panel); border: 1px solid var(--border); border-top: none; border-radius: 0 0 8px 8px; padding: 14px; font-size: .8rem; line-height: 1.6; color: var(--text2); } .rbody h4 { font-size: .78rem; color: var(--gold2); font-weight: 600; margin: 12px 0 4px; } .rbody h4:first-child { margin-top: 0; } .rbody ul { padding-left: 16px; } .rbody li { margin-bottom: 2px; } .plist { display: flex; flex-direction: column; gap: 3px; } .pitem { display: flex; align-items: center; gap: 7px; font-size: .75rem; } .pnum { width: 18px; height: 18px; border-radius: 50%; background: rgba(180, 130, 20, .15); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: .62rem; color: var(--gold2); flex-shrink: 0; }
+        .zoom { position: fixed; inset: 0; background: rgba(0, 0, 0, .93); display: none; align-items: center; justify-content: center; gap: 14px; flex-wrap: wrap; padding: 14px; z-index: 9999; cursor: pointer; } .zoom.on { display: flex; } .zside { display: flex; flex-direction: column; align-items: center; gap: 6px; } .zlbl { font-size: .68rem; color: #aaa; } .zoom img { max-width: min(320px, 44vw); max-height: 80vh; border-radius: 9px; border: 1.5px solid var(--gold2); object-fit: contain; } .zclose { position: fixed; top: 12px; right: 14px; background: none; border: 1px solid #777; color: #ccc; border-radius: 50%; width: 30px; height: 30px; font-size: .9rem; cursor: pointer; z-index: 10000; display: flex; align-items: center; justify-content: center; }
+        .toast { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%) translateY(60px); background: var(--panel); border: 1px solid var(--border2); color: var(--text2); padding: 8px 16px; border-radius: 7px; font-size: .8rem; z-index: 9998; transition: transform .3s; pointer-events: none; white-space: nowrap; } .toast.on { transform: translateX(-50%) translateY(0); }
+        .act-type { display: inline-block; font-size: .62rem; font-weight: 700; padding: 1px 6px; border-radius: 4px; margin-right: 5px; vertical-align: middle; } .at-rad { background: rgba(200, 80, 30, .25); color: #f0804a; border: 1px solid rgba(200, 80, 30, .4); } .at-bat { background: rgba(180, 40, 40, .25); color: #f08080; border: 1px solid rgba(180, 40, 40, .4); } .at-bau { background: rgba(40, 100, 180, .25); color: #80b0f0; border: 1px solid rgba(40, 100, 180, .4); } .at-tax { background: rgba(180, 150, 20, .25); color: #f0d060; border: 1px solid rgba(180, 150, 20, .4); } .at-mar { background: rgba(80, 160, 80, .25); color: #80d080; border: 1px solid rgba(80, 160, 80, .4); } .at-ver { background: rgba(120, 40, 120, .25); color: #c080c0; border: 1px solid rgba(120, 40, 120, .4); } .at-ges { background: rgba(180, 100, 20, .25); color: #f0b060; border: 1px solid rgba(180, 100, 20, .4); } .suit-change-alert { background: rgba(180, 130, 20, .2); border: 1px solid var(--gold2); border-radius: 6px; padding: 8px 12px; margin-top: 6px; font-size: .78rem; color: var(--gold2); text-align: center; font-weight: 600; animation: highlightPulse 2s ease-in-out 3; }
     </style>
 </head>
 <body>
@@ -1197,7 +145,7 @@
 
     <div class="main" id="mainApp" style="display:none;">
         <h1>✦ WAKHAN KI ✦</h1>
-        <p class="subtitle">Pax Pamir 2. Edition · Solo &amp; Duo Modus</p>
+        <p class="subtitle">Pax Pamir 2. Edition · Solo & Duo Modus</p>
         <div class="divider"></div>
 
         <div class="rupien-bar">
@@ -1249,7 +197,7 @@
 
         <button class="btn-primary" id="drawBtn" onclick="takeTurn()">▶ Wakhan Zug starten</button>
 
-        <div class="apanel" id="apanel">
+        <div class="apanel" id="apanel" style="display:none;">
             <div class="apanel-title">
                 <span>Aktion <span id="actNum">1</span> von 2</span>
                 <span id="actionsDoneSpan" style="color:var(--text3);font-size:.68rem;"></span>
@@ -1329,7 +277,7 @@
             <h4>⚙ Verwaltungsphase – Wakhan</h4>
             <span id="verwText"></span>
             <div style="margin-top:10px;">
-                <button class="btn-sm" onclick="document.getElementById('verwPanel').style.display='none';document.getElementById('drawBtn').disabled=false;toast('Zug abgeschlossen ✓')">✓ Verwaltung abgeschlossen</button>
+                <button class="btn-sm" onclick="finishVerwaltung()">✓ Verwaltung abgeschlossen</button>
             </div>
         </div>
 
@@ -1412,7 +360,9 @@
     <div class="toast" id="toast"></div>
 
     <script>
-        // ─── DATA INTEGRATION: HOFKARTEN & KI-KARTEN ──────────────────────────────────
+        // ═══════════════════════════════════════════════════════════════════
+        // DATEN-INTEGRATION AUS DEN HOCHGELADENEN DATEN
+        // ═══════════════════════════════════════════════════════════════════
         const RAW_CARDS = [
             { id: 1, name: "Mohan Lal", region: "Kabul", suit: "Geheimdienst", rank: 3, impactIcons: ["spy", "spy", "spy"], actions: ["move"], patriot: null, prize: "Russisch", suitChange: null, specialAbility: "Unentbehrliche Berater: Deine Spione können in Kämpfen mit anderen Spionen nicht entfernt werden." },
             { id: 2, name: "Jan-Fishan Khan", region: "Kabul", suit: "Geheimdienst", rank: 2, impactIcons: ["spy", "spy", "army"], actions: ["battle", "move"], patriot: null, prize: "Russisch", suitChange: null, specialAbility: null },
@@ -1566,13 +516,7 @@
         const WKC = WKC_RAW.map(c => {
             const oppLabel = c.backTopLabel === "Top (left)" ? "Bottom (right)" : "Top (left)";
             return {
-                id: c.id,
-                loyaltyOrder: c.loyaltyOrder,
-                action1_de: c.action1_de,
-                action2_de: c.action2_de,
-                action3_de: c.action3_de,
-                redArrow: c.redArrow,
-                blackArrow: c.blackArrow,
+                ...c,
                 backArray: [c.backTopLabel, ...c.priorities, oppLabel]
             };
         });
@@ -1619,11 +563,9 @@
             if (ring) ring.style.display = 'flex';
             for (const f of fns) { const u = f(id); try { const s = await tryFetch(u);
                     el.src = s;
-                    el.style.display = 'block'; if (ph) ph.style.display = 'none'; if (ring) ring.style
-                        .display = 'none'; return true; } catch {} try { const s = await tryImgSrc(u);
+                    el.style.display = 'block'; if (ph) ph.style.display = 'none'; if (ring) ring.style.display = 'none'; return true; } catch {} try { const s = await tryImgSrc(u);
                     el.src = s;
-                    el.style.display = 'block'; if (ph) ph.style.display = 'none'; if (ring) ring.style
-                        .display = 'none'; return true; } catch {} }
+                    el.style.display = 'block'; if (ph) ph.style.display = 'none'; if (ring) ring.style.display = 'none'; return true; } catch {} }
             if (ring) ring.style.display = 'none';
             el.style.display = 'none'; if (ph) ph.style.display = 'flex'; return false;
         }
@@ -1643,16 +585,12 @@
             wakLoy = 'Russisch';
         let preferredSuit = 'Politik';
         let courtLimit = 3;
-        let radCardId = null,
-            radBriber = null;
-        let autoActionInfo = '';
 
-        function shuffle(a) { for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i +
-                1));
+        function shuffle(a) { for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1));
             [a[i], a[j]] = [a[j], a[i]]; } }
 
         // ─── SETUP ────────────────────────────────────────────────────────────────────
-        let setupStep = 0,
+        let setupStep = 'step1',
             tmpPlayerCount = 1,
             tmpLoyalties = [];
 
@@ -1671,6 +609,7 @@
         function showSetupStep(id) {
             document.querySelectorAll('.setup-step').forEach(s => s.classList.remove('act'));
             document.getElementById(id).classList.add('act');
+            setupStep = id;
         }
 
         function finishSetup() {
@@ -1679,8 +618,7 @@
             courtLimit = playerCount === 1 ? 3 : 4;
             document.getElementById('setupModal').style.display = 'none';
             document.getElementById('loyBar').style.display = 'flex';
-            document.getElementById('mainApp').style.display = 'flex';
-            document.getElementById('mainApp').style.flexDirection = 'column';
+            document.getElementById('mainApp').style.display = 'block';
             initGame();
         }
 
@@ -1691,6 +629,8 @@
             document.getElementById('mainApp').style.display = 'none';
             showSetupStep('step1');
             hidePanel();
+            document.getElementById('drawBtn').style.display = 'block';
+            document.getElementById('drawBtn').disabled = false;
         }
 
         // ─── LOYALITÄT ────────────────────────────────────────────────────────────────
@@ -1740,6 +680,7 @@
             topDeck = null;
             aIdx = 0;
             aDone = 0;
+            aSkips = [];
             rupien = 5;
             updateRupien();
             updateStack();
@@ -1760,8 +701,7 @@
                 topDeck = WKC.find(c => c.id === pile[pile.length - 1]);
                 phB.textContent = 'Lädt…';
                 phB.style.display = 'flex';
-                loadImg(imgB, phB, ringB, BURLS, pile[pile.length - 1]).then(ok => { if (!ok) { phB
-                        .textContent = 'Rückseite';
+                loadImg(imgB, phB, ringB, BURLS, pile[pile.length - 1]).then(ok => { if (!ok) { phB.textContent = 'Rückseite';
                         phB.style.display = 'flex'; } });
             } else {
                 topDeck = null;
@@ -1773,8 +713,7 @@
         }
 
         function clearDrawn() {
-            ['imgA', 'arrA', 'badgeA'].forEach(id => { const el = document.getElementById(id); if (el) { el.style
-                        .display = 'none'; } });
+            ['imgA', 'arrA', 'badgeA'].forEach(id => { const el = document.getElementById(id); if (el) { el.style.display = 'none'; } });
             const phA = document.getElementById('phA'); if (phA) { phA.style.display = 'flex';
                 phA.textContent = 'Karte\nziehen'; }
             document.getElementById('regs').style.display = 'none';
@@ -1788,8 +727,7 @@
                 ringA = document.getElementById('ringA');
             phA.textContent = 'Lädt…';
             phA.style.display = 'flex';
-            loadImg(imgA, phA, ringA, URLS, card.id).then(ok => { if (!ok) { phA.textContent = 'Karte #' + card
-                        .id;
+            loadImg(imgA, phA, ringA, URLS, card.id).then(ok => { if (!ok) { phA.textContent = 'Karte #' + card.id;
                     phA.style.display = 'flex'; } });
             const arr = document.getElementById('arrA');
             arr.className = 'arr ' + (card.redArrow === 'top' ? 'top' : 'bot');
@@ -1804,19 +742,18 @@
             updateLoyBar();
         }
 
+        // KORRIGIERTE LOGIK FÜR MARKTSPALTE UND MARKTREIHE
         function getMarketColumn(cardA, cardB) {
-            if (!cardB || !cardA.blackArrow) return '?';
-            // Der schwarze Pfeil zeigt auf eine Position 1–6 im backArray (Index 1–6)
-            return cardB.backArray[cardA.blackArrow];
+            if (!cardB || !cardA.blackArrow || cardA.blackArrow < 1 || cardA.blackArrow > 6) return '?';
+            // Der schwarze Pfeil zeigt auf eine Position 1–6 im backArray (Index 0–5)
+            const idx = cardA.blackArrow - 1; // Umrechnung auf 0-basierten Index
+            return cardB.priorities[idx];
         }
 
-        function getMarketRowAndSide(cardA, cardB) {
-            if (!cardB) return { row: '?', side: '?' };
-            const idx = cardA.redArrow === 'top' ? 0 : 7;
-            const label = cardB.backArray[idx].toLowerCase(); // "top (left)" or "bottom (right)"
-            const row = label.includes('top') ? 'OBEN' : 'UNTEN';
-            const side = label.includes('left') ? 'Links im Hof' : 'Rechts im Hof';
-            return { row, side };
+        function getMarketRowAndSide(cardA) {
+            return cardA.redArrow === 'top'
+                ? { row: 'OBEN', side: 'Links im Hof' }
+                : { row: 'UNTEN', side: 'Rechts im Hof' };
         }
 
         function showRegsAndMarket(cardA, cardB) {
@@ -1825,7 +762,7 @@
             if (cardB) {
                 // Zeige die sechs Prioritäten der Rückseite (Indizes 1–6)
                 for (let i = 1; i <= 6; i++) {
-                    const val = cardB.backArray[i];
+                    const val = cardB.priorities[i-1]; // Korrigiert: auf das priorities-Array zugreifen
                     const reg = REGION_BY_IDX[val];
                     if (!reg) continue;
                     const s = document.createElement('span');
@@ -1835,7 +772,7 @@
                 }
                 regsEl.style.display = 'flex';
 
-                const { row, side } = getMarketRowAndSide(cardA, cardB);
+                const { row, side } = getMarketRowAndSide(cardA);
                 const col = getMarketColumn(cardA, cardB);
                 document.getElementById('miRow').textContent = row;
                 document.getElementById('miCol').textContent = col;
@@ -1880,7 +817,7 @@
             }
         }
 
-        // ─── HOFKARTEN-ANALYSE (unverändert) ─────────────────────────────────────────
+        // ─── HOFKARTEN-ANALYSE ────────────────────────────────────────────────────────
         function getCourtCardsWithAction(actionType) {
             return court.filter(c => {
                 if (c.usedThisTurn) return false;
@@ -1895,9 +832,7 @@
                 if (c.usedThisTurn) return false;
                 const info = CD[c.id];
                 if (!info) return false;
-                if (info.suit === preferredSuit) return true;
-                if (info.specialAbility && info.specialAbility.includes('bevorzugten Farbe')) return true;
-                return false;
+                return info.suit === preferredSuit;
             });
         }
 
@@ -1913,52 +848,20 @@
             return '';
         }
 
+        // KORRIGIERTE LOGIK FÜR canWakhanPerformAction
         function canWakhanPerformAction(actionText) {
             const lbl = actionLabel(actionText);
             if (lbl === 'rad') return true;
             if (!lbl) {
-                const t = actionText.toLowerCase();
-                if (t.includes('keine karte mit der bewegungsaktion') || t.includes('weniger als 2 rupien') ||
-                    t.includes('hofgröße') || t.includes('bevorzugt werden') || t.includes('dominanz hat') ||
-                    t.includes('koalition') || t.includes('weniger spione') || t.includes('kontrolle über eine region')) {
-                    return 'conditional';
-                }
-                return true;
+                // Für komplexe Bedingungsprüfungen können wir nicht automatisch entscheiden
+                return 'conditional';
             }
             const matchingCards = getCourtCardsWithAction(lbl);
             if (matchingCards.length === 0) {
-                if (lbl === 'ges') return true;
-                if (lbl === 'bat') {
-                    const hasAnyBattleCard = court.some(c => !c.usedThisTurn && CD[c.id] && CD[c.id].actions && CD[
-                        c.id].actions.includes('battle'));
-                    if (!hasAnyBattleCard) return false;
-                    return 'conditional';
-                }
-                if (lbl === 'tax') {
-                    const hasAnyTaxCard = court.some(c => !c.usedThisTurn && CD[c.id] && CD[c.id].actions && CD[c.id]
-                        .actions.includes('tax'));
-                    if (!hasAnyTaxCard) return false;
-                    return 'conditional';
-                }
-                if (lbl === 'bau') {
-                    const hasAnyBuildCard = court.some(c => !c.usedThisTurn && CD[c.id] && CD[c.id].actions && CD[c.id]
-                        .actions.includes('build'));
-                    if (!hasAnyBuildCard) return false;
-                    return 'conditional';
-                }
-                if (lbl === 'mar') {
-                    const hasAnyMoveCard = court.some(c => !c.usedThisTurn && CD[c.id] && CD[c.id].actions && CD[c.id]
-                        .actions.includes('move'));
-                    if (!hasAnyMoveCard) return false;
-                    return 'conditional';
-                }
-                if (lbl === 'ver') {
-                    const hasAnyBetrayCard = court.some(c => !c.usedThisTurn && CD[c.id] && CD[c.id].actions && CD[c.id]
-                        .actions.includes('betray'));
-                    if (!hasAnyBetrayCard) return false;
-                    return 'conditional';
-                }
-                return false;
+                // Keine passende Karte gefunden
+                const hasAnyActionCard = court.some(c => !c.usedThisTurn && CD[c.id] && CD[c.id].actions && CD[c.id].actions.includes(lbl));
+                if (!hasAnyActionCard) return false;
+                return 'conditional';
             }
             return true;
         }
@@ -1973,8 +876,7 @@
                 return {
                     entry: c,
                     info: info,
-                    priority: info ? (info.suit === preferredSuit ? 0 : (info.patriot ? 1 : (info.prize ? 2 : (
-                        info.rank || 3)))) : 9
+                    priority: info ? (info.suit === preferredSuit ? 0 : (info.patriot ? 1 : (info.prize ? 2 : (info.rank || 3)))) : 9
                 };
             });
             ranked.sort((a, b) => {
@@ -1990,6 +892,7 @@
             ['apanel', 'radwiz', 'bonusPanel', 'verwPanel'].forEach(id => {
                 const el = document.getElementById(id); if (el) el.style.display = 'none';
             });
+            document.getElementById('drawBtn').style.display = 'block';
             document.getElementById('drawBtn').disabled = false;
             aIdx = 0;
             aDone = 0;
@@ -2026,25 +929,23 @@
 
             if (canDo === false) {
                 boxClass += ' warn';
-                document.getElementById('abox').innerHTML = lblHtml + txt +
-                    '<div class="warn-msg">⚠ Keine passende, unbenutzte Hofkarte mit dieser Aktion gefunden. Aktion wird automatisch übersprungen.</div>';
+                document.getElementById('abox').innerHTML = lblHtml + txt + '<div class="warn-msg">⚠ Keine passende, unbenutzte Hofkarte mit dieser Aktion gefunden. Aktion wird automatisch übersprungen.</div>';
                 document.getElementById('abox').className = boxClass;
                 document.getElementById('actNum').textContent = aDone + 1;
                 document.getElementById('actionsDoneSpan').textContent = `${aDone} von 2 ausgeführt`;
                 document.getElementById('radwiz').style.display = 'none';
                 document.getElementById('btnExec').style.display = 'none';
+                document.getElementById('btnSkip').style.display = 'block';
                 document.getElementById('btnSkip').textContent = '→ Überspringen';
                 document.getElementById('btnSkip').style.flex = '1';
                 autoActionInfo = 'blocked';
                 return;
             } else if (canDo === 'conditional') {
-                autoInfoEl.innerHTML =
-                    '<div class="info-msg">ℹ Hofkarte vorhanden, aber Brettbedingungen müssen vom Spieler geprüft werden.</div>';
-            } else if (lbl !== 'rad') {
+                autoInfoEl.innerHTML = '<div class="info-msg">ℹ Hofkarte vorhanden, aber Brettbedingungen müssen vom Spieler geprüft werden.</div>';
+            } else {
                 const best = getBestCourtCardForAction(txt);
                 if (best && best.info) {
-                    autoInfoEl.innerHTML =
-                        `<div class="info-msg">✅ Empfohlene Hofkarte: <strong>#${best.info.id} – ${best.info.name}</strong> (${best.info.suit}, Rang ${best.info.rank}) – Position: ${best.entry.pos}</div>`;
+                    autoInfoEl.innerHTML = `<div class="info-msg">✅ Empfohlene Hofkarte: <strong>#${best.info.id} – ${best.info.name}</strong> (${best.info.suit}, Rang ${best.info.rank}) – Position: ${best.entry.pos}</div>`;
                 }
             }
 
@@ -2054,6 +955,7 @@
             document.getElementById('actionsDoneSpan').textContent = `${aDone} von 2 ausgeführt`;
             document.getElementById('radwiz').style.display = 'none';
             document.getElementById('btnExec').style.display = '';
+            document.getElementById('btnSkip').style.display = '';
             document.getElementById('btnSkip').textContent = '✗ Überspringen';
             document.getElementById('btnSkip').style.flex = '1';
             document.getElementById('btnExec').style.flex = '1';
@@ -2079,8 +981,9 @@
             updateStack();
             showDrawn(cur);
             document.getElementById('apanel').style.display = 'block';
-            document.getElementById('drawBtn').disabled = true;
+            document.getElementById('drawBtn').style.display = 'none';
             document.getElementById('btnExec').style.display = '';
+            document.getElementById('btnSkip').style.display = '';
             document.getElementById('btnSkip').textContent = '✗ Überspringen';
             updatePanel();
         }
@@ -2096,9 +999,7 @@
                     return;
                 }
                 if (autoActionInfo === 'conditional') {
-                    const confirmed = confirm(
-                        'Sind alle Brett-Bedingungen für diese Aktion erfüllt?\n\n' + txt +
-                        '\n\nOK = Ja, Aktion ausführen\nAbbrechen = Nein, überspringen');
+                    const confirmed = confirm('Sind alle Brett-Bedingungen für diese Aktion erfüllt?\n\n' + txt + '\n\nOK = Ja, Aktion ausführen\nAbbrechen = Nein, überspringen');
                     if (!confirmed) {
                         aSkips[aIdx] = true;
                         advanceAction();
@@ -2145,12 +1046,9 @@
             document.getElementById('apanel').style.display = 'none';
 
             if (bonusCards.length === 0) {
-                content.innerHTML =
-                    '<p style="color:#80b080;">Keine unbenutzten Hofkarten der bevorzugten Farbe (<strong>' +
-                    preferredSuit + '</strong>) vorhanden. Keine Bonusaktionen.</p>';
+                content.innerHTML = '<p style="color:#80b080;">Keine unbenutzten Hofkarten der bevorzugten Farbe (<strong>' + preferredSuit + '</strong>) vorhanden. Keine Bonusaktionen.</p>';
             } else {
-                let html = '<p style="color:#80b080;">Unbenutzte Hofkarten der bevorzugten Farbe (<strong>' +
-                    preferredSuit + '</strong>):</p>';
+                let html = '<p style="color:#80b080;">Unbenutzte Hofkarten der bevorzugten Farbe (<strong>' + preferredSuit + '</strong>):</p>';
                 bonusCards.sort((a, b) => {
                     if (a.pos === 'L' && b.pos === 'R') return -1;
                     if (a.pos === 'R' && b.pos === 'L') return 1;
@@ -2162,12 +1060,8 @@
                     const actions = info.actions || [];
                     const firstAction = actions.length > 0 ? actions[0] : 'keine';
                     const actionLabelMap = {
-                        'tax': 'Besteuerung',
-                        'battle': 'Kampf',
-                        'build': 'Bauen',
-                        'move': 'Bewegen',
-                        'betray': 'Verrat',
-                        'gift': 'Geschenk'
+                        'tax': 'Besteuerung', 'battle': 'Kampf', 'build': 'Bauen',
+                        'move': 'Bewegen', 'betray': 'Verrat', 'gift': 'Geschenk'
                     };
                     const actionName = actionLabelMap[firstAction] || firstAction;
                     html += `<div class="bonus-card-item">
@@ -2178,12 +1072,10 @@
                         <span style="color:#888;font-size:.7rem;">Pos: ${c.pos}</span>
                     </div>`;
                     if (actions.length > 1) {
-                        html +=
-                            `<div style="font-size:.68rem;color:#8a8;margin-left:20px;">Weitere Aktionen: ${actions.slice(1).map(a=>actionLabelMap[a]||a).join(', ')}</div>`;
+                        html += `<div style="font-size:.68rem;color:#8a8;margin-left:20px;">Weitere Aktionen: ${actions.slice(1).map(a=>actionLabelMap[a]||a).join(', ')}</div>`;
                     }
                 });
-                html +=
-                    '<p style="font-size:.7rem;color:#aaa;margin-top:8px;">▶ Führe die linke Aktion jeder Karte von links nach rechts aus. Überspringe ungültige Aktionen.</p>';
+                html += '<p style="font-size:.7rem;color:#aaa;margin-top:8px;">▶ Führe die linke Aktion jeder Karte von links nach rechts aus. Überspringe ungültige Aktionen.</p>';
                 content.innerHTML = html;
             }
             disc.push(cur.id);
@@ -2199,20 +1091,27 @@
             const over = court.length > limit;
             let txt = `Hofgröße: ${court.length}/${limit} Karten. `;
             if (over) {
-                txt +=
-                    `⚠ ${court.length-limit} Karte(n) abwerfen! Abwerfpriorität beachten (Hinweis im Hof).`;
+                txt += `⚠ ${court.length-limit} Karte(n) abwerfen! Abwerfpriorität beachten (Hinweis im Hof).`;
                 document.getElementById('discardHint').style.display = 'block';
             } else {
                 txt += 'Hof im Rahmen – kein Abwerfen nötig.';
                 document.getElementById('discardHint').style.display = 'none';
             }
-            txt +=
-                '<br>Handkarten: Wakhan hat keine Handkarten (entfällt).<br>Markt auffüllen: Ereigniskarten abwerfen und Markt neu befüllen (durch Mensch).';
+            txt += '<br>Handkarten: Wakhan hat keine Handkarten (entfällt).<br>Markt auffüllen: Ereigniskarten abwerfen und Markt neu befüllen (durch Mensch).';
             document.getElementById('verwText').innerHTML = txt;
             document.getElementById('verwPanel').style.display = 'block';
         }
 
-        // ─── RADIKALISIERUNG WIZARD (angepasst mit backArray-Logik) ─────────────────
+        function finishVerwaltung() {
+            document.getElementById('verwPanel').style.display = 'none';
+            document.getElementById('drawBtn').style.display = 'block';
+            document.getElementById('drawBtn').disabled = false;
+            cur = null;
+            clearDrawn();
+            toast('Zug abgeschlossen ✓');
+        }
+
+        // ─── RADIKALISIERUNG WIZARD ─────────────────────────────────────────────────
         let radSpecialText = '';
 
         function openRadWiz(actionText) {
@@ -2220,8 +1119,7 @@
             radCardId = null;
             radBriber = null;
             document.getElementById('radwiz').style.display = 'block';
-            ['rStep1', 'rStep1b', 'rStep2', 'rStep3', 'rStep3b', 'rStep4'].forEach(id => document.getElementById(
-                id).classList.remove('act'));
+            ['rStep1', 'rStep1b', 'rStep2', 'rStep3', 'rStep3b', 'rStep4'].forEach(id => document.getElementById(id).classList.remove('act'));
             document.getElementById('rStep1').classList.add('act');
             document.getElementById('placementDetails').innerHTML = '';
             const isStandard = actionText.toLowerCase() === 'radikalisierung.';
@@ -2233,8 +1131,7 @@
         }
 
         function showRStep(id) {
-            ['rStep1', 'rStep1b', 'rStep2', 'rStep3', 'rStep3b', 'rStep4'].forEach(s => document.getElementById(s)
-                .classList.remove('act'));
+            ['rStep1', 'rStep1b', 'rStep2', 'rStep3', 'rStep3b', 'rStep4'].forEach(s => document.getElementById(s).classList.remove('act'));
             document.getElementById(id).classList.add('act');
         }
 
@@ -2245,16 +1142,13 @@
         function wakhanWinsDom(yes) {
             if (yes) {
                 const box = document.getElementById('rMarketBox');
-                box.innerHTML =
-                    '<strong>Wakhan kauft die Dominanzcheck-Karte!</strong><br>Zahle den Preis. Führe sofort den Dominanzcheck durch! Dann:<br>Dominanzcheck-Kartennummer eingeben (101–104):';
+                box.innerHTML = '<strong>Wakhan kauft die Dominanzcheck-Karte!</strong><br>Zahle den Preis. Führe sofort den Dominanzcheck durch! Dann:<br>Dominanzcheck-Kartennummer eingeben (101–104):';
                 document.getElementById('rCardInput').min = 101;
                 document.getElementById('rCardInput').max = 116;
                 showRStep('rStep2');
             } else {
                 const box = document.getElementById('rMarketBox');
-                box.innerHTML =
-                    '<strong>Wakhan kauft NICHT die Dominanzcheck-Karte.</strong><br>Wähle stattdessen:<br>1. Billigsten Patrioten loyal zur dominanten Koalition.<br>2. Falls kein Patriot: Billigste Karte mit meisten Armeen/Straßen der dom. Koalition.<br>3. Falls kein dominantes Bündnis: Billigste Karte mit meisten Spionen/Stämmen.<br>Bei Gleichstand: höchste Kartennummer.<br><br>' +
-                    marketPfeilText();
+                box.innerHTML = '<strong>Wakhan kauft NICHT die Dominanzcheck-Karte.</strong><br>Wähle stattdessen:<br>1. Billigsten Patrioten loyal zur dominanten Koalition.<br>2. Falls kein Patriot: Billigste Karte mit meisten Armeen/Straßen der dom. Koalition.<br>3. Falls kein dominantes Bündnis: Billigste Karte mit meisten Spionen/Stämmen.<br>Bei Gleichstand: höchste Kartennummer.<br><br>' + marketPfeilText();
                 document.getElementById('rCardInput').min = 1;
                 document.getElementById('rCardInput').max = 116;
                 showRStep('rStep2');
@@ -2263,7 +1157,7 @@
 
         function marketPfeilText() {
             if (!cur || !topDeck) return '';
-            const { row } = getMarketRowAndSide(cur, topDeck);
+            const { row } = getMarketRowAndSide(cur);
             const col = getMarketColumn(cur, topDeck);
             return `<strong>Standard-Pfeil:</strong> ${row} Marktreihe, Spalte ${col} (0=rechts, 5=links).<br>Falls Karte nicht verfügbar: nächste links davon. Reihe leer → andere Reihe, gleiche Spalte.`;
         }
@@ -2325,7 +1219,7 @@
             const info = radCardId && CD[radCardId] ? CD[radCardId] : null;
             const isEvent = radCardId > 100;
             const name = info ? (isEvent ? info.namePurchased : info.name) : `Karte #${radCardId}`;
-            const { side } = getMarketRowAndSide(cur, topDeck);
+            const { side } = getMarketRowAndSide(cur);
             const sideAbbr = side.includes('Links') ? 'L' : 'R';
             let result = '';
             document.getElementById('placementDetails').innerHTML = '';
@@ -2341,21 +1235,17 @@
                 if (cardAdded) {
                     rupien -= cost;
                     updateRupien();
-                    result =
-                        `<strong>Bestechung: Zahle ${cost} Rupien</strong> an den Herrscher der Region.<br>`;
-                    result +=
-                        `Lege <strong>${name}</strong> auf die <strong>${side}</strong> von Wakhans Hof (automatisch Position: ${sideAbbr}).<br><br>`;
+                    result = `<strong>Bestechung: Zahle ${cost} Rupien</strong> an den Herrscher der Region.<br>`;
+                    result += `Lege <strong>${name}</strong> auf die <strong>${side}</strong> von Wakhans Hof (automatisch Position: ${sideAbbr}).<br><br>`;
                     result += cardEffectText(radCardId);
                     addCourtCard(radCardId, sideAbbr);
                 } else {
-                    result =
-                        `<strong>Wakhan kann die Bestechung (${cost} Rupien) nicht zahlen!</strong><br>`;
+                    result = `<strong>Wakhan kann die Bestechung (${cost} Rupien) nicht zahlen!</strong><br>`;
                     result += `Die Karte wird <strong>abgeworfen</strong> und nicht in den Hof gelegt. Kein Effekt.`;
                 }
             } else {
                 result = `Keine Bestechung nötig. Zahle 0 Rupien.<br>`;
-                result +=
-                    `Lege <strong>${name}</strong> auf die <strong>${side}</strong> von Wakhans Hof (automatisch Position: ${sideAbbr}).<br><br>`;
+                result += `Lege <strong>${name}</strong> auf die <strong>${side}</strong> von Wakhans Hof (automatisch Position: ${sideAbbr}).<br><br>`;
                 result += cardEffectText(radCardId);
                 addCourtCard(radCardId, sideAbbr);
             }
@@ -2385,8 +1275,7 @@
             if (info.patriot) txt += `• Patriot: <strong>${info.patriot}</strong><br>`;
             if (info.specialAbility) txt += `• 🌟 <strong>Fähigkeit:</strong> ${info.specialAbility}<br>`;
             if (info.suitChange) {
-                txt +=
-                    `• <span class="suit-change-alert" style="display:inline-block;padding:2px 8px;margin-top:4px;">🔄 Bevorzugte Farbe ändert sich zu → <strong>${info.suitChange}</strong></span><br>`;
+                txt += `• <span class="suit-change-alert" style="display:inline-block;padding:2px 8px;margin-top:4px;">🔄 Bevorzugte Farbe ändert sich zu → <strong>${info.suitChange}</strong></span><br>`;
             }
             return txt;
         }
@@ -2401,20 +1290,16 @@
             const roads = info.impactIcons.filter(i => i === 'road').length;
             const tribes = info.impactIcons.filter(i => i === 'tribe').length;
             if (spies > 0) {
-                html +=
-                    `<br>🕵️ <strong>${spies} Spion(e):</strong> Auf Hofkarten der Region <em>${info.region}</em> mit höchster Kartenpriorität, wo Wakhan <strong>nicht</strong> die meisten Spione hat.`;
+                html += `<br>🕵️ <strong>${spies} Spion(e):</strong> Auf Hofkarten der Region <em>${info.region}</em> mit höchster Kartenpriorität, wo Wakhan <strong>nicht</strong> die meisten Spione hat.`;
             }
             if (roads > 0) {
-                html +=
-                    `<br>🛤️ <strong>${roads} Straße(n):</strong> An Grenzen gemäß Regionenpriorität (siehe oben), beginnend bei Region <em>${info.region}</em>. Ungültige Grenzen überspringen.`;
+                html += `<br>🛤️ <strong>${roads} Straße(n):</strong> An Grenzen gemäß Regionenpriorität (siehe oben), beginnend bei Region <em>${info.region}</em>. Ungültige Grenzen überspringen.`;
             }
             if (armies > 0) {
-                html +=
-                    `<br>⚔️ <strong>${armies} Armee(n):</strong> Gemäß pragmatischer Loyalität (<strong>${wakLoy}</strong>) in der Kartenregion platzieren.`;
+                html += `<br>⚔️ <strong>${armies} Armee(n):</strong> Gemäß pragmatischer Loyalität (<strong>${wakLoy}</strong>) in der Kartenregion platzieren.`;
             }
             if (tribes > 0) {
-                html +=
-                    `<br>🏘️ <strong>${tribes} Stamm/Stämme:</strong> In der Kartenregion platzieren (gemäß pragmatischer Loyalität: <strong>${wakLoy}</strong>).`;
+                html += `<br>🏘️ <strong>${tribes} Stamm/Stämme:</strong> In der Kartenregion platzieren (gemäß pragmatischer Loyalität: <strong>${wakLoy}</strong>).`;
             }
             html += '<br><em>🌐 Regionen-Priorität (höchste zuerst):</em> ';
             html += pris.map(idx => REGION_BY_IDX[idx] ? REGION_BY_IDX[idx].n : '?').join(' → ');
@@ -2424,8 +1309,7 @@
 
         function getRegionPriorities(cardB) {
             if (!cardB) return [0,1,2,3,4,5];
-            // Die Prioritäten sind in backArray Indizes 1–6 in der auf der Karte sichtbaren Reihenfolge
-            return cardB.backArray.slice(1, 7);
+            return cardB.priorities;
         }
 
         function finishRad() {
@@ -2508,8 +1392,7 @@
                 const top = document.createElement('div');
                 top.className = 'ccard-top';
                 top.style.zIndex = '3';
-                top.innerHTML =
-                    `<span class="pos-badge pos-${pos}">${pos}</span>${usedThisTurn?'<span class="used-badge">verwendet</span>':''}`;
+                top.innerHTML = `<span class="pos-badge pos-${pos}">${pos}</span>${usedThisTurn?'<span class="used-badge">verwendet</span>':''}`;
                 const img = document.createElement('img');
                 img.alt = '#' + id;
                 img.loading = 'lazy';
@@ -2518,8 +1401,7 @@
                 loadImg(img, null, null, URLS, id);
                 const foot = document.createElement('div');
                 foot.className = 'ccard-foot';
-                foot.innerHTML =
-                    `<span title="${info.name}">#${id} R${info.rank}</span><button onclick="removeCourt(${id},event)" title="Entfernen">✕</button>`;
+                foot.innerHTML = `<span title="${info.name}">#${id} R${info.rank}</span><button onclick="removeCourt(${id},event)" title="Entfernen">✕</button>`;
                 div.appendChild(top);
                 div.appendChild(img);
                 div.appendChild(foot);
@@ -2588,8 +1470,7 @@
         // ─── KEYBOARD ─────────────────────────────────────────────────────────────────
         document.addEventListener('keydown', e => {
             if (e.key === 'Escape') closeZoom();
-            if (e.key === ' ' && document.getElementById('apanel').style.display !== 'block') { e
-                    .preventDefault();
+            if (e.key === ' ' && document.getElementById('drawBtn').style.display !== 'none' && !document.getElementById('drawBtn').disabled) { e.preventDefault();
                 takeTurn(); }
         });
     </script>
