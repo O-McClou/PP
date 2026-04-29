@@ -1,83 +1,291 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="referrer" content="no-referrer">
-<title>Wakhan KI – Pax Pamir 2</title>
-<style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --gold:#b8860b;--gold2:#d4a017;--sand:#f0e0b0;
-  --bg:#0d0a04;--panel:#1a1208;--card-bg:#121008;
-  --border:rgba(180,130,30,0.35);--border2:rgba(180,130,30,0.6);
-  --text:#e8d5a0;--text2:#a08858;--text3:#686040;
-  --brit:#3a7abf;--rus:#8b2020;--afg:#2a7a2a;
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pax Pamir 2E - Wakhan KI Tool</title>
+    <style>
+        :root {
+            --gold: #b8860b;
+            --sand: #f0e0b0;
+            --bg: #0d0a04;
+            --panel: #1a1208;
+            --text: #e8d5a0;
+            --border: rgba(180,130,30,0.35);
+            --brit: #3a7abf;
+            --rus: #8b2020;
+            --afg: #2a7a2a;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            margin: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            width: 100%;
+        }
+
+        .card-display {
+            background: var(--panel);
+            border: 2px solid var(--gold);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+        }
+
+        .loyalty-box {
+            display: flex;
+            gap: 10px;
+            margin: 15px 0;
+        }
+
+        .loyalty-icon {
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 0.9em;
+        }
+
+        .Britisch { background: var(--brit); color: white; }
+        .Russisch { background: var(--rus); color: white; }
+        .Afghanisch { background: var(--afg); color: white; }
+
+        .action-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .action-item {
+            background: rgba(255,255,255,0.05);
+            margin: 8px 0;
+            padding: 10px;
+            border-left: 4px solid var(--gold);
+        }
+
+        .market-info {
+            display: flex;
+            justify-content: space-around;
+            background: #251c0c;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            border: 1px dashed var(--gold);
+        }
+
+        .priority-number {
+            font-size: 1.5em;
+            color: var(--gold);
+            font-weight: bold;
+        }
+
+        button {
+            background: var(--gold);
+            color: black;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.1em;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+            transition: background 0.3s;
+        }
+
+        button:hover { background: var(--sand); }
+
+        .deck-info {
+            text-align: center;
+            margin-top: 10px;
+            font-size: 0.8em;
+            color: #888;
+        }
+
+        .region-list {
+            margin-top: 10px;
+            font-size: 0.9em;
+            color: var(--sand);
+        }
+
+        .red-arrow {
+            color: #ff4444;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1 style="text-align: center; color: var(--gold);">Wakhan Solo-Modus</h1>
+    
+    <div id="game-ui" style="display:none;">
+        <div class="card-display">
+            <div class="card-header">
+                <span id="card-id">Karte #---</span>
+                <span id="red-arrow-dir" class="red-arrow">Pfeil: --</span>
+            </div>
+
+            <h3>Pragmatische Loyalität (Reihenfolge):</h3>
+            <div id="loyalty-display" class="loyalty-box"></div>
+
+            <h3>Aktionen:</h3>
+            <ul class="action-list">
+                <li class="action-item" id="action1">--</li>
+                <li class="action-item" id="action2">--</li>
+                <li class="action-item" id="action3">--</li>
+            </ul>
+        </div>
+
+        <div class="market-info">
+            <div style="text-align: center;">
+                <div>Markt-Spalte</div>
+                <div id="market-col" class="priority-number">--</div>
+            </div>
+            <div style="text-align: center;">
+                <div>Ziel-Regionen (Priorität)</div>
+                <div id="region-prio" class="region-list">--</div>
+            </div>
+        </div>
+    </div>
+
+    <div style="margin-top: 20px;">
+        <button onclick="takeTurn()">Nächster Zug / Karte ziehen</button>
+        <div id="deck-count" class="deck-info">Karten im Stapel: 24</div>
+        <button onclick="resetGame()" style="margin-top: 10px; background: #444; color: #ccc; padding: 8px;">Stapel neu mischen</button>
+    </div>
+</div>
+
+<script>
+// --- DATEN: WAKHAN KARTEN (Korrekturen angewendet) ---
+const WKC = [
+    { id: 117, loyaltyOrder: ["Britisch", "Russisch", "Afghanisch"], action1_de: "Wenn Militärkarten bevorzugt werden, radikalisiere die am höchsten eingestufte Militärkarte.", action2_de: "Radikalisierung.", action3_de: "Radikalisierung.", redArrow: "bottom", priorities: [3, 4, 5, 0, 1, 2], backTopLabel: "Top (left)" },
+    { id: 118, loyaltyOrder: ["Afghanisch", "Britisch", "Russisch"], action1_de: "Wenn Politikkarten bevorzugt: Radikalisiere die am höchsten eingestufte Wirtschaftskarte.", action2_de: "Radikalisiere die am höchsten eingestufte Politikkarte.", action3_de: "Radikalisierung.", redArrow: "top", priorities: [4, 5, 0, 1, 2, 3], backTopLabel: "Bottom (right)" },
+    { id: 119, loyaltyOrder: ["Britisch", "Russisch", "Afghanisch"], action1_de: "Besteuerung.", action2_de: "Radikalisiere die am höchsten eingestufte Geheimdienstkarte.", action3_de: "Radikalisierung.", redArrow: "bottom", priorities: [2, 3, 4, 5, 0, 1], backTopLabel: "Top (left)" },
+    { id: 120, loyaltyOrder: ["Russisch", "Afghanisch", "Britisch"], action1_de: "Wenn Wakhan < 2 Rupien: Radikalisiere die Karte mit den meisten Rupien.", action2_de: "Bauen.", action3_de: "Radikalisierung.", redArrow: "top", priorities: [1, 2, 3, 4, 5, 0], backTopLabel: "Top (left)" },
+    { id: 121, loyaltyOrder: ["Britisch", "Russisch", "Afghanisch"], action1_de: "Radikalisiere eine Karte, die Wakhan Kontrolle über eine Region verschafft.", action2_de: "Kampf.", action3_de: "Radikalisierung.", redArrow: "top", priorities: [4, 5, 0, 1, 2, 3], backTopLabel: "Top (left)" },
+    { id: 122, loyaltyOrder: ["Britisch", "Russisch", "Afghanisch"], action1_de: "Radikalisiere eine Geheimdienstkarte.", action2_de: "Bewegen.", action3_de: "Radikalisierung.", redArrow: "top", priorities: [5, 0, 1, 2, 3, 4], backTopLabel: "Top (left)" },
+    { id: 123, loyaltyOrder: ["Afghanisch", "Russisch", "Britisch"], action1_de: "Bauen.", action2_de: "Bewegen.", action3_de: "Radikalisierung.", redArrow: "bottom", priorities: [0, 1, 2, 3, 4, 5], backTopLabel: "Top (left)" },
+    { id: 124, loyaltyOrder: ["Russisch", "Britisch", "Afghanisch"], action1_de: "Geschenk.", action2_de: "Radikalisiere die Karte mit den meisten Impact-Symbolen.", action3_de: "Radikalisierung.", redArrow: "top", priorities: [1, 2, 3, 4, 5, 0], backTopLabel: "Bottom (right)" },
+    { id: 125, loyaltyOrder: ["Afghanisch", "Russisch", "Britisch"], action1_de: "Kampf.", action2_de: "Wenn Wirtschaftskarten bevorzugt werden, radikalisiere die am höchsten eingestufte Wirtschaftskarte.", action3_de: "Radikalisierung.", redArrow: "bottom", priorities: [2, 3, 4, 5, 0, 1], backTopLabel: "Bottom (right)" },
+    { id: 126, loyaltyOrder: ["Russisch", "Britisch", "Afghanisch"], action1_de: "Besteuerung.", action2_de: "Bewegen.", action3_de: "Radikalisierung.", redArrow: "bottom", priorities: [3, 4, 5, 0, 1, 2], backTopLabel: "Bottom (right)" },
+    { id: 127, loyaltyOrder: ["Britisch", "Afghanisch", "Russisch"], action1_de: "Wenn kein Hof: Radikalisiere Karte mit meisten Spionen/Stämmen.", action2_de: "Militär bevorzugt: Radikalisiere höchste Militärkarte.", action3_de: "Radikalisierung.", redArrow: "bottom", priorities: [5, 0, 1, 2, 3, 4], backTopLabel: "Top (left)" },
+    { id: 128, loyaltyOrder: ["Afghanisch", "Russisch", "Britisch"], action1_de: "Bewegen.", action2_de: "Verrat.", action3_de: "Radikalisierung.", redArrow: "top", priorities: [0, 1, 2, 3, 4, 5], backTopLabel: "Bottom (right)" },
+    { id: 129, loyaltyOrder: ["Russisch", "Afghanisch", "Britisch"], action1_de: "Verrat.", action2_de: "Radikalisiere eine Politikkarte.", action3_de: "Radikalisierung.", redArrow: "bottom", priorities: [0, 1, 2, 3, 4, 5], backTopLabel: "Top (left)" },
+    { id: 130, loyaltyOrder: ["Britisch", "Afghanisch", "Russisch"], action1_de: "Geschenk.", action2_de: "Bauen.", action3_de: "Radikalisierung.", redArrow: "top", priorities: [5, 0, 1, 2, 3, 4], backTopLabel: "Bottom (right)" },
+    { id: 131, loyaltyOrder: ["Russisch", "Afghanisch", "Britisch"], action1_de: "Wakhan < 2 Rupien: Radikalisiere Karte mit meisten Rupien.", action2_de: "Besteuerung.", action3_de: "Radikalisierung.", redArrow: "bottom", priorities: [1, 2, 3, 4, 5, 0], backTopLabel: "Bottom (right)" },
+    { id: 132, loyaltyOrder: ["Afghanisch", "Britisch", "Russisch"], action1_de: "Bauen.", action2_de: "Radikalisiere Karte mit meisten Impact-Symbolen.", action3_de: "Radikalisierung.", redArrow: "top", priorities: [4, 5, 0, 1, 2, 3], backTopLabel: "Bottom (right)" },
+    { id: 133, loyaltyOrder: ["Russisch", "Afghanisch", "Britisch"], action1_de: "Hoflimit erreicht: Radikalisiere höchste Politikkarte.", action2_de: "Besteuerung.", action3_de: "Radikalisierung.", redArrow: "bottom", priorities: [2, 3, 4, 5, 0, 1], backTopLabel: "Top (left)" },
+    { id: 134, loyaltyOrder: ["Britisch", "Russisch", "Afghanisch"], action1_de: "Radikalisiere die am höchsten eingestufte Politikkarte.", action2_de: "Militär bevorzugt: Radikalisiere höchste Militärkarte.", action3_de: "Radikalisierung.", redArrow: "top", priorities: [3, 4, 5, 0, 1, 2], backTopLabel: "Bottom (right)" },
+    { id: 135, loyaltyOrder: ["Afghanisch", "Britisch", "Russisch"], action1_de: "Geschenk.", action2_de: "Kampf.", action3_de: "Radikalisierung.", redArrow: "bottom", priorities: [4, 5, 0, 1, 2, 3], backTopLabel: "Top (left)" },
+    { id: 136, loyaltyOrder: ["Russisch", "Britisch", "Afghanisch"], action1_de: "Bewegen.", action2_de: "Radikalisiere die höchste Geheimdienstkarte.", action3_de: "Radikalisierung.", redArrow: "top", priorities: [2, 3, 4, 5, 0, 1], backTopLabel: "Bottom (right)" },
+    { id: 137, loyaltyOrder: ["Britisch", "Afghanisch", "Russisch"], action1_de: "Besteuerung.", action2_de: "Radikalisiere Karte für Region-Kontrolle.", action3_de: "Radikalisierung.", redArrow: "bottom", priorities: [0, 1, 2, 3, 4, 5], backTopLabel: "Bottom (right)" },
+    { id: 138, loyaltyOrder: ["Afghanisch", "Britisch", "Russisch"], action1_de: "Kein Hof: Radikalisiere Karte mit meisten Spionen/Stämmen.", action2_de: "Verrat.", action3_de: "Radikalisierung.", redArrow: "top", priorities: [3, 4, 5, 0, 1, 2], backTopLabel: "Bottom (right)" },
+    { id: 139, loyaltyOrder: ["Russisch", "Britisch", "Afghanisch"], action1_de: "Radikalisiere eine Politikkarte.", action2_de: "Kampf.", action3_de: "Radikalisierung.", redArrow: "top", priorities: [1, 2, 3, 4, 5, 0], backTopLabel: "Bottom (right)" },
+    { id: 140, loyaltyOrder: ["Britisch", "Afghanisch", "Russisch"], action1_de: "Verrat.", action2_de: "Bewegen.", action3_de: "Radikalisierung.", redArrow: "bottom", priorities: [5, 0, 1, 2, 3, 4], backTopLabel: "Top (left)" }
+];
+
+const REGIONS = ["Herat", "Kandahar", "Kabul", "Transcaspia", "Punjab", "Persien"];
+
+// --- LOGIK ---
+let deck = [];
+let discard = [];
+
+function shuffle(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
 }
-body{min-height:100vh;background:var(--bg);color:var(--text);
-  font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
-  display:flex;flex-direction:column;align-items:center;
-  padding:0 0 56px;font-size:14px;}
 
-/* ── MODAL ── */
-.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.92);display:flex;align-items:center;justify-content:center;z-index:9000;padding:16px;}
-.modal-box{background:var(--panel);border:1px solid var(--border2);border-radius:14px;padding:22px 20px;width:100%;max-width:380px;display:flex;flex-direction:column;gap:14px;}
-.modal-box h2{font-size:1.1rem;color:var(--gold2);text-align:center;font-weight:600;}
-.modal-box p{font-size:.82rem;color:var(--text2);line-height:1.5;}
-.modal-box label{font-size:.78rem;color:var(--text2);display:block;margin-bottom:5px;}
-.loy-btns{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;}
-.lbtn{padding:8px 16px;border-radius:8px;border:2px solid;font-family:inherit;font-size:.82rem;font-weight:600;cursor:pointer;transition:all .2s;background:transparent;}
-.lbtn.brit{border-color:var(--brit);color:var(--brit);}
-.lbtn.brit.sel{background:var(--brit);color:#fff;}
-.lbtn.rus{border-color:var(--rus);color:var(--rus);}
-.lbtn.rus.sel{background:var(--rus);color:#fff;}
-.lbtn.afg{border-color:var(--afg);color:var(--afg);}
-.lbtn.afg.sel{background:var(--afg);color:#fff;}
-.setup-step{display:none;}
-.setup-step.act{display:block;}
+function resetGame() {
+    deck = WKC.map(c => c.id);
+    shuffle(deck);
+    discard = [];
+    document.getElementById('game-ui').style.display = 'none';
+    updateDeckCount();
+    alert("Stapel neu gemischt (24 Karten).");
+}
 
-/* ── LOYALTY BAR ── */
-.loy-bar{width:100%;background:rgba(0,0,0,.4);border-bottom:1px solid var(--border);padding:8px 12px;display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;position:sticky;top:0;z-index:100;box-shadow:0 4px 12px rgba(0,0,0,.5);}
-.loy-group{display:flex;align-items:center;gap:7px;flex-wrap:wrap;}
-.loy-label{font-size:.65rem;color:var(--text3);text-transform:uppercase;letter-spacing:.05em;}
-.loy-pill{font-size:.72rem;font-weight:700;padding:3px 10px;border-radius:12px;border:1.5px solid;cursor:pointer;transition:all .2s;}
-.loy-pill.brit{border-color:var(--brit);color:var(--brit);}
-.loy-pill.brit.sel{background:var(--brit);color:#fff;}
-.loy-pill.rus{border-color:var(--rus);color:var(--rus);}
-.loy-pill.rus.sel{background:var(--rus);color:#fff;}
-.loy-pill.afg{border-color:var(--afg);color:var(--afg);}
-.loy-pill.afg.sel{background:var(--afg);color:#fff;}
-.wak-loy{font-size:.75rem;font-weight:700;padding:3px 10px;border-radius:12px;background:rgba(180,130,20,.15);border:1.5px solid var(--gold2);color:var(--gold2);}
-.pref-suit{font-size:.7rem;color:var(--text3);}
-.pref-suit span{color:var(--text2);font-weight:600;}
+function updateDeckCount() {
+    document.getElementById('deck-count').textContent = `Karten im Stapel: ${deck.length}`;
+}
 
-/* ── MAIN WRAP ── */
-.main{width:100%;max-width:440px;padding:14px 12px;display:flex;flex-direction:column;gap:12px;}
-h1{font-size:clamp(1.2rem,5vw,1.7rem);color:var(--gold2);letter-spacing:.1em;text-align:center;font-weight:600;}
-.subtitle{font-size:.78rem;color:var(--text3);text-align:center;font-style:italic;}
-.divider{width:140px;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin:0 auto;}
+function takeTurn() {
+    if (deck.length === 0) {
+        alert("Der Stapel ist leer! Bitte neu mischen.");
+        return;
+    }
 
-/* ── RUPIEN ── */
-.rupien-bar{display:flex;align-items:center;gap:10px;background:var(--panel);border:1px solid var(--border);border-radius:8px;padding:10px 14px;}
-.rup-label{font-size:.75rem;color:var(--text2);text-transform:uppercase;font-weight:600;letter-spacing:.05em;}
-.rup-count{font-size:1.3rem;font-weight:700;color:var(--gold2);min-width:28px;text-align:center;}
-.rup-btns{display:flex;gap:6px;margin-left:auto;}
-.rup-btn{width:32px;height:32px;border-radius:6px;border:1px solid var(--border2);background:rgba(255,255,255,.06);color:var(--text);font-size:1.2rem;display:flex;align-items:center;justify-content:center;cursor:pointer;}
+    const drawnId = deck.pop();
+    const drawnCard = WKC.find(c => c.id === drawnId);
+    
+    // Die oberste Karte auf dem Stapel (für Markt-Spalte und Regionen)
+    let topDeckCard = null;
+    if (deck.length > 0) {
+        topDeckCard = WKC.find(c => c.id === deck[deck.length - 1]);
+    } else if (discard.length > 0) {
+        topDeckCard = WKC.find(c => c.id === discard[discard.length - 1]);
+    } else {
+        // Fallback falls gar keine Karte mehr da ist (theoretisch bei letzter Karte)
+        topDeckCard = drawnCard; 
+    }
 
-/* ── CARDS STAGE ── */
-.stage{display:flex;gap:12px;align-items:flex-start;}
-.slot{flex:1;display:flex;flex-direction:column;gap:5px;}
-.slot-lbl{font-size:.65rem;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;text-align:center;}
-.frame{width:100%;aspect-ratio:2/3;border:1.5px solid var(--border);border-radius:10px;
-  background:var(--card-bg);display:flex;align-items:center;justify-content:center;
-  overflow:hidden;position:relative;cursor:pointer;transition:border-color .2s;box-shadow:inset 0 0 20px rgba(0,0,0,.5);}
-.frame:hover{border-color:var(--gold2);}
-.frame.hl{border-color:var(--gold2);box-shadow:0 0 16px rgba(212,160,23,.25);}
-.frame img{width:100%;height:100%;object-fit:contain;display:none;}
-.frame .ph{font-size:.78rem;color:var(--text3);text-align:center;padding:10px;line-height:1.5;display:flex;align-items:center;justify-content:center;height:100%;}
-.badge{position:absolute;bottom:5px;right:5px;font-size:.65rem;background:rgba(0,0,0,.85);color:var(--gold2);border-radius:4px;padding:3px 6px;font-weight:600;}
-.arr{position:absolute;top:5px;right:5px;font-size:.7rem;font-weight:700;border-radius:4px;padding:3px 7px;display:none;}
-.arr.top{background:rgba(40,160,70,.9);color:#fff;}
-.arr.bot{background:rgba(200,70,30,.9);color:#fff;}
-.cnt{position:absolute;top:5px;left:5px;font-size:.65rem;background:rgba(0,0,0,.85);color:#ccc;border-radius:4px;padding:3px 6px;font-weight:600;}
-.loading-ring{width:28px;height:28px;border:3px solid var
+    displayCard(drawnCard, topDeckCard);
+    discard.push(drawnId);
+    updateDeckCount();
+    document.getElementById('game-ui').style.display = 'block';
+}
+
+function displayCard(card, nextCard) {
+    document.getElementById('card-id').textContent = `Gezogene Karte: #${card.id}`;
+    document.getElementById('red-arrow-dir').textContent = `Roter Pfeil: ${card.redArrow === 'top' ? 'OBEN (Rechts)' : 'UNTEN (Links)'}`;
+    
+    // Loyalität
+    const loyBox = document.getElementById('loyalty-display');
+    loyBox.innerHTML = '';
+    card.loyaltyOrder.forEach(l => {
+        const span = document.createElement('span');
+        span.className = `loyalty-icon ${l}`;
+        span.textContent = l;
+        loyBox.appendChild(span);
+    });
+
+    // Aktionen
+    document.getElementById('action1').textContent = `1. ${card.action1_de}`;
+    document.getElementById('action2').textContent = `2. ${card.action2_de}`;
+    document.getElementById('action3').textContent = `3. ${card.action3_de}`;
+
+    // Markt-Spalte (Logik korrigiert)
+    const marketCol = card.redArrow === "top" ? nextCard.priorities[0] : nextCard.priorities[5];
+    document.getElementById('market-col').textContent = marketCol;
+
+    // Regionen-Priorität
+    const p = [...nextCard.priorities];
+    const sortedIndices = nextCard.backTopLabel === "Top (left)" ? p : p.reverse();
+    const regionNames = sortedIndices.map(i => REGIONS[i]);
+    document.getElementById('region-prio').textContent = regionNames.join(" > ");
+}
+
+// Start
+resetGame();
+</script>
+
+</body>
+</html>
