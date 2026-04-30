@@ -798,8 +798,7 @@
             RAW.forEach(r=>CD[r.id]=r);
             const evtNames=["Dominanzcheck","Dominanzcheck","Dominanzcheck","Dominanzcheck","Neue Taktiken","Koh-i-Noor zurückerlangt","Höfische Manieren","Gerücht","Kriegsmüdigkeit","Nationalismus","Öffentlicher Rückzug","Staatenbildung","Rückendeckung der persischen Aristokratie","Andere Überzeugungsmethoden","Paschtunwali-Werte","Rüge"];
             for(let i=101;i<=116;i++) CD[i]={id:i,name:evtNames[i-101],isEvent:true,region:"Ereignis",suit:"Ereignis",rank:0,impactIcons:[],actions:[],patriot:null,prize:null,suitChange:null};
-            
-            // Korrigierte WKC_RAW basierend auf Wakhan.js
+
             const WKC_RAW = [
                 {id:117,loyaltyOrder:["Russisch","Afghanisch","Britisch"],action1_de:"Besteuerung.",action2_de:"Wenn Militärkarten bevorzugt werden, radikalisiere die am höchsten eingestufte Militärkarte.",action3_de:"Radikalisierung.",redArrow:"bottom",blackArrow:3,backTopLabel:"Top (left)",priorities:[3,4,5,0,1,2]},
                 {id:118,loyaltyOrder:["Afghanisch","Britisch","Russisch"],action1_de:"Wenn Politikkarten bevorzugt werden, radikalisiere die am höchsten eingestufte Wirtschaftskarte.",action2_de:"Radikalisiere die am höchsten eingestufte Politikkarte.",action3_de:"Radikalisierung.",redArrow:"top",blackArrow:2,backTopLabel:"Bottom (right)",priorities:[4,5,0,1,2,3]},
@@ -846,6 +845,7 @@
             let preferredSuit='Politik';
             let turnActive=false;
             let verwAbwurfIdx=0,verwCandidates=[];
+            let ambitionMode = false;
 
             function getCourtLimit() {
                 return 3 + court.filter(c => CD[c.id] && CD[c.id].suit === 'Politik').reduce((sum, c) => sum + (CD[c.id].rank || 0), 0);
@@ -992,30 +992,99 @@
             window._setupPickCount=function(n){tmpPC=n;tmpLoy=[];setupStep=1;renderSetup();};
             window._setupPickLoy=function(idx,loy){tmpLoy[idx]=loy;setupStep=(idx===0&&tmpPC===2)?2:3;renderSetup();};
             window._finishSetup=function(){playerCount=tmpPC;playerLoyalties=[...tmpLoy];initGame();showScreen('scrGame');updateTopBar();updateCourtUI();updateEventUI();updateStackUI();};
-            window._resetGame=function(){if(!confirm('Neues Spiel starten?'))return;setupStep=0;tmpPC=1;tmpLoy=[];turnActive=false;document.getElementById('btnStartTurn').disabled=false;hideAllPanels();showScreen('scrSetup');renderSetup();};
+            window._resetGame=function(){if(!confirm('Neues Spiel starten?'))return;setupStep=0;tmpPC=1;tmpLoy=[];turnActive=false;ambitionMode=false;document.getElementById('btnStartTurn').disabled=false;hideAllPanels();showScreen('scrSetup');renderSetup();};
 
             function initGame(){
                 pile=WKC.map(c=>c.id);shuffle(pile);disc=[];court=[];events=[];cur=null;topDeck=null;
                 aIdx=0;aDone=0;aSkips=[false,false,false];rupien=5;turnActive=false;radCardId=null;radBriber=null;
-                verwAbwurfIdx=0;verwCandidates=[];
+                verwAbwurfIdx=0;verwCandidates=[]; ambitionMode = false;
                 hideAllPanels();updateStackUI();clearCurUI();updateCourtUI();updateEventUI();
                 document.getElementById('priorityPills').style.display='none';
             }
             function hideAllPanels(){['actionCard','radCard','bonusCard','verwCard'].forEach(id=>document.getElementById(id).style.display='none');}
 
-            function actionLabel(txt){const t=txt.toLowerCase();if(t.includes('radikalis'))return'rad';if(t.includes('kampf')||t.includes('kämpfe'))return'bat';if(t.includes('bauen'))return'bau';if(t.includes('besteuerung')||t.includes('steuern'))return'tax';if(t.includes('bewegen')||t.includes('marschieren'))return'mar';if(t.includes('verrat'))return'ver';if(t.includes('geschenk'))return'ges';return'';}
+            function actionLabel(txt){const t=txt.toLowerCase();if(t.includes('radikalis'))return'rad';if(t.includes('kampf')||t.includes('kämpfe'))return'battle';if(t.includes('bauen'))return'build';if(t.includes('besteuerung')||t.includes('steuern'))return'tax';if(t.includes('bewegen')||t.includes('marschieren'))return'move';if(t.includes('verrat'))return'betray';if(t.includes('geschenk'))return'gift';return'';}
             function getCourtCardsWithAction(actionType){return court.filter(c=>{if(c.usedThisTurn)return false;const info=CD[c.id];return info&&info.actions&&info.actions.includes(actionType);});}
             function canWakhanPerformAction(actionText){const lbl=actionLabel(actionText);if(lbl==='rad')return true;if(!lbl){const t=actionText.toLowerCase();if(t.includes('keine karte')||t.includes('weniger als')||t.includes('hofgröße')||t.includes('bevorzugt werden')||t.includes('dominanz hat')||t.includes('koalition')||t.includes('weniger spione')||t.includes('kontrolle'))return'conditional';return true;}const matching=getCourtCardsWithAction(lbl);if(matching.length===0){const any=court.some(c=>!c.usedThisTurn&&CD[c.id]&&CD[c.id].actions&&CD[c.id].actions.includes(lbl));if(!any)return false;return'conditional';}return true;}
             function getBestCourtCardForAction(actionText){const lbl=actionLabel(actionText);if(!lbl||lbl==='rad')return null;const candidates=getCourtCardsWithAction(lbl);if(candidates.length===0)return null;const ranked=candidates.map(c=>{const info=CD[c.id];return{entry:c,info,priority:info?(info.suit===preferredSuit?0:(info.patriot?1:(info.prize?2:(info.rank||3)))):9};});ranked.sort((a,b)=>{if(a.priority!==b.priority)return a.priority-b.priority;if(a.info&&b.info&&a.info.rank!==b.info.rank)return(b.info.rank||0)-(a.info.rank||0);return(b.info?b.info.id||0:0)-(a.info?a.info.id||0:0);});return ranked[0]||null;}
+
+            // ===== Ambition Check =====
+            function checkAmbition(){
+                // Prüft, ob Wakhan sofort die Dominanzcheck-Karte kaufen will
+                const actionCardEl = document.getElementById('actionCard');
+                const actionBoxEl = document.getElementById('actionBox');
+                const actionExtraEl = document.getElementById('actionExtra');
+                const stepDotsEl = document.getElementById('stepDots');
+                const bonusRowEl = document.getElementById('bonusCheckRow');
+                const btnDoEl = document.getElementById('btnDo');
+                const btnSkipEl = document.getElementById('btnSkip');
+
+                // UI für Ambition-Frage vorbereiten
+                actionCardEl.style.display = 'block';
+                document.getElementById('actNum').textContent = '?';
+                stepDotsEl.innerHTML = '';
+                bonusRowEl.style.display = 'none';
+                actionExtraEl.textContent = '';
+
+                actionBoxEl.innerHTML = '<strong>🌐 Wakhans Ambition</strong><br>Befindet sich eine <strong>Dominanzcheck-Ereigniskarte</strong> im Markt und würde Wakhan beim Check die <strong>meisten Siegpunkte</strong> bekommen?';
+                btnDoEl.textContent = '✓ Ja – Ambition ausführen';
+                btnDoEl.onclick = function(){
+                    // Ja: Ambition ausführen – Spieler muss Kartennummer eingeben
+                    actionBoxEl.innerHTML = '<strong>Dominanzcheck-Karte kaufen</strong><br>Bitte gib die Nummer der Dominanzcheck-Ereigniskarte ein (101–104):';
+                    btnDoEl.textContent = 'Karte kaufen';
+                    btnDoEl.onclick = function(){
+                        const inputField = document.getElementById('ambitionInput');
+                        if (!inputField) return;
+                        const cardId = parseInt(inputField.value);
+                        if (isNaN(cardId) || cardId < 101 || cardId > 104) {
+                            toast('Bitte gültige Nr. 101–104 eingeben.');
+                            return;
+                        }
+                        ambitionMode = true;
+                        radCardId = cardId;
+                        radBriber = 'nobody';
+                        // Dominanzcheck-Karte immer Ereignis -> Kosten 0
+                        finalizeRad(0);
+                        // Nach Abschluss wird _radFinish aufgerufen, das ambitionMode erkennt
+                    };
+                    // Eingabefeld hinzufügen
+                    const existingInput = document.getElementById('ambitionInput');
+                    if (existingInput) existingInput.remove();
+                    const inputHtml = '<input type="number" class="input-num" id="ambitionInput" min="101" max="104" placeholder="Nr." style="margin:8px 0;">';
+                    actionBoxEl.innerHTML += inputHtml;
+                    btnSkipEl.textContent = 'Abbrechen';
+                    btnSkipEl.onclick = function(){
+                        ambitionMode = false;
+                        hideAllPanels();
+                        startStandardActions();
+                    };
+                };
+                btnSkipEl.textContent = '✗ Nein – keine Ambition';
+                btnSkipEl.onclick = function(){
+                    ambitionMode = false;
+                    hideAllPanels();
+                    startStandardActions();
+                };
+            }
+
+            function startStandardActions(){
+                // Normale KI-Aktionen starten
+                aIdx = 0;
+                document.getElementById('actionCard').style.display = 'none';
+                updateActionPanel();
+            }
 
             window._startTurn=function(){
                 if(turnActive)return;
                 if(pile.length===0){if(disc.length===0){toast('Kein KI-Stapel mehr!');return;}pile=[...disc];disc=[];shuffle(pile);toast('KI-Stapel neu gemischt!');}
                 const id=pile.pop();cur=WKC_BY_ID[id]||null;if(!cur){toast('Fehler: KI-Karte nicht gefunden!');return;}
                 topDeck=pile.length>0?(WKC_BY_ID[pile[pile.length-1]]||null):null;
-                aIdx=0;aDone=0;aSkips=[false,false,false];court.forEach(c=>c.usedThisTurn=false);radCardId=null;radBriber=null;turnActive=true;
+                aIdx=0;aDone=0;aSkips=[false,false,false];court.forEach(c=>c.usedThisTurn=false);radCardId=null;radBriber=null;turnActive=true;ambitionMode=false;
                 updateStackUI();showCurUI(cur);updateTopBar();updateCourtUI();document.getElementById('btnStartTurn').disabled=true;
-                hideAllPanels();showScreen('scrGame');updateActionPanel();
+                hideAllPanels();showScreen('scrGame');
+
+                // Zuerst Ambition prüfen
+                checkAmbition();
             };
 
             function updateActionPanel(){
@@ -1042,13 +1111,15 @@
                 }else{
                     document.getElementById('btnDo').style.display='';document.getElementById('btnSkip').textContent='✗ Überspringen';
                     const best=getBestCourtCardForAction(currentText);
-                    if(best&&best.info&&lbl!=='rad')document.getElementById('actionExtra').innerHTML='✅ Empfohlen: <strong>#'+best.info.id+' – '+best.info.name+'</strong> ('+best.info.suit+', R'+best.info.rank+')';
-                    else document.getElementById('actionExtra').textContent='';
+                    if(best&&best.info&&lbl!=='rad')document.getElementById('actionExtra').innerHTML='✅ Empfohlen: <strong>#'+best.info.id+' – '+best.info.name+'</strong> ('+best.info.suit+', R'+best.info.rank+')<br><small>Nach Ausführung die gewählte Hofkarte per Rechtsklick als genutzt markieren.</small>';
+                    else document.getElementById('actionExtra').innerHTML='<small>Nach Ausführung die gewählte Hofkarte per Rechtsklick als genutzt markieren.</small>';
                 }
                 document.getElementById('actionBox').innerHTML=boxHtml;document.getElementById('actionBox').className=boxClass;
                 document.getElementById('bonusCheckRow').style.display = (lbl==='rad')?'none':'flex';
                 document.getElementById('bonusChk').checked = false;
                 document.getElementById('actionCard').style.display='block';
+                document.getElementById('btnDo').onclick = function(){ window._resolveAction(true); };
+                document.getElementById('btnSkip').onclick = function(){ window._resolveAction(false); };
             }
 
             window._resolveAction=function(exec){
@@ -1070,8 +1141,23 @@
             function advanceAction(){
                 aIdx++;
                 if(aIdx>=3||aDone>=2){
-                    if(aDone<2&&aIdx>=3){aIdx=0;updateActionPanel();return;}
-                    finishStandardActions();return;
+                    // Wenn alle drei Aktionen ungültig sind und noch keine Aktion ausgeführt wurde -> Zug beenden
+                    if(aDone===0 && aSkips.every(s=>s===true)){
+                        finishStandardActions();
+                        return;
+                    }
+                    if(aDone<2){
+                        // Noch eine Aktion übrig: von vorne beginnen, aber nur wenn nicht schon alles geskippt wurde
+                        if(aSkips.every(s=>s===true)){
+                            finishStandardActions();
+                        }else{
+                            aIdx=0;
+                            updateActionPanel();
+                        }
+                    }else{
+                        finishStandardActions();
+                    }
+                    return;
                 }
                 updateActionPanel();
             }
@@ -1113,7 +1199,7 @@
                 }
             }
             window._radDomInMarket=function(yes){if(yes)showRadStep('domWins');else showRadStep('pickCard',getMarketInstruction().row+' Reihe, Spalte '+getMarketInstruction().col+'.');};
-            window._radDomWins=function(yes){if(yes)showRadStep('pickCard','<strong>Dom.-Karte gekauft!</strong> Führe Dominanzcheck durch. Gib dann die Kartennummer ein (101–104).');else showRadStep('pickCard','Wähle: billigster Patriot der dom. Koalition, sonst billigste Karte mit meisten Armeen/Straßen, sonst billigste mit meisten Spionen/Stämmen.');};
+            window._radDomWins=function(yes){if(yes)showRadStep('pickCard','<strong>Dom.-Karte gekauft!</strong> Führe Dominanzcheck durch. Gib dann die Kartennummer ein (101–104).');else showRadStep('pickCard','Wähle: billigster Patriot der dom. Koalition, sonst billigste Karte mit meisten Armeen/Straßen <strong>der dom. Koalition</strong>, sonst billigste mit meisten Spionen/Stämmen.');};
             window._radCardPicked=function(){const v=parseInt(document.getElementById('radInput').value);if(isNaN(v)||v<1||v>116){toast('Bitte Nr. 1–116 eingeben.');return;}radCardId=v;if(v>100){radBriber='nobody';finalizeRad(0);return;}showRadStep('bribe');};
             window._radSetBriber=function(who){radBriber=who;if(who==='nobody')finalizeRad(0);else showRadStep('bribeAmount');};
             window._radCalcBribe=function(){const amt=parseInt(document.getElementById('bribeAmt').value);if(isNaN(amt)||amt<0){toast('Bitte Anzahl eingeben.');return;}finalizeRad(amt);};
@@ -1142,20 +1228,53 @@
                 if(isEvent){
                     events.push(radCardId);updateEventUI();
                     result='<p><strong>Ereignis #'+radCardId+' – '+name+'</strong> gekauft!<br>Wurde <em>nicht</em> in den Hof gelegt.</p>';
+                    if (ambitionMode) {
+                        result += '<p style="color:#f0d060;">Führe jetzt den <strong>Dominanzcheck</strong> durch.</p>';
+                    }
                 }else if(cost>rupien){
                     result='<p class="warn">Wakhan kann Bestechung (<strong>'+cost+' Rupien</strong>) nicht zahlen!<br>Karte wird <strong>abgeworfen</strong>.</p>';
                 }else{
                     if(cost>0)rupien-=cost;
                     const side=getMarketSide();
-                    if(!court.find(c=>c.id===radCardId)){if(side==='L')court.unshift({id:radCardId,usedThisTurn:true});else court.push({id:radCardId,usedThisTurn:true});}
+                    if(!court.find(c=>c.id===radCardId)){
+                        const newEntry = {id:radCardId, usedThisTurn: false};  // Karte ist frisch und noch nicht genutzt
+                        if(side==='L') court.unshift(newEntry); else court.push(newEntry);
+                    }
                     result='<p>✅ <strong>'+name+'</strong> auf <strong>'+(side==='L'?'linke':'rechte')+'</strong> Hofseite gelegt.'+(cost>0?' Bestechung: '+cost+' Rupien.':'')+'</p>';
                     if(info&&info.impactIcons&&info.impactIcons.length>0)result+=buildPlacementInstructions(info);
                     if(info&&info.suitChange){preferredSuit=info.suitChange;result+='<p style="color:#f0d060;margin-top:6px;">🔄 Bevorzugte Farbe → <strong>'+info.suitChange+'</strong></p>';updateTopBar();}
                     updateCourtUI();
                 }
+                if (ambitionMode) {
+                    // Ambition abgeschlossen -> nicht advanceAction, sondern in normale Aktionen übergehen
+                    result += '<button class="btn-gold" style="margin-top:10px;" onclick="window._finishAmbitionRad()">✓ Weiter zu Wakhans Aktionen</button>';
+                } else {
+                    result += '<button class="btn-gold" style="margin-top:10px;" onclick="window._radFinish(true)">✓ Aktion abgeschlossen</button>';
+                }
                 showRadStep('result',result);
             }
-            window._radFinish=function(success){if(success&&radCardId){aDone++;aSkips[aIdx]=false;}else{aSkips[aIdx]=true;}document.getElementById('radCard').style.display='none';advanceAction();};
+            window._finishAmbitionRad = function(){
+                // Ambition beendet, aDone = 1, dann normale Aktionen starten
+                aDone = 1;
+                ambitionMode = false;
+                document.getElementById('radCard').style.display = 'none';
+                hideAllPanels();
+                startStandardActions();
+            };
+            window._radFinish=function(success){
+                if (ambitionMode) {
+                    // Sollte nicht vorkommen, aber sicherheitshalber
+                    ambitionMode = false;
+                    aDone = 1;
+                    document.getElementById('radCard').style.display = 'none';
+                    hideAllPanels();
+                    startStandardActions();
+                    return;
+                }
+                if(success&&radCardId){aDone++;aSkips[aIdx]=false;}else{aSkips[aIdx]=true;}
+                document.getElementById('radCard').style.display='none';
+                advanceAction();
+            };
 
             function showBonusPhase(){
                 hideAllPanels();
@@ -1217,7 +1336,7 @@
                 const toDiscard=verwCandidates.slice(0,needed);
                 let html='<p><strong>Vorschlag zum Abwerfen:</strong></p>';
                 toDiscard.forEach(c=>{const info=CD[c.id];html+='<div style="background:rgba(200,60,40,.1);border:1px solid rgba(200,60,40,.3);border-radius:6px;padding:8px;margin:4px 0;font-size:.85rem;"><strong>#'+c.id+' – '+(info?info.name:'?')+'</strong> ('+(info?info.suit:'?')+', R'+(info?info.rank:'?')+') <button class="btn-sm btn-danger" style="padding:4px 10px;font-size:.8rem;" onclick="window._discardCourtCard('+c.id+')">✕ Abwerfen</button></div>';});
-                html+='<p style="font-size:.8rem;color:var(--text3);margin-top:6px;">Wirf die vorgeschlagenen Karten ab oder wähle manuell im Hof.</p><button class="btn-gold" style="margin-top:8px;" onclick="window._finishVerwaltung()">✓ Verwaltung erledigt</button>';
+                html+='<p style="font-size:.8rem;color:var(--text3);margin-top:6px;">Wirf die vorgeschlagenen Karten ab oder wähle manuell im Hof.<br><em>Hinweis: Falls Wakhan eine fremdfinanzierte Karte abwirft und keine Rupien hat, muss sie <strong>keine</strong> Ersatzkarten abwerfen.</em></p><button class="btn-gold" style="margin-top:8px;" onclick="window._finishVerwaltung()">✓ Verwaltung erledigt</button>';
                 document.getElementById('verwBody').innerHTML=html;
             }
             window._discardCourtCard=function(id){const idx=court.findIndex(c=>c.id===id);if(idx>=0){court.splice(idx,1);updateCourtUI();toast('Karte #'+id+' abgeworfen.');}if(court.length<=getCourtLimit()){document.getElementById('verwBody').innerHTML+='<p style="color:#80d080;">✅ Hof jetzt im Limit!</p>';}};
@@ -1227,7 +1346,15 @@
                 document.getElementById('priorityPills').style.display='none';toast('✅ Wakhans Zug abgeschlossen.');showScreen('scrGame');
             };
 
-            document.getElementById('rulesContent').innerHTML=`<h4>Pragmatische Loyalität</h4><p>Erste Koalition in der Loyalitätsreihe der KI-Karte, die <em>kein</em> menschlicher Spieler besitzt.</p><h4>Kartenpriorität</h4><ul><li>Karte eines Mitspielers</li><li>Bevorzugte Farbe</li><li>Patriot des dominanten Bündnisses</li><li>Beute des dom. Bündnisses</li><li>Anderer Patriot</li><li>Fremdfinanziert</li><li>Höchster Rang</li><li>Höchste Nr.</li></ul><h4>Abwerfpriorität</h4><ul><li>Nicht-Politik</li><li>Kein Patriot</li><li>Nicht-fremdfinanziert</li><li>Meiste fremde Spione</li><li>Wenigste Spione</li><li>Niedrigster Rang</li><li>Nicht bevorzugte Farbe</li><li>Niedrigste Nr.</li></ul><h4>Kampf</h4><p>Region mit ≥1 Armee + feindlichen Einheiten. Zerstörung: Stämme → Armeen → Straßen.</p><h4>Steuern</h4><p>Spieler vor Marktkarten. Meiste Rupien zuerst. Gleichstand → roter Pfeil.</p><h4>Marschieren</h4><p>Nur Armeen, keine Straßen nötig. In Regionen mit feindlichen Stämmen.</p><h4>Bauen</h4><p>Region am weitesten links auf KI-Karte mit Wakhan-Vorherrschaft.</p>`;
+            document.getElementById('rulesContent').innerHTML=`<h4>Pragmatische Loyalität</h4><p>Erste Koalition in der Loyalitätsreihe der KI-Karte, die <em>kein</em> menschlicher Spieler besitzt.</p>
+            <h4>Wakhans Herrschaft</h4><p>Zur Bestimmung der Herrschaft zählen nur Wakhans Stämme und die Armeen <strong>einer einzigen</strong> Koalition (der mit den meisten Armeen in der Region). Die pragmatische Loyalität wird nicht verwendet.</p>
+            <h4>Kartenpriorität</h4><ul><li>Karte eines Mitspielers</li><li>Bevorzugte Farbe</li><li>Patriot des dominanten Bündnisses</li><li>Beute des dom. Bündnisses</li><li>Anderer Patriot</li><li>Fremdfinanziert</li><li>Höchster Rang</li><li>Höchste Nr.</li></ul>
+            <h4>Abwerfpriorität</h4><ul><li>Nicht-Politik</li><li>Kein Patriot</li><li>Nicht-fremdfinanziert</li><li>Meiste fremde Spione</li><li>Wenigste Spione</li><li>Niedrigster Rang</li><li>Nicht bevorzugte Farbe</li><li>Niedrigste Nr.</li></ul>
+            <p><em>Wichtig:</em> Wirft Wakhan eine fremdfinanzierte Karte ab und hat keine Rupien, muss sie <strong>keine</strong> Ersatzkarten abwerfen.</p>
+            <h4>Kampf</h4><p>Region mit ≥1 Armee + feindlichen Einheiten. Zerstörung: Stämme → Armeen → Straßen. Kann keine Region gewählt werden, kämpft Wakhan auf der Hofkarte mit der höchsten Priorität, auf der sie und ein anderer Spieler Spione haben.</p>
+            <h4>Steuern</h4><p>Spieler vor Marktkarten. Meiste Rupien zuerst. Gleichstand → roter Pfeil.</p>
+            <h4>Marschieren</h4><p>Nur Armeen, keine Straßen nötig. In Regionen mit feindlichen Stämmen.</p>
+            <h4>Bauen</h4><p>Region am weitesten links auf KI-Karte mit Wakhan-Vorherrschaft.</p>`;
 
             window._addCourtManual=addCourtManual;window._clearCourt=clearCourt;window._addEvent=addEvent;
             window._startTurn=window._startTurn;window._resolveAction=window._resolveAction;window._finishBonuses=window._finishBonuses;
