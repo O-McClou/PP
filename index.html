@@ -5,10 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="referrer" content="no-referrer">
     <title>Wakhan KI – Pax Pamir 2</title>
     <style>
-        /* ... (Dein gesamtes, unverändertes CSS aus der ersten index.html) ... */
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0 }
         :root {
             --gold: #b8860b; --gold2: #d4a017; --sand: #f0e0b0; --bg: #0d0a04; --panel: #1a1208;
@@ -361,7 +359,7 @@
 
     <script>
         // ═══════════════════════════════════════════════════════════════════
-        // DATEN-INTEGRATION AUS DEN HOCHGELADENEN DATEN
+        // DATEN-INTEGRATION AUS wakhanCards.js (KORRIGIERTE VERSION)
         // ═══════════════════════════════════════════════════════════════════
         const RAW_CARDS = [
             { id: 1, name: "Mohan Lal", region: "Kabul", suit: "Geheimdienst", rank: 3, impactIcons: ["spy", "spy", "spy"], actions: ["move"], patriot: null, prize: "Russisch", suitChange: null, specialAbility: "Unentbehrliche Berater: Deine Spione können in Kämpfen mit anderen Spionen nicht entfernt werden." },
@@ -484,35 +482,65 @@
         const CD = {};
         RAW_CARDS.forEach(c => CD[c.id] = c);
 
-        // ─── WAKHAN KI-KARTEN (mit vollständigem backArray) ──────────────────────────
-        const WKC_RAW = [
-            { id: 117, loyaltyOrder: ["Russisch","Afghanisch","Britisch"], action1_de: "Besteuerung.", action2_de: "Wenn Militärkarten bevorzugt werden, radikalisiere die am höchsten eingestufte Militärkarte.", action3_de: "Radikalisierung.", redArrow: "bottom", blackArrow: 3, backTopLabel: "Top (left)", priorities: [2,3,4,5,0,1] },
-            { id: 118, loyaltyOrder: ["Afghanisch","Britisch","Russisch"], action1_de: "Wenn Politikkarten bevorzugt werden, radikalisiere die am höchsten eingestufte Wirtschaftskarte.", action2_de: "Radikalisiere die am höchsten eingestufte Politikkarte.", action3_de: "Radikalisierung.", redArrow: "top", blackArrow: 2, backTopLabel: "Bottom (right)", priorities: [3,4,5,0,1,2] },
-            { id: 119, loyaltyOrder: ["Britisch","Russisch","Afghanisch"], action1_de: "Besteuerung.", action2_de: "Radikalisiere die am höchsten eingestufte Geheimdienstkarte.", action3_de: "Radikalisierung.", redArrow: "bottom", blackArrow: 4, backTopLabel: "Bottom (right)", priorities: [0,1,2,3,4,5] },
-            { id: 120, loyaltyOrder: ["Russisch","Afghanisch","Britisch"], action1_de: "Wenn Wakhan weniger als 2 Rupien hat, radikalisiere die Karte, die die meisten Rupien einbringt.", action2_de: "Bauen.", action3_de: "Radikalisierung.", redArrow: "top", blackArrow: 5, backTopLabel: "Top (left)", priorities: [4,5,0,1,2,3] },
-            { id: 121, loyaltyOrder: ["Britisch","Russisch","Afghanisch"], action1_de: "Radikalisiere eine Karte, die Wakhan die Kontrolle über eine Region verschafft.", action2_de: "Kampf.", action3_de: "Radikalisierung.", redArrow: "top", blackArrow: 2, backTopLabel: "Bottom (right)", priorities: [2,3,4,5,0,1] },
-            { id: 122, loyaltyOrder: ["Britisch","Russisch","Afghanisch"], action1_de: "Radikalisiere eine Geheimdienstkarte.", action2_de: "Bewegen.", action3_de: "Radikalisierung.", redArrow: "top", blackArrow: 1, backTopLabel: "Bottom (right)", priorities: [0,1,2,3,4,5] },
-            { id: 123, loyaltyOrder: ["Afghanisch","Russisch","Britisch"], action1_de: "Bauen.", action2_de: "Bewegen.", action3_de: "Radikalisierung.", redArrow: "bottom", blackArrow: 5, backTopLabel: "Top (left)", priorities: [1,2,3,4,5,0] },
-            { id: 124, loyaltyOrder: ["Russisch","Afghanisch","Britisch"], action1_de: "Besteuerung.", action2_de: "Verrat.", action3_de: "Radikalisierung.", redArrow: "bottom", blackArrow: 5, backTopLabel: "Top (left)", priorities: [1,2,3,4,5,0] },
-            { id: 125, loyaltyOrder: ["Russisch","Britisch","Afghanisch"], action1_de: "Radikalisiere die Karte, die die meisten Armeen und/oder Straßen platziert.", action2_de: "Wenn keine Koalition Dominanz hat, radikalisiere die Karte, die die meisten Spione und/oder Stämme platziert.", action3_de: "Radikalisierung.", redArrow: "bottom", blackArrow: 6, backTopLabel: "Top (left)", priorities: [1,2,3,4,5,0] },
-            { id: 126, loyaltyOrder: ["Afghanisch","Britisch","Russisch"], action1_de: "Wenn Wakhan keine Karte mit der Bewegungsaktion hat, radikalisiere eine Karte mit einer Bewegungsaktion.", action2_de: "Bewegen.", action3_de: "Radikalisierung.", redArrow: "bottom", blackArrow: 1, backTopLabel: "Top (left)", priorities: [3,4,5,0,1,2] },
-            { id: 127, loyaltyOrder: ["Afghanisch","Russisch","Britisch"], action1_de: "Wenn keine Koalition Dominanz hat, radikalisiere die Karte, die die meisten Spione und/oder Stämme platziert.", action2_de: "Wenn Militärkarten bevorzugt werden, radikalisiere die am höchsten eingestufte Militärkarte.", action3_de: "Radikalisierung.", redArrow: "bottom", blackArrow: 1, backTopLabel: "Top (left)", priorities: [4,5,0,1,2,3] },
-            { id: 128, loyaltyOrder: ["Afghanisch","Russisch","Britisch"], action1_de: "Bewegen.", action2_de: "Verrat.", action3_de: "Radikalisierung.", redArrow: "bottom", blackArrow: 5, backTopLabel: "Top (left)", priorities: [4,5,0,1,2,3] },
-            { id: 129, loyaltyOrder: ["Afghanisch","Russisch","Britisch"], action1_de: "Wenn eine Koalition Dominanz hat, radikalisiere einen passenden Patrioten.", action2_de: "Wenn keine Koalition Dominanz hat, radikalisiere die Karte, die die meisten Spione und/oder Stämme platziert.", action3_de: "Radikalisierung.", redArrow: "top", blackArrow: 3, backTopLabel: "Bottom (right)", priorities: [5,0,1,2,3,4] },
-            { id: 130, loyaltyOrder: ["Afghanisch","Russisch","Britisch"], action1_de: "Kämpfe auf der ranghöchsten Hofkarte mit den meisten Spionen, auf der Wakhan ebenfalls mindestens einen Spion hat.", action2_de: "Kampf.", action3_de: "Radikalisierung.", redArrow: "top", blackArrow: 4, backTopLabel: "Bottom (right)", priorities: [5,0,1,2,3,4] },
-            { id: 131, loyaltyOrder: ["Russisch","Britisch","Afghanisch"], action1_de: "Bewegen.", action2_de: "Kampf.", action3_de: "Radikalisierung.", redArrow: "bottom", blackArrow: 3, backTopLabel: "Bottom (right)", priorities: [1,2,3,4,5,0] },
-            { id: 132, loyaltyOrder: ["Afghanisch","Britisch","Russisch"], action1_de: "Wenn keine Koalition Dominanz hat, radikalisiere die Karte, die die meisten Spione und/oder Stämme platziert.", action2_de: "Kämpfe auf der ranghöchsten Hofkarte mit den meisten Spionen, auf der Wakhan ebenfalls mindestens einen Spion hat.", action3_de: "Radikalisierung.", redArrow: "top", blackArrow: 6, backTopLabel: "Bottom (right)", priorities: [2,3,4,5,0,1] },
-            { id: 133, loyaltyOrder: ["Russisch","Afghanisch","Britisch"], action1_de: "Wenn Wakhans Hofgröße ihr Limit erreicht hat, radikalisiere die am höchsten eingestufte Politikkarte.", action2_de: "Besteuerung.", action3_de: "Radikalisierung.", redArrow: "top", blackArrow: 1, backTopLabel: "Top (left)", priorities: [3,4,5,0,1,2] },
-            { id: 134, loyaltyOrder: ["Afghanisch","Russisch","Britisch"], action1_de: "Besteuerung.", action2_de: "Verrat.", action3_de: "Radikalisierung.", redArrow: "top", blackArrow: 4, backTopLabel: "Top (left)", priorities: [0,1,2,3,4,5] },
-            { id: 135, loyaltyOrder: ["Afghanisch","Britisch","Russisch"], action1_de: "Bauen.", action2_de: "Bewegen.", action3_de: "Radikalisierung.", redArrow: "top", blackArrow: 3, backTopLabel: "Bottom (right)", priorities: [0,1,2,3,4,5] },
-            { id: 136, loyaltyOrder: ["Russisch","Afghanisch","Britisch"], action1_de: "Wenn Wakhan weniger als 2 Rupien hat, radikalisiere die Karte, die die meisten Rupien einbringt.", action2_de: "Bauen.", action3_de: "Radikalisierung.", redArrow: "bottom", blackArrow: 2, backTopLabel: "Bottom (right)", priorities: [3,4,5,0,1,2] },
-            { id: 137, loyaltyOrder: ["Afghanisch","Russisch","Britisch"], action1_de: "Radikalisiere eine Karte, die Wakhan die Kontrolle über eine Region verschafft.", action2_de: "Bauen.", action3_de: "Radikalisierung.", redArrow: "top", blackArrow: 6, backTopLabel: "Bottom (right)", priorities: [3,4,5,0,1,2] },
-            { id: 138, loyaltyOrder: ["Russisch","Afghanisch","Britisch"], action1_de: "Verrat.", action2_de: "Kämpfe auf der ranghöchsten Hofkarte mit den meisten Spionen, auf der Wakhan ebenfalls mindestens einen Spion hat.", action3_de: "Radikalisierung.", redArrow: "bottom", blackArrow: 6, backTopLabel: "Top (left)", priorities: [4,5,0,1,2,3] },
-            { id: 139, loyaltyOrder: ["Britisch","Russisch","Afghanisch"], action1_de: "Radikalisiere die am höchsten eingestufte Politikkarte.", action2_de: "Wenn Militärkarten bevorzugt werden, radikalisiere die am höchsten eingestufte Militärkarte.", action3_de: "Radikalisierung.", redArrow: "bottom", blackArrow: 4, backTopLabel: "Bottom (right)", priorities: [2,3,4,5,0,1] },
-            { id: 140, loyaltyOrder: ["Afghanisch","Britisch","Russisch"], action1_de: "Wenn Wakhan weniger Spione hat als ein anderer Spieler, radikalisiere die am höchsten eingestufte Geheimdienstkarte.", action2_de: "Kämpfe auf der ranghöchsten Hofkarte mit den meisten Spionen, auf der Wakhan ebenfalls mindestens einen Spion hat.", action3_de: "Radikalisierung.", redArrow: "bottom", blackArrow: 2, backTopLabel: "Bottom (right)", priorities: [0,1,2,3,4,5] }
+        // ═══════════════════════════════════════════════════════════════════
+        // KORRIGIERTE WAKHAN-KI-KARTEN (aus wakhanCards.js)
+        // Loyalität: Bär→Russisch, Adler→Afghanisch, Löwe→Britisch
+        // Aktionen übersetzt aus der JS-Datei
+        // ═══════════════════════════════════════════════════════════════════
+        const LOYALTY_MAP = { "Bär": "Russisch", "Adler": "Afghanisch", "Löwe": "Britisch" };
+        const ACTION_DE = {
+            "Radicalize (special)": "Radikalisierung (Sonderbedingung lt. Karte).",
+            "Tax": "Besteuerung.",
+            "Radicalize": "Radikalisierung.",
+            "Battle": "Kampf.",
+            "Build": "Bauen.",
+            "Move": "Bewegen.",
+            "Betray": "Verrat.",
+            "Gift": "Geschenk."
+        };
+
+        // Rohdaten aus der JS-Datei
+        const WAKHAN_CARDS_RAW = [
+            { id: 117, loyaltyOrder: ["Bär","Adler","Löwe"], actions: ["Radicalize (special)","Tax","Radicalize"], blackArrow: 5, redArrow: "bottom", backTopLabel: "Top (left)", priorities: [5,0,1,2,3,4] },
+            { id: 118, loyaltyOrder: ["Löwe","Bär","Adler"], actions: ["Radicalize (special)","Battle","Radicalize"], blackArrow: 3, redArrow: "top", backTopLabel: "Bottom (right)", priorities: [1,2,3,4,5,0] },
+            { id: 119, loyaltyOrder: ["Löwe","Adler","Bär"], actions: ["Radicalize (special)","Build","Radicalize"], blackArrow: 6, redArrow: "bottom", backTopLabel: "Top (left)", priorities: [4,5,0,1,2,3] },
+            { id: 120, loyaltyOrder: ["Adler","Löwe","Bär"], actions: ["Radicalize (special)","Move","Radicalize"], blackArrow: 2, redArrow: "top", backTopLabel: "Bottom (right)", priorities: [0,1,2,3,4,5] },
+            { id: 121, loyaltyOrder: ["Bär","Löwe","Adler"], actions: ["Radicalize (special)","Betray","Radicalize"], blackArrow: 4, redArrow: "bottom", backTopLabel: "Top (left)", priorities: [2,3,4,5,0,1] },
+            { id: 122, loyaltyOrder: ["Adler","Bär","Löwe"], actions: ["Radicalize (special)","Gift","Radicalize"], blackArrow: 1, redArrow: "top", backTopLabel: "Bottom (right)", priorities: [3,4,5,0,1,2] },
+            { id: 123, loyaltyOrder: ["Löwe","Bär","Adler"], actions: ["Battle","Tax","Radicalize"], blackArrow: 2, redArrow: "bottom", backTopLabel: "Top (left)", priorities: [0,1,2,3,4,5] },
+            { id: 124, loyaltyOrder: ["Löwe","Adler","Bär"], actions: ["Battle","Build","Radicalize"], blackArrow: 5, redArrow: "top", backTopLabel: "Bottom (right)", priorities: [1,2,3,4,5,0] },
+            { id: 125, loyaltyOrder: ["Bär","Löwe","Adler"], actions: ["Battle","Move","Radicalize"], blackArrow: 1, redArrow: "bottom", backTopLabel: "Top (left)", priorities: [5,0,1,2,3,4] },
+            { id: 126, loyaltyOrder: ["Adler","Bär","Löwe"], actions: ["Battle","Betray","Radicalize"], blackArrow: 4, redArrow: "top", backTopLabel: "Bottom (right)", priorities: [4,5,0,1,2,3] },
+            { id: 127, loyaltyOrder: ["Bär","Adler","Löwe"], actions: ["Battle","Gift","Radicalize"], blackArrow: 6, redArrow: "bottom", backTopLabel: "Top (left)", priorities: [2,3,4,5,0,1] },
+            { id: 128, loyaltyOrder: ["Adler","Löwe","Bär"], actions: ["Battle","Radicalize","Radicalize"], blackArrow: 3, redArrow: "top", backTopLabel: "Bottom (right)", priorities: [3,4,5,0,1,2] },
+            { id: 129, loyaltyOrder: ["Löwe","Adler","Bär"], actions: ["Radicalize (special)","Tax","Radicalize"], blackArrow: 5, redArrow: "bottom", backTopLabel: "Bottom (right)", priorities: [2,3,4,5,0,1] },
+            { id: 130, loyaltyOrder: ["Bär","Löwe","Adler"], actions: ["Radicalize (special)","Battle","Radicalize"], blackArrow: 3, redArrow: "top", backTopLabel: "Top (left)", priorities: [3,4,5,0,1,2] },
+            { id: 131, loyaltyOrder: ["Adler","Bär","Löwe"], actions: ["Radicalize (special)","Build","Radicalize"], blackArrow: 2, redArrow: "bottom", backTopLabel: "Bottom (right)", priorities: [4,5,0,1,2,3] },
+            { id: 132, loyaltyOrder: ["Löwe","Bär","Adler"], actions: ["Radicalize (special)","Move","Radicalize"], blackArrow: 6, redArrow: "top", backTopLabel: "Bottom (right)", priorities: [2,3,4,5,0,1] },
+            { id: 133, loyaltyOrder: ["Bär","Adler","Löwe"], actions: ["Radicalize (special)","Tax","Radicalize"], blackArrow: 1, redArrow: "top", backTopLabel: "Top (left)", priorities: [3,4,5,0,1,2] },
+            { id: 134, loyaltyOrder: ["Adler","Bär","Löwe"], actions: ["Tax","Betray","Radicalize"], blackArrow: 4, redArrow: "top", backTopLabel: "Top (left)", priorities: [0,1,2,3,4,5] },
+            { id: 135, loyaltyOrder: ["Adler","Löwe","Bär"], actions: ["Build","Move","Radicalize"], blackArrow: 3, redArrow: "top", backTopLabel: "Bottom (right)", priorities: [0,1,2,3,4,5] },
+            { id: 136, loyaltyOrder: ["Bär","Adler","Löwe"], actions: ["Radicalize (special)","Build","Radicalize"], blackArrow: 2, redArrow: "bottom", backTopLabel: "Bottom (right)", priorities: [3,4,5,0,1,2] },
+            { id: 137, loyaltyOrder: ["Adler","Bär","Löwe"], actions: ["Radicalize (special)","Build","Radicalize"], blackArrow: 6, redArrow: "top", backTopLabel: "Bottom (right)", priorities: [3,4,5,0,1,2] },
+            { id: 138, loyaltyOrder: ["Bär","Adler","Löwe"], actions: ["Betray","Build","Radicalize"], blackArrow: 4, redArrow: "top", backTopLabel: "Top (left)", priorities: [1,2,3,4,5,0] },
+            { id: 139, loyaltyOrder: ["Löwe","Adler","Bär"], actions: ["Radicalize (special)","Battle","Radicalize"], blackArrow: 1, redArrow: "bottom", backTopLabel: "Bottom (right)", priorities: [5,0,1,2,3,4] },
+            { id: 140, loyaltyOrder: ["Bär","Löwe","Adler"], actions: ["Radicalize (special)","Gift","Radicalize"], blackArrow: 5, redArrow: "top", backTopLabel: "Top (left)", priorities: [4,5,0,1,2,3] }
         ];
 
-        // backArray bauen
+        // In deutsches Format konvertieren
+        const WKC_RAW = WAKHAN_CARDS_RAW.map(c => ({
+            id: c.id,
+            loyaltyOrder: c.loyaltyOrder.map(l => LOYALTY_MAP[l]),
+            action1_de: ACTION_DE[c.actions[0]] || c.actions[0],
+            action2_de: ACTION_DE[c.actions[1]] || c.actions[1],
+            action3_de: ACTION_DE[c.actions[2]] || c.actions[2],
+            redArrow: c.redArrow,
+            blackArrow: c.blackArrow,
+            backTopLabel: c.backTopLabel,
+            priorities: c.priorities
+        }));
+
+        // backArray bauen (für Anzeige der Rückseite)
         const WKC = WKC_RAW.map(c => {
             const oppLabel = c.backTopLabel === "Top (left)" ? "Bottom (right)" : "Top (left)";
             return {
@@ -553,10 +581,10 @@
             return o;
         }
         async function tryImgSrc(u) {
-            return new Promise((r, j) => { const i = new Image();
+            return new Promise((resolve, reject) => { const i = new Image();
                 i.crossOrigin = 'anonymous';
-                i.onload = () => r(u);
-                i.onerror = j;
+                i.onload = () => resolve(u);
+                i.onerror = reject;
                 i.src = u; });
         }
         async function loadImg(el, ph, ring, fns, id) {
@@ -585,6 +613,7 @@
             wakLoy = 'Russisch';
         let preferredSuit = 'Politik';
         let courtLimit = 3;
+        let autoActionInfo = '';
 
         function shuffle(a) { for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1));
             [a[i], a[j]] = [a[j], a[i]]; } }
@@ -742,41 +771,79 @@
             updateLoyBar();
         }
 
-        // KORRIGIERTE LOGIK FÜR MARKTSPALTE UND MARKTREIHE
-        function getMarketColumn(cardA, cardB) {
-            if (!cardB || !cardA.blackArrow || cardA.blackArrow < 1 || cardA.blackArrow > 6) return '?';
-            // Der schwarze Pfeil zeigt auf eine Position 1–6 im backArray (Index 0–5)
-            const idx = cardA.blackArrow - 1; // Umrechnung auf 0-basierten Index
-            return cardB.priorities[idx];
+        // ═══════════════════════════════════════════════════════════════════
+        // KORRIGIERTE PFEIL-LOGIK (aus wakhanCards.js)
+        // ═══════════════════════════════════════════════════════════════════
+
+        /**
+         * Bestimmt die Marktreihe und die Hofseite basierend auf dem Pfeil-Zeiger-System.
+         * Der rote Pfeil auf Karte A zeigt physisch auf ein Label auf der Rückseite von Karte B.
+         */
+        function getRedArrowDecision(drawnCard, topDeckCard) {
+            if (!topDeckCard) return { marketRow: '?', courtSide: '?' };
+            let pointedLabel;
+            if (drawnCard.redArrow === "top") {
+                pointedLabel = topDeckCard.backTopLabel;
+            } else {
+                pointedLabel = (topDeckCard.backTopLabel === "Top (left)")
+                    ? "Bottom (right)"
+                    : "Top (left)";
+            }
+            if (pointedLabel === "Top (left)") {
+                return { marketRow: "OBEN", courtSide: "Links im Hof" };
+            } else {
+                return { marketRow: "UNTEN", courtSide: "Rechts im Hof" };
+            }
         }
 
+        /**
+         * Bestimmt die Marktspalte (0-5).
+         * Der schwarze Pfeil (Position 1-6) auf Karte A zeigt auf die n-te Zahl auf Karte B.
+         */
+        function getMarketColumn(drawnCard, topDeckCard) {
+            if (!topDeckCard || !drawnCard.blackArrow || drawnCard.blackArrow < 1 || drawnCard.blackArrow > 6) return '?';
+            return topDeckCard.priorities[drawnCard.blackArrow - 1];
+        }
+
+        /**
+         * Gibt die Regionen-Priorität zurück.
+         * Die Liste wird von Karte B gelesen. Wenn das obere Label 'Bottom (right)' ist,
+         * wird die Liste umgekehrt, da die Karte physisch "auf dem Kopf" steht.
+         */
+        function getRegionPriorities(topDeckCard) {
+            if (!topDeckCard) return [0, 1, 2, 3, 4, 5];
+            const p = [...topDeckCard.priorities];
+            return topDeckCard.backTopLabel === "Top (left)" ? p : p.reverse();
+        }
+
+        // Kompatibilitäts-Wrapper für bestehenden Code
         function getMarketRowAndSide(cardA) {
-            return cardA.redArrow === 'top'
-                ? { row: 'OBEN', side: 'Links im Hof' }
-                : { row: 'UNTEN', side: 'Rechts im Hof' };
+            if (!cardA || !topDeck) return { row: '?', side: '?' };
+            const decision = getRedArrowDecision(cardA, topDeck);
+            return { row: decision.marketRow, side: decision.courtSide };
         }
 
         function showRegsAndMarket(cardA, cardB) {
             const regsEl = document.getElementById('regs');
             regsEl.innerHTML = '';
             if (cardB) {
-                // Zeige die sechs Prioritäten der Rückseite (Indizes 1–6)
-                for (let i = 1; i <= 6; i++) {
-                    const val = cardB.priorities[i-1]; // Korrigiert: auf das priorities-Array zugreifen
+                const regionPris = getRegionPriorities(cardB);
+                for (let i = 0; i < 6; i++) {
+                    const val = regionPris[i];
                     const reg = REGION_BY_IDX[val];
                     if (!reg) continue;
                     const s = document.createElement('span');
                     s.className = 'reg ' + reg.c;
-                    s.textContent = `${i}. ${reg.n}`;
+                    s.textContent = `${i + 1}. ${reg.n}`;
                     regsEl.appendChild(s);
                 }
                 regsEl.style.display = 'flex';
 
-                const { row, side } = getMarketRowAndSide(cardA);
+                const decision = getRedArrowDecision(cardA, cardB);
                 const col = getMarketColumn(cardA, cardB);
-                document.getElementById('miRow').textContent = row;
+                document.getElementById('miRow').textContent = decision.marketRow;
                 document.getElementById('miCol').textContent = col;
-                document.getElementById('miSide').textContent = side;
+                document.getElementById('miSide').textContent = decision.courtSide;
                 document.getElementById('marketInfo').style.display = 'block';
             } else {
                 regsEl.style.display = 'none';
@@ -794,7 +861,7 @@
             }
             pvDiv.style.display = 'block';
             const backArray = topDeck.backArray;
-            const activeIndex = cur.blackArrow; // 1–6
+            const activeIndex = cur.blackArrow;
             const topLabel = backArray[0];
             labelEl.textContent = topLabel;
 
@@ -848,17 +915,14 @@
             return '';
         }
 
-        // KORRIGIERTE LOGIK FÜR canWakhanPerformAction
         function canWakhanPerformAction(actionText) {
             const lbl = actionLabel(actionText);
             if (lbl === 'rad') return true;
             if (!lbl) {
-                // Für komplexe Bedingungsprüfungen können wir nicht automatisch entscheiden
                 return 'conditional';
             }
             const matchingCards = getCourtCardsWithAction(lbl);
             if (matchingCards.length === 0) {
-                // Keine passende Karte gefunden
                 const hasAnyActionCard = court.some(c => !c.usedThisTurn && CD[c.id] && CD[c.id].actions && CD[c.id].actions.includes(lbl));
                 if (!hasAnyActionCard) return false;
                 return 'conditional';
@@ -1113,6 +1177,8 @@
 
         // ─── RADIKALISIERUNG WIZARD ─────────────────────────────────────────────────
         let radSpecialText = '';
+        let radCardId = null;
+        let radBriber = null;
 
         function openRadWiz(actionText) {
             radSpecialText = actionText;
@@ -1157,9 +1223,9 @@
 
         function marketPfeilText() {
             if (!cur || !topDeck) return '';
-            const { row } = getMarketRowAndSide(cur);
+            const decision = getRedArrowDecision(cur, topDeck);
             const col = getMarketColumn(cur, topDeck);
-            return `<strong>Standard-Pfeil:</strong> ${row} Marktreihe, Spalte ${col} (0=rechts, 5=links).<br>Falls Karte nicht verfügbar: nächste links davon. Reihe leer → andere Reihe, gleiche Spalte.`;
+            return `<strong>Standard-Pfeil:</strong> ${decision.marketRow} Marktreihe, Spalte ${col} (0=rechts, 5=links).<br>Falls Karte nicht verfügbar: nächste links davon. Reihe leer → andere Reihe, gleiche Spalte.`;
         }
 
         function goToMarketStep() {
@@ -1219,8 +1285,8 @@
             const info = radCardId && CD[radCardId] ? CD[radCardId] : null;
             const isEvent = radCardId > 100;
             const name = info ? (isEvent ? info.namePurchased : info.name) : `Karte #${radCardId}`;
-            const { side } = getMarketRowAndSide(cur);
-            const sideAbbr = side.includes('Links') ? 'L' : 'R';
+            const decision = getRedArrowDecision(cur, topDeck);
+            const sideAbbr = decision.courtSide.includes('Links') ? 'L' : 'R';
             let result = '';
             document.getElementById('placementDetails').innerHTML = '';
             if (isEvent) {
@@ -1236,7 +1302,7 @@
                     rupien -= cost;
                     updateRupien();
                     result = `<strong>Bestechung: Zahle ${cost} Rupien</strong> an den Herrscher der Region.<br>`;
-                    result += `Lege <strong>${name}</strong> auf die <strong>${side}</strong> von Wakhans Hof (automatisch Position: ${sideAbbr}).<br><br>`;
+                    result += `Lege <strong>${name}</strong> auf die <strong>${decision.courtSide}</strong> von Wakhans Hof (automatisch Position: ${sideAbbr}).<br><br>`;
                     result += cardEffectText(radCardId);
                     addCourtCard(radCardId, sideAbbr);
                 } else {
@@ -1245,7 +1311,7 @@
                 }
             } else {
                 result = `Keine Bestechung nötig. Zahle 0 Rupien.<br>`;
-                result += `Lege <strong>${name}</strong> auf die <strong>${side}</strong> von Wakhans Hof (automatisch Position: ${sideAbbr}).<br><br>`;
+                result += `Lege <strong>${name}</strong> auf die <strong>${decision.courtSide}</strong> von Wakhans Hof (automatisch Position: ${sideAbbr}).<br><br>`;
                 result += cardEffectText(radCardId);
                 addCourtCard(radCardId, sideAbbr);
             }
@@ -1305,11 +1371,6 @@
             html += pris.map(idx => REGION_BY_IDX[idx] ? REGION_BY_IDX[idx].n : '?').join(' → ');
             html += '</div>';
             container.innerHTML = html;
-        }
-
-        function getRegionPriorities(cardB) {
-            if (!cardB) return [0,1,2,3,4,5];
-            return cardB.priorities;
         }
 
         function finishRad() {
