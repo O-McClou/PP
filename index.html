@@ -36,39 +36,39 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 0 0 48px;
-            font-size: 14px;
+            padding: 0 0 56px;
+            font-size: 17px;
             -webkit-tap-highlight-color: transparent;
             -webkit-user-select: none;
             user-select: none;
         }
         .screen {
             width: 100%;
-            max-width: 460px;
-            padding: 12px 10px;
+            max-width: 480px;
+            padding: 16px 12px;
             display: none;
             flex-direction: column;
-            gap: 10px;
+            gap: 12px;
         }
         .screen.active {
             display: flex;
         }
         h1 {
-            font-size: 1.3rem;
+            font-size: 1.5rem;
             color: var(--gold2);
             text-align: center;
             letter-spacing: 0.06em;
             font-weight: 700;
         }
         .sub {
-            font-size: 0.72rem;
+            font-size: 0.8rem;
             color: var(--text3);
             text-align: center;
             font-style: italic;
-            margin-top: -4px;
+            margin-top: -6px;
         }
         .divider {
-            width: 90px;
+            width: 100px;
             height: 1px;
             background: linear-gradient(90deg, transparent, var(--gold), transparent);
             margin: 0 auto;
@@ -76,13 +76,13 @@
         .card {
             background: var(--panel);
             border: 1px solid var(--border);
-            border-radius: 10px;
-            padding: 14px 12px;
+            border-radius: 12px;
+            padding: 16px 14px;
         }
         .card h2 {
-            font-size: 0.9rem;
+            font-size: 1rem;
             color: var(--gold2);
-            margin-bottom: 8px;
+            margin-bottom: 10px;
             font-weight: 700;
             display: flex;
             align-items: center;
@@ -98,7 +98,7 @@
         }
         .row {
             display: flex;
-            gap: 8px;
+            gap: 10px;
             flex-wrap: wrap;
             align-items: center;
         }
@@ -113,14 +113,14 @@
             cursor: pointer;
             font-weight: 600;
             border: none;
-            border-radius: 7px;
+            border-radius: 8px;
             transition: all 0.15s;
-            font-size: 0.82rem;
-            padding: 10px 15px;
+            font-size: 0.95rem;
+            padding: 0.7em 1.2em;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 4px;
+            gap: 5px;
             white-space: nowrap;
         }
         button:active {
@@ -131,8 +131,8 @@
             background: linear-gradient(135deg, #f0d070, var(--gold2));
             color: #1a1000;
             box-shadow: 0 3px 12px rgba(180, 130, 20, 0.3);
-            font-size: 0.88rem;
-            padding: 12px 16px;
+            font-size: 1rem;
+            padding: 0.9em 1.4em;
             width: 100%;
         }
         .btn-outline {
@@ -146,8 +146,8 @@
             color: var(--text2);
         }
         .btn-sm {
-            padding: 6px 10px;
-            font-size: 0.75rem;
+            padding: 0.45em 0.9em;
+            font-size: 0.8rem;
         }
         .btn-danger {
             background: transparent;
@@ -159,15 +159,15 @@
         }
         .loy-pills {
             display: flex;
-            gap: 5px;
+            gap: 6px;
             flex-wrap: wrap;
             justify-content: center;
         }
         .loy-pill {
-            padding: 7px 13px;
-            border-radius: 18px;
+            padding: 0.5em 1em;
+            border-radius: 20px;
             border: 2px solid;
-            font-size: 0.78rem;
+            font-size: 0.85rem;
             font-weight: 700;
             cursor: pointer;
             background: transparent;
@@ -199,11 +199,13 @@
         }
         .info-tag {
             display: inline-block;
-            font-size: 0.68rem;
-            padding: 3px 7px;
-            border-radius: 9px;
+            font-size: 0.7rem;
+            padding: 3px 8px;
+            border-radius: 10px;
             font-weight: 600;
             margin: 1px;
+            cursor: pointer;
+            transition: background 0.2s;
         }
         .tag-wak {
             background: rgba(200, 160, 30, 0.2);
@@ -214,10 +216,36 @@
             background: rgba(160, 130, 180, 0.2);
             border: 1px solid #a080c0;
             color: #c0a0d0;
+            position: relative;
+        }
+        .suit-picker {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: var(--panel);
+            border: 1px solid var(--border2);
+            border-radius: 8px;
+            flex-direction: column;
+            gap: 4px;
+            z-index: 50;
+            min-width: 150px;
+        }
+        .suit-picker.show {
+            display: flex;
+        }
+        .suit-picker button {
+            background: transparent;
+            border: none;
+            color: var(--text);
+            font-size: 0.8rem;
+            padding: 6px 10px;
+            text-align: left;
+            width: 100%;
         }
         .stage-row {
             display: flex;
-            gap: 8px;
+            gap: 10px;
             align-items: flex-start;
             justify-content: center;
         }
@@ -229,7 +257,7 @@
             align-items: center;
         }
         .slot-lbl {
-            font-size: 0.6rem;
+            font-size: 0.65rem;
             color: var(--text3);
             text-transform: uppercase;
             letter-spacing: 0.05em;
@@ -251,7 +279,7 @@
         }
         .frame.hl {
             border-color: var(--gold2);
-            box-shadow: 0 0 10px rgba(212, 160, 23, 0.2);
+            box-shadow: 0 0 12px rgba(212, 160, 23, 0.2);
         }
         .frame img {
             width: 100%;
@@ -260,7 +288,7 @@
             display: none;
         }
         .frame .ph {
-            font-size: 0.7rem;
+            font-size: 0.75rem;
             color: var(--text3);
             text-align: center;
             padding: 8px;
@@ -270,37 +298,14 @@
             justify-content: center;
             height: 100%;
         }
-        .loading-ring {
-            width: 22px;
-            height: 22px;
-            border: 3px solid var(--border);
-            border-top-color: var(--gold);
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
-            display: none;
-            position: absolute;
-        }
-        @keyframes spin {
-            to {
-                transform: rotate(360deg);
-            }
-        }
-        .plus-sep {
-            display: flex;
-            align-items: center;
-            padding-top: 40px;
-            color: var(--text3);
-            font-size: 1rem;
-            flex-shrink: 0;
-        }
         .arr-tag {
             position: absolute;
             top: 4px;
             right: 4px;
-            font-size: 0.6rem;
+            font-size: 0.65rem;
             font-weight: 700;
             border-radius: 3px;
-            padding: 2px 5px;
+            padding: 2px 6px;
             display: none;
             z-index: 2;
         }
@@ -316,11 +321,11 @@
             position: absolute;
             bottom: 4px;
             right: 4px;
-            font-size: 0.55rem;
+            font-size: 0.6rem;
             background: rgba(0, 0, 0, 0.75);
             color: var(--gold2);
             border-radius: 3px;
-            padding: 1px 4px;
+            padding: 2px 5px;
             display: none;
             z-index: 2;
         }
@@ -328,45 +333,41 @@
             position: absolute;
             top: 4px;
             left: 4px;
-            font-size: 0.55rem;
+            font-size: 0.6rem;
             background: rgba(0, 0, 0, 0.75);
             color: #aaa;
             border-radius: 3px;
-            padding: 1px 4px;
+            padding: 2px 5px;
             z-index: 2;
         }
         .action-box {
             background: rgba(0, 0, 0, 0.4);
             border-left: 3px solid var(--gold);
             border-radius: 6px;
-            padding: 10px 12px;
-            font-size: 0.84rem;
+            padding: 12px 14px;
+            font-size: 0.9rem;
             line-height: 1.5;
         }
         .action-box.rad {
             border-left-color: var(--rad);
         }
-        .action-box.warn {
-            border-left-color: #c04040;
-            background: rgba(180, 30, 30, 0.1);
-        }
         .step-dots {
             display: flex;
-            gap: 4px;
+            gap: 5px;
             align-items: center;
             flex-wrap: wrap;
-            margin: 6px 0;
+            margin: 8px 0;
         }
         .step-dot {
-            width: 20px;
-            height: 20px;
+            width: 24px;
+            height: 24px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 0.55rem;
+            font-size: 0.7rem;
             font-weight: 700;
-            border: 1.5px solid var(--border2);
+            border: 2px solid var(--border2);
             color: var(--text3);
             flex-shrink: 0;
         }
@@ -379,7 +380,7 @@
             background: rgba(200, 160, 30, 0.4);
             border-color: var(--gold2);
             color: #fff;
-            box-shadow: 0 0 8px rgba(200, 160, 30, 0.4);
+            box-shadow: 0 0 10px rgba(200, 160, 30, 0.5);
             animation: pulse 1.5s infinite;
         }
         .step-dot.skip {
@@ -393,24 +394,24 @@
                 box-shadow: 0 0 6px rgba(200, 160, 30, 0.3);
             }
             50% {
-                box-shadow: 0 0 14px rgba(200, 160, 30, 0.7);
+                box-shadow: 0 0 16px rgba(200, 160, 30, 0.7);
             }
         }
         .court-row {
             display: flex;
-            gap: 6px;
+            gap: 8px;
             overflow-x: auto;
-            padding: 6px 2px;
+            padding: 8px 2px;
             flex-wrap: nowrap;
             align-items: flex-start;
-            min-height: 110px;
+            min-height: 120px;
         }
         .court-card {
             flex-shrink: 0;
-            width: 78px;
+            width: 86px;
             aspect-ratio: 2/3;
-            border: 1.5px solid var(--border);
-            border-radius: 6px;
+            border: 2px solid var(--border);
+            border-radius: 8px;
             background: var(--card-bg);
             overflow: hidden;
             cursor: pointer;
@@ -433,11 +434,11 @@
         .court-card .used-ov {
             position: absolute;
             inset: 0;
-            background: rgba(0, 0, 0, 0.45);
+            background: rgba(0, 0, 0, 0.5);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.4rem;
+            font-size: 1.6rem;
             color: #888;
             z-index: 3;
             pointer-events: none;
@@ -446,30 +447,24 @@
             position: absolute;
             bottom: 2px;
             right: 2px;
-            font-size: 0.5rem;
-            background: rgba(0, 0, 0, 0.75);
+            font-size: 0.55rem;
+            background: rgba(0, 0, 0, 0.8);
             color: var(--gold2);
-            border-radius: 2px;
-            padding: 1px 3px;
+            border-radius: 3px;
+            padding: 2px 4px;
             z-index: 2;
-        }
-        .court-empty {
-            font-size: 0.78rem;
-            color: var(--text3);
-            padding: 30px 0;
-            text-align: center;
         }
         .event-row {
             display: flex;
-            gap: 6px;
+            gap: 8px;
             flex-wrap: wrap;
             padding: 4px 0;
         }
         .event-card {
-            width: 72px;
+            width: 80px;
             aspect-ratio: 2/3;
-            border: 1.5px solid rgba(180, 50, 30, 0.5);
-            border-radius: 6px;
+            border: 2px solid rgba(180, 50, 30, 0.5);
+            border-radius: 8px;
             background: var(--card-bg);
             overflow: hidden;
             cursor: pointer;
@@ -484,16 +479,16 @@
         }
         .event-card .del-btn {
             position: absolute;
-            top: 2px;
-            right: 2px;
-            background: rgba(0, 0, 0, 0.75);
+            top: 3px;
+            right: 3px;
+            background: rgba(0, 0, 0, 0.8);
             border: none;
             color: #f06040;
-            font-size: 0.7rem;
+            font-size: 0.8rem;
             cursor: pointer;
             border-radius: 50%;
-            width: 18px;
-            height: 18px;
+            width: 22px;
+            height: 22px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -504,58 +499,58 @@
             bottom: 2px;
             left: 2px;
             right: 2px;
-            font-size: 0.45rem;
-            background: rgba(0, 0, 0, 0.8);
+            font-size: 0.5rem;
+            background: rgba(0, 0, 0, 0.85);
             color: #e0a090;
             text-align: center;
-            padding: 1px 2px;
+            padding: 2px 3px;
             z-index: 2;
-            line-height: 1.1;
+            line-height: 1.2;
         }
         .input-num {
-            padding: 7px 8px;
-            width: 72px;
+            padding: 0.6em 0.8em;
+            min-width: 80px;
             font-family: inherit;
-            font-size: 0.85rem;
+            font-size: 1rem;
             background: var(--panel);
             color: var(--text);
             border: 1px solid var(--border2);
-            border-radius: 6px;
+            border-radius: 7px;
             text-align: center;
         }
         .zoom-ov {
             position: fixed;
             inset: 0;
-            background: rgba(0, 0, 0, 0.94);
+            background: rgba(0, 0, 0, 0.95);
             display: none;
             align-items: center;
             justify-content: center;
-            gap: 10px;
+            gap: 12px;
             z-index: 9999;
-            padding: 10px;
+            padding: 12px;
             flex-wrap: wrap;
         }
         .zoom-ov.on {
             display: flex;
         }
         .zoom-ov img {
-            max-width: min(300px, 42vw);
+            max-width: min(320px, 44vw);
             max-height: 76vh;
-            border-radius: 7px;
+            border-radius: 8px;
             border: 2px solid var(--gold2);
             object-fit: contain;
         }
         .zclose {
             position: fixed;
-            top: 12px;
-            right: 14px;
+            top: 14px;
+            right: 16px;
             background: none;
             border: 1px solid #777;
             color: #ccc;
             border-radius: 50%;
-            width: 30px;
-            height: 30px;
-            font-size: 0.9rem;
+            width: 36px;
+            height: 36px;
+            font-size: 1rem;
             cursor: pointer;
             z-index: 10000;
             display: flex;
@@ -564,15 +559,15 @@
         }
         .toast {
             position: fixed;
-            bottom: 20px;
+            bottom: 24px;
             left: 50%;
             transform: translateX(-50%) translateY(60px);
             background: var(--panel);
             border: 1px solid var(--border2);
             color: var(--text2);
-            padding: 9px 16px;
-            border-radius: 7px;
-            font-size: 0.78rem;
+            padding: 10px 18px;
+            border-radius: 8px;
+            font-size: 0.9rem;
             z-index: 9998;
             transition: transform 0.3s;
             pointer-events: none;
@@ -584,37 +579,37 @@
             transform: translateX(-50%) translateY(0);
         }
         .rules-block {
-            font-size: 0.73rem;
+            font-size: 0.8rem;
             color: var(--text2);
-            line-height: 1.5;
+            line-height: 1.6;
         }
         .rules-block h4 {
             color: var(--gold2);
-            font-size: 0.78rem;
-            margin: 8px 0 3px;
+            font-size: 0.85rem;
+            margin: 10px 0 4px;
         }
         .rules-block ul {
-            padding-left: 16px;
+            padding-left: 20px;
         }
         .rules-block li {
-            margin-bottom: 1px;
+            margin-bottom: 2px;
         }
         summary {
             cursor: pointer;
             font-weight: 600;
             color: var(--text2);
-            font-size: 0.8rem;
-            padding: 6px 0;
+            font-size: 0.85rem;
+            padding: 8px 0;
         }
         .pill-row {
             display: flex;
-            gap: 3px;
+            gap: 4px;
             flex-wrap: wrap;
         }
         .pill {
-            font-size: 0.6rem;
-            padding: 2px 6px;
-            border-radius: 8px;
+            font-size: 0.65rem;
+            padding: 3px 8px;
+            border-radius: 10px;
             border: 1px solid;
             font-weight: 600;
             white-space: nowrap;
@@ -652,20 +647,29 @@
         .placement-box {
             background: rgba(40, 100, 180, 0.1);
             border: 1px solid rgba(40, 100, 180, 0.35);
-            border-radius: 6px;
-            padding: 10px 12px;
-            font-size: 0.78rem;
+            border-radius: 8px;
+            padding: 12px 14px;
+            font-size: 0.85rem;
             color: #b0c8e8;
-            line-height: 1.5;
-            margin-top: 6px;
+            line-height: 1.6;
+            margin-top: 8px;
         }
         .placement-box strong {
             color: #80b0f0;
         }
+        .action-box.warn {
+            border-left-color: #c04040;
+            background: rgba(180, 30, 30, 0.1);
+        }
+        .bonus-row {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.85rem;
+        }
     </style>
 </head>
 <body>
-
     <div class="screen active" id="scrSetup">
         <h1>✦ WAKHAN KI ✦</h1>
         <p class="sub">Pax Pamir 2. Edition – Solo &amp; Duo</p>
@@ -677,12 +681,18 @@
     </div>
 
     <div class="screen" id="scrGame">
-        <div class="row spread" style="flex-wrap:wrap;gap:6px;">
-            <div style="display:flex;gap:4px;flex-wrap:wrap;">
+        <div class="row spread" style="flex-wrap:wrap;gap:8px;">
+            <div style="display:flex;gap:5px;flex-wrap:wrap;">
                 <span class="info-tag tag-wak" id="wakLoyTag">–</span>
-                <span class="info-tag tag-suit" id="prefSuitTag">–</span>
+                <span class="info-tag tag-suit" id="prefSuitTag" onclick="toggleSuitPicker()">–</span>
+                <div class="suit-picker" id="suitPicker">
+                    <button onclick="setPreferredSuit('Politik')">Politik</button>
+                    <button onclick="setPreferredSuit('Wirtschaft')">Wirtschaft</button>
+                    <button onclick="setPreferredSuit('Militär')">Militär</button>
+                    <button onclick="setPreferredSuit('Geheimdienst')">Geheimdienst</button>
+                </div>
             </div>
-            <div style="display:flex;gap:4px;flex-wrap:wrap;" id="playerTags"></div>
+            <div style="display:flex;gap:5px;flex-wrap:wrap;" id="playerTags"></div>
         </div>
         <h1>✦ WAKHAN KI ✦</h1>
         <div class="divider"></div>
@@ -691,17 +701,17 @@
             <div class="slot">
                 <div class="slot-lbl">KI-Stapel</div>
                 <div class="frame" id="fStack" onclick="window._zoomStack()">
-                    <div class="loading-ring" id="ringStack"></div>
+                    <div class="loading-ring" id="ringStack" style="display:none;"></div>
                     <img id="imgStack" alt="">
                     <div class="ph" id="phStack">leer</div>
                     <div class="cnt-stack" id="cntStack">0</div>
                 </div>
             </div>
-            <div class="plus-sep">→</div>
+            <div class="plus-sep" style="padding-top:45px;">→</div>
             <div class="slot">
                 <div class="slot-lbl">Gezogene KI-Karte</div>
                 <div class="frame hl" id="fCur" onclick="window._zoomCur()">
-                    <div class="loading-ring" id="ringCur"></div>
+                    <div class="loading-ring" id="ringCur" style="display:none;"></div>
                     <img id="imgCur" alt="">
                     <div class="ph" id="phCur">Karte ziehen</div>
                     <div class="arr-tag" id="arrCur"></div>
@@ -718,8 +728,12 @@
             <h2>⚡ Aktion <span id="actNum">1</span> von 2</h2>
             <div class="step-dots" id="stepDots"></div>
             <div class="action-box" id="actionBox"></div>
-            <div id="actionExtra" style="font-size:.74rem;color:#80b0d0;margin-top:4px;"></div>
-            <div class="row" style="gap:6px;margin-top:8px;">
+            <div id="actionExtra" style="font-size:.8rem;color:#80b0d0;margin-top:5px;"></div>
+            <div class="bonus-row" style="margin-top:8px; display:none;" id="bonusCheckRow">
+                <input type="checkbox" id="bonusChk">
+                <label for="bonusChk">Bonusaktion (bevorzugte Farbe)</label>
+            </div>
+            <div class="row" style="gap:8px;margin-top:10px;">
                 <button class="btn-outline" id="btnDo" onclick="window._resolveAction(true)">✓ Ausführen</button>
                 <button class="btn-ghost" id="btnSkip" onclick="window._resolveAction(false)">✗ Überspringen</button>
             </div>
@@ -733,7 +747,7 @@
         <div class="card" id="bonusCard" style="display:none;">
             <h2>🌟 Bonusaktionen</h2>
             <div id="bonusBody"></div>
-            <button class="btn-gold" style="margin-top:6px;" onclick="window._finishBonuses()">✓ Zug abschließen</button>
+            <button class="btn-gold" style="margin-top:8px;" onclick="window._finishBonuses()">✓ Zug abschließen</button>
         </div>
 
         <div class="card" id="verwCard" style="display:none;">
@@ -742,11 +756,9 @@
         </div>
 
         <div class="card">
-            <h2>⚔ Wakhans Hof <span style="font-size:.7rem;color:var(--text3);" id="courtCnt">(0)</span></h2>
-            <div class="court-row" id="courtRow">
-                <div class="court-empty">Noch keine Hofkarten.</div>
-            </div>
-            <div class="row" style="margin-top:6px;gap:5px;">
+            <h2>⚔ Wakhans Hof <span style="font-size:.8rem;color:var(--text3);" id="courtCnt">(0)</span></h2>
+            <div class="court-row" id="courtRow"><div class="court-empty">Noch keine Hofkarten.</div></div>
+            <div class="row" style="margin-top:8px;gap:8px;">
                 <input type="number" class="input-num" id="courtIn" min="1" max="100" placeholder="Nr. 1–100">
                 <button class="btn-sm btn-outline" onclick="window._addCourtManual()">+ Karte</button>
                 <button class="btn-sm btn-danger" onclick="window._clearCourt()">Leeren</button>
@@ -754,979 +766,451 @@
         </div>
 
         <div class="card">
-            <h2>📋 Ereigniskarten <span style="font-size:.7rem;color:var(--text3);" id="eventCnt">(0)</span></h2>
-            <div class="event-row" id="eventRow">
-                <span style="font-size:.72rem;color:var(--text3);">Keine.</span>
-            </div>
-            <div class="row" style="margin-top:4px;gap:5px;">
+            <h2>📋 Ereigniskarten <span style="font-size:.8rem;color:var(--text3);" id="eventCnt">(0)</span></h2>
+            <div class="event-row" id="eventRow"><span style="font-size:.8rem;color:var(--text3);">Keine.</span></div>
+            <div class="row" style="margin-top:6px;gap:8px;">
                 <input type="number" class="input-num" id="eventIn" min="101" max="116" placeholder="Nr. 101–116">
                 <button class="btn-sm btn-outline" onclick="window._addEvent()">+ Ereignis</button>
             </div>
         </div>
 
-        <details style="margin-top:4px;">
+        <details style="margin-top:6px;">
             <summary>📜 Regelreferenz</summary>
             <div class="rules-block" id="rulesContent"></div>
         </details>
-        <button class="btn-ghost btn-sm" style="margin-top:4px;" onclick="window._resetGame()">↺ Neues Spiel</button>
+        <button class="btn-ghost btn-sm" style="margin-top:6px;" onclick="window._resetGame()">↺ Neues Spiel</button>
     </div>
 
     <div class="zoom-ov" id="zoom" onclick="window._closeZoom()">
         <button class="zclose" onclick="window._closeZoom()">✕</button>
-        <div><img id="zimg" src="" alt=""><div style="font-size:.68rem;color:#aaa;text-align:center;" id="zlbl"></div></div>
+        <div><img id="zimg" src="" alt=""><div style="font-size:.75rem;color:#aaa;text-align:center;" id="zlbl"></div></div>
     </div>
     <div class="toast" id="toast"></div>
 
     <script>
         (function() {
-            const REGION_NAMES = ['Transkaspien', 'Kabul', 'Kandahar', 'Punjab', 'Herat', 'Persien'];
-            const REGION_CLASSES = ['rT', 'rK', 'rKa', 'rPu', 'rH', 'rP'];
+            const REGION_NAMES = ['Transkaspien','Kabul','Kandahar','Punjab','Herat','Persien'];
+            const REGION_CLASSES = ['rT','rK','rKa','rPu','rH','rP'];
             const REGION_BY_IDX = {};
-            for (let i = 0; i < 6; i++) REGION_BY_IDX[i] = { n: REGION_NAMES[i], c: REGION_CLASSES[i] };
+            for(let i=0;i<6;i++) REGION_BY_IDX[i]={n:REGION_NAMES[i],c:REGION_CLASSES[i]};
+            const CD={};
+            const RAW=[{id:1,name:"Mohan Lal",region:"Kabul",suit:"Geheimdienst",rank:3,impactIcons:["spy","spy","spy"],actions:["move"],patriot:null,prize:"Russisch",suitChange:null},{id:2,name:"Jan-Fishan Khan",region:"Kabul",suit:"Geheimdienst",rank:2,impactIcons:["spy","spy","army"],actions:["battle","move"],patriot:null,prize:"Russisch",suitChange:null},{id:3,name:"Prinz Akbar Khan",region:"Kabul",suit:"Geheimdienst",rank:2,impactIcons:["spy","spy","army"],actions:["battle"],patriot:"Afghanisch",prize:null,suitChange:"Militär"},{id:4,name:"Charles Stoddart",region:"Kabul",suit:"Geheimdienst",rank:1,impactIcons:["spy"],actions:["gift","move"],patriot:null,prize:"Afghanisch",suitChange:null},{id:5,name:"Shah Shujah Durrani",region:"Kabul",suit:"Politik",rank:1,impactIcons:["tribe"],actions:["build"],patriot:null,prize:"Afghanisch",suitChange:null},{id:6,name:"Aminullah Khan Logari",region:"Kabul",suit:"Politik",rank:1,impactIcons:["spy","army","tribe"],actions:["build","battle"],patriot:"Afghanisch",prize:null,suitChange:null},{id:7,name:"Dost Mohammad",region:"Kabul",suit:"Politik",rank:2,impactIcons:["spy","army","tribe","tribe"],actions:[],patriot:null,prize:null,suitChange:null},{id:8,name:"Kabul Bazaar",region:"Kabul",suit:"Wirtschaft",rank:2,impactIcons:["spy","road","road"],actions:["tax"],patriot:null,prize:null,suitChange:"Politik"},{id:9,name:"Afghanisches Kunsthandwerk",region:"Kabul",suit:"Wirtschaft",rank:1,impactIcons:["road"],actions:["tax","move"],patriot:null,prize:null,suitChange:null},{id:10,name:"Arsenmine von Balkh",region:"Kabul",suit:"Wirtschaft",rank:1,impactIcons:["road"],actions:["build","betray"],patriot:null,prize:"Afghanisch",suitChange:"Militär"},{id:11,name:"Lapislazuli-Mine",region:"Kabul",suit:"Wirtschaft",rank:2,impactIcons:["road","road"],actions:["tax","gift"],patriot:"Afghanisch",prize:null,suitChange:null},{id:12,name:"Stadt Ghazni",region:"Kabul",suit:"Wirtschaft",rank:3,impactIcons:["army","road","road","road"],actions:["gift"],patriot:null,prize:null,suitChange:null},{id:13,name:"Ghilzai-Nomaden",region:"Kabul",suit:"Wirtschaft",rank:2,impactIcons:["road","road"],actions:["tax","move"],patriot:null,prize:"Russisch",suitChange:null},{id:14,name:"Geldverleiher",region:"Kabul",suit:"Wirtschaft",rank:2,impactIcons:["road","road"],actions:["gift","build"],patriot:null,prize:null,suitChange:null},{id:15,name:"Durrani-Königsgarde",region:"Kabul",suit:"Militär",rank:1,impactIcons:["army"],actions:["betray"],patriot:null,prize:null,suitChange:null},{id:16,name:"Bala Hissar",region:"Kabul",suit:"Militär",rank:1,impactIcons:["army"],actions:["tax","betray"],patriot:null,prize:null,suitChange:null},{id:17,name:"Zitadelle von Ghazni",region:"Kabul",suit:"Militär",rank:1,impactIcons:["army"],actions:["build"],patriot:null,prize:null,suitChange:null},{id:18,name:"Harry Flashman",region:"Punjab",suit:"Geheimdienst",rank:1,impactIcons:["spy"],actions:["gift","betray"],patriot:null,prize:null,suitChange:null},{id:19,name:"Eldred Pottinger",region:"Punjab",suit:"Geheimdienst",rank:2,impactIcons:["spy","spy"],actions:["move","betray"],patriot:"Britisch",prize:"Russisch",suitChange:"Wirtschaft"},{id:20,name:"Henry Rawlinson",region:"Punjab",suit:"Geheimdienst",rank:1,impactIcons:["spy"],actions:["gift","move"],patriot:"Britisch",prize:"Russisch",suitChange:"Wirtschaft"},{id:21,name:"Alexander Burnes",region:"Punjab",suit:"Geheimdienst",rank:2,impactIcons:["spy","spy"],actions:["move"],patriot:null,prize:"Afghanisch",suitChange:null},{id:22,name:"George Hayward",region:"Punjab",suit:"Geheimdienst",rank:1,impactIcons:["spy"],actions:["move","gift"],patriot:"Britisch",prize:"Russisch",suitChange:"Politik"},{id:23,name:"Henry Pottinger",region:"Punjab",suit:"Geheimdienst",rank:1,impactIcons:["spy"],actions:["battle","move"],patriot:"Britisch",prize:"Russisch",suitChange:"Wirtschaft"},{id:24,name:"Ranjit Singh",region:"Punjab",suit:"Politik",rank:2,impactIcons:["army","tribe","tribe"],actions:["betray"],patriot:null,prize:null,suitChange:null},{id:25,name:"Josiah Harlan",region:"Punjab",suit:"Politik",rank:1,impactIcons:["tribe"],actions:["tax"],patriot:"Afghanisch",prize:"Britisch",suitChange:null},{id:26,name:"Paolo Avitabile",region:"Punjab",suit:"Politik",rank:1,impactIcons:["army","tribe"],actions:["betray"],patriot:null,prize:"Afghanisch",suitChange:null},{id:27,name:"Maqpon-Dynastie",region:"Punjab",suit:"Politik",rank:1,impactIcons:["tribe"],actions:["build"],patriot:null,prize:null,suitChange:null},{id:28,name:"Anarkali-Basar",region:"Punjab",suit:"Wirtschaft",rank:1,impactIcons:["spy","road"],actions:["tax","build"],patriot:null,prize:"Afghanisch",suitChange:null},{id:29,name:"Khyber-Pass",region:"Punjab",suit:"Wirtschaft",rank:2,impactIcons:["road","road"],actions:["tax","move"],patriot:null,prize:null,suitChange:null},{id:30,name:"Sikh-Händler in Lahore",region:"Punjab",suit:"Wirtschaft",rank:1,impactIcons:["spy","road"],actions:["tax","gift"],patriot:null,prize:null,suitChange:null},{id:31,name:"Kompaniewaffen",region:"Punjab",suit:"Militär",rank:1,impactIcons:["army"],actions:["tax","betray"],patriot:null,prize:null,suitChange:"Geheimdienst"},{id:32,name:"Armee des Indus",region:"Punjab",suit:"Militär",rank:3,impactIcons:["army","army","army"],actions:["move"],patriot:"Britisch",prize:"Afghanisch",suitChange:null},{id:33,name:"Zorawar Singh Kahluria",region:"Punjab",suit:"Militär",rank:2,impactIcons:["army","army"],actions:["battle","gift"],patriot:null,prize:null,suitChange:null},{id:34,name:"Sindhi-Krieger",region:"Punjab",suit:"Militär",rank:1,impactIcons:["army"],actions:["battle","move","betray"],patriot:null,prize:"Britisch",suitChange:"Wirtschaft"},{id:35,name:"Hari Singh Nalwa",region:"Punjab",suit:"Militär",rank:2,impactIcons:["army","army"],actions:["battle","move"],patriot:null,prize:null,suitChange:"Politik"},{id:36,name:"Bengalische Eingeboreneninfanterie",region:"Punjab",suit:"Militär",rank:1,impactIcons:["army"],actions:["battle","betray"],patriot:"Britisch",prize:"Afghanisch",suitChange:"Geheimdienst"},{id:37,name:"Seaforth Highlanders",region:"Punjab",suit:"Militär",rank:1,impactIcons:["army"],actions:["battle","move"],patriot:"Britisch",prize:"Afghanisch",suitChange:"Politik"},{id:38,name:"Akali-Sikhs",region:"Punjab",suit:"Militär",rank:2,impactIcons:["army","army"],actions:["battle"],patriot:null,prize:"Britisch",suitChange:null},{id:39,name:"William Moorcroft",region:"Kandahar",suit:"Geheimdienst",rank:1,impactIcons:["spy"],actions:["move","battle"],patriot:null,prize:null,suitChange:null},{id:40,name:"William Hay Macnaghten",region:"Kandahar",suit:"Geheimdienst",rank:2,impactIcons:["spy","spy"],actions:["tax","move"],patriot:"Britisch",prize:"Afghanisch",suitChange:null},{id:41,name:"Charles Masson",region:"Kandahar",suit:"Geheimdienst",rank:2,impactIcons:["spy","spy"],actions:["build"],patriot:null,prize:null,suitChange:null},{id:42,name:"Barakzai-Sadars",region:"Kandahar",suit:"Politik",rank:1,impactIcons:["tribe"],actions:["build"],patriot:"Afghanisch",prize:"Afghanisch",suitChange:"Wirtschaft"},{id:43,name:"Giljee-Adlige",region:"Kandahar",suit:"Politik",rank:1,impactIcons:["army","tribe"],actions:["battle"],patriot:null,prize:"Afghanisch",suitChange:null},{id:44,name:"Baluchische Häuptlinge",region:"Kandahar",suit:"Politik",rank:1,impactIcons:["army","tribe"],actions:["build","tax"],patriot:null,prize:"Russisch",suitChange:null},{id:45,name:"Haji Khan Kakar",region:"Kandahar",suit:"Politik",rank:1,impactIcons:["army","tribe"],actions:["betray","gift"],patriot:null,prize:null,suitChange:null},{id:46,name:"Bank",region:"Kandahar",suit:"Wirtschaft",rank:2,impactIcons:["road","road"],actions:["gift"],patriot:null,prize:null,suitChange:"Geheimdienst"},{id:47,name:"Bolan-Pass",region:"Kandahar",suit:"Wirtschaft",rank:2,impactIcons:["army","road","road"],actions:["gift","move"],patriot:null,prize:"Russisch",suitChange:null},{id:48,name:"Obstmärkte",region:"Kandahar",suit:"Wirtschaft",rank:1,impactIcons:["road"],actions:["move","build"],patriot:null,prize:null,suitChange:"Politik"},{id:49,name:"Kandahar-Märkte",region:"Kandahar",suit:"Wirtschaft",rank:1,impactIcons:["road"],actions:["tax","build"],patriot:null,prize:null,suitChange:"Politik"},{id:50,name:"Britische Linieninfanterie",region:"Kandahar",suit:"Militär",rank:2,impactIcons:["army","army"],actions:["battle","move"],patriot:"Britisch",prize:"Russisch",suitChange:null},{id:51,name:"Sir John Keane",region:"Kandahar",suit:"Militär",rank:1,impactIcons:["army"],actions:["battle"],patriot:"Britisch",prize:"Russisch",suitChange:null},{id:52,name:"Paschtunischer Söldner",region:"Kandahar",suit:"Militär",rank:1,impactIcons:["army"],actions:["battle","tax"],patriot:null,prize:null,suitChange:"Politik"},{id:53,name:"Jezail-Scharfschützen",region:"Kandahar",suit:"Militär",rank:2,impactIcons:["spy","army","army"],actions:["betray"],patriot:null,prize:"Russisch",suitChange:null},{id:54,name:"Heratische Banditen",region:"Herat",suit:"Geheimdienst",rank:1,impactIcons:["spy"],actions:["tax"],patriot:null,prize:null,suitChange:null},{id:55,name:"Hazara-Häuptlinge",region:"Herat",suit:"Politik",rank:1,impactIcons:["army","tribe"],actions:["battle","tax","move"],patriot:null,prize:null,suitChange:null},{id:56,name:"Yar Mohammad Alikozai",region:"Herat",suit:"Politik",rank:2,impactIcons:["tribe","tribe"],actions:["betray"],patriot:null,prize:"Afghanisch",suitChange:"Politik"},{id:57,name:"Exilierter Durrani-Adel",region:"Herat",suit:"Politik",rank:1,impactIcons:["tribe"],actions:["betray","move"],patriot:null,prize:"Britisch",suitChange:null},{id:58,name:"Ishaqzai-Häuptlinge",region:"Herat",suit:"Politik",rank:1,impactIcons:["tribe"],actions:["gift","build"],patriot:"Afghanisch",prize:null,suitChange:"Wirtschaft"},{id:59,name:"Tadschikische Kriegsschar",region:"Herat",suit:"Militär",rank:2,impactIcons:["army","army"],actions:["betray","battle"],patriot:null,prize:null,suitChange:null},{id:60,name:"Nomadischer Kriegsherr",region:"Herat",suit:"Militär",rank:1,impactIcons:["army"],actions:["tax","gift","battle"],patriot:null,prize:"Russisch",suitChange:null},{id:61,name:"Karakulschafe",region:"Herat",suit:"Wirtschaft",rank:2,impactIcons:["road","road"],actions:["tax"],patriot:null,prize:null,suitChange:null},{id:62,name:"Qanat-System",region:"Herat",suit:"Wirtschaft",rank:1,impactIcons:["road"],actions:["gift","build"],patriot:null,prize:null,suitChange:"Politik"},{id:63,name:"Farah-Straße",region:"Herat",suit:"Wirtschaft",rank:3,impactIcons:["road","road","road"],actions:["move"],patriot:null,prize:null,suitChange:null},{id:64,name:"Opiumfelder",region:"Herat",suit:"Wirtschaft",rank:2,impactIcons:["spy","road","road"],actions:["tax"],patriot:null,prize:null,suitChange:"Militär"},{id:65,name:"Minarett von Jam",region:"Herat",suit:"Wirtschaft",rank:1,impactIcons:["army","road"],actions:["battle","tax","move"],patriot:null,prize:null,suitChange:null},{id:66,name:"Baluchische Schmuggler",region:"Herat",suit:"Wirtschaft",rank:2,impactIcons:["army","road","road"],actions:["battle"],patriot:null,prize:"Afghanisch",suitChange:null},{id:67,name:"Weizenfelder",region:"Herat",suit:"Wirtschaft",rank:2,impactIcons:["road"],actions:["move","gift"],patriot:null,prize:null,suitChange:null},{id:68,name:"Ghaem Magham Farahani",region:"Persien",suit:"Geheimdienst",rank:2,impactIcons:["army","spy","spy"],actions:["tax"],patriot:null,prize:null,suitChange:null},{id:69,name:"Graf Ivan Simonich",region:"Persien",suit:"Geheimdienst",rank:2,impactIcons:["spy","spy"],actions:["battle","move"],patriot:"Russisch",prize:"Britisch",suitChange:null},{id:70,name:"Alexander Griboyedov",region:"Persien",suit:"Geheimdienst",rank:2,impactIcons:["spy","spy"],actions:["move"],patriot:"Russisch",prize:"Afghanisch",suitChange:null},{id:71,name:"Joseph Wolff",region:"Persien",suit:"Geheimdienst",rank:1,impactIcons:["spy"],actions:["move","gift"],patriot:"Britisch",prize:"Afghanisch",suitChange:null},{id:72,name:"Claude Wade",region:"Persien",suit:"Geheimdienst",rank:2,impactIcons:["spy","spy"],actions:["move"],patriot:null,prize:"Russisch",suitChange:null},{id:73,name:"Jean-François Allard",region:"Persien",suit:"Geheimdienst",rank:1,impactIcons:["spy"],actions:["build","battle"],patriot:null,prize:"Britisch",suitChange:"Militär"},{id:74,name:"Hajj Mirza Aghasi",region:"Persien",suit:"Politik",rank:1,impactIcons:["tribe"],actions:["betray","battle"],patriot:"Afghanisch",prize:"Russisch",suitChange:"Geheimdienst"},{id:75,name:"Abbas Mirza",region:"Persien",suit:"Politik",rank:1,impactIcons:["army","tribe"],actions:["tax","battle"],patriot:null,prize:null,suitChange:null},{id:76,name:"Fath-Ali Shah",region:"Persien",suit:"Politik",rank:2,impactIcons:["tribe","tribe"],actions:[],patriot:null,prize:null,suitChange:"Geheimdienst"},{id:77,name:"Mohammad Shah",region:"Persien",suit:"Politik",rank:1,impactIcons:["army","tribe"],actions:["build","betray"],patriot:null,prize:null,suitChange:"Geheimdienst"},{id:78,name:"Städtische Verbesserungen",region:"Persien",suit:"Wirtschaft",rank:2,impactIcons:["road","road"],actions:["build"],patriot:null,prize:null,suitChange:"Geheimdienst"},{id:79,name:"Sklavenmärkte",region:"Persien",suit:"Wirtschaft",rank:1,impactIcons:["spy","road"],actions:["tax","move"],patriot:null,prize:"Britisch",suitChange:null},{id:80,name:"Anglo-Persischer Handel",region:"Persien",suit:"Wirtschaft",rank:1,impactIcons:["road"],actions:["tax","build"],patriot:"Britisch",prize:"Russisch",suitChange:null},{id:81,name:"Russo-Persischer Handel",region:"Persien",suit:"Wirtschaft",rank:2,impactIcons:["road","road"],actions:["tax","build"],patriot:"Russisch",prize:"Britisch",suitChange:null},{id:82,name:"Persische Armee",region:"Persien",suit:"Militär",rank:2,impactIcons:["army","army"],actions:["gift","battle"],patriot:null,prize:null,suitChange:"Geheimdienst"},{id:83,name:"Leibgarde des Schahs",region:"Persien",suit:"Militär",rank:1,impactIcons:["spy","army"],actions:["tax"],patriot:null,prize:null,suitChange:null},{id:84,name:"Russische Linieninfanterie",region:"Persien",suit:"Militär",rank:2,impactIcons:["army","army"],actions:["battle"],patriot:"Russisch",prize:"Afghanisch",suitChange:"Wirtschaft"},{id:85,name:"Bucharische Juden",region:"Transkaspien",suit:"Geheimdienst",rank:1,impactIcons:["spy"],actions:["gift","build"],patriot:null,prize:"Britisch",suitChange:"Wirtschaft"},{id:86,name:"Jan Prosper Witkiewicz",region:"Transkaspien",suit:"Geheimdienst",rank:2,impactIcons:["spy","spy"],actions:["move","build"],patriot:"Russisch",prize:null,suitChange:null},{id:87,name:"Imperiale Landvermesser",region:"Transkaspien",suit:"Geheimdienst",rank:1,impactIcons:["spy"],actions:["move","gift","build"],patriot:"Russisch",prize:null,suitChange:null},{id:88,name:"Arthur Conolly",region:"Transkaspien",suit:"Geheimdienst",rank:1,impactIcons:["spy"],actions:["move","gift"],patriot:"Britisch",prize:null,suitChange:null},{id:89,name:"Aga Mehdi",region:"Transkaspien",suit:"Geheimdienst",rank:1,impactIcons:["spy"],actions:["move","betray","battle"],patriot:"Russisch",prize:null,suitChange:null},{id:90,name:"Nasrullah Khan",region:"Transkaspien",suit:"Politik",rank:1,impactIcons:["tribe"],actions:["tax","betray"],patriot:null,prize:"Britisch",suitChange:null},{id:91,name:"Allah Quli Bahadur",region:"Transkaspien",suit:"Geheimdienst",rank:1,impactIcons:["spy","army","tribe"],actions:["betray"],patriot:null,prize:"Russisch",suitChange:null},{id:92,name:"Mir Murad Beg",region:"Transkaspien",suit:"Politik",rank:1,impactIcons:["spy","tribe"],actions:["battle","tax","move"],patriot:null,prize:"Britisch",suitChange:"Militär"},{id:93,name:"Madali Khan",region:"Transkaspien",suit:"Politik",rank:2,impactIcons:["tribe","tribe"],actions:["battle","betray"],patriot:null,prize:"Britisch",suitChange:null},{id:94,name:"Sklavenmärkte von Chiwa",region:"Transkaspien",suit:"Wirtschaft",rank:1,impactIcons:["spy","road"],actions:["tax","betray"],patriot:null,prize:"Britisch",suitChange:null},{id:95,name:"Nachschub aus Orenburg",region:"Transkaspien",suit:"Wirtschaft",rank:1,impactIcons:["road"],actions:["tax","move"],patriot:"Russisch",prize:"Afghanisch",suitChange:null},{id:96,name:"Panjdeh-Oase",region:"Transkaspien",suit:"Wirtschaft",rank:2,impactIcons:["road","road"],actions:["tax","move"],patriot:null,prize:"Britisch",suitChange:null},{id:97,name:"Zitadelle von Buchara",region:"Transkaspien",suit:"Militär",rank:1,impactIcons:["army"],actions:["build"],patriot:null,prize:null,suitChange:"Geheimdienst"},{id:98,name:"Europäische Kanonen",region:"Transkaspien",suit:"Militär",rank:3,impactIcons:["army","army","army"],actions:["gift"],patriot:null,prize:"Britisch",suitChange:null},{id:99,name:"Kosaken",region:"Transkaspien",suit:"Militär",rank:1,impactIcons:["spy","army"],actions:["battle"],patriot:"Russisch",prize:"Britisch",suitChange:null},{id:100,name:"Graf Perovsky",region:"Transkaspien",suit:"Militär",rank:2,impactIcons:["army","army"],actions:["battle"],patriot:"Russisch",prize:"Britisch",suitChange:null}];
+            RAW.forEach(r=>CD[r.id]=r);
+            const evtNames=["Dominanzcheck","Dominanzcheck","Dominanzcheck","Dominanzcheck","Neue Taktiken","Koh-i-Noor zurückerlangt","Höfische Manieren","Gerücht","Kriegsmüdigkeit","Nationalismus","Öffentlicher Rückzug","Staatenbildung","Rückendeckung der persischen Aristokratie","Andere Überzeugungsmethoden","Paschtunwali-Werte","Rüge"];
+            for(let i=101;i<=116;i++) CD[i]={id:i,name:evtNames[i-101],isEvent:true,region:"Ereignis",suit:"Ereignis",rank:0,impactIcons:[],actions:[],patriot:null,prize:null,suitChange:null};
+            const WKC_RAW=[{id:117,loyaltyOrder:["Russisch","Afghanisch","Britisch"],action1_de:"Besteuerung.",action2_de:"Wenn Militärkarten bevorzugt werden, radikalisiere die am höchsten eingestufte Militärkarte.",action3_de:"Radikalisierung.",redArrow:"bottom",blackArrow:3,backTopLabel:"Top (left)",priorities:[2,3,4,5,0,1]},{id:118,loyaltyOrder:["Afghanisch","Britisch","Russisch"],action1_de:"Wenn Politikkarten bevorzugt werden, radikalisiere die am höchsten eingestufte Wirtschaftskarte.",action2_de:"Radikalisiere die am höchsten eingestufte Politikkarte.",action3_de:"Radikalisierung.",redArrow:"top",blackArrow:2,backTopLabel:"Bottom (right)",priorities:[3,4,5,0,1,2]},{id:119,loyaltyOrder:["Britisch","Russisch","Afghanisch"],action1_de:"Besteuerung.",action2_de:"Radikalisiere die am höchsten eingestufte Geheimdienstkarte.",action3_de:"Radikalisierung.",redArrow:"bottom",blackArrow:4,backTopLabel:"Bottom (right)",priorities:[0,1,2,3,4,5]},{id:120,loyaltyOrder:["Russisch","Afghanisch","Britisch"],action1_de:"Wenn Wakhan weniger als 2 Rupien hat, radikalisiere die Karte, die die meisten Rupien einbringt.",action2_de:"Bauen.",action3_de:"Radikalisierung.",redArrow:"top",blackArrow:5,backTopLabel:"Top (left)",priorities:[4,5,0,1,2,3]},{id:121,loyaltyOrder:["Britisch","Russisch","Afghanisch"],action1_de:"Radikalisiere eine Karte, die Wakhan die Kontrolle über eine Region verschafft.",action2_de:"Kampf.",action3_de:"Radikalisierung.",redArrow:"top",blackArrow:2,backTopLabel:"Bottom (right)",priorities:[2,3,4,5,0,1]},{id:122,loyaltyOrder:["Britisch","Russisch","Afghanisch"],action1_de:"Radikalisiere eine Geheimdienstkarte.",action2_de:"Bewegen.",action3_de:"Radikalisierung.",redArrow:"top",blackArrow:1,backTopLabel:"Bottom (right)",priorities:[0,1,2,3,4,5]},{id:123,loyaltyOrder:["Afghanisch","Russisch","Britisch"],action1_de:"Bauen.",action2_de:"Bewegen.",action3_de:"Radikalisierung.",redArrow:"bottom",blackArrow:5,backTopLabel:"Top (left)",priorities:[1,2,3,4,5,0]},{id:124,loyaltyOrder:["Russisch","Afghanisch","Britisch"],action1_de:"Besteuerung.",action2_de:"Verrat.",action3_de:"Radikalisierung.",redArrow:"bottom",blackArrow:5,backTopLabel:"Top (left)",priorities:[1,2,3,4,5,0]},{id:125,loyaltyOrder:["Russisch","Britisch","Afghanisch"],action1_de:"Radikalisiere die Karte, die die meisten Armeen und/oder Straßen platziert.",action2_de:"Wenn keine Koalition Dominanz hat, radikalisiere die Karte, die die meisten Spione und/oder Stämme platziert.",action3_de:"Radikalisierung.",redArrow:"bottom",blackArrow:6,backTopLabel:"Top (left)",priorities:[1,2,3,4,5,0]},{id:126,loyaltyOrder:["Afghanisch","Britisch","Russisch"],action1_de:"Wenn Wakhan keine Karte mit der Bewegungsaktion hat, radikalisiere eine Karte mit einer Bewegungsaktion.",action2_de:"Bewegen.",action3_de:"Radikalisierung.",redArrow:"bottom",blackArrow:1,backTopLabel:"Top (left)",priorities:[3,4,5,0,1,2]},{id:127,loyaltyOrder:["Afghanisch","Russisch","Britisch"],action1_de:"Wenn keine Koalition Dominanz hat, radikalisiere die Karte, die die meisten Spione und/oder Stämme platziert.",action2_de:"Wenn Militärkarten bevorzugt werden, radikalisiere die am höchsten eingestufte Militärkarte.",action3_de:"Radikalisierung.",redArrow:"bottom",blackArrow:1,backTopLabel:"Top (left)",priorities:[4,5,0,1,2,3]},{id:128,loyaltyOrder:["Afghanisch","Russisch","Britisch"],action1_de:"Bewegen.",action2_de:"Verrat.",action3_de:"Radikalisierung.",redArrow:"bottom",blackArrow:5,backTopLabel:"Top (left)",priorities:[4,5,0,1,2,3]},{id:129,loyaltyOrder:["Afghanisch","Russisch","Britisch"],action1_de:"Wenn eine Koalition Dominanz hat, radikalisiere einen passenden Patrioten.",action2_de:"Wenn keine Koalition Dominanz hat, radikalisiere die Karte, die die meisten Spione und/oder Stämme platziert.",action3_de:"Radikalisierung.",redArrow:"top",blackArrow:3,backTopLabel:"Bottom (right)",priorities:[5,0,1,2,3,4]},{id:130,loyaltyOrder:["Afghanisch","Russisch","Britisch"],action1_de:"Kämpfe auf der ranghöchsten Hofkarte mit den meisten Spionen, auf der Wakhan ebenfalls mindestens einen Spion hat.",action2_de:"Kampf.",action3_de:"Radikalisierung.",redArrow:"top",blackArrow:4,backTopLabel:"Bottom (right)",priorities:[5,0,1,2,3,4]},{id:131,loyaltyOrder:["Russisch","Britisch","Afghanisch"],action1_de:"Bewegen.",action2_de:"Kampf.",action3_de:"Radikalisierung.",redArrow:"bottom",blackArrow:3,backTopLabel:"Bottom (right)",priorities:[1,2,3,4,5,0]},{id:132,loyaltyOrder:["Afghanisch","Britisch","Russisch"],action1_de:"Wenn keine Koalition Dominanz hat, radikalisiere die Karte, die die meisten Spione und/oder Stämme platziert.",action2_de:"Kämpfe auf der ranghöchsten Hofkarte mit den meisten Spionen, auf der Wakhan ebenfalls mindestens einen Spion hat.",action3_de:"Radikalisierung.",redArrow:"top",blackArrow:6,backTopLabel:"Bottom (right)",priorities:[2,3,4,5,0,1]},{id:133,loyaltyOrder:["Russisch","Afghanisch","Britisch"],action1_de:"Wenn Wakhans Hofgröße ihr Limit erreicht hat, radikalisiere die am höchsten eingestufte Politikkarte.",action2_de:"Besteuerung.",action3_de:"Radikalisierung.",redArrow:"top",blackArrow:1,backTopLabel:"Top (left)",priorities:[3,4,5,0,1,2]},{id:134,loyaltyOrder:["Afghanisch","Russisch","Britisch"],action1_de:"Besteuerung.",action2_de:"Verrat.",action3_de:"Radikalisierung.",redArrow:"top",blackArrow:4,backTopLabel:"Top (left)",priorities:[0,1,2,3,4,5]},{id:135,loyaltyOrder:["Afghanisch","Britisch","Russisch"],action1_de:"Bauen.",action2_de:"Bewegen.",action3_de:"Radikalisierung.",redArrow:"top",blackArrow:3,backTopLabel:"Bottom (right)",priorities:[0,1,2,3,4,5]},{id:136,loyaltyOrder:["Russisch","Afghanisch","Britisch"],action1_de:"Wenn Wakhan weniger als 2 Rupien hat, radikalisiere die Karte, die die meisten Rupien einbringt.",action2_de:"Bauen.",action3_de:"Radikalisierung.",redArrow:"bottom",blackArrow:2,backTopLabel:"Bottom (right)",priorities:[3,4,5,0,1,2]},{id:137,loyaltyOrder:["Afghanisch","Russisch","Britisch"],action1_de:"Radikalisiere eine Karte, die Wakhan die Kontrolle über eine Region verschafft.",action2_de:"Bauen.",action3_de:"Radikalisierung.",redArrow:"top",blackArrow:6,backTopLabel:"Bottom (right)",priorities:[3,4,5,0,1,2]},{id:138,loyaltyOrder:["Russisch","Afghanisch","Britisch"],action1_de:"Verrat.",action2_de:"Kämpfe auf der ranghöchsten Hofkarte mit den meisten Spionen, auf der Wakhan ebenfalls mindestens einen Spion hat.",action3_de:"Radikalisierung.",redArrow:"bottom",blackArrow:6,backTopLabel:"Top (left)",priorities:[4,5,0,1,2,3]},{id:139,loyaltyOrder:["Britisch","Russisch","Afghanisch"],action1_de:"Radikalisiere die am höchsten eingestufte Politikkarte.",action2_de:"Wenn Militärkarten bevorzugt werden, radikalisiere die am höchsten eingestufte Militärkarte.",action3_de:"Radikalisierung.",redArrow:"bottom",blackArrow:4,backTopLabel:"Bottom (right)",priorities:[2,3,4,5,0,1]},{id:140,loyaltyOrder:["Afghanisch","Britisch","Russisch"],action1_de:"Wenn Wakhan weniger Spione hat als ein anderer Spieler, radikalisiere die am höchsten eingestufte Geheimdienstkarte.",action2_de:"Kämpfe auf der ranghöchsten Hofkarte mit den meisten Spionen, auf der Wakhan ebenfalls mindestens einen Spion hat.",action3_de:"Radikalisierung.",redArrow:"bottom",blackArrow:2,backTopLabel:"Bottom (right)",priorities:[0,1,2,3,4,5]}];
+            const WKC=WKC_RAW.map(c=>{const oppLabel=c.backTopLabel==="Top (left)"?"Bottom (right)":"Top (left)";return{id:c.id,loyaltyOrder:c.loyaltyOrder,action1_de:c.action1_de,action2_de:c.action2_de,action3_de:c.action3_de,redArrow:c.redArrow,blackArrow:c.blackArrow,backArray:[c.backTopLabel,...c.priorities,oppLabel]};});
+            const WKC_BY_ID={};WKC.forEach(c=>WKC_BY_ID[c.id]=c);
+            const URLS=[id=>`Cards/card_${id}.jpg`,id=>`Cards/card_${id}.png`,id=>`https://cdn.jsdelivr.net/gh/O-McClou/PP@3e8bc12b57fae22301e28250a1351dd677360f60/Cards/card_${id}.jpg`,id=>`https://cdn.jsdelivr.net/gh/O-McClou/PP@3e8bc12b57fae22301e28250a1351dd677360f60/Cards/card_${id}.png`];
+            const BURLS=[id=>`Cards/card_back_${id}.jpg`,id=>`Cards/card_back_${id}.png`,id=>`https://cdn.jsdelivr.net/gh/O-McClou/PP@3e8bc12b57fae22301e28250a1351dd677360f60/Cards/card_back_${id}.jpg`,id=>`https://cdn.jsdelivr.net/gh/O-McClou/PP@3e8bc12b57fae22301e28250a1351dd677360f60/Cards/card_back_${id}.png`];
+            const blobCache={};
 
-            const CD = {};
-            const RAW = [
-                { id: 1, name: "Mohan Lal", region: "Kabul", suit: "Geheimdienst", rank: 3, impactIcons: ["spy","spy","spy"], actions: ["move"], patriot: null, prize: "Russisch", suitChange: null },
-                { id: 2, name: "Jan-Fishan Khan", region: "Kabul", suit: "Geheimdienst", rank: 2, impactIcons: ["spy","spy","army"], actions: ["battle","move"], patriot: null, prize: "Russisch", suitChange: null },
-                { id: 3, name: "Prinz Akbar Khan", region: "Kabul", suit: "Geheimdienst", rank: 2, impactIcons: ["spy","spy","army"], actions: ["battle"], patriot: "Afghanisch", prize: null, suitChange: "Militär" },
-                { id: 4, name: "Charles Stoddart", region: "Kabul", suit: "Geheimdienst", rank: 1, impactIcons: ["spy"], actions: ["gift","move"], patriot: null, prize: "Afghanisch", suitChange: null },
-                { id: 5, name: "Shah Shujah Durrani", region: "Kabul", suit: "Politik", rank: 1, impactIcons: ["tribe"], actions: ["build"], patriot: null, prize: "Afghanisch", suitChange: null },
-                { id: 6, name: "Aminullah Khan Logari", region: "Kabul", suit: "Politik", rank: 1, impactIcons: ["spy","army","tribe"], actions: ["build","battle"], patriot: "Afghanisch", prize: null, suitChange: null },
-                { id: 7, name: "Dost Mohammad", region: "Kabul", suit: "Politik", rank: 2, impactIcons: ["spy","army","tribe","tribe"], actions: [], patriot: null, prize: null, suitChange: null },
-                { id: 8, name: "Kabul Bazaar", region: "Kabul", suit: "Wirtschaft", rank: 2, impactIcons: ["spy","road","road"], actions: ["tax"], patriot: null, prize: null, suitChange: "Politik" },
-                { id: 9, name: "Afghanisches Kunsthandwerk", region: "Kabul", suit: "Wirtschaft", rank: 1, impactIcons: ["road"], actions: ["tax","move"], patriot: null, prize: null, suitChange: null },
-                { id: 10, name: "Arsenmine von Balkh", region: "Kabul", suit: "Wirtschaft", rank: 1, impactIcons: ["road"], actions: ["build","betray"], patriot: null, prize: "Afghanisch", suitChange: "Militär" },
-                { id: 11, name: "Lapislazuli-Mine", region: "Kabul", suit: "Wirtschaft", rank: 2, impactIcons: ["road","road"], actions: ["tax","gift"], patriot: "Afghanisch", prize: null, suitChange: null },
-                { id: 12, name: "Stadt Ghazni", region: "Kabul", suit: "Wirtschaft", rank: 3, impactIcons: ["army","road","road","road"], actions: ["gift"], patriot: null, prize: null, suitChange: null },
-                { id: 13, name: "Ghilzai-Nomaden", region: "Kabul", suit: "Wirtschaft", rank: 2, impactIcons: ["road","road"], actions: ["tax","move"], patriot: null, prize: "Russisch", suitChange: null },
-                { id: 14, name: "Geldverleiher", region: "Kabul", suit: "Wirtschaft", rank: 2, impactIcons: ["road","road"], actions: ["gift","build"], patriot: null, prize: null, suitChange: null },
-                { id: 15, name: "Durrani-Königsgarde", region: "Kabul", suit: "Militär", rank: 1, impactIcons: ["army"], actions: ["betray"], patriot: null, prize: null, suitChange: null },
-                { id: 16, name: "Bala Hissar", region: "Kabul", suit: "Militär", rank: 1, impactIcons: ["army"], actions: ["tax","betray"], patriot: null, prize: null, suitChange: null },
-                { id: 17, name: "Zitadelle von Ghazni", region: "Kabul", suit: "Militär", rank: 1, impactIcons: ["army"], actions: ["build"], patriot: null, prize: null, suitChange: null },
-                { id: 18, name: "Harry Flashman", region: "Punjab", suit: "Geheimdienst", rank: 1, impactIcons: ["spy"], actions: ["gift","betray"], patriot: null, prize: null, suitChange: null },
-                { id: 19, name: "Eldred Pottinger", region: "Punjab", suit: "Geheimdienst", rank: 2, impactIcons: ["spy","spy"], actions: ["move","betray"], patriot: "Britisch", prize: "Russisch", suitChange: "Wirtschaft" },
-                { id: 20, name: "Henry Rawlinson", region: "Punjab", suit: "Geheimdienst", rank: 1, impactIcons: ["spy"], actions: ["gift","move"], patriot: "Britisch", prize: "Russisch", suitChange: "Wirtschaft" },
-                { id: 21, name: "Alexander Burnes", region: "Punjab", suit: "Geheimdienst", rank: 2, impactIcons: ["spy","spy"], actions: ["move"], patriot: null, prize: "Afghanisch", suitChange: null },
-                { id: 22, name: "George Hayward", region: "Punjab", suit: "Geheimdienst", rank: 1, impactIcons: ["spy"], actions: ["move","gift"], patriot: "Britisch", prize: "Russisch", suitChange: "Politik" },
-                { id: 23, name: "Henry Pottinger", region: "Punjab", suit: "Geheimdienst", rank: 1, impactIcons: ["spy"], actions: ["battle","move"], patriot: "Britisch", prize: "Russisch", suitChange: "Wirtschaft" },
-                { id: 24, name: "Ranjit Singh", region: "Punjab", suit: "Politik", rank: 2, impactIcons: ["army","tribe","tribe"], actions: ["betray"], patriot: null, prize: null, suitChange: null },
-                { id: 25, name: "Josiah Harlan", region: "Punjab", suit: "Politik", rank: 1, impactIcons: ["tribe"], actions: ["tax"], patriot: "Afghanisch", prize: "Britisch", suitChange: null },
-                { id: 26, name: "Paolo Avitabile", region: "Punjab", suit: "Politik", rank: 1, impactIcons: ["army","tribe"], actions: ["betray"], patriot: null, prize: "Afghanisch", suitChange: null },
-                { id: 27, name: "Maqpon-Dynastie", region: "Punjab", suit: "Politik", rank: 1, impactIcons: ["tribe"], actions: ["build"], patriot: null, prize: null, suitChange: null },
-                { id: 28, name: "Anarkali-Basar", region: "Punjab", suit: "Wirtschaft", rank: 1, impactIcons: ["spy","road"], actions: ["tax","build"], patriot: null, prize: "Afghanisch", suitChange: null },
-                { id: 29, name: "Khyber-Pass", region: "Punjab", suit: "Wirtschaft", rank: 2, impactIcons: ["road","road"], actions: ["tax","move"], patriot: null, prize: null, suitChange: null },
-                { id: 30, name: "Sikh-Händler in Lahore", region: "Punjab", suit: "Wirtschaft", rank: 1, impactIcons: ["spy","road"], actions: ["tax","gift"], patriot: null, prize: null, suitChange: null },
-                { id: 31, name: "Kompaniewaffen", region: "Punjab", suit: "Militär", rank: 1, impactIcons: ["army"], actions: ["tax","betray"], patriot: null, prize: null, suitChange: "Geheimdienst" },
-                { id: 32, name: "Armee des Indus", region: "Punjab", suit: "Militär", rank: 3, impactIcons: ["army","army","army"], actions: ["move"], patriot: "Britisch", prize: "Afghanisch", suitChange: null },
-                { id: 33, name: "Zorawar Singh Kahluria", region: "Punjab", suit: "Militär", rank: 2, impactIcons: ["army","army"], actions: ["battle","gift"], patriot: null, prize: null, suitChange: null },
-                { id: 34, name: "Sindhi-Krieger", region: "Punjab", suit: "Militär", rank: 1, impactIcons: ["army"], actions: ["battle","move","betray"], patriot: null, prize: "Britisch", suitChange: "Wirtschaft" },
-                { id: 35, name: "Hari Singh Nalwa", region: "Punjab", suit: "Militär", rank: 2, impactIcons: ["army","army"], actions: ["battle","move"], patriot: null, prize: null, suitChange: "Politik" },
-                { id: 36, name: "Bengalische Eingeboreneninfanterie", region: "Punjab", suit: "Militär", rank: 1, impactIcons: ["army"], actions: ["battle","betray"], patriot: "Britisch", prize: "Afghanisch", suitChange: "Geheimdienst" },
-                { id: 37, name: "Seaforth Highlanders", region: "Punjab", suit: "Militär", rank: 1, impactIcons: ["army"], actions: ["battle","move"], patriot: "Britisch", prize: "Afghanisch", suitChange: "Politik" },
-                { id: 38, name: "Akali-Sikhs", region: "Punjab", suit: "Militär", rank: 2, impactIcons: ["army","army"], actions: ["battle"], patriot: null, prize: "Britisch", suitChange: null },
-                { id: 39, name: "William Moorcroft", region: "Kandahar", suit: "Geheimdienst", rank: 1, impactIcons: ["spy"], actions: ["move","battle"], patriot: null, prize: null, suitChange: null },
-                { id: 40, name: "William Hay Macnaghten", region: "Kandahar", suit: "Geheimdienst", rank: 2, impactIcons: ["spy","spy"], actions: ["tax","move"], patriot: "Britisch", prize: "Afghanisch", suitChange: null },
-                { id: 41, name: "Charles Masson", region: "Kandahar", suit: "Geheimdienst", rank: 2, impactIcons: ["spy","spy"], actions: ["build"], patriot: null, prize: null, suitChange: null },
-                { id: 42, name: "Barakzai-Sadars", region: "Kandahar", suit: "Politik", rank: 1, impactIcons: ["tribe"], actions: ["build"], patriot: "Afghanisch", prize: "Afghanisch", suitChange: "Wirtschaft" },
-                { id: 43, name: "Giljee-Adlige", region: "Kandahar", suit: "Politik", rank: 1, impactIcons: ["army","tribe"], actions: ["battle"], patriot: null, prize: "Afghanisch", suitChange: null },
-                { id: 44, name: "Baluchische Häuptlinge", region: "Kandahar", suit: "Politik", rank: 1, impactIcons: ["army","tribe"], actions: ["build","tax"], patriot: null, prize: "Russisch", suitChange: null },
-                { id: 45, name: "Haji Khan Kakar", region: "Kandahar", suit: "Politik", rank: 1, impactIcons: ["army","tribe"], actions: ["betray","gift"], patriot: null, prize: null, suitChange: null },
-                { id: 46, name: "Bank", region: "Kandahar", suit: "Wirtschaft", rank: 2, impactIcons: ["road","road"], actions: ["gift"], patriot: null, prize: null, suitChange: "Geheimdienst" },
-                { id: 47, name: "Bolan-Pass", region: "Kandahar", suit: "Wirtschaft", rank: 2, impactIcons: ["army","road","road"], actions: ["gift","move"], patriot: null, prize: "Russisch", suitChange: null },
-                { id: 48, name: "Obstmärkte", region: "Kandahar", suit: "Wirtschaft", rank: 1, impactIcons: ["road"], actions: ["move","build"], patriot: null, prize: null, suitChange: "Politik" },
-                { id: 49, name: "Kandahar-Märkte", region: "Kandahar", suit: "Wirtschaft", rank: 1, impactIcons: ["road"], actions: ["tax","build"], patriot: null, prize: null, suitChange: "Politik" },
-                { id: 50, name: "Britische Linieninfanterie", region: "Kandahar", suit: "Militär", rank: 2, impactIcons: ["army","army"], actions: ["battle","move"], patriot: "Britisch", prize: "Russisch", suitChange: null },
-                { id: 51, name: "Sir John Keane", region: "Kandahar", suit: "Militär", rank: 1, impactIcons: ["army"], actions: ["battle"], patriot: "Britisch", prize: "Russisch", suitChange: null },
-                { id: 52, name: "Paschtunischer Söldner", region: "Kandahar", suit: "Militär", rank: 1, impactIcons: ["army"], actions: ["battle","tax"], patriot: null, prize: null, suitChange: "Politik" },
-                { id: 53, name: "Jezail-Scharfschützen", region: "Kandahar", suit: "Militär", rank: 2, impactIcons: ["spy","army","army"], actions: ["betray"], patriot: null, prize: "Russisch", suitChange: null },
-                { id: 54, name: "Heratische Banditen", region: "Herat", suit: "Geheimdienst", rank: 1, impactIcons: ["spy"], actions: ["tax"], patriot: null, prize: null, suitChange: null },
-                { id: 55, name: "Hazara-Häuptlinge", region: "Herat", suit: "Politik", rank: 1, impactIcons: ["army","tribe"], actions: ["battle","tax","move"], patriot: null, prize: null, suitChange: null },
-                { id: 56, name: "Yar Mohammad Alikozai", region: "Herat", suit: "Politik", rank: 2, impactIcons: ["tribe","tribe"], actions: ["betray"], patriot: null, prize: "Afghanisch", suitChange: "Politik" },
-                { id: 57, name: "Exilierter Durrani-Adel", region: "Herat", suit: "Politik", rank: 1, impactIcons: ["tribe"], actions: ["betray","move"], patriot: null, prize: "Britisch", suitChange: null },
-                { id: 58, name: "Ishaqzai-Häuptlinge", region: "Herat", suit: "Politik", rank: 1, impactIcons: ["tribe"], actions: ["gift","build"], patriot: "Afghanisch", prize: null, suitChange: "Wirtschaft" },
-                { id: 59, name: "Tadschikische Kriegsschar", region: "Herat", suit: "Militär", rank: 2, impactIcons: ["army","army"], actions: ["betray","battle"], patriot: null, prize: null, suitChange: null },
-                { id: 60, name: "Nomadischer Kriegsherr", region: "Herat", suit: "Militär", rank: 1, impactIcons: ["army"], actions: ["tax","gift","battle"], patriot: null, prize: "Russisch", suitChange: null },
-                { id: 61, name: "Karakulschafe", region: "Herat", suit: "Wirtschaft", rank: 2, impactIcons: ["road","road"], actions: ["tax"], patriot: null, prize: null, suitChange: null },
-                { id: 62, name: "Qanat-System", region: "Herat", suit: "Wirtschaft", rank: 1, impactIcons: ["road"], actions: ["gift","build"], patriot: null, prize: null, suitChange: "Politik" },
-                { id: 63, name: "Farah-Straße", region: "Herat", suit: "Wirtschaft", rank: 3, impactIcons: ["road","road","road"], actions: ["move"], patriot: null, prize: null, suitChange: null },
-                { id: 64, name: "Opiumfelder", region: "Herat", suit: "Wirtschaft", rank: 2, impactIcons: ["spy","road","road"], actions: ["tax"], patriot: null, prize: null, suitChange: "Militär" },
-                { id: 65, name: "Minarett von Jam", region: "Herat", suit: "Wirtschaft", rank: 1, impactIcons: ["army","road"], actions: ["battle","tax","move"], patriot: null, prize: null, suitChange: null },
-                { id: 66, name: "Baluchische Schmuggler", region: "Herat", suit: "Wirtschaft", rank: 2, impactIcons: ["army","road","road"], actions: ["battle"], patriot: null, prize: "Afghanisch", suitChange: null },
-                { id: 67, name: "Weizenfelder", region: "Herat", suit: "Wirtschaft", rank: 2, impactIcons: ["road"], actions: ["move","gift"], patriot: null, prize: null, suitChange: null },
-                { id: 68, name: "Ghaem Magham Farahani", region: "Persien", suit: "Geheimdienst", rank: 2, impactIcons: ["army","spy","spy"], actions: ["tax"], patriot: null, prize: null, suitChange: null },
-                { id: 69, name: "Graf Ivan Simonich", region: "Persien", suit: "Geheimdienst", rank: 2, impactIcons: ["spy","spy"], actions: ["battle","move"], patriot: "Russisch", prize: "Britisch", suitChange: null },
-                { id: 70, name: "Alexander Griboyedov", region: "Persien", suit: "Geheimdienst", rank: 2, impactIcons: ["spy","spy"], actions: ["move"], patriot: "Russisch", prize: "Afghanisch", suitChange: null },
-                { id: 71, name: "Joseph Wolff", region: "Persien", suit: "Geheimdienst", rank: 1, impactIcons: ["spy"], actions: ["move","gift"], patriot: "Britisch", prize: "Afghanisch", suitChange: null },
-                { id: 72, name: "Claude Wade", region: "Persien", suit: "Geheimdienst", rank: 2, impactIcons: ["spy","spy"], actions: ["move"], patriot: null, prize: "Russisch", suitChange: null },
-                { id: 73, name: "Jean-François Allard", region: "Persien", suit: "Geheimdienst", rank: 1, impactIcons: ["spy"], actions: ["build","battle"], patriot: null, prize: "Britisch", suitChange: "Militär" },
-                { id: 74, name: "Hajj Mirza Aghasi", region: "Persien", suit: "Politik", rank: 1, impactIcons: ["tribe"], actions: ["betray","battle"], patriot: "Afghanisch", prize: "Russisch", suitChange: "Geheimdienst" },
-                { id: 75, name: "Abbas Mirza", region: "Persien", suit: "Politik", rank: 1, impactIcons: ["army","tribe"], actions: ["tax","battle"], patriot: null, prize: null, suitChange: null },
-                { id: 76, name: "Fath-Ali Shah", region: "Persien", suit: "Politik", rank: 2, impactIcons: ["tribe","tribe"], actions: [], patriot: null, prize: null, suitChange: "Geheimdienst" },
-                { id: 77, name: "Mohammad Shah", region: "Persien", suit: "Politik", rank: 1, impactIcons: ["army","tribe"], actions: ["build","betray"], patriot: null, prize: null, suitChange: "Geheimdienst" },
-                { id: 78, name: "Städtische Verbesserungen", region: "Persien", suit: "Wirtschaft", rank: 2, impactIcons: ["road","road"], actions: ["build"], patriot: null, prize: null, suitChange: "Geheimdienst" },
-                { id: 79, name: "Sklavenmärkte", region: "Persien", suit: "Wirtschaft", rank: 1, impactIcons: ["spy","road"], actions: ["tax","move"], patriot: null, prize: "Britisch", suitChange: null },
-                { id: 80, name: "Anglo-Persischer Handel", region: "Persien", suit: "Wirtschaft", rank: 1, impactIcons: ["road"], actions: ["tax","build"], patriot: "Britisch", prize: "Russisch", suitChange: null },
-                { id: 81, name: "Russo-Persischer Handel", region: "Persien", suit: "Wirtschaft", rank: 2, impactIcons: ["road","road"], actions: ["tax","build"], patriot: "Russisch", prize: "Britisch", suitChange: null },
-                { id: 82, name: "Persische Armee", region: "Persien", suit: "Militär", rank: 2, impactIcons: ["army","army"], actions: ["gift","battle"], patriot: null, prize: null, suitChange: "Geheimdienst" },
-                { id: 83, name: "Leibgarde des Schahs", region: "Persien", suit: "Militär", rank: 1, impactIcons: ["spy","army"], actions: ["tax"], patriot: null, prize: null, suitChange: null },
-                { id: 84, name: "Russische Linieninfanterie", region: "Persien", suit: "Militär", rank: 2, impactIcons: ["army","army"], actions: ["battle"], patriot: "Russisch", prize: "Afghanisch", suitChange: "Wirtschaft" },
-                { id: 85, name: "Bucharische Juden", region: "Transkaspien", suit: "Geheimdienst", rank: 1, impactIcons: ["spy"], actions: ["gift","build"], patriot: null, prize: "Britisch", suitChange: "Wirtschaft" },
-                { id: 86, name: "Jan Prosper Witkiewicz", region: "Transkaspien", suit: "Geheimdienst", rank: 2, impactIcons: ["spy","spy"], actions: ["move","build"], patriot: "Russisch", prize: null, suitChange: null },
-                { id: 87, name: "Imperiale Landvermesser", region: "Transkaspien", suit: "Geheimdienst", rank: 1, impactIcons: ["spy"], actions: ["move","gift","build"], patriot: "Russisch", prize: null, suitChange: null },
-                { id: 88, name: "Arthur Conolly", region: "Transkaspien", suit: "Geheimdienst", rank: 1, impactIcons: ["spy"], actions: ["move","gift"], patriot: "Britisch", prize: null, suitChange: null },
-                { id: 89, name: "Aga Mehdi", region: "Transkaspien", suit: "Geheimdienst", rank: 1, impactIcons: ["spy"], actions: ["move","betray","battle"], patriot: "Russisch", prize: null, suitChange: null },
-                { id: 90, name: "Nasrullah Khan", region: "Transkaspien", suit: "Politik", rank: 1, impactIcons: ["tribe"], actions: ["tax","betray"], patriot: null, prize: "Britisch", suitChange: null },
-                { id: 91, name: "Allah Quli Bahadur", region: "Transkaspien", suit: "Geheimdienst", rank: 1, impactIcons: ["spy","army","tribe"], actions: ["betray"], patriot: null, prize: "Russisch", suitChange: null },
-                { id: 92, name: "Mir Murad Beg", region: "Transkaspien", suit: "Politik", rank: 1, impactIcons: ["spy","tribe"], actions: ["battle","tax","move"], patriot: null, prize: "Britisch", suitChange: "Militär" },
-                { id: 93, name: "Madali Khan", region: "Transkaspien", suit: "Politik", rank: 2, impactIcons: ["tribe","tribe"], actions: ["battle","betray"], patriot: null, prize: "Britisch", suitChange: null },
-                { id: 94, name: "Sklavenmärkte von Chiwa", region: "Transkaspien", suit: "Wirtschaft", rank: 1, impactIcons: ["spy","road"], actions: ["tax","betray"], patriot: null, prize: "Britisch", suitChange: null },
-                { id: 95, name: "Nachschub aus Orenburg", region: "Transkaspien", suit: "Wirtschaft", rank: 1, impactIcons: ["road"], actions: ["tax","move"], patriot: "Russisch", prize: "Afghanisch", suitChange: null },
-                { id: 96, name: "Panjdeh-Oase", region: "Transkaspien", suit: "Wirtschaft", rank: 2, impactIcons: ["road","road"], actions: ["tax","move"], patriot: null, prize: "Britisch", suitChange: null },
-                { id: 97, name: "Zitadelle von Buchara", region: "Transkaspien", suit: "Militär", rank: 1, impactIcons: ["army"], actions: ["build"], patriot: null, prize: null, suitChange: "Geheimdienst" },
-                { id: 98, name: "Europäische Kanonen", region: "Transkaspien", suit: "Militär", rank: 3, impactIcons: ["army","army","army"], actions: ["gift"], patriot: null, prize: "Britisch", suitChange: null },
-                { id: 99, name: "Kosaken", region: "Transkaspien", suit: "Militär", rank: 1, impactIcons: ["spy","army"], actions: ["battle"], patriot: "Russisch", prize: "Britisch", suitChange: null },
-                { id: 100, name: "Graf Perovsky", region: "Transkaspien", suit: "Militär", rank: 2, impactIcons: ["army","army"], actions: ["battle"], patriot: "Russisch", prize: "Britisch", suitChange: null },
-            ];
-            RAW.forEach(r => CD[r.id] = r);
-            const evtNames = ["Dominanzcheck","Dominanzcheck","Dominanzcheck","Dominanzcheck","Neue Taktiken","Koh-i-Noor zurückerlangt","Höfische Manieren","Gerücht","Kriegsmüdigkeit","Nationalismus","Öffentlicher Rückzug","Staatenbildung","Rückendeckung der persischen Aristokratie","Andere Überzeugungsmethoden","Paschtunwali-Werte","Rüge"];
-            for (let i = 101; i <= 116; i++) CD[i] = { id: i, name: evtNames[i-101], isEvent: true, region: "Ereignis", suit: "Ereignis", rank: 0, impactIcons: [], actions: [], patriot: null, prize: null, suitChange: null };
+            async function tryFetch(u){if(blobCache[u])return blobCache[u];const r=await fetch(u,{mode:'cors',cache:'force-cache'});if(!r.ok)throw 0;const b=await r.blob();if(!b.type.startsWith('image/'))throw 0;const o=URL.createObjectURL(b);blobCache[u]=o;return o;}
+            async function tryImgSrc(u){return new Promise((resolve,reject)=>{const i=new Image();i.crossOrigin='anonymous';i.onload=()=>resolve(u);i.onerror=reject;i.src=u;});}
+            async function loadImg(el,fns,id){el.style.display='none';for(const f of fns){const u=f(id);try{const s=await tryFetch(u);el.src=s;el.style.display='block';return true;}catch{}try{const s=await tryImgSrc(u);el.src=s;el.style.display='block';return true;}catch{}}return false;}
 
-            const WKC_RAW = [
-                { id: 117, loyaltyOrder: ["Russisch","Afghanisch","Britisch"], action1_de: "Besteuerung.", action2_de: "Wenn Militärkarten bevorzugt werden, radikalisiere die am höchsten eingestufte Militärkarte.", action3_de: "Radikalisierung.", redArrow: "bottom", blackArrow: 3, backTopLabel: "Top (left)", priorities: [2,3,4,5,0,1] },
-                { id: 118, loyaltyOrder: ["Afghanisch","Britisch","Russisch"], action1_de: "Wenn Politikkarten bevorzugt werden, radikalisiere die am höchsten eingestufte Wirtschaftskarte.", action2_de: "Radikalisiere die am höchsten eingestufte Politikkarte.", action3_de: "Radikalisierung.", redArrow: "top", blackArrow: 2, backTopLabel: "Bottom (right)", priorities: [3,4,5,0,1,2] },
-                { id: 119, loyaltyOrder: ["Britisch","Russisch","Afghanisch"], action1_de: "Besteuerung.", action2_de: "Radikalisiere die am höchsten eingestufte Geheimdienstkarte.", action3_de: "Radikalisierung.", redArrow: "bottom", blackArrow: 4, backTopLabel: "Bottom (right)", priorities: [0,1,2,3,4,5] },
-                { id: 120, loyaltyOrder: ["Russisch","Afghanisch","Britisch"], action1_de: "Wenn Wakhan weniger als 2 Rupien hat, radikalisiere die Karte, die die meisten Rupien einbringt.", action2_de: "Bauen.", action3_de: "Radikalisierung.", redArrow: "top", blackArrow: 5, backTopLabel: "Top (left)", priorities: [4,5,0,1,2,3] },
-                { id: 121, loyaltyOrder: ["Britisch","Russisch","Afghanisch"], action1_de: "Radikalisiere eine Karte, die Wakhan die Kontrolle über eine Region verschafft.", action2_de: "Kampf.", action3_de: "Radikalisierung.", redArrow: "top", blackArrow: 2, backTopLabel: "Bottom (right)", priorities: [2,3,4,5,0,1] },
-                { id: 122, loyaltyOrder: ["Britisch","Russisch","Afghanisch"], action1_de: "Radikalisiere eine Geheimdienstkarte.", action2_de: "Bewegen.", action3_de: "Radikalisierung.", redArrow: "top", blackArrow: 1, backTopLabel: "Bottom (right)", priorities: [0,1,2,3,4,5] },
-                { id: 123, loyaltyOrder: ["Afghanisch","Russisch","Britisch"], action1_de: "Bauen.", action2_de: "Bewegen.", action3_de: "Radikalisierung.", redArrow: "bottom", blackArrow: 5, backTopLabel: "Top (left)", priorities: [1,2,3,4,5,0] },
-                { id: 124, loyaltyOrder: ["Russisch","Afghanisch","Britisch"], action1_de: "Besteuerung.", action2_de: "Verrat.", action3_de: "Radikalisierung.", redArrow: "bottom", blackArrow: 5, backTopLabel: "Top (left)", priorities: [1,2,3,4,5,0] },
-                { id: 125, loyaltyOrder: ["Russisch","Britisch","Afghanisch"], action1_de: "Radikalisiere die Karte, die die meisten Armeen und/oder Straßen platziert.", action2_de: "Wenn keine Koalition Dominanz hat, radikalisiere die Karte, die die meisten Spione und/oder Stämme platziert.", action3_de: "Radikalisierung.", redArrow: "bottom", blackArrow: 6, backTopLabel: "Top (left)", priorities: [1,2,3,4,5,0] },
-                { id: 126, loyaltyOrder: ["Afghanisch","Britisch","Russisch"], action1_de: "Wenn Wakhan keine Karte mit der Bewegungsaktion hat, radikalisiere eine Karte mit einer Bewegungsaktion.", action2_de: "Bewegen.", action3_de: "Radikalisierung.", redArrow: "bottom", blackArrow: 1, backTopLabel: "Top (left)", priorities: [3,4,5,0,1,2] },
-                { id: 127, loyaltyOrder: ["Afghanisch","Russisch","Britisch"], action1_de: "Wenn keine Koalition Dominanz hat, radikalisiere die Karte, die die meisten Spione und/oder Stämme platziert.", action2_de: "Wenn Militärkarten bevorzugt werden, radikalisiere die am höchsten eingestufte Militärkarte.", action3_de: "Radikalisierung.", redArrow: "bottom", blackArrow: 1, backTopLabel: "Top (left)", priorities: [4,5,0,1,2,3] },
-                { id: 128, loyaltyOrder: ["Afghanisch","Russisch","Britisch"], action1_de: "Bewegen.", action2_de: "Verrat.", action3_de: "Radikalisierung.", redArrow: "bottom", blackArrow: 5, backTopLabel: "Top (left)", priorities: [4,5,0,1,2,3] },
-                { id: 129, loyaltyOrder: ["Afghanisch","Russisch","Britisch"], action1_de: "Wenn eine Koalition Dominanz hat, radikalisiere einen passenden Patrioten.", action2_de: "Wenn keine Koalition Dominanz hat, radikalisiere die Karte, die die meisten Spione und/oder Stämme platziert.", action3_de: "Radikalisierung.", redArrow: "top", blackArrow: 3, backTopLabel: "Bottom (right)", priorities: [5,0,1,2,3,4] },
-                { id: 130, loyaltyOrder: ["Afghanisch","Russisch","Britisch"], action1_de: "Kämpfe auf der ranghöchsten Hofkarte mit den meisten Spionen, auf der Wakhan ebenfalls mindestens einen Spion hat.", action2_de: "Kampf.", action3_de: "Radikalisierung.", redArrow: "top", blackArrow: 4, backTopLabel: "Bottom (right)", priorities: [5,0,1,2,3,4] },
-                { id: 131, loyaltyOrder: ["Russisch","Britisch","Afghanisch"], action1_de: "Bewegen.", action2_de: "Kampf.", action3_de: "Radikalisierung.", redArrow: "bottom", blackArrow: 3, backTopLabel: "Bottom (right)", priorities: [1,2,3,4,5,0] },
-                { id: 132, loyaltyOrder: ["Afghanisch","Britisch","Russisch"], action1_de: "Wenn keine Koalition Dominanz hat, radikalisiere die Karte, die die meisten Spione und/oder Stämme platziert.", action2_de: "Kämpfe auf der ranghöchsten Hofkarte mit den meisten Spionen, auf der Wakhan ebenfalls mindestens einen Spion hat.", action3_de: "Radikalisierung.", redArrow: "top", blackArrow: 6, backTopLabel: "Bottom (right)", priorities: [2,3,4,5,0,1] },
-                { id: 133, loyaltyOrder: ["Russisch","Afghanisch","Britisch"], action1_de: "Wenn Wakhans Hofgröße ihr Limit erreicht hat, radikalisiere die am höchsten eingestufte Politikkarte.", action2_de: "Besteuerung.", action3_de: "Radikalisierung.", redArrow: "top", blackArrow: 1, backTopLabel: "Top (left)", priorities: [3,4,5,0,1,2] },
-                { id: 134, loyaltyOrder: ["Afghanisch","Russisch","Britisch"], action1_de: "Besteuerung.", action2_de: "Verrat.", action3_de: "Radikalisierung.", redArrow: "top", blackArrow: 4, backTopLabel: "Top (left)", priorities: [0,1,2,3,4,5] },
-                { id: 135, loyaltyOrder: ["Afghanisch","Britisch","Russisch"], action1_de: "Bauen.", action2_de: "Bewegen.", action3_de: "Radikalisierung.", redArrow: "top", blackArrow: 3, backTopLabel: "Bottom (right)", priorities: [0,1,2,3,4,5] },
-                { id: 136, loyaltyOrder: ["Russisch","Afghanisch","Britisch"], action1_de: "Wenn Wakhan weniger als 2 Rupien hat, radikalisiere die Karte, die die meisten Rupien einbringt.", action2_de: "Bauen.", action3_de: "Radikalisierung.", redArrow: "bottom", blackArrow: 2, backTopLabel: "Bottom (right)", priorities: [3,4,5,0,1,2] },
-                { id: 137, loyaltyOrder: ["Afghanisch","Russisch","Britisch"], action1_de: "Radikalisiere eine Karte, die Wakhan die Kontrolle über eine Region verschafft.", action2_de: "Bauen.", action3_de: "Radikalisierung.", redArrow: "top", blackArrow: 6, backTopLabel: "Bottom (right)", priorities: [3,4,5,0,1,2] },
-                { id: 138, loyaltyOrder: ["Russisch","Afghanisch","Britisch"], action1_de: "Verrat.", action2_de: "Kämpfe auf der ranghöchsten Hofkarte mit den meisten Spionen, auf der Wakhan ebenfalls mindestens einen Spion hat.", action3_de: "Radikalisierung.", redArrow: "bottom", blackArrow: 6, backTopLabel: "Top (left)", priorities: [4,5,0,1,2,3] },
-                { id: 139, loyaltyOrder: ["Britisch","Russisch","Afghanisch"], action1_de: "Radikalisiere die am höchsten eingestufte Politikkarte.", action2_de: "Wenn Militärkarten bevorzugt werden, radikalisiere die am höchsten eingestufte Militärkarte.", action3_de: "Radikalisierung.", redArrow: "bottom", blackArrow: 4, backTopLabel: "Bottom (right)", priorities: [2,3,4,5,0,1] },
-                { id: 140, loyaltyOrder: ["Afghanisch","Britisch","Russisch"], action1_de: "Wenn Wakhan weniger Spione hat als ein anderer Spieler, radikalisiere die am höchsten eingestufte Geheimdienstkarte.", action2_de: "Kämpfe auf der ranghöchsten Hofkarte mit den meisten Spionen, auf der Wakhan ebenfalls mindestens einen Spion hat.", action3_de: "Radikalisierung.", redArrow: "bottom", blackArrow: 2, backTopLabel: "Bottom (right)", priorities: [0,1,2,3,4,5] }
-            ];
-            const WKC = WKC_RAW.map(c => {
-                const oppLabel = c.backTopLabel === "Top (left)" ? "Bottom (right)" : "Top (left)";
-                return { id: c.id, loyaltyOrder: c.loyaltyOrder, action1_de: c.action1_de, action2_de: c.action2_de, action3_de: c.action3_de, redArrow: c.redArrow, blackArrow: c.blackArrow, backArray: [c.backTopLabel, ...c.priorities, oppLabel] };
-            });
-            const WKC_BY_ID = {};
-            WKC.forEach(c => WKC_BY_ID[c.id] = c);
+            let pile=[],disc=[],cur=null,topDeck=null;
+            let aIdx=0,aDone=0,aSkips=[false,false,false];
+            let court=[];
+            let events=[];
+            let rupien=5;
+            let playerCount=1,playerLoyalties=['Britisch'],wakLoy='Russisch';
+            let preferredSuit='Politik';
+            let turnActive=false;
+            let verwAbwurfIdx=0,verwCandidates=[];
 
-            const URLS = [id=>`Cards/card_${id}.jpg`, id=>`Cards/card_${id}.png`, id=>`https://cdn.jsdelivr.net/gh/O-McClou/PP@3e8bc12b57fae22301e28250a1351dd677360f60/Cards/card_${id}.jpg`, id=>`https://cdn.jsdelivr.net/gh/O-McClou/PP@3e8bc12b57fae22301e28250a1351dd677360f60/Cards/card_${id}.png`];
-            const BURLS = [id=>`Cards/card_back_${id}.jpg`, id=>`Cards/card_back_${id}.png`, id=>`https://cdn.jsdelivr.net/gh/O-McClou/PP@3e8bc12b57fae22301e28250a1351dd677360f60/Cards/card_back_${id}.jpg`, id=>`https://cdn.jsdelivr.net/gh/O-McClou/PP@3e8bc12b57fae22301e28250a1351dd677360f60/Cards/card_back_${id}.png`];
-            const blobCache = {};
-            async function tryFetch(u) { if (blobCache[u]) return blobCache[u]; const r = await fetch(u, { mode: 'cors', cache: 'force-cache' }); if (!r.ok) throw 0; const b = await r.blob(); if (!b.type.startsWith('image/')) throw 0; const o = URL.createObjectURL(b); blobCache[u] = o; return o; }
-            async function tryImgSrc(u) { return new Promise((r, j) => { const i = new Image();
-                i.crossOrigin = 'anonymous';
-                i.onload = () => r(u);
-                i.onerror = j;
-                i.src = u; }); }
-            async function loadImg(el, fns, id) { el.style.display = 'none'; for (const f of fns) { const u = f(id); try { const s = await tryFetch(u);
-                    el.src = s;
-                    el.style.display = 'block'; return true; } catch {} try { const s = await tryImgSrc(u);
-                    el.src = s;
-                    el.style.display = 'block'; return true; } catch {} } return false; }
-
-            let pile = [],
-                disc = [],
-                cur = null,
-                topDeck = null;
-            let aIdx = 0,
-                aDone = 0,
-                aSkips = [false, false, false];
-            let court = [];
-            let events = [];
-            let rupien = 5;
-            let playerCount = 1,
-                playerLoyalties = ['Britisch'],
-                wakLoy = 'Russisch';
-            let preferredSuit = 'Politik';
-            let courtLimit = 3;
-            let radCardId = null,
-                radBriber = null;
-            let turnActive = false;
-            let verwAbwurfIdx = 0;
-            let verwCandidates = [];
-
-            function shuffle(a) { for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1));
-                [a[i], a[j]] = [a[j], a[i]]; } }
-
-            function showScreen(id) { document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-                document.getElementById(id).classList.add('active'); }
+            function getCourtLimit() {
+                return 3 + court.filter(c => CD[c.id] && CD[c.id].suit === 'Politik').reduce((sum, c) => sum + (CD[c.id].rank || 0), 0);
+            }
+            function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}}
+            function showScreen(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');}
             let _t;
+            function toast(msg){const el=document.getElementById('toast');el.textContent=msg;el.className='toast on';clearTimeout(_t);_t=setTimeout(()=>el.className='toast',2500);}
+            function calcWakLoy(){if(!cur)return wakLoy;for(const l of cur.loyaltyOrder){if(!playerLoyalties.includes(l))return l;}return cur.loyaltyOrder[0];}
 
-            function toast(msg) { const el = document.getElementById('toast');
-                el.textContent = msg;
-                el.className = 'toast on';
-                clearTimeout(_t);
-                _t = setTimeout(() => el.className = 'toast', 2500); }
-
-            function calcWakLoy() { if (!cur) return wakLoy; for (const l of cur.loyaltyOrder) { if (!playerLoyalties.includes(
-                        l)) return l; } return cur.loyaltyOrder[0]; }
-
-            function updateTopBar() {
-                wakLoy = calcWakLoy();
-                document.getElementById('wakLoyTag').textContent = '⚡ Pragm. Loyalität: ' + wakLoy;
-                document.getElementById('prefSuitTag').textContent = '🎨 Farbe: ' + preferredSuit;
-                const map = { Britisch: 'brit', Russisch: 'rus', Afghanisch: 'afg' };
-                const container = document.getElementById('playerTags');
-                container.innerHTML = '';
-                playerLoyalties.forEach((l, i) => {
-                    const sp = document.createElement('span');
-                    sp.className = `loy-pill ${map[l]||''} sel`;
-                    sp.textContent = `S${i+1}: ${l}`;
-                    sp.onclick = () => { const opts = ['Britisch', 'Russisch', 'Afghanisch'];
-                        playerLoyalties[i] = opts[(opts.indexOf(l) + 1) % 3];
-                        updateTopBar();
-                        toast(`Spieler ${i+1}: Loyalität → ${playerLoyalties[i]}`); };
-                    sp.title = 'Klicken zum Wechseln';
+            function updateTopBar(){
+                wakLoy=calcWakLoy();
+                document.getElementById('wakLoyTag').textContent='⚡ Pragm. Loyalität: '+wakLoy;
+                document.getElementById('prefSuitTag').textContent='🎨 Farbe: '+preferredSuit;
+                const map={Britisch:'brit',Russisch:'rus',Afghanisch:'afg'};
+                const container=document.getElementById('playerTags');
+                container.innerHTML='';
+                playerLoyalties.forEach((l,i)=>{
+                    const sp=document.createElement('span');
+                    sp.className=`loy-pill ${map[l]||''} sel`;
+                    sp.textContent=`S${i+1}: ${l}`;
+                    sp.onclick=()=>{const opts=['Britisch','Russisch','Afghanisch'];playerLoyalties[i]=opts[(opts.indexOf(l)+1)%3];updateTopBar();toast(`Spieler ${i+1}: Loyalität → ${playerLoyalties[i]}`);};
+                    sp.title='Klicken zum Wechseln';
                     container.appendChild(sp);
                 });
             }
 
-            function updateStackUI() {
-                const n = pile.length;
-                document.getElementById('cntStack').textContent = n;
-                const imgS = document.getElementById('imgStack'),
-                    phS = document.getElementById('phStack'),
-                    ringS = document.getElementById('ringStack');
-                if (n > 0) {
-                    topDeck = WKC_BY_ID[pile[pile.length - 1]] || null;
-                    phS.textContent = 'Lädt…';
-                    phS.style.display = 'flex';
-                    imgS.style.display = 'none';
-                    ringS.style.display = 'flex';
-                    loadImg(imgS, BURLS, pile[pile.length - 1]).then(ok => { ringS.style.display = 'none'; if (ok) { phS.style
-                                .display = 'none'; } else { phS.textContent = 'Rückseite';
-                            phS.style.display = 'flex'; } });
-                } else { topDeck = null;
-                    imgS.style.display = 'none';
-                    ringS.style.display = 'none';
-                    phS.style.display = 'flex';
-                    phS.textContent = 'Stapel leer'; }
+            window.toggleSuitPicker = function() {
+                document.getElementById('suitPicker').classList.toggle('show');
+            };
+            window.setPreferredSuit = function(s) {
+                preferredSuit = s;
+                updateTopBar();
+                document.getElementById('suitPicker').classList.remove('show');
+                toast('Bevorzugte Farbe: '+s);
+            };
+
+            function updateStackUI(){
+                const n=pile.length;
+                document.getElementById('cntStack').textContent=n;
+                const imgS=document.getElementById('imgStack'),phS=document.getElementById('phStack'),ringS=document.getElementById('ringStack');
+                if(n>0){
+                    topDeck=WKC_BY_ID[pile[pile.length-1]]||null;
+                    phS.textContent='Lädt…'; phS.style.display='flex'; imgS.style.display='none'; ringS.style.display='flex';
+                    loadImg(imgS,BURLS,pile[pile.length-1]).then(ok=>{ringS.style.display='none';if(ok){phS.style.display='none';}else{phS.textContent='Rückseite';phS.style.display='flex';}});
+                }else{topDeck=null;imgS.style.display='none';ringS.style.display='none';phS.style.display='flex';phS.textContent='Stapel leer';}
                 updatePriorityPills();
             }
-
-            function clearCurUI() { ['imgCur', 'arrCur', 'badgeCur'].forEach(id => { const el = document.getElementById(id); if (
-                        el) el.style.display = 'none'; });
-                document.getElementById('phCur').style.display = 'flex';
-                document.getElementById('phCur').textContent = 'Karte ziehen';
-                document.getElementById('priorityPills').style.display = 'none'; }
-
-            function showCurUI(card) {
-                const imgC = document.getElementById('imgCur'),
-                    phC = document.getElementById('phCur'),
-                    ringC = document.getElementById('ringCur');
-                phC.textContent = 'Lädt…';
-                phC.style.display = 'flex';
-                imgC.style.display = 'none';
-                ringC.style.display = 'flex';
-                loadImg(imgC, URLS, card.id).then(ok => { ringC.style.display = 'none'; if (ok) { phC.style.display =
-                    'none'; } else { phC.textContent = 'Karte #' + card.id;
-                    phC.style.display = 'flex'; } });
-                const arr = document.getElementById('arrCur');
-                arr.className = 'arr-tag ' + (card.redArrow === 'top' ? 'top' : 'bot');
-                arr.textContent = card.redArrow === 'top' ? '▲ OBEN' : '▼ UNTEN';
-                arr.style.display = 'block';
-                const badge = document.getElementById('badgeCur');
-                badge.textContent = '#' + card.id + ' ⬤' + card.blackArrow;
-                badge.style.display = 'block';
+            function clearCurUI(){['imgCur','arrCur','badgeCur'].forEach(id=>{const el=document.getElementById(id);if(el)el.style.display='none';});document.getElementById('phCur').style.display='flex';document.getElementById('phCur').textContent='Karte ziehen';document.getElementById('priorityPills').style.display='none';}
+            function showCurUI(card){
+                const imgC=document.getElementById('imgCur'),phC=document.getElementById('phCur'),ringC=document.getElementById('ringCur');
+                phC.textContent='Lädt…';phC.style.display='flex';imgC.style.display='none';ringC.style.display='flex';
+                loadImg(imgC,URLS,card.id).then(ok=>{ringC.style.display='none';if(ok){phC.style.display='none';}else{phC.textContent='Karte #'+card.id;phC.style.display='flex';}});
+                const arr=document.getElementById('arrCur');arr.className='arr-tag '+(card.redArrow==='top'?'top':'bot');arr.textContent=card.redArrow==='top'?'▲ OBEN':'▼ UNTEN';arr.style.display='block';
+                const badge=document.getElementById('badgeCur');badge.textContent='#'+card.id+' ⬤'+card.blackArrow;badge.style.display='block';
                 updatePriorityPills();
             }
-
-            function updatePriorityPills() {
-                const container = document.getElementById('priorityPills');
-                if (!topDeck || !cur) { container.style.display = 'none'; return; }
-                container.style.display = 'flex';
-                container.innerHTML = '<span style="font-size:.6rem;color:var(--text3);">Regionen-Priorität:</span>';
-                for (let i = 1; i <= 6; i++) {
-                    const val = topDeck.backArray[i];
-                    const reg = REGION_BY_IDX[val];
-                    if (!reg) continue;
-                    const activeMark = i === cur.blackArrow ? ' ●' : '';
-                    const s = document.createElement('span');
-                    s.className = 'pill ' + reg.c;
-                    s.textContent = i + '. ' + reg.n + activeMark;
-                    s.title = activeMark ? 'Schwarzer Pfeil zeigt hierher (Spalte ' + val + ')' : '';
+            function updatePriorityPills(){
+                const container=document.getElementById('priorityPills');
+                if(!topDeck||!cur){container.style.display='none';return;}
+                container.style.display='flex';
+                container.innerHTML='<span style="font-size:.65rem;color:var(--text3);">Regionen-Priorität:</span>';
+                for(let i=1;i<=6;i++){
+                    const val=topDeck.backArray[i];
+                    const reg=REGION_BY_IDX[val];if(!reg)continue;
+                    const activeMark=i===cur.blackArrow?' ●':'';
+                    const s=document.createElement('span');s.className='pill '+reg.c;s.textContent=i+'. '+reg.n+activeMark;
+                    s.title=activeMark?'Schwarzer Pfeil zeigt hierher (Spalte '+val+')':'';
                     container.appendChild(s);
                 }
             }
-
-            function updateCourtUI() {
-                const row = document.getElementById('courtRow');
-                const cnt = court.length;
-                document.getElementById('courtCnt').textContent = '(' + cnt + ')';
-                if (!cnt) { row.innerHTML = '<div class="court-empty">Noch keine Hofkarten.</div>'; return; }
-                row.innerHTML = '';
-                court.forEach((entry, idx) => {
-                    const { id, usedThisTurn } = entry;
-                    const info = CD[id] || { name: '#' + id, rank: '?' };
-                    const div = document.createElement('div');
-                    div.className = 'court-card' + (usedThisTurn ? ' used' : '');
-                    div.title = '#' + id + ' – ' + (info.name || '') + ' – Rang ' + (info.rank || '?');
-                    div.onclick = () => zoomCard(id);
-                    div.oncontextmenu = e => { e.preventDefault();
-                        toggleCourtUsed(idx); };
-                    if (usedThisTurn) { const ov = document.createElement('div');
-                        ov.className = 'used-ov';
-                        ov.textContent = '✓';
-                        div.appendChild(ov); }
-                    const posDot = document.createElement('div');
-                    posDot.style.cssText =
-                        'position:absolute;top:3px;left:3px;width:8px;height:8px;border-radius:50%;z-index:2;';
-                    if (idx === 0) posDot.style.background = '#4a8fd4';
-                    else if (idx === court.length - 1) posDot.style.background = '#c04040';
-                    else posDot.style.background = '#888';
+            function updateCourtUI(){
+                const row=document.getElementById('courtRow');
+                const cnt=court.length;
+                const limit=getCourtLimit();
+                document.getElementById('courtCnt').textContent='('+cnt+'/'+limit+')';
+                if(!cnt){row.innerHTML='<div class="court-empty">Noch keine Hofkarten.</div>';return;}
+                row.innerHTML='';
+                court.forEach((entry,idx)=>{
+                    const{id,usedThisTurn}=entry;
+                    const info=CD[id]||{name:'#'+id,rank:'?'};
+                    const div=document.createElement('div');div.className='court-card'+(usedThisTurn?' used':'');
+                    div.title='#'+id+' – '+(info.name||'')+' – Rang '+(info.rank||'?');
+                    div.onclick=()=>zoomCard(id);
+                    div.oncontextmenu=e=>{e.preventDefault();toggleCourtUsed(idx);};
+                    if(usedThisTurn){const ov=document.createElement('div');ov.className='used-ov';ov.textContent='✓';div.appendChild(ov);}
+                    const posDot=document.createElement('div');posDot.style.cssText='position:absolute;top:3px;left:3px;width:10px;height:10px;border-radius:50%;z-index:2;';
+                    if(idx===0)posDot.style.background='#4a8fd4';else if(idx===court.length-1)posDot.style.background='#c04040';else posDot.style.background='#888';
                     div.appendChild(posDot);
-                    const nrSpan = document.createElement('span');
-                    nrSpan.className = 'card-nr';
-                    nrSpan.textContent = '#' + id;
-                    div.appendChild(nrSpan);
-                    const img = document.createElement('img');
-                    img.alt = '#' + id;
-                    img.loading = 'lazy';
-                    div.appendChild(img);
-                    loadImg(img, URLS, id);
-                    const delBtn = document.createElement('button');
-                    delBtn.style.cssText =
-                        'position:absolute;top:2px;right:2px;background:rgba(0,0,0,.7);border:none;color:#d44;font-size:.7rem;cursor:pointer;border-radius:50%;width:18px;height:18px;display:flex;align-items:center;justify-content:center;z-index:4;';
-                    delBtn.textContent = '✕';
-                    delBtn.onclick = e => { e.stopPropagation();
-                        removeCourt(idx); };
+                    const nrSpan=document.createElement('span');nrSpan.className='card-nr';nrSpan.textContent='#'+id;div.appendChild(nrSpan);
+                    const img=document.createElement('img');img.alt='#'+id;img.loading='lazy';div.appendChild(img);loadImg(img,URLS,id);
+                    const delBtn=document.createElement('button');delBtn.style.cssText='position:absolute;top:2px;right:2px;background:rgba(0,0,0,.7);border:none;color:#d44;font-size:.8rem;cursor:pointer;border-radius:50%;width:20px;height:20px;display:flex;align-items:center;justify-content:center;z-index:4;';delBtn.textContent='✕';delBtn.onclick=e=>{e.stopPropagation();removeCourt(idx);};
                     div.appendChild(delBtn);
                     row.appendChild(div);
                 });
             }
-
-            function updateEventUI() {
-                const row = document.getElementById('eventRow');
-                const cnt = events.length;
-                document.getElementById('eventCnt').textContent = '(' + cnt + ')';
-                if (!cnt) { row.innerHTML = '<span style="font-size:.72rem;color:var(--text3);">Keine.</span>'; return; }
-                row.innerHTML = '';
-                events.forEach((eid, idx) => {
-                    const info = CD[eid] || { name: 'Ereignis #' + eid };
-                    const card = document.createElement('div');
-                    card.className = 'event-card';
-                    card.onclick = () => zoomCard(eid);
-                    card.title = '#' + eid + ' – ' + (info.name || '');
-                    const img = document.createElement('img');
-                    img.alt = '#' + eid;
-                    img.loading = 'lazy';
-                    card.appendChild(img);
-                    loadImg(img, URLS, eid);
-                    const nameDiv = document.createElement('div');
-                    nameDiv.className = 'evt-name';
-                    nameDiv.textContent = (info.name || 'Ereignis #' + eid);
-                    card.appendChild(nameDiv);
-                    const delBtn = document.createElement('button');
-                    delBtn.className = 'del-btn';
-                    delBtn.textContent = '✕';
-                    delBtn.onclick = e => { e.stopPropagation();
-                        removeEvent(idx); };
+            function updateEventUI(){
+                const row=document.getElementById('eventRow');
+                const cnt=events.length;
+                document.getElementById('eventCnt').textContent='('+cnt+')';
+                if(!cnt){row.innerHTML='<span style="font-size:.8rem;color:var(--text3);">Keine.</span>';return;}
+                row.innerHTML='';
+                events.forEach((eid,idx)=>{
+                    const info=CD[eid]||{name:'Ereignis #'+eid};
+                    const card=document.createElement('div');card.className='event-card';card.onclick=()=>zoomCard(eid);card.title='#'+eid+' – '+(info.name||'');
+                    const img=document.createElement('img');img.alt='#'+eid;img.loading='lazy';card.appendChild(img);loadImg(img,URLS,eid);
+                    const nameDiv=document.createElement('div');nameDiv.className='evt-name';nameDiv.textContent=(info.name||'Ereignis #'+eid);card.appendChild(nameDiv);
+                    const delBtn=document.createElement('button');delBtn.className='del-btn';delBtn.textContent='✕';delBtn.onclick=e=>{e.stopPropagation();removeEvent(idx);};
                     card.appendChild(delBtn);
                     row.appendChild(card);
                 });
             }
-
-            function toggleCourtUsed(idx) { if (idx >= 0 && idx < court.length) { court[idx].usedThisTurn = !court[idx]
-                    .usedThisTurn;
-                    updateCourtUI(); } }
-
-            function removeCourt(idx) { if (idx >= 0 && idx < court.length) { court.splice(idx, 1);
-                    updateCourtUI();
-                    toast('Hofkarte entfernt.'); } }
-
-            function addCourtManual() {
-                const v = parseInt(document.getElementById('courtIn').value);
-                if (isNaN(v) || v < 1 || v > 100) { toast('Bitte Nr. 1–100 eingeben.'); return; }
-                if (court.find(c => c.id === v)) { toast('Karte #' + v + ' bereits im Hof.'); return; }
-                const pos = confirm('An die LINKE Seite des Hofes? (Abbrechen = rechts)');
-                if (pos) court.unshift({ id: v, usedThisTurn: false });
-                else court.push({ id: v, usedThisTurn: false });
-                document.getElementById('courtIn').value = '';
-                updateCourtUI();
-                toast('Hofkarte #' + v + ' ' + (pos ? 'links' : 'rechts') + ' hinzugefügt.');
+            function toggleCourtUsed(idx){if(idx>=0&&idx<court.length){court[idx].usedThisTurn=!court[idx].usedThisTurn;updateCourtUI();}}
+            function removeCourt(idx){if(idx>=0&&idx<court.length){court.splice(idx,1);updateCourtUI();toast('Hofkarte entfernt.');}}
+            function addCourtManual(){
+                const v=parseInt(document.getElementById('courtIn').value);
+                if(isNaN(v)||v<1||v>100){toast('Bitte Nr. 1–100 eingeben.');return;}
+                if(court.find(c=>c.id===v)){toast('Karte #'+v+' bereits im Hof.');return;}
+                const pos=confirm('An die LINKE Seite des Hofes? (Abbrechen = rechts)');
+                if(pos)court.unshift({id:v,usedThisTurn:false});else court.push({id:v,usedThisTurn:false});
+                document.getElementById('courtIn').value='';updateCourtUI();toast('Hofkarte #'+v+' hinzugefügt.');
             }
-
-            function clearCourt() { if (!court.length) return; if (!confirm('Hof leeren?')) return;
-                court = [];
-                updateCourtUI();
-                toast('Hof geleert.'); }
-
-            function addEvent() {
-                const v = parseInt(document.getElementById('eventIn').value);
-                if (isNaN(v) || v < 101 || v > 116) { toast('Bitte Nr. 101–116 eingeben.'); return; }
-                if (events.includes(v)) { toast('Ereignis #' + v + ' bereits vorhanden.'); return; }
-                events.push(v);
-                document.getElementById('eventIn').value = '';
-                updateEventUI();
-                toast('Ereignis #' + v + ' hinzugefügt.');
+            function clearCourt(){if(!court.length)return;if(!confirm('Hof leeren?'))return;court=[];updateCourtUI();toast('Hof geleert.');}
+            function addEvent(){
+                const v=parseInt(document.getElementById('eventIn').value);
+                if(isNaN(v)||v<101||v>116){toast('Bitte Nr. 101–116 eingeben.');return;}
+                if(events.includes(v)){toast('Ereignis #'+v+' bereits vorhanden.');return;}
+                events.push(v);document.getElementById('eventIn').value='';updateEventUI();toast('Ereignis #'+v+' hinzugefügt.');
             }
+            function removeEvent(idx){if(idx>=0&&idx<events.length){events.splice(idx,1);updateEventUI();toast('Ereignis entfernt.');}}
+            function zoomCard(id){const img=document.getElementById('zimg');img.style.display='none';document.getElementById('zlbl').textContent='Karte #'+id;document.getElementById('zoom').className='zoom-ov on';loadImg(img,URLS,id);}
+            window._zoomStack=function(){if(!pile.length)return;const tid=pile[pile.length-1];const img=document.getElementById('zimg');img.style.display='none';document.getElementById('zlbl').textContent='KI-Stapel Rückseite #'+tid;document.getElementById('zoom').className='zoom-ov on';loadImg(img,BURLS,tid);};
+            window._zoomCur=function(){if(!cur)return;const img=document.getElementById('zimg');img.style.display='none';document.getElementById('zlbl').textContent='KI-Karte Vorderseite #'+cur.id;document.getElementById('zoom').className='zoom-ov on';loadImg(img,URLS,cur.id);};
+            window._closeZoom=function(){document.getElementById('zoom').className='zoom-ov';};
 
-            function removeEvent(idx) { if (idx >= 0 && idx < events.length) { events.splice(idx, 1);
-                    updateEventUI();
-                    toast('Ereignis entfernt.'); } }
-
-            function zoomCard(id) {
-                const img = document.getElementById('zimg');
-                img.style.display = 'none';
-                document.getElementById('zlbl').textContent = 'Karte #' + id;
-                document.getElementById('zoom').className = 'zoom-ov on';
-                loadImg(img, URLS, id);
+            let setupStep=0,tmpPC=1,tmpLoy=[];
+            function renderSetup(){
+                const el=document.getElementById('setupContent');
+                if(setupStep===0)el.innerHTML='<p style="font-size:1.1rem;">Wie viele <strong>menschliche</strong> Spieler?</p><div class="loy-pills"><button class="loy-pill brit" onclick="window._setupPickCount(1)">Solo (1)</button><button class="loy-pill afg" onclick="window._setupPickCount(2)">Duo (2)</button></div>';
+                else if(setupStep===1)el.innerHTML='<p style="font-size:1.1rem;">Loyalität <strong>Spieler 1</strong>:</p><div class="loy-pills"><button class="loy-pill brit" onclick="window._setupPickLoy(0,\'Britisch\')">Britisch</button><button class="loy-pill rus" onclick="window._setupPickLoy(0,\'Russisch\')">Russisch</button><button class="loy-pill afg" onclick="window._setupPickLoy(0,\'Afghanisch\')">Afghanisch</button></div>';
+                else if(setupStep===2)el.innerHTML='<p style="font-size:1.1rem;">Loyalität <strong>Spieler 2</strong>:</p><div class="loy-pills"><button class="loy-pill brit" onclick="window._setupPickLoy(1,\'Britisch\')">Britisch</button><button class="loy-pill rus" onclick="window._setupPickLoy(1,\'Russisch\')">Russisch</button><button class="loy-pill afg" onclick="window._setupPickLoy(1,\'Afghanisch\')">Afghanisch</button></div>';
+                else el.innerHTML='<p>Wakhans KI-Deck wird gemischt.<br>Die erste KI-Karte bestimmt die <strong>pragmatische Loyalität</strong>.</p><button class="btn-gold" onclick="window._finishSetup()">▶ Spiel starten</button>';
             }
+            window._setupPickCount=function(n){tmpPC=n;tmpLoy=[];setupStep=1;renderSetup();};
+            window._setupPickLoy=function(idx,loy){tmpLoy[idx]=loy;setupStep=(idx===0&&tmpPC===2)?2:3;renderSetup();};
+            window._finishSetup=function(){playerCount=tmpPC;playerLoyalties=[...tmpLoy];initGame();showScreen('scrGame');updateTopBar();updateCourtUI();updateEventUI();updateStackUI();};
+            window._resetGame=function(){if(!confirm('Neues Spiel starten?'))return;setupStep=0;tmpPC=1;tmpLoy=[];turnActive=false;document.getElementById('btnStartTurn').disabled=false;hideAllPanels();showScreen('scrSetup');renderSetup();};
 
-            function zoomStack() { if (!pile.length) return; const tid = pile[pile.length - 1]; const img = document
-                .getElementById('zimg');
-                img.style.display = 'none';
-                document.getElementById('zlbl').textContent = 'KI-Stapel Rückseite #' + tid;
-                document.getElementById('zoom').className = 'zoom-ov on';
-                loadImg(img, BURLS, tid); }
-
-            function zoomCur() { if (!cur) return; const img = document.getElementById('zimg');
-                img.style.display = 'none';
-                document.getElementById('zlbl').textContent = 'KI-Karte Vorderseite #' + cur.id;
-                document.getElementById('zoom').className = 'zoom-ov on';
-                loadImg(img, URLS, cur.id); }
-
-            function closeZoom() { document.getElementById('zoom').className = 'zoom-ov'; }
-
-            let setupStep = 0,
-                tmpPC = 1,
-                tmpLoy = [];
-
-            function renderSetup() {
-                const el = document.getElementById('setupContent');
-                if (setupStep === 0) el.innerHTML =
-                    '<p>Wie viele <strong>menschliche</strong> Spieler?</p><div class="loy-pills"><button class="loy-pill brit" onclick="window._setupPickCount(1)">Solo (1)</button><button class="loy-pill afg" onclick="window._setupPickCount(2)">Duo (2)</button></div>';
-                else if (setupStep === 1) el.innerHTML =
-                    '<p>Loyalität <strong>Spieler 1</strong>:</p><div class="loy-pills"><button class="loy-pill brit" onclick="window._setupPickLoy(0,\'Britisch\')">Britisch</button><button class="loy-pill rus" onclick="window._setupPickLoy(0,\'Russisch\')">Russisch</button><button class="loy-pill afg" onclick="window._setupPickLoy(0,\'Afghanisch\')">Afghanisch</button></div>';
-                else if (setupStep === 2) el.innerHTML =
-                    '<p>Loyalität <strong>Spieler 2</strong>:</p><div class="loy-pills"><button class="loy-pill brit" onclick="window._setupPickLoy(1,\'Britisch\')">Britisch</button><button class="loy-pill rus" onclick="window._setupPickLoy(1,\'Russisch\')">Russisch</button><button class="loy-pill afg" onclick="window._setupPickLoy(1,\'Afghanisch\')">Afghanisch</button></div>';
-                else el.innerHTML =
-                    '<p>Wakhans KI-Deck wird gemischt.<br>Die erste KI-Karte bestimmt die <strong>pragmatische Loyalität</strong>.</p><button class="btn-gold" onclick="window._finishSetup()">▶ Spiel starten</button>';
+            function initGame(){
+                pile=WKC.map(c=>c.id);shuffle(pile);disc=[];court=[];events=[];cur=null;topDeck=null;
+                aIdx=0;aDone=0;aSkips=[false,false,false];rupien=5;turnActive=false;radCardId=null;radBriber=null;
+                verwAbwurfIdx=0;verwCandidates=[];
+                hideAllPanels();updateStackUI();clearCurUI();updateCourtUI();updateEventUI();
+                document.getElementById('priorityPills').style.display='none';
             }
-            window._setupPickCount = function(n) { tmpPC = n;
-                tmpLoy = [];
-                setupStep = 1;
-                renderSetup(); };
-            window._setupPickLoy = function(idx, loy) { tmpLoy[idx] = loy;
-                setupStep = (idx === 0 && tmpPC === 2) ? 2 : 3;
-                renderSetup(); };
-            window._finishSetup = function() {
-                playerCount = tmpPC;
-                playerLoyalties = [...tmpLoy];
-                courtLimit = playerCount === 1 ? 3 : 4;
-                initGame();
-                showScreen('scrGame');
-                updateTopBar();
-                updateCourtUI();
-                updateEventUI();
-                updateStackUI();
-            };
-            window._resetGame = function() {
-                if (!confirm('Neues Spiel starten?')) return;
-                setupStep = 0;
-                tmpPC = 1;
-                tmpLoy = [];
-                turnActive = false;
-                document.getElementById('btnStartTurn').disabled = false;
-                hideAllPanels();
-                showScreen('scrSetup');
-                renderSetup();
+            function hideAllPanels(){['actionCard','radCard','bonusCard','verwCard'].forEach(id=>document.getElementById(id).style.display='none');}
+
+            function actionLabel(txt){const t=txt.toLowerCase();if(t.includes('radikalis'))return'rad';if(t.includes('kampf')||t.includes('kämpfe'))return'bat';if(t.includes('bauen'))return'bau';if(t.includes('besteuerung')||t.includes('steuern'))return'tax';if(t.includes('bewegen')||t.includes('marschieren'))return'mar';if(t.includes('verrat'))return'ver';if(t.includes('geschenk'))return'ges';return'';}
+            function getCourtCardsWithAction(actionType){return court.filter(c=>{if(c.usedThisTurn)return false;const info=CD[c.id];return info&&info.actions&&info.actions.includes(actionType);});}
+            function canWakhanPerformAction(actionText){const lbl=actionLabel(actionText);if(lbl==='rad')return true;if(!lbl){const t=actionText.toLowerCase();if(t.includes('keine karte')||t.includes('weniger als')||t.includes('hofgröße')||t.includes('bevorzugt werden')||t.includes('dominanz hat')||t.includes('koalition')||t.includes('weniger spione')||t.includes('kontrolle'))return'conditional';return true;}const matching=getCourtCardsWithAction(lbl);if(matching.length===0){const any=court.some(c=>!c.usedThisTurn&&CD[c.id]&&CD[c.id].actions&&CD[c.id].actions.includes(lbl));if(!any)return false;return'conditional';}return true;}
+            function getBestCourtCardForAction(actionText){const lbl=actionLabel(actionText);if(!lbl||lbl==='rad')return null;const candidates=getCourtCardsWithAction(lbl);if(candidates.length===0)return null;const ranked=candidates.map(c=>{const info=CD[c.id];return{entry:c,info,priority:info?(info.suit===preferredSuit?0:(info.patriot?1:(info.prize?2:(info.rank||3)))):9};});ranked.sort((a,b)=>{if(a.priority!==b.priority)return a.priority-b.priority;if(a.info&&b.info&&a.info.rank!==b.info.rank)return(b.info.rank||0)-(a.info.rank||0);return(b.info?b.info.id||0:0)-(a.info?a.info.id||0:0);});return ranked[0]||null;}
+
+            window._startTurn=function(){
+                if(turnActive)return;
+                if(pile.length===0){if(disc.length===0){toast('Kein KI-Stapel mehr!');return;}pile=[...disc];disc=[];shuffle(pile);toast('KI-Stapel neu gemischt!');}
+                const id=pile.pop();cur=WKC_BY_ID[id]||null;if(!cur){toast('Fehler: KI-Karte nicht gefunden!');return;}
+                topDeck=pile.length>0?(WKC_BY_ID[pile[pile.length-1]]||null):null;
+                aIdx=0;aDone=0;aSkips=[false,false,false];court.forEach(c=>c.usedThisTurn=false);radCardId=null;radBriber=null;turnActive=true;
+                updateStackUI();showCurUI(cur);updateTopBar();updateCourtUI();document.getElementById('btnStartTurn').disabled=true;
+                hideAllPanels();showScreen('scrGame');updateActionPanel();
             };
 
-            function initGame() {
-                pile = WKC.map(c => c.id);
-                shuffle(pile);
-                disc = [];
-                court = [];
-                events = [];
-                cur = null;
-                topDeck = null;
-                aIdx = 0;
-                aDone = 0;
-                aSkips = [false, false, false];
-                rupien = 5;
-                turnActive = false;
-                radCardId = null;
-                radBriber = null;
-                verwAbwurfIdx = 0;
-                verwCandidates = [];
-                hideAllPanels();
-                updateStackUI();
-                clearCurUI();
-                updateCourtUI();
-                updateEventUI();
-                document.getElementById('priorityPills').style.display = 'none';
+            function updateActionPanel(){
+                if(!cur)return;
+                const acts=[cur.action1_de,cur.action2_de,cur.action3_de];
+                const currentText=acts[aIdx];
+                const canDo=canWakhanPerformAction(currentText);
+                if(canDo===false){
+                    aSkips[aIdx]=true;
+                    toast('⚠ Keine passende Hofkarte – Aktion übersprungen');
+                    advanceAction();
+                    return;
+                }
+                const lbl=actionLabel(currentText);
+                document.getElementById('actNum').textContent=aDone+1;
+                const dotsEl=document.getElementById('stepDots');dotsEl.innerHTML='';
+                acts.forEach((_,i)=>{const d=document.createElement('div');d.className='step-dot';d.textContent=i+1;if(i<aIdx)d.className+=aSkips[i]?' skip':' done';else if(i===aIdx)d.className+=' act';dotsEl.appendChild(d);});
+                let boxClass='action-box';let boxHtml='';
+                if(lbl==='rad'){boxClass+=' rad';boxHtml+='<span style="color:#f0804a;font-weight:700;">🌀 RADIKALISIERUNG</span><br>';}
+                boxHtml+=currentText;
+                if(canDo==='conditional'){
+                    document.getElementById('btnDo').style.display='';document.getElementById('btnSkip').textContent='✗ Überspringen';
+                    document.getElementById('actionExtra').textContent='ℹ Bedingungen am Brett prüfen.';
+                }else{
+                    document.getElementById('btnDo').style.display='';document.getElementById('btnSkip').textContent='✗ Überspringen';
+                    const best=getBestCourtCardForAction(currentText);
+                    if(best&&best.info&&lbl!=='rad')document.getElementById('actionExtra').innerHTML='✅ Empfohlen: <strong>#'+best.info.id+' – '+best.info.name+'</strong> ('+best.info.suit+', R'+best.info.rank+')';
+                    else document.getElementById('actionExtra').textContent='';
+                }
+                document.getElementById('actionBox').innerHTML=boxHtml;document.getElementById('actionBox').className=boxClass;
+                document.getElementById('bonusCheckRow').style.display = (lbl==='rad')?'none':'flex';
+                document.getElementById('bonusChk').checked = false;
+                document.getElementById('actionCard').style.display='block';
             }
 
-            function hideAllPanels() { ['actionCard', 'radCard', 'bonusCard', 'verwCard'].forEach(id => document
-                .getElementById(id).style.display = 'none'); }
-
-            function actionLabel(txt) { const t = txt.toLowerCase(); if (t.includes('radikalis')) return 'rad'; if (t.includes(
-                    'kampf') || t.includes('kämpfe')) return 'bat'; if (t.includes('bauen')) return 'bau'; if (t.includes(
-                    'besteuerung') || t.includes('steuern')) return 'tax'; if (t.includes('bewegen') || t.includes(
-                    'marschieren')) return 'mar'; if (t.includes('verrat')) return 'ver'; if (t.includes('geschenk')) return
-                'ges'; return ''; }
-
-            function getCourtCardsWithAction(actionType) { return court.filter(c => { if (c.usedThisTurn) return false; const
-                    info = CD[c.id]; return info && info.actions && info.actions.includes(actionType); }); }
-
-            function canWakhanPerformAction(actionText) { const lbl = actionLabel(actionText); if (lbl === 'rad') return true; if (
-                    !lbl) { const t = actionText.toLowerCase(); if (t.includes('keine karte') || t.includes('weniger als') || t
-                        .includes('hofgröße') || t.includes('bevorzugt werden') || t.includes('dominanz hat') || t.includes(
-                            'koalition') || t.includes('weniger spione') || t.includes('kontrolle')) return 'conditional';
-                return true; } const matching = getCourtCardsWithAction(lbl); if (matching.length === 0) { const any = court
-                    .some(c => !c.usedThisTurn && CD[c.id] && CD[c.id].actions && CD[c.id].actions.includes(lbl)); if (!any)
-                    return false; return 'conditional'; } return true; }
-
-            function getBestCourtCardForAction(actionText) { const lbl = actionLabel(actionText); if (!lbl || lbl === 'rad')
-                return null; const candidates = getCourtCardsWithAction(lbl); if (candidates.length === 0) return null; const
-                ranked = candidates.map(c => { const info = CD[c.id]; return { entry: c, info, priority: info ? (info.suit ===
-                    preferredSuit ? 0 : (info.patriot ? 1 : (info.prize ? 2 : (info.rank || 3)))) : 9 }; });
-                ranked.sort((a, b) => { if (a.priority !== b.priority) return a.priority - b.priority; if (a.info && b.info &&
-                    a.info.rank !== b.info.rank) return (b.info.rank || 0) - (a.info.rank || 0); return (b.info ? b.info.id ||
-                    0 : 0) - (a.info ? a.info.id || 0 : 0); }); return ranked[0] || null; }
-
-            window._startTurn = function() {
-                if (turnActive) return;
-                if (pile.length === 0) { if (disc.length === 0) { toast('Kein KI-Stapel mehr!'); return; }
-                    pile = [...disc];
-                    disc = [];
-                    shuffle(pile);
-                    toast('KI-Stapel neu gemischt!'); }
-                const id = pile.pop();
-                cur = WKC_BY_ID[id] || null;
-                if (!cur) { toast('Fehler: KI-Karte nicht gefunden!'); return; }
-                topDeck = pile.length > 0 ? (WKC_BY_ID[pile[pile.length - 1]] || null) : null;
-                aIdx = 0;
-                aDone = 0;
-                aSkips = [false, false, false];
-                court.forEach(c => c.usedThisTurn = false);
-                radCardId = null;
-                radBriber = null;
-                turnActive = true;
-                updateStackUI();
-                showCurUI(cur);
-                updateTopBar();
-                updateCourtUI();
-                document.getElementById('btnStartTurn').disabled = true;
-                hideAllPanels();
-                showScreen('scrGame');
-                updateActionPanel();
-                document.getElementById('actionCard').style.display = 'block';
-            };
-
-            function updateActionPanel() {
-                if (!cur) return;
-                const acts = [cur.action1_de, cur.action2_de, cur.action3_de];
-                const currentText = acts[aIdx];
-                const canDo = canWakhanPerformAction(currentText);
-                const lbl = actionLabel(currentText);
-                document.getElementById('actNum').textContent = aDone + 1;
-                const dotsEl = document.getElementById('stepDots');
-                dotsEl.innerHTML = '';
-                acts.forEach((_, i) => { const d = document.createElement('div');
-                    d.className = 'step-dot';
-                    d.textContent = i + 1; if (i < aIdx) d.className += aSkips[i] ? ' skip' : ' done'; else if (i ===
-                    aIdx) d.className += ' act';
-                    dotsEl.appendChild(d); });
-                let boxClass = 'action-box';
-                let boxHtml = ''; if (lbl === 'rad') { boxClass += ' rad';
-                    boxHtml += '<span style="color:#f0804a;font-weight:700;">🌀 RADIKALISIERUNG</span><br>'; }
-                boxHtml += currentText; if (canDo === false) { boxClass += ' warn';
-                    boxHtml +=
-                        '<div style="color:#e08070;margin-top:5px;font-style:italic;">⚠ Keine passende unbenutzte Hofkarte. Wird automatisch übersprungen.</div>';
-                    document.getElementById('btnDo').style.display = 'none';
-                    document.getElementById('btnSkip').textContent = '→ Überspringen (automatisch)';
-                    document.getElementById('actionExtra').textContent = ''; } else if (canDo === 'conditional') { document
-                    .getElementById('btnDo').style.display = '';
-                    document.getElementById('btnSkip').textContent = '✗ Überspringen';
-                    document.getElementById('actionExtra').textContent =
-                    'ℹ Brettbedingungen müssen geprüft werden.'; } else { document.getElementById('btnDo').style.display =
-                    '';
-                    document.getElementById('btnSkip').textContent = '✗ Überspringen'; const best =
-                    getBestCourtCardForAction(currentText); if (best && best.info && lbl !== 'rad') { document
-                        .getElementById('actionExtra').innerHTML = '✅ Empfohlen: <strong>#' + best.info.id + ' – ' + best
-                        .info.name + '</strong> (' + best.info.suit + ', R' + best.info.rank + ')'; } else { document
-                        .getElementById('actionExtra').textContent = ''; } }
-                document.getElementById('actionBox').innerHTML = boxHtml;
-                document.getElementById('actionBox').className = boxClass;
-            }
-
-            window._resolveAction = function(exec) {
-                if (!cur) return;
-                const acts = [cur.action1_de, cur.action2_de, cur.action3_de];
-                const txt = acts[aIdx];
-                const canDo = canWakhanPerformAction(txt); if (exec && canDo === false) exec = false; if (exec) { const
-                    isRad = txt.toLowerCase().includes('radikalis'); if (isRad) { openRadWiz(txt); return; } if (canDo ===
-                        'conditional') { if (!confirm('Sind alle Brett-Bedingungen erfüllt?\n\n' + txt +
-                            '\n\nOK = Ja, ausführen\nAbbrechen = Nein, überspringen')) { aSkips[aIdx] = true;
-                        advanceAction(); return; } }
-                    aDone++;
-                    aSkips[aIdx] = false;
-                    markBestCardAsUsed(txt); } else { aSkips[aIdx] = true; }
+            window._resolveAction=function(exec){
+                if(!cur)return;
+                const txt=[cur.action1_de,cur.action2_de,cur.action3_de][aIdx];
+                const canDo=canWakhanPerformAction(txt);
+                if(exec&&canDo===false)exec=false;
+                if(exec){
+                    const isRad=txt.toLowerCase().includes('radikalis');
+                    if(isRad){openRadWiz(txt);return;}
+                    if(canDo==='conditional'&&!confirm('Sind alle Brett-Bedingungen erfüllt?\n\n'+txt+'\n\nOK = Ja, ausführen\nAbbrechen = Nein, überspringen')){aSkips[aIdx]=true;advanceAction();return;}
+                    const isBonus = document.getElementById('bonusChk').checked;
+                    if(!isBonus) aDone++;
+                    aSkips[aIdx]=false;markBestCardAsUsed(txt);
+                }else{aSkips[aIdx]=true;}
                 advanceAction();
             };
-
-            function markBestCardAsUsed(actionText) { const lbl = actionLabel(actionText); if (!lbl || lbl === 'rad') return; const
-                best = getBestCourtCardForAction(actionText); if (best && best.entry) { const idx = court.findIndex(cc => cc
-                    .id === best.entry.id && !cc.usedThisTurn); if (idx >= 0) { court[idx].usedThisTurn = true;
-                    updateCourtUI(); } } }
-
-            function advanceAction() {
-                aIdx++; if (aIdx >= 3 || aDone >= 2) { if (aDone < 2 && aIdx < 3) { aIdx = 0;
-                    updateActionPanel(); return; }
-                    finishStandardActions(); return; }
+            function markBestCardAsUsed(actionText){const lbl=actionLabel(actionText);if(!lbl||lbl==='rad')return;const best=getBestCourtCardForAction(actionText);if(best&&best.entry){const idx=court.findIndex(cc=>cc.id===best.entry.id&&!cc.usedThisTurn);if(idx>=0){court[idx].usedThisTurn=true;updateCourtUI();}}}
+            function advanceAction(){
+                aIdx++;
+                if(aIdx>=3||aDone>=2){
+                    if(aDone<2&&aIdx>=3){aIdx=0;updateActionPanel();return;}
+                    finishStandardActions();return;
+                }
                 updateActionPanel();
             }
+            function finishStandardActions(){document.getElementById('actionCard').style.display='none';document.getElementById('radCard').style.display='none';showBonusPhase();}
 
-            function finishStandardActions() { document.getElementById('actionCard').style.display = 'none';
-                document.getElementById('radCard').style.display = 'none';
-                showBonusPhase(); }
-
-            function getMarketInstruction() {
-                if (!cur || !topDeck) return { row: '?', col: '?', colIdx: -1 };
-                const redLabel = cur.redArrow === 'top' ? 'OBEN' : 'UNTEN';
-                const colIdx = cur.blackArrow >= 1 && cur.blackArrow <= 6 ? topDeck.backArray[cur.blackArrow] : -1;
-                const colDisplay = colIdx >= 0 ? colIdx : '?';
-                return { row: redLabel, col: colDisplay, colIdx: colIdx };
+            function getMarketInstruction(){
+                if(!cur||!topDeck)return{row:'?',col:'?',colIdx:-1};
+                const redLabel=cur.redArrow==='top'?'OBEN':'UNTEN';
+                const colIdx=cur.blackArrow>=1&&cur.blackArrow<=6?topDeck.backArray[cur.blackArrow]:-1;
+                const colDisplay=colIdx>=0?colIdx:'?';
+                return{row:redLabel,col:colDisplay,colIdx:colIdx};
             }
-
-            function openRadWiz(actionText) {
-                radCardId = null;
-                radBriber = null;
-                document.getElementById('radCard').style.display = 'block';
-                document.getElementById('radContent').innerHTML = '';
-                showRadStep('start');
-            }
-
-            function showRadStep(step, data) {
-                const el = document.getElementById('radContent');
-                if (step === 'start') {
-                    const instr = getMarketInstruction();
-                    el.innerHTML =
-                        '<p>🌀 <strong>Radikalisierung:</strong> Wakhan kauft eine Karte vom Markt und spielt sie aus.</p><p style="font-size:.8rem;">📍 <strong>Standard-Marktposition:</strong> <span class="hl">' +
-                        instr.row + ' Reihe, Spalte <strong>' + instr.col +
-                        '</strong></span> (von rechts gezählt, 0=rechts).<br>Falls nicht verfügbar: nächste links davon. Reihe leer → andere Reihe, gleiche Spalte.</p><p style="font-size:.75rem;">Liegt eine <strong>Dominanzcheck-Ereigniskarte</strong> im Markt?</p><div class="row" style="gap:6px;"><button class="btn-outline btn-sm" onclick="window._radDomInMarket(true)">Ja</button><button class="btn-ghost btn-sm" onclick="window._radDomInMarket(false)">Nein</button></div>';
-                } else if (step === 'domWins') {
-                    el.innerHTML =
-                        '<p>Würde Wakhan beim Dominanzcheck die <strong>meisten Siegpunkte</strong> bekommen?</p><div class="row" style="gap:6px;"><button class="btn-outline btn-sm" onclick="window._radDomWins(true)">Ja – Dom.-Karte kaufen</button><button class="btn-ghost btn-sm" onclick="window._radDomWins(false)">Nein – andere Karte</button></div>';
-                } else if (step === 'pickCard') {
-                    el.innerHTML = '<p>Welche Karte wurde gekauft? <strong>Nr. 1–116</strong>:</p><p style="font-size:.7rem;color:var(--text3);">' +
-                        (data || '') +
-                        '</p><div class="row" style="gap:6px;"><input type="number" class="input-num" id="radInput" min="1" max="116" placeholder="Nr."><button class="btn-outline btn-sm" onclick="window._radCardPicked()">Weiter →</button></div><button class="btn-ghost btn-sm btn-full" style="margin-top:4px;" onclick="window._radFinish(false)">Keine Karte verfügbar</button>';
-                } else if (step === 'bribe') {
-                    const info = radCardId ? CD[radCardId] : null;
-                    const name = info ? info.name : 'Karte #' + radCardId;
-                    const region = info && info.region ? info.region : '?';
-                    let btns =
-                        '<button class="btn-outline btn-sm" onclick="window._radSetBriber(\'nobody\')">Niemand / Wakhan</button><button class="btn-outline btn-sm" onclick="window._radSetBriber(\'p1\')">Spieler 1</button>';
-                    if (playerCount === 2) btns +=
-                        '<button class="btn-outline btn-sm" onclick="window._radSetBriber(\'p2\')">Spieler 2</button>';
-                    el.innerHTML = '<p>Wer <strong>beherrscht die Region</strong> von <strong>' + name + '</strong> (#' +
-                        radCardId + ', Region: ' + region + ')?</p><div class="row" style="gap:6px;">' + btns + '</div>';
-                } else if (step === 'bribeAmount') {
-                    el.innerHTML =
-                        '<p>Wie viele <strong>Stämme</strong> hat der Spieler in dieser Region?</p><div class="row" style="gap:6px;"><input type="number" class="input-num" id="bribeAmt" min="0" max="20" placeholder="Anzahl"><button class="btn-outline btn-sm" onclick="window._radCalcBribe()">Berechnen</button></div>';
-                } else if (step === 'result') {
-                    el.innerHTML = (data || 'Radikalisierung abgeschlossen.') +
-                        '<button class="btn-gold" style="margin-top:8px;" onclick="window._radFinish(true)">✓ Aktion abgeschlossen</button>';
+            function openRadWiz(actionText){radCardId=null;radBriber=null;document.getElementById('radCard').style.display='block';document.getElementById('radContent').innerHTML='';showRadStep('start');}
+            function showRadStep(step,data){
+                const el=document.getElementById('radContent');
+                if(step==='start'){
+                    const instr=getMarketInstruction();
+                    el.innerHTML='<p style="font-size:1rem;">🌀 <strong>Radikalisierung:</strong> Wakhan kauft eine Karte vom Markt und spielt sie aus.</p>'
+                    +'<ul style="font-size:.85rem;padding-left:20px;margin:8px 0;">'
+                    +'<li>📍 <strong>Reihe:</strong> '+instr.row+'</li>'
+                    +'<li>🔢 <strong>Spalte:</strong> '+instr.col+' (0 = ganz rechts)</li>'
+                    +'<li>➡️ Falls nicht verfügbar: nächste Karte links. Reihe leer → andere Reihe, gleiche Spalte.</li>'
+                    +'</ul>'
+                    +'<p style="font-size:.9rem;">Liegt eine <strong>Dominanzcheck-Ereigniskarte</strong> im Markt?</p>'
+                    +'<div class="row" style="gap:8px;"><button class="btn-outline btn-sm" onclick="window._radDomInMarket(true)">Ja</button><button class="btn-ghost btn-sm" onclick="window._radDomInMarket(false)">Nein</button></div>';
+                }else if(step==='domWins'){
+                    el.innerHTML='<p>Würde Wakhan beim Dominanzcheck die <strong>meisten Siegpunkte</strong> bekommen?</p><div class="row" style="gap:8px;"><button class="btn-outline btn-sm" onclick="window._radDomWins(true)">Ja – Dom.-Karte kaufen</button><button class="btn-ghost btn-sm" onclick="window._radDomWins(false)">Nein – andere Karte</button></div>';
+                }else if(step==='pickCard'){
+                    el.innerHTML='<p>Welche Karte wurde gekauft? <strong>Nr. 1–116</strong>:</p><p style="font-size:.8rem;color:var(--text3);">'+(data||'')+'</p><div class="row" style="gap:8px;"><input type="number" class="input-num" id="radInput" min="1" max="116" placeholder="Nr."><button class="btn-outline btn-sm" onclick="window._radCardPicked()">Weiter →</button></div><button class="btn-ghost btn-sm btn-full" style="margin-top:6px;" onclick="window._radFinish(false)">Keine Karte verfügbar</button>';
+                }else if(step==='bribe'){
+                    const info=radCardId?CD[radCardId]:null;const name=info?info.name:'Karte #'+radCardId;const region=info&&info.region?info.region:'?';
+                    let btns='<button class="btn-outline btn-sm" onclick="window._radSetBriber(\'nobody\')">Niemand / Wakhan</button><button class="btn-outline btn-sm" onclick="window._radSetBriber(\'p1\')">Spieler 1</button>';
+                    if(playerCount===2)btns+='<button class="btn-outline btn-sm" onclick="window._radSetBriber(\'p2\')">Spieler 2</button>';
+                    el.innerHTML='<p>Wer <strong>beherrscht die Region</strong> von <strong>'+name+'</strong> (#'+radCardId+', Region: '+region+')?</p><div class="row" style="gap:8px;">'+btns+'</div>';
+                }else if(step==='bribeAmount'){
+                    el.innerHTML='<p>Wie viele <strong>Stämme</strong> hat der Spieler in dieser Region?</p><div class="row" style="gap:8px;"><input type="number" class="input-num" id="bribeAmt" min="0" max="20" placeholder="Anzahl"><button class="btn-outline btn-sm" onclick="window._radCalcBribe()">Berechnen</button></div>';
+                }else if(step==='result'){
+                    el.innerHTML=(data||'Radikalisierung abgeschlossen.')+'<button class="btn-gold" style="margin-top:10px;" onclick="window._radFinish(true)">✓ Aktion abgeschlossen</button>';
                 }
             }
-            window._radDomInMarket = function(yes) { if (yes) showRadStep('domWins'); else showRadStep('pickCard',
-                    getMarketInstruction().row + ' Reihe, Spalte ' + getMarketInstruction().col + '.'); };
-            window._radDomWins = function(yes) { if (yes) showRadStep('pickCard',
-                    '<strong>Dom.-Karte gekauft!</strong> Führe Dominanzcheck durch. Gib dann die Kartennummer ein (101–104).'
-                    ); else showRadStep('pickCard',
-                    'Wähle: billigster Patriot der dom. Koalition, sonst billigste Karte mit meisten Armeen/Straßen, sonst billigste mit meisten Spionen/Stämmen.'
-                    ); };
-            window._radCardPicked = function() { const v = parseInt(document.getElementById('radInput').value); if (isNaN(
-                    v) || v < 1 || v > 116) { toast('Bitte Nr. 1–116 eingeben.'); return; }
-                radCardId = v; if (v > 100) { radBriber = 'nobody';
-                    finalizeRad(0); return; }
-                showRadStep('bribe'); };
-            window._radSetBriber = function(who) { radBriber = who; if (who === 'nobody') finalizeRad(
-                0); else showRadStep('bribeAmount'); };
-            window._radCalcBribe = function() { const amt = parseInt(document.getElementById('bribeAmt').value); if (isNaN(
-                    amt) || amt < 0) { toast('Bitte Anzahl eingeben.'); return; }
-                finalizeRad(amt); };
+            window._radDomInMarket=function(yes){if(yes)showRadStep('domWins');else showRadStep('pickCard',getMarketInstruction().row+' Reihe, Spalte '+getMarketInstruction().col+'.');};
+            window._radDomWins=function(yes){if(yes)showRadStep('pickCard','<strong>Dom.-Karte gekauft!</strong> Führe Dominanzcheck durch. Gib dann die Kartennummer ein (101–104).');else showRadStep('pickCard','Wähle: billigster Patriot der dom. Koalition, sonst billigste Karte mit meisten Armeen/Straßen, sonst billigste mit meisten Spionen/Stämmen.');};
+            window._radCardPicked=function(){const v=parseInt(document.getElementById('radInput').value);if(isNaN(v)||v<1||v>116){toast('Bitte Nr. 1–116 eingeben.');return;}radCardId=v;if(v>100){radBriber='nobody';finalizeRad(0);return;}showRadStep('bribe');};
+            window._radSetBriber=function(who){radBriber=who;if(who==='nobody')finalizeRad(0);else showRadStep('bribeAmount');};
+            window._radCalcBribe=function(){const amt=parseInt(document.getElementById('bribeAmt').value);if(isNaN(amt)||amt<0){toast('Bitte Anzahl eingeben.');return;}finalizeRad(amt);};
 
-            function getMarketSide() { if (!cur || !topDeck) return 'R'; const idx = cur.redArrow === 'top' ? 0 : 7; const
-                label = topDeck.backArray[idx].toLowerCase(); return label.includes('left') ? 'L' : 'R'; }
-
-            function getRegionPriorities() { if (!topDeck) return [0, 1, 2, 3, 4, 5]; return topDeck.backArray.slice(1,
-            7); }
-
-            function buildPlacementInstructions(info) {
-                if (!info) return '';
-                const pris = getRegionPriorities();
-                const prioNames = pris.map(i => REGION_BY_IDX[i] ? REGION_BY_IDX[i].n : '?').join(' → ');
-                let html = '<div class="placement-box"><strong>📋 Platzierungsanweisungen:</strong><br>';
-                const spies = info.impactIcons ? info.impactIcons.filter(i => i === 'spy').length : 0;
-                const armies = info.impactIcons ? info.impactIcons.filter(i => i === 'army').length : 0;
-                const roads = info.impactIcons ? info.impactIcons.filter(i => i === 'road').length : 0;
-                const tribes = info.impactIcons ? info.impactIcons.filter(i => i === 'tribe').length : 0;
-                if (spies > 0) html +=
-                    '<br>🕵️ <strong>' + spies + ' Spion(e):</strong> Auf Hofkarten der Region <em>' + info.region +
-                    '</em> mit höchster Kartenpriorität, wo Wakhan <strong>nicht</strong> die meisten Spione hat.';
-                if (roads > 0) html += '<br>🛤️ <strong>' + roads +
-                    ' Straße(n):</strong> An Grenzen gemäß Regionen-Priorität (siehe KI-Karte), beginnend bei Region <em>' +
-                    info.region + '</em>. Ungültige Grenzen überspringen.';
-                if (armies > 0) html += '<br>⚔️ <strong>' + armies +
-                    ' Armee(n):</strong> In der Kartenregion <em>' + info.region +
-                    '</em> platzieren (pragmatische Loyalität: <strong>' + wakLoy + '</strong>).';
-                if (tribes > 0) html += '<br>🏘️ <strong>' + tribes +
-                    ' Stamm/Stämme:</strong> In der Kartenregion <em>' + info.region +
-                    '</em> platzieren (pragmatische Loyalität: <strong>' + wakLoy + '</strong>).';
-                html += '<br><br><em>🌐 Regionen-Priorität (KI-Karte):</em> ' + prioNames;
-                html += '</div>';
+            function getMarketSide(){if(!cur||!topDeck)return'R';const idx=cur.redArrow==='top'?0:7;const label=topDeck.backArray[idx].toLowerCase();return label.includes('left')?'L':'R';}
+            function getRegionPriorities(){if(!topDeck)return[0,1,2,3,4,5];return topDeck.backArray.slice(1,7);}
+            function buildPlacementInstructions(info){
+                if(!info)return'';
+                const pris=getRegionPriorities();
+                const prioNames=pris.map(i=>REGION_BY_IDX[i]?REGION_BY_IDX[i].n:'?').join(' → ');
+                let html='<div class="placement-box"><strong>📋 Platzierungsanweisungen:</strong><br><ul style="margin-top:6px;padding-left:20px;">';
+                const spies=info.impactIcons?info.impactIcons.filter(i=>i==='spy').length:0;
+                const armies=info.impactIcons?info.impactIcons.filter(i=>i==='army').length:0;
+                const roads=info.impactIcons?info.impactIcons.filter(i=>i==='road').length:0;
+                const tribes=info.impactIcons?info.impactIcons.filter(i=>i==='tribe').length:0;
+                if(spies>0)html+='<li>🕵️ <strong>'+spies+' Spion(e):</strong> Auf Hofkarten der Region <em>'+info.region+'</em> mit höchster Kartenpriorität, wo Wakhan <strong>nicht</strong> die meisten Spione hat.</li>';
+                if(roads>0)html+='<li>🛤️ <strong>'+roads+' Straße(n):</strong> An Grenzen gemäß Regionen-Priorität (siehe KI-Karte), beginnend bei Region <em>'+info.region+'</em>. Ungültige Grenzen überspringen.</li>';
+                if(armies>0)html+='<li>⚔️ <strong>'+armies+' Armee(n):</strong> In der Kartenregion <em>'+info.region+'</em> platzieren (pragmatische Loyalität: <strong>'+wakLoy+'</strong>).</li>';
+                if(tribes>0)html+='<li>🏘️ <strong>'+tribes+' Stamm/Stämme:</strong> In der Kartenregion <em>'+info.region+'</em> platzieren (pragmatische Loyalität: <strong>'+wakLoy+'</strong>).</li>';
+                html+='</ul><p style="margin-top:6px;"><em>🌐 Regionen-Priorität (KI-Karte):</em> '+prioNames+'</p></div>';
                 return html;
             }
-
-            function finalizeRad(cost) {
-                const info = radCardId ? CD[radCardId] : null;
-                const isEvent = radCardId > 100;
-                const name = info ? (isEvent ? info.name : info.name) : 'Karte #' + radCardId;
-                let result = '';
-                if (isEvent) {
-                    events.push(radCardId);
-                    updateEventUI();
-                    result = '<p><strong>Ereignis #' + radCardId + ' – ' + name +
-                        '</strong> gekauft!<br>Wurde <em>nicht</em> in den Hof gelegt.</p>';
-                } else if (cost > rupien) {
-                    result = '<p class="warn">Wakhan kann Bestechung (<strong>' + cost +
-                        ' Rupien</strong>) nicht zahlen!<br>Karte wird <strong>abgeworfen</strong>.</p>';
-                } else {
-                    if (cost > 0) rupien -= cost;
-                    const side = getMarketSide();
-                    if (!court.find(c => c.id === radCardId)) { if (side === 'L') court.unshift({ id: radCardId,
-                            usedThisTurn: true }); else court.push({ id: radCardId, usedThisTurn: true }); }
-                    result = '<p>✅ <strong>' + name + '</strong> auf <strong>' + (side === 'L' ? 'linke' : 'rechte') +
-                        '</strong> Hofseite gelegt.' + (cost > 0 ? ' Bestechung: ' + cost + ' Rupien.' : '') + '</p>';
-                    if (info && info.impactIcons && info.impactIcons.length > 0) {
-                        result += buildPlacementInstructions(info);
-                    }
-                    if (info && info.suitChange) { preferredSuit = info.suitChange;
-                        result +=
-                        '<p style="color:#f0d060;margin-top:6px;">🔄 Bevorzugte Farbe → <strong>' + info.suitChange +
-                        '</strong></p>';
-                        updateTopBar(); }
+            function finalizeRad(cost){
+                const info=radCardId?CD[radCardId]:null;const isEvent=radCardId>100;const name=info?(isEvent?info.name:info.name):'Karte #'+radCardId;
+                let result='';
+                if(isEvent){
+                    events.push(radCardId);updateEventUI();
+                    result='<p><strong>Ereignis #'+radCardId+' – '+name+'</strong> gekauft!<br>Wurde <em>nicht</em> in den Hof gelegt.</p>';
+                }else if(cost>rupien){
+                    result='<p class="warn">Wakhan kann Bestechung (<strong>'+cost+' Rupien</strong>) nicht zahlen!<br>Karte wird <strong>abgeworfen</strong>.</p>';
+                }else{
+                    if(cost>0)rupien-=cost;
+                    const side=getMarketSide();
+                    if(!court.find(c=>c.id===radCardId)){if(side==='L')court.unshift({id:radCardId,usedThisTurn:true});else court.push({id:radCardId,usedThisTurn:true});}
+                    result='<p>✅ <strong>'+name+'</strong> auf <strong>'+(side==='L'?'linke':'rechte')+'</strong> Hofseite gelegt.'+(cost>0?' Bestechung: '+cost+' Rupien.':'')+'</p>';
+                    if(info&&info.impactIcons&&info.impactIcons.length>0)result+=buildPlacementInstructions(info);
+                    if(info&&info.suitChange){preferredSuit=info.suitChange;result+='<p style="color:#f0d060;margin-top:6px;">🔄 Bevorzugte Farbe → <strong>'+info.suitChange+'</strong></p>';updateTopBar();}
                     updateCourtUI();
                 }
-                showRadStep('result', result);
+                showRadStep('result',result);
             }
-            window._radFinish = function(success) { if (success && radCardId) { aDone++;
-                    aSkips[aIdx] = false; } else { aSkips[aIdx] = true; }
-                document.getElementById('radCard').style.display = 'none';
-                advanceAction(); };
+            window._radFinish=function(success){if(success&&radCardId){aDone++;aSkips[aIdx]=false;}else{aSkips[aIdx]=true;}document.getElementById('radCard').style.display='none';advanceAction();};
 
-            function showBonusPhase() {
+            function showBonusPhase(){
                 hideAllPanels();
-                const bonusCards = court.filter(c => !c.usedThisTurn && CD[c.id] && CD[c.id].suit === preferredSuit);
-                document.getElementById('bonusCard').style.display = 'block';
-                const body = document.getElementById('bonusBody');
-                if (bonusCards.length === 0) { body.innerHTML =
-                        '<p>Keine unbenutzten Hofkarten der Farbe <strong>' + preferredSuit + '</strong>.</p>'; } else {
-                    let html = '<p>Karten der Farbe <strong>' + preferredSuit + '</strong> (unbenutzt):</p>';
-                    bonusCards.forEach(c => { const info = CD[c.id]; if (!info) return; const firstAction = (info.actions &&
-                            info.actions.length > 0) ? info.actions[0] : 'keine';
-                        html +=
-                            '<div style="background:rgba(60,160,80,.1);border:1px solid rgba(60,160,80,.3);border-radius:6px;padding:5px 8px;margin:3px 0;font-size:.75rem;"><strong>#' +
-                            c.id + ' – ' + info.name + '</strong> (' + info.suit + ', R' + info.rank + ') → ' +
-                        firstAction + '</div>'; });
-                    html +=
-                        '<p style="font-size:.7rem;color:#aaa;margin-top:4px;">Führe die <strong>linke</strong> Aktion jeder Karte von <strong>links nach rechts</strong> aus.</p>';
-                    body.innerHTML = html; }
+                const bonusCards=court.filter(c=>!c.usedThisTurn&&CD[c.id]&&CD[c.id].suit===preferredSuit);
+                document.getElementById('bonusCard').style.display='block';
+                const body=document.getElementById('bonusBody');
+                if(bonusCards.length===0){body.innerHTML='<p>Keine unbenutzten Hofkarten der Farbe <strong>'+preferredSuit+'</strong>.</p>';}
+                else{
+                    let html='<p style="margin-bottom:8px;">Folgende Karten der Farbe <strong>'+preferredSuit+'</strong> sind noch <strong>unbenutzt</strong>:</p><ol style="padding-left:20px;font-size:.85rem;">';
+                    bonusCards.forEach(c=>{const info=CD[c.id];if(!info)return;const firstAction=(info.actions&&info.actions.length>0)?info.actions[0]:'keine';
+                        html+='<li style="margin-bottom:4px;"><strong>#'+c.id+' – '+info.name+'</strong> ('+info.suit+', R'+info.rank+') → '+firstAction+'</li>';});
+                    html+='</ol><p style="font-size:.8rem;color:#aaa;margin-top:6px;">Führe die <strong>linke</strong> Aktion jeder Karte von <strong>links nach rechts</strong> aus.</p>';
+                    body.innerHTML=html;
+                }
                 disc.push(cur.id);
             }
-            window._finishBonuses = function() { document.getElementById('bonusCard').style.display = 'none';
-                showVerwaltung(); };
+            window._finishBonuses=function(){document.getElementById('bonusCard').style.display='none';showVerwaltung();};
 
-            function showVerwaltung() {
-                hideAllPanels();
-                verwAbwurfIdx = 0;
-                verwCandidates = [];
-                const limit = courtLimit;
-                const over = court.length - limit;
-                const card = document.getElementById('verwCard');
-                card.style.display = 'block'; if (over <= 0) { document.getElementById('verwBody').innerHTML =
-                        '<p>Hofgröße: <strong>' + court.length + '/' + limit +
-                        '</strong> – im Rahmen.</p><p style="font-size:.73rem;color:var(--text3);">Handkarten: Wakhan hat keine.<br>Markt auffüllen: durch Mensch ausführen.</p><button class="btn-gold" style="margin-top:6px;" onclick="window._finishVerwaltung()">✓ Verwaltung erledigt</button>'; return; }
+            function showVerwaltung(){
+                hideAllPanels();verwAbwurfIdx=0;verwCandidates=[];
+                const limit=getCourtLimit();const over=court.length-limit;
+                document.getElementById('verwCard').style.display='block';
+                if(over<=0){document.getElementById('verwBody').innerHTML='<p>Hofgröße: <strong>'+court.length+'/'+limit+'</strong> – im Rahmen.</p><p style="font-size:.8rem;color:var(--text3);">Handkarten: Wakhan hat keine.<br>Markt auffüllen: durch Mensch ausführen.</p><button class="btn-gold" style="margin-top:8px;" onclick="window._finishVerwaltung()">✓ Verwaltung erledigt</button>';return;}
                 startAbwurfWizard(over);
             }
-
-            function startAbwurfWizard(over) {
-                verwCandidates = [...court];
-                verwAbwurfIdx = 0;
-                document.getElementById('verwBody').innerHTML =
-                    '<p>⚠ Hof zu groß: <strong>' + court.length + '/' + courtLimit + '</strong> – <strong>' + over +
-                    ' Karte(n)</strong> abwerfen!</p><p style="font-size:.73rem;">Die App schlägt Karten nach Abwerfpriorität vor.</p><div id="abwurfProgress"></div>';
+            function startAbwurfWizard(over){
+                verwCandidates=[...court];verwAbwurfIdx=0;
+                document.getElementById('verwBody').innerHTML='<p>⚠ Hof zu groß: <strong>'+court.length+'/'+getCourtLimit()+'</strong> – <strong>'+over+' Karte(n)</strong> abwerfen!</p><p style="font-size:.8rem;">Die App schlägt Karten nach Abwerfpriorität vor.</p><div id="abwurfProgress"></div>';
                 processAbwurfStep(over);
             }
-
-            function processAbwurfStep(needed) {
-                if (verwCandidates.length <= needed) { showAbwurfResult(needed); return; }
-                const remaining = verwCandidates.length - needed;
-                if (verwAbwurfIdx === 0) { const nonPolitik = verwCandidates.filter(c => CD[c.id] && CD[c.id].suit !==
-                        'Politik'); if (nonPolitik.length > 0 && verwCandidates.length - nonPolitik.length >= needed) {
-                        verwCandidates = nonPolitik;
-                        verwAbwurfIdx++;
-                        document.getElementById('abwurfProgress').innerHTML +=
-                            '<p style="font-size:.7rem;color:var(--text3);">→ Nicht-Politik-Karten priorisiert (' +
-                            verwCandidates.length + ' Kandidaten).</p>';
-                        processAbwurfStep(needed); return; } }
-                if (verwAbwurfIdx <= 1) { const noPatriot = verwCandidates.filter(c => CD[c.id] && !CD[c.id].patriot); if (
-                        noPatriot.length > 0 && verwCandidates.length - noPatriot.length >= needed && noPatriot.length <
-                        verwCandidates.length) { verwCandidates = noPatriot;
-                        verwAbwurfIdx = 2;
-                        document.getElementById('abwurfProgress').innerHTML +=
-                            '<p style="font-size:.7rem;color:var(--text3);">→ Kein-Patriot priorisiert (' + verwCandidates
-                            .length + ' Kandidaten).</p>';
-                        processAbwurfStep(needed); return; } }
-                if (verwAbwurfIdx <= 2) { askDebtThenContinue(needed); return; }
-                if (verwAbwurfIdx <= 3) { askSpyCountThenContinue(needed, 'mostForeignSpies'); return; }
-                if (verwAbwurfIdx <= 4) { askSpyCountThenContinue(needed, 'fewestSpies'); return; }
-                if (verwAbwurfIdx <= 5) { const lowestRank = Math.min(...verwCandidates.map(c => CD[c.id] ? (CD[c.id].rank ||
-                    0) : 0)); const lowRankCards = verwCandidates.filter(c => (CD[c.id] ? (CD[c.id].rank || 0) : 0) ===
-                    lowestRank); if (lowRankCards.length > 0 && verwCandidates.length - lowRankCards.length >= needed) {
-                    verwCandidates = lowRankCards;
-                    verwAbwurfIdx = 6;
-                    document.getElementById('abwurfProgress').innerHTML +=
-                        '<p style="font-size:.7rem;color:var(--text3);">→ Niedrigster Rang priorisiert (' +
-                        verwCandidates.length + ' Kandidaten).</p>';
-                    processAbwurfStep(needed); return; } }
-                if (verwAbwurfIdx <= 6) { const notPref = verwCandidates.filter(c => CD[c.id] && CD[c.id].suit !==
-                        preferredSuit); if (notPref.length > 0 && verwCandidates.length - notPref.length >= needed) {
-                    verwCandidates = notPref;
-                    verwAbwurfIdx = 7;
-                    document.getElementById('abwurfProgress').innerHTML +=
-                        '<p style="font-size:.7rem;color:var(--text3);">→ Nicht bevorzugte Farbe priorisiert (' +
-                        verwCandidates.length + ' Kandidaten).</p>';
-                    processAbwurfStep(needed); return; } }
-                verwCandidates.sort((a, b) => (a.id || 999) - (b.id || 999));
-                verwAbwurfIdx = 8;
-                document.getElementById('abwurfProgress').innerHTML +=
-                    '<p style="font-size:.7rem;color:var(--text3);">→ Nach niedrigster Kartennummer sortiert.</p>';
+            function processAbwurfStep(needed){
+                if(verwCandidates.length<=needed){showAbwurfResult(needed);return;}
+                if(verwAbwurfIdx===0){const nonPolitik=verwCandidates.filter(c=>CD[c.id]&&CD[c.id].suit!=='Politik');if(nonPolitik.length>0&&verwCandidates.length-nonPolitik.length>=needed){verwCandidates=nonPolitik;verwAbwurfIdx++;document.getElementById('abwurfProgress').innerHTML+='<p style="font-size:.75rem;color:var(--text3);">→ Nicht-Politik-Karten priorisiert ('+verwCandidates.length+' Kandidaten).</p>';processAbwurfStep(needed);return;}}
+                if(verwAbwurfIdx<=1){const noPatriot=verwCandidates.filter(c=>CD[c.id]&&!CD[c.id].patriot);if(noPatriot.length>0&&verwCandidates.length-noPatriot.length>=needed&&noPatriot.length<verwCandidates.length){verwCandidates=noPatriot;verwAbwurfIdx=2;document.getElementById('abwurfProgress').innerHTML+='<p style="font-size:.75rem;color:var(--text3);">→ Kein-Patriot priorisiert ('+verwCandidates.length+' Kandidaten).</p>';processAbwurfStep(needed);return;}}
+                if(verwAbwurfIdx<=2){askDebtThenContinue(needed);return;}
+                if(verwAbwurfIdx<=3){askSpyCountThenContinue(needed,'mostForeignSpies');return;}
+                if(verwAbwurfIdx<=4){askSpyCountThenContinue(needed,'fewestSpies');return;}
+                if(verwAbwurfIdx<=5){const lowestRank=Math.min(...verwCandidates.map(c=>CD[c.id]?(CD[c.id].rank||0):0));const lowRankCards=verwCandidates.filter(c=>(CD[c.id]?(CD[c.id].rank||0):0)===lowestRank);if(lowRankCards.length>0&&verwCandidates.length-lowRankCards.length>=needed){verwCandidates=lowRankCards;verwAbwurfIdx=6;document.getElementById('abwurfProgress').innerHTML+='<p style="font-size:.75rem;color:var(--text3);">→ Niedrigster Rang priorisiert ('+verwCandidates.length+' Kandidaten).</p>';processAbwurfStep(needed);return;}}
+                if(verwAbwurfIdx<=6){const notPref=verwCandidates.filter(c=>CD[c.id]&&CD[c.id].suit!==preferredSuit);if(notPref.length>0&&verwCandidates.length-notPref.length>=needed){verwCandidates=notPref;verwAbwurfIdx=7;document.getElementById('abwurfProgress').innerHTML+='<p style="font-size:.75rem;color:var(--text3);">→ Nicht bevorzugte Farbe priorisiert ('+verwCandidates.length+' Kandidaten).</p>';processAbwurfStep(needed);return;}}
+                verwCandidates.sort((a,b)=>(a.id||999)-(b.id||999));verwAbwurfIdx=8;
+                document.getElementById('abwurfProgress').innerHTML+='<p style="font-size:.75rem;color:var(--text3);">→ Nach niedrigster Kartennummer sortiert.</p>';
                 showAbwurfResult(needed);
             }
-
-            function askDebtThenContinue(needed) {
-                const fremdIds = verwCandidates.map(c => c.id).join(', ');
-                if (confirm(
-                        'Welche dieser Hofkarten sind <strong>fremdfinanziert</strong> (Schuldensymbol)?\n\nKarten: #' +
-                        fremdIds + '\n\nOK = Eingabe\nAbbrechen = Keine')) {
-                    const input = prompt(
-                        'Gib die Kartennummern der fremdfinanzierten Karten ein (durch Komma getrennt):'); if (input) { const
-                        debtIds = input.split(',').map(s => parseInt(s.trim())).filter(n => !isNaN(n)); const noDebt =
-                        verwCandidates.filter(c => !debtIds.includes(c.id)); if (noDebt.length > 0 && verwCandidates
-                            .length - noDebt.length >= needed) verwCandidates = noDebt; }
+            function askDebtThenContinue(needed){
+                const fremdIds=verwCandidates.map(c=>c.id).join(', ');
+                if(confirm('Welche dieser Hofkarten sind <strong>fremdfinanziert</strong> (Schuldensymbol)?\n\nKarten: #'+fremdIds+'\n\nOK = Eingabe\nAbbrechen = Keine')){
+                    const input=prompt('Gib die Kartennummern der fremdfinanzierten Karten ein (durch Komma getrennt):');if(input){const debtIds=input.split(',').map(s=>parseInt(s.trim())).filter(n=>!isNaN(n));const noDebt=verwCandidates.filter(c=>!debtIds.includes(c.id));if(noDebt.length>0&&verwCandidates.length-noDebt.length>=needed)verwCandidates=noDebt;}
                 }
-                verwAbwurfIdx = 3;
-                document.getElementById('abwurfProgress').innerHTML +=
-                    '<p style="font-size:.7rem;color:var(--text3);">→ Fremdfinanzierung geprüft (' + verwCandidates.length +
-                    ' Kandidaten).</p>';
-                processAbwurfStep(needed);
+                verwAbwurfIdx=3;document.getElementById('abwurfProgress').innerHTML+='<p style="font-size:.75rem;color:var(--text3);">→ Fremdfinanzierung geprüft ('+verwCandidates.length+' Kandidaten).</p>';processAbwurfStep(needed);
             }
-
-            function askSpyCountThenContinue(needed, mode) {
-                const candidateIds = verwCandidates.map(c => c.id).join(', ');
-                const label = mode === 'mostForeignSpies' ?
-                    'die <strong>meisten fremden Spione</strong> (mehr als Wakhan) haben' :
-                    'die <strong>wenigsten Spione</strong> haben';
-                if (confirm('Welche dieser Hofkarten ' + label + '?\n\nKandidaten: #' + candidateIds +
-                        '\n\nOK = Eingabe\nAbbrechen = Keine Unterschiede')) {
-                    const input = prompt('Gib die Kartennummern ein (durch Komma getrennt):'); if (input) { const spyIds =
-                            input.split(',').map(s => parseInt(s.trim())).filter(n => !isNaN(n)); const filtered = mode ===
-                            'mostForeignSpies' ? verwCandidates.filter(c => spyIds.includes(c.id)) : verwCandidates
-                        .filter(c => !spyIds.includes(c.id)); if (filtered.length > 0 && verwCandidates.length - filtered
-                            .length >= needed) verwCandidates = filtered; }
+            function askSpyCountThenContinue(needed,mode){
+                const candidateIds=verwCandidates.map(c=>c.id).join(', ');const label=mode==='mostForeignSpies'?'die <strong>meisten fremden Spione</strong> (mehr als Wakhan) haben':'die <strong>wenigsten Spione</strong> haben';
+                if(confirm('Welche dieser Hofkarten '+label+'?\n\nKandidaten: #'+candidateIds+'\n\nOK = Eingabe\nAbbrechen = Keine Unterschiede')){
+                    const input=prompt('Gib die Kartennummern ein (durch Komma getrennt):');if(input){const spyIds=input.split(',').map(s=>parseInt(s.trim())).filter(n=>!isNaN(n));const filtered=mode==='mostForeignSpies'?verwCandidates.filter(c=>spyIds.includes(c.id)):verwCandidates.filter(c=>!spyIds.includes(c.id));if(filtered.length>0&&verwCandidates.length-filtered.length>=needed)verwCandidates=filtered;}
                 }
-                verwAbwurfIdx = mode === 'mostForeignSpies' ? 4 : 5;
-                document.getElementById('abwurfProgress').innerHTML +=
-                    '<p style="font-size:.7rem;color:var(--text3);">→ Spion-Prüfung abgeschlossen (' + verwCandidates.length +
-                    ' Kandidaten).</p>';
-                processAbwurfStep(needed);
+                verwAbwurfIdx=mode==='mostForeignSpies'?4:5;document.getElementById('abwurfProgress').innerHTML+='<p style="font-size:.75rem;color:var(--text3);">→ Spion-Prüfung abgeschlossen ('+verwCandidates.length+' Kandidaten).</p>';processAbwurfStep(needed);
             }
-
-            function showAbwurfResult(needed) {
-                const toDiscard = verwCandidates.slice(0, needed);
-                let html = '<p><strong>Vorschlag zum Abwerfen:</strong></p>';
-                toDiscard.forEach(c => { const info = CD[c.id];
-                    html +=
-                        '<div style="background:rgba(200,60,40,.1);border:1px solid rgba(200,60,40,.3);border-radius:6px;padding:6px 8px;margin:3px 0;font-size:.78rem;"><strong>#' +
-                        c.id + ' – ' + (info ? info.name : '?') + '</strong> (' + (info ? info.suit : '?') + ', R' + (info ?
-                            info.rank : '?') +
-                        ') <button class="btn-sm btn-danger" style="padding:3px 8px;font-size:.7rem;" onclick="window._discardCourtCard(' +
-                        c.id + ')">✕ Abwerfen</button></div>'; });
-                html +=
-                    '<p style="font-size:.7rem;color:var(--text3);margin-top:4px;">Wirf die vorgeschlagenen Karten ab oder wähle manuell im Hof.</p><button class="btn-gold" style="margin-top:6px;" onclick="window._finishVerwaltung()">✓ Verwaltung erledigt</button>';
-                document.getElementById('verwBody').innerHTML = html;
+            function showAbwurfResult(needed){
+                const toDiscard=verwCandidates.slice(0,needed);
+                let html='<p><strong>Vorschlag zum Abwerfen:</strong></p>';
+                toDiscard.forEach(c=>{const info=CD[c.id];html+='<div style="background:rgba(200,60,40,.1);border:1px solid rgba(200,60,40,.3);border-radius:6px;padding:8px;margin:4px 0;font-size:.85rem;"><strong>#'+c.id+' – '+(info?info.name:'?')+'</strong> ('+(info?info.suit:'?')+', R'+(info?info.rank:'?')+') <button class="btn-sm btn-danger" style="padding:4px 10px;font-size:.8rem;" onclick="window._discardCourtCard('+c.id+')">✕ Abwerfen</button></div>';});
+                html+='<p style="font-size:.8rem;color:var(--text3);margin-top:6px;">Wirf die vorgeschlagenen Karten ab oder wähle manuell im Hof.</p><button class="btn-gold" style="margin-top:8px;" onclick="window._finishVerwaltung()">✓ Verwaltung erledigt</button>';
+                document.getElementById('verwBody').innerHTML=html;
             }
-            window._discardCourtCard = function(id) { const idx = court.findIndex(c => c.id === id); if (idx >= 0) { court
-                    .splice(idx, 1);
-                    updateCourtUI();
-                    toast('Karte #' + id + ' abgeworfen.'); } if (court.length <= courtLimit) { document.getElementById(
-                    'verwBody').innerHTML += '<p style="color:#80d080;">✅ Hof jetzt im Limit!</p>'; } };
-            window._finishVerwaltung = function() {
-                turnActive = false;
-                document.getElementById('btnStartTurn').disabled = false;
-                hideAllPanels();
-                court.forEach(c => c.usedThisTurn = false);
-                updateCourtUI();
-                clearCurUI();
-                document.getElementById('priorityPills').style.display = 'none';
-                toast('✅ Wakhans Zug abgeschlossen.');
-                showScreen('scrGame');
+            window._discardCourtCard=function(id){const idx=court.findIndex(c=>c.id===id);if(idx>=0){court.splice(idx,1);updateCourtUI();toast('Karte #'+id+' abgeworfen.');}if(court.length<=getCourtLimit()){document.getElementById('verwBody').innerHTML+='<p style="color:#80d080;">✅ Hof jetzt im Limit!</p>';}};
+            window._finishVerwaltung=function(){
+                turnActive=false;document.getElementById('btnStartTurn').disabled=false;hideAllPanels();
+                court.forEach(c=>c.usedThisTurn=false);updateCourtUI();clearCurUI();
+                document.getElementById('priorityPills').style.display='none';toast('✅ Wakhans Zug abgeschlossen.');showScreen('scrGame');
             };
 
-            document.getElementById('rulesContent').innerHTML = `
-            <h4>Pragmatische Loyalität</h4><p>Erste Koalition in der Loyalitätsreihe der KI-Karte, die <em>kein</em> menschlicher Spieler besitzt.</p>
-            <h4>Kartenpriorität</h4><ul><li>Karte eines Mitspielers</li><li>Bevorzugte Farbe</li><li>Patriot des dominanten Bündnisses</li><li>Beute des dom. Bündnisses</li><li>Anderer Patriot</li><li>Fremdfinanziert</li><li>Höchster Rang</li><li>Höchste Nr.</li></ul>
-            <h4>Abwerfpriorität</h4><ul><li>Nicht-Politik</li><li>Kein Patriot</li><li>Nicht-fremdfinanziert</li><li>Meiste fremde Spione</li><li>Wenigste Spione</li><li>Niedrigster Rang</li><li>Nicht bevorzugte Farbe</li><li>Niedrigste Nr.</li></ul>
-            <h4>Kampf</h4><p>Region mit ≥1 Armee + feindlichen Einheiten. Zerstörung: Stämme → Armeen → Straßen.</p>
-            <h4>Steuern</h4><p>Spieler vor Marktkarten. Meiste Rupien zuerst. Gleichstand → roter Pfeil.</p>
-            <h4>Marschieren</h4><p>Nur Armeen, keine Straßen nötig. In Regionen mit feindlichen Stämmen.</p>
-            <h4>Bauen</h4><p>Region am weitesten links auf KI-Karte mit Wakhan-Vorherrschaft.</p>`;
+            document.getElementById('rulesContent').innerHTML=`<h4>Pragmatische Loyalität</h4><p>Erste Koalition in der Loyalitätsreihe der KI-Karte, die <em>kein</em> menschlicher Spieler besitzt.</p><h4>Kartenpriorität</h4><ul><li>Karte eines Mitspielers</li><li>Bevorzugte Farbe</li><li>Patriot des dominanten Bündnisses</li><li>Beute des dom. Bündnisses</li><li>Anderer Patriot</li><li>Fremdfinanziert</li><li>Höchster Rang</li><li>Höchste Nr.</li></ul><h4>Abwerfpriorität</h4><ul><li>Nicht-Politik</li><li>Kein Patriot</li><li>Nicht-fremdfinanziert</li><li>Meiste fremde Spione</li><li>Wenigste Spione</li><li>Niedrigster Rang</li><li>Nicht bevorzugte Farbe</li><li>Niedrigste Nr.</li></ul><h4>Kampf</h4><p>Region mit ≥1 Armee + feindlichen Einheiten. Zerstörung: Stämme → Armeen → Straßen.</p><h4>Steuern</h4><p>Spieler vor Marktkarten. Meiste Rupien zuerst. Gleichstand → roter Pfeil.</p><h4>Marschieren</h4><p>Nur Armeen, keine Straßen nötig. In Regionen mit feindlichen Stämmen.</p><h4>Bauen</h4><p>Region am weitesten links auf KI-Karte mit Wakhan-Vorherrschaft.</p>`;
 
-            // Globale Funktionen exponieren
-            window._zoomStack = zoomStack;
-            window._zoomCur = zoomCur;
-            window._closeZoom = closeZoom;
-            window._addCourtManual = addCourtManual;
-            window._clearCourt = clearCourt;
-            window._addEvent = addEvent;
-            window._startTurn = window._startTurn;
-            window._resolveAction = window._resolveAction;
-            window._finishBonuses = window._finishBonuses;
-            window._radDomInMarket = window._radDomInMarket;
-            window._radDomWins = window._radDomWins;
-            window._radCardPicked = window._radCardPicked;
-            window._radSetBriber = window._radSetBriber;
-            window._radCalcBribe = window._radCalcBribe;
-            window._radFinish = window._radFinish;
-            window._discardCourtCard = window._discardCourtCard;
-            window._finishVerwaltung = window._finishVerwaltung;
-            window._resetGame = window._resetGame;
-            window._setupPickCount = window._setupPickCount;
-            window._setupPickLoy = window._setupPickLoy;
-            window._finishSetup = window._finishSetup;
+            window._addCourtManual=addCourtManual;window._clearCourt=clearCourt;window._addEvent=addEvent;
+            window._startTurn=window._startTurn;window._resolveAction=window._resolveAction;window._finishBonuses=window._finishBonuses;
+            window._radDomInMarket=window._radDomInMarket;window._radDomWins=window._radDomWins;window._radCardPicked=window._radCardPicked;
+            window._radSetBriber=window._radSetBriber;window._radCalcBribe=window._radCalcBribe;window._radFinish=window._radFinish;
+            window._discardCourtCard=window._discardCourtCard;window._finishVerwaltung=window._finishVerwaltung;
+            window._resetGame=window._resetGame;window._setupPickCount=window._setupPickCount;window._setupPickLoy=window._setupPickLoy;
+            window._finishSetup=window._finishSetup;
 
             renderSetup();
-            document.addEventListener('keydown', e => { if (e.key === 'Escape') closeZoom(); });
+            document.addEventListener('keydown',e=>{if(e.key==='Escape')window._closeZoom();});
             updateTopBar();
         })();
     </script>
