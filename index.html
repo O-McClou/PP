@@ -527,8 +527,8 @@
             { id: 140, loyaltyOrder: ["Bär","Löwe","Adler"], actions: ["Radicalize (special)","Gift","Radicalize"], blackArrow: 5, redArrow: "top", backTopLabel: "Top (left)", priorities: [4,5,0,1,2,3] }
         ];
 
-        // In deutsches Format konvertieren
-        const WKC_RAW = WAKHAN_CARDS_RAW.map(c => ({
+        // In deutsches Format konvertieren und NUR die benötigten Felder behalten
+        const WKC = WAKHAN_CARDS_RAW.map(c => ({
             id: c.id,
             loyaltyOrder: c.loyaltyOrder.map(l => LOYALTY_MAP[l]),
             action1_de: ACTION_DE[c.actions[0]] || c.actions[0],
@@ -539,15 +539,6 @@
             backTopLabel: c.backTopLabel,
             priorities: c.priorities
         }));
-
-        // backArray bauen (für Anzeige der Rückseite)
-        const WKC = WKC_RAW.map(c => {
-            const oppLabel = c.backTopLabel === "Top (left)" ? "Bottom (right)" : "Top (left)";
-            return {
-                ...c,
-                backArray: [c.backTopLabel, ...c.priorities, oppLabel]
-            };
-        });
 
         // ─── REGIONEN ──────────────────────────────────────────────────────────────────
         const REGS = [
@@ -851,35 +842,42 @@
             }
         }
 
+        // ═══════════════════════════════════════════════════════════════════
+        // KORRIGIERTE updatePriorityDisplay (verwendet priorities & backTopLabel)
+        // ═══════════════════════════════════════════════════════════════════
         function updatePriorityDisplay() {
             const pvDiv = document.getElementById('priorityValues');
             const grid = document.getElementById('pvGrid');
             const labelEl = document.getElementById('pvLabel');
+
             if (!topDeck || !cur) {
                 pvDiv.style.display = 'none';
                 return;
             }
-            pvDiv.style.display = 'block';
-            const backArray = topDeck.backArray;
-            const activeIndex = cur.blackArrow;
-            const topLabel = backArray[0];
-            labelEl.textContent = topLabel;
 
+            pvDiv.style.display = 'block';
+            
+            // Korrektur: Nutze backTopLabel statt backArray[0]
+            labelEl.textContent = topDeck.backTopLabel;
+            
             grid.innerHTML = '';
+            
+            // Korrektur: Nutze das priorities-Array (0-5)
+            // cur.blackArrow ist 1-6, daher ist der Index i-1
             for (let i = 1; i <= 6; i++) {
-                const val = backArray[i];
+                const val = topDeck.priorities[i - 1]; 
                 const region = REGION_BY_IDX[val];
                 const regionName = region ? region.n : '?';
+                
                 const item = document.createElement('div');
-                item.className = 'pv-item' + (i === activeIndex ? ' active' : '');
+                // Highlighte das Element, auf das der schwarze Pfeil (1-6) zeigt
+                item.className = (i === cur.blackArrow) ? 'pv-item active' : 'pv-item';
+                
                 item.innerHTML = `
-                    <div class="pv-pos">Pos ${i}</div>
+                    <div class="pv-pos">${i}</div>
                     <div class="pv-val">${val}</div>
                     <div class="pv-region">${regionName}</div>
                 `;
-                if (i === activeIndex) {
-                    item.title = 'Schwarzer Pfeil zeigt auf diese Position → Spalte ' + val;
-                }
                 grid.appendChild(item);
             }
         }
@@ -1221,11 +1219,20 @@
             }
         }
 
+        // ═══════════════════════════════════════════════════════════════════
+        // KORRIGIERTE marketPfeilText (verwendet getRedArrowDecision & getMarketColumn)
+        // ═══════════════════════════════════════════════════════════════════
         function marketPfeilText() {
-            if (!cur || !topDeck) return '';
+            if (!topDeck || !cur) return "";
+            
             const decision = getRedArrowDecision(cur, topDeck);
             const col = getMarketColumn(cur, topDeck);
-            return `<strong>Standard-Pfeil:</strong> ${decision.marketRow} Marktreihe, Spalte ${col} (0=rechts, 5=links).<br>Falls Karte nicht verfügbar: nächste links davon. Reihe leer → andere Reihe, gleiche Spalte.`;
+            
+            const rowText = decision.marketRow === "top" ? "OBERE" : "UNTERE";
+            const sideText = decision.courtSide === "left" ? "LINKS" : "RECHTS";
+
+            return `<strong>Pfeil-Analyse:</strong> Kauf aus der <u>${rowText}</u> Marktreihe, Spalte <u>${col}</u> (0=ganz rechts).<br>` +
+                   `Lege die Karte anschließend <u>${sideText}</u> in Wakhans Hof.`;
         }
 
         function goToMarketStep() {
