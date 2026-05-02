@@ -626,6 +626,8 @@
             -webkit-backdrop-filter: blur(8px);
             padding: 16px;
             padding-bottom: max(16px, env(safe-area-inset-bottom));
+            /* Smooth peek transition */
+            transition: background 0.2s ease, backdrop-filter 0.2s ease, -webkit-backdrop-filter 0.2s ease;
         }
         .modal-overlay.open {
             display: flex;
@@ -634,6 +636,18 @@
         @keyframes modalBgFade {
             from { opacity: 0; }
             to   { opacity: 1; }
+        }
+
+        /* ── PEEK STATE: background fades out, card vanishes ── */
+        .modal-overlay.is-peeking {
+            background: rgba(10,6,14,0) !important;
+            backdrop-filter: blur(0px) !important;
+            -webkit-backdrop-filter: blur(0px) !important;
+            pointer-events: none; /* click-through while peeking */
+        }
+        .modal-overlay.is-peeking .modal-card {
+            opacity: 0;
+            transform: scale(0.97) translateY(8px);
         }
 
         .modal-card {
@@ -653,6 +667,8 @@
                 0 0 0 1px rgba(200,168,75,0.07),
                 inset 0 1px 0 rgba(200,168,75,0.07);
             animation: modalSlideIn 0.32s cubic-bezier(0.34,1.1,0.64,1) forwards;
+            /* Smooth peek transition */
+            transition: opacity 0.2s ease, transform 0.2s ease;
         }
         @keyframes modalSlideIn {
             from { transform: translateY(24px) scale(0.98); opacity: 0.7; }
@@ -775,6 +791,71 @@
             width: 100%;
             font-size: 0.88rem;
             min-height: 42px;
+        }
+
+        /* ── PEEK BUTTON ── */
+        #btnWizPeek {
+            width: 100%;
+            min-height: 40px;
+            font-size: 0.82rem;
+            background: transparent;
+            border: 1px solid rgba(200,168,75,0.15);
+            color: var(--text3);
+            letter-spacing: 0.04em;
+            /* Critical for iOS: prevents text-selection popup on long press */
+            -webkit-user-select: none;
+            user-select: none;
+            -webkit-touch-callout: none;
+            touch-action: none;
+        }
+        #btnWizPeek:active,
+        #btnWizPeek.peeking {
+            background: rgba(200,168,75,0.07);
+            color: var(--gold2);
+            border-color: var(--gold-border);
+            transform: none; /* don't lift, it's a hold gesture */
+        }
+
+        /* ── NEXT-CARD PRIORITY BANNER (inside .modal-body) ── */
+        .next-priority-banner {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(200,168,75,0.06);
+            border: 1px solid var(--gold-border);
+            border-radius: 12px;
+            padding: 10px 14px;
+            margin-bottom: 14px;
+        }
+        .next-priority-icon {
+            font-size: 1.8rem;
+            line-height: 1;
+            flex-shrink: 0;
+        }
+        .next-priority-text {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+        .next-priority-label {
+            font-size: 0.60rem;
+            color: var(--text3);
+            text-transform: uppercase;
+            letter-spacing: 0.10em;
+            font-family: 'Lato', sans-serif;
+            font-weight: 700;
+        }
+        .next-priority-value {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.0rem;
+            font-weight: 700;
+            color: var(--gold2);
+            line-height: 1.2;
+        }
+        .next-priority-sub {
+            font-size: 0.78rem;
+            color: var(--text3);
+            font-style: italic;
         }
 
         /* ─────────────────────────────────────────
@@ -1103,6 +1184,8 @@
             </div>
             <!-- Überspringen / Alternative (optional) -->
             <button class="btn-secondary btn-skip" id="btnWizSkip" style="display:none;">✗ Überspringen</button>
+            <!-- PEEK: Gedrückt halten → Modal verschwindet, Brett sichtbar -->
+            <button id="btnWizPeek" title="Gedrückt halten zum Ansehen">👁 Brett ansehen</button>
         </div>
 
     </div>
@@ -1492,49 +1575,99 @@
         });
     }
 
+    // ── Region icons for the priority banner ──────────────────────────────
+    const regionIcons = ['🏔','🏙','🌵','🌾','🏜','🕌']; // T, K, Ka, Pu, H, P
+
+    // ── Peek logic (shared between mouse and touch) ───────────────────────
+    function peekStart(){
+        document.getElementById('wizardModal').classList.add('is-peeking');
+        document.getElementById('btnWizPeek').classList.add('peeking');
+    }
+    function peekEnd(){
+        document.getElementById('wizardModal').classList.remove('is-peeking');
+        document.getElementById('btnWizPeek').classList.remove('peeking');
+        // Re-enable pointer events (was disabled during peek)
+        document.getElementById('wizardModal').style.pointerEvents = '';
+    }
+
     // ──────────────────────────────────────
-    // WIZARD — Jetzt als vollwertiges Full-Screen-Modal
+    // WIZARD — Full-Screen-Modal mit Priority-Banner + Peek
     // ──────────────────────────────────────
     function hideWizard(){
         const modal=document.getElementById('wizardModal');
-        modal.classList.remove('open');
+        modal.classList.remove('open','is-peeking');
         modal.style.display='none';
     }
-    function showWizard(title,body,buttons){
-        const modal=document.getElementById('wizardModal');
-        modal.style.display='flex';
-        // Trigger reflow for animation
-        modal.offsetHeight; // eslint-disable-line
+    function showWizard(title, body, buttons){
+        const modal = document.getElementById('wizardModal');
+        modal.style.display = 'flex';
+        modal.offsetHeight; // force reflow for animation
         modal.classList.add('open');
+        modal.classList.remove('is-peeking');
 
         updatePhaseIndicator();
 
+        // ── Build next-card priority banner ──────────────────────────────
+        let priorityBanner = '';
+        if (state.nextCardPriority) {
+            const p = state.nextCardPriority;
+            const peekNote = state._topCardFromPeek
+                ? '<span style="font-size:.72rem;color:var(--warn);margin-top:2px;font-style:italic;">⚠ Stapel leer – Wert aus temporärem Neushuffle</span>'
+                : '';
+            priorityBanner = `
+                <div class="next-priority-banner">
+                    <div class="next-priority-icon">${p.icon}</div>
+                    <div class="next-priority-text">
+                        <span class="next-priority-label">Ziel-Priorität (nächste Karte, Spalte ${p.col})</span>
+                        <span class="next-priority-value">${p.name}</span>
+                        ${peekNote}
+                    </div>
+                </div>`;
+        }
+
         // Set title
-        document.getElementById('wizTitle').textContent=title;
+        document.getElementById('wizTitle').textContent = title;
 
-        // Set body & scroll to top
-        const bodyEl=document.getElementById('wizBody');
-        bodyEl.innerHTML=body;
-        bodyEl.scrollTop=0;
+        // Set body (banner first, then content) and scroll to top
+        const bodyEl = document.getElementById('wizBody');
+        bodyEl.innerHTML = priorityBanner + body;
+        bodyEl.scrollTop = 0;
 
-        // Configure buttons
-        const btnBack=document.getElementById('btnWizBack');
-        const btnNext=document.getElementById('btnWizNext');
-        const btnSkip=document.getElementById('btnWizSkip');
+        // ── Configure navigation buttons ──────────────────────────────────
+        const btnBack = document.getElementById('btnWizBack');
+        const btnNext = document.getElementById('btnWizNext');
+        const btnSkip = document.getElementById('btnWizSkip');
 
-        // Back (secondary)
-        btnBack.style.display=buttons.back?'':'none';
-        if(buttons.backFn) btnBack.onclick=buttons.backFn;
+        btnBack.style.display = buttons.back ? '' : 'none';
+        if (buttons.backFn) btnBack.onclick = buttons.backFn;
 
-        // Next (primary)
-        btnNext.style.display=buttons.next?'':'none';
-        btnNext.textContent=buttons.nextLabel||'Weiter →';
-        btnNext.onclick=buttons.nextFn||(()=>{});
+        btnNext.style.display = buttons.next ? '' : 'none';
+        btnNext.textContent   = buttons.nextLabel || 'Weiter →';
+        btnNext.onclick       = buttons.nextFn || (()=>{});
 
-        // Skip (secondary)
-        btnSkip.style.display=buttons.skip?'':'none';
-        btnSkip.textContent=buttons.skipLabel||'✗ Überspringen';
-        btnSkip.onclick=buttons.skipFn||(()=>{});
+        btnSkip.style.display = buttons.skip ? '' : 'none';
+        btnSkip.textContent   = buttons.skipLabel || '✗ Überspringen';
+        btnSkip.onclick       = buttons.skipFn || (()=>{});
+
+        // ── Wire up Peek button (touch + mouse, iOS-safe) ─────────────────
+        const peekBtn = document.getElementById('btnWizPeek');
+
+        // Clone to remove any old listeners cleanly
+        const freshPeek = peekBtn.cloneNode(true);
+        peekBtn.parentNode.replaceChild(freshPeek, peekBtn);
+
+        // Touch (primary, iOS-native feel)
+        freshPeek.addEventListener('touchstart', e => {
+            e.preventDefault(); // prevents iOS context menu + tap highlight
+            peekStart();
+        }, { passive: false });
+        freshPeek.addEventListener('touchend',    e => { e.preventDefault(); peekEnd(); }, { passive: false });
+        freshPeek.addEventListener('touchcancel', e => { e.preventDefault(); peekEnd(); }, { passive: false });
+
+        // Mouse fallback (desktop / Android)
+        freshPeek.addEventListener('mousedown', e => { e.preventDefault(); peekStart(); });
+        freshPeek.addEventListener('mouseup',   ()  => peekEnd());
+        freshPeek.addEventListener('mouseleave',()  => peekEnd());
     }
 
     // ──────────────────────────────────────
@@ -1568,7 +1701,42 @@
         if(!state.pile.length){state.pile=[...state.discard];state.discard=[];shuffle(state.pile);toast('KI-Stapel neu gemischt!');}
         const id=state.pile.pop(); state.currentCard=WKC_BY_ID[id]||null;
         if(!state.currentCard){toast('Fehler: KI-Karte nicht gefunden!');return;}
-        state.topCard=state.pile.length>0?(WKC_BY_ID[state.pile[state.pile.length-1]]||null):null;
+
+        // ── TWO-CARD SYSTEM ──────────────────────────────────────────────────
+        // The CURRENT card's front = active actions (loyalties, action texts).
+        // The NEXT card's BACK = region priorities + market column (blackArrow).
+        // state.topCard is always the card NOW on top of the pile after the draw.
+        state.topCard = state.pile.length > 0
+            ? (WKC_BY_ID[state.pile[state.pile.length - 1]] || null)
+            : null;
+
+        // If the pile is now empty we need to peek at the discard to determine
+        // the next card's back — reshuffle a temporary copy, don't touch state.
+        if (!state.topCard && state.discard.length > 0) {
+            const tempPile = [...state.discard];
+            shuffle(tempPile);
+            const peekId = tempPile[tempPile.length - 1];
+            state.topCard = WKC_BY_ID[peekId] || null;
+            state._topCardFromPeek = true; // flag: came from temp reshuffle
+        } else {
+            state._topCardFromPeek = false;
+        }
+
+        // Derive the human-readable priority from the next card's back.
+        // backArray = [topLabel, pri0, pri1, pri2, pri3, pri4, pri5, bottomLabel]
+        // blackArrow on the CURRENT card points to which column (1-6) to use.
+        if (state.topCard && state.currentCard) {
+            const colIdx = state.currentCard.blackArrow; // 1–6
+            const regionIdx = state.topCard.backArray[colIdx]; // 0–5
+            const region = REGION_BY_IDX[regionIdx];
+            state.nextCardPriority = region
+                ? { icon: regionIcons[regionIdx] || '🗺', name: region.n, cls: region.c, col: colIdx }
+                : null;
+        } else {
+            state.nextCardPriority = null;
+        }
+        // ────────────────────────────────────────────────────────────────────
+
         state.actionsCompleted=0;state.actionSkips=[false,false,false];state.currentActionIdx=0;
         state.radicalizedThisTurn=null;state.radCardId=null;state.radBriber=null;
         state.court.forEach(c=>c.usedThisTurn=false);
