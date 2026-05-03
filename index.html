@@ -1099,13 +1099,7 @@
 
     <div class="card">
         <h2>⚔ Wakhans Hof <span style="font-size:.78rem;color:var(--text3);font-family:'Lato',sans-serif;font-style:italic;font-weight:400;" id="courtLimit">(0/3)</span></h2>
-        <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;flex-wrap:wrap;">
-            <span style="font-size:.80rem;color:var(--lev);font-weight:700;">Lila ★ im Hof:</span>
-            <button class="btn-sm btn-secondary btn-auto" style="min-height:30px;padding:0 10px;" onclick="updateCourtStars(-1)">−</button>
-            <span id="courtStarsVal" style="font-size:.95rem;font-weight:700;color:var(--lev);min-width:20px;text-align:center;">0</span>
-            <button class="btn-sm btn-secondary btn-auto" style="min-height:30px;padding:0 10px;" onclick="updateCourtStars(1)">+</button>
-            <span style="font-size:.75rem;color:var(--text3);font-style:italic;">→ Hoflimit = 3 + lila ★</span>
-        </div>
+        <p style="font-size:.73rem;color:var(--text3);font-style:italic;margin-bottom:8px;">Hoflimit = 3 + Summe der lila Sterne (Ränge) aller Politik-Karten im Hof</p>
         <div class="court-row" id="courtRow"><div style="font-size:.88rem;color:var(--text3);padding:22px;font-style:italic;">Noch keine Hofkarten.</div></div>
         <p style="font-size:.72rem;color:var(--text3);margin-top:6px;font-style:italic;">👤-Button: aktivieren wenn ein Mitspieler diese Karte im Hof hat → Wakhan bevorzugt diese Karte (Priorität #1).</p>
         <p style="font-size:.72rem;color:var(--warn);margin-top:3px;font-style:italic;">⚠ Geiselnahme: Hat ein Mitspieler mehr Spione auf einer Wakhan-Hofkarte als alle anderen einzeln, muss Wakhan bei Nutzung dieser Karte Bestechungsgeld zahlen.</p>
@@ -1179,7 +1173,7 @@
             <h4>Geiselnahme durch Mitspieler</h4>
             <p>Hält ein Mitspieler eine Wakhan-Hofkarte als Geisel (mehr Spione als alle anderen einzeln), muss Wakhan bei Aktionsnutzung Bestechungsgeld in Höhe der Geisel-Spione zahlen.</p>
             <h4>Hoflimit</h4>
-            <p>3 + Summe der <strong>lila Sterne ★</strong> in Wakhans Hof. Lila ★ mit dem Zähler oben im Hofbereich pflegen!</p>
+            <p>3 + <strong>Summe der Ränge</strong> aller Politik-Karten (lila) in Wakhans Hof. Rang 1 = +1, Rang 2 = +2, Rang 3 = +3. Wird automatisch berechnet.</p>
             <h4>Hofkarten-Legende</h4>
             <p>🟠 Rand = Mitspieler-Karte · <span style="color:var(--lev)">①</span> = Fremdfinanziert · ✓ = benutzt · Blau = ganz links · Rot = ganz rechts im Hof</p>
         </div>
@@ -1417,12 +1411,16 @@
         preferredSuit:'Politik', dominantCoalition:null,
         radicalizedThisTurn:null, radCardId:null, radBriber:null,
         actionsCompleted:0, actionSkips:[false,false,false], currentActionIdx:0,
-        loopedThisTurn:false,
-        courtStarsCount:0
+        loopedThisTurn:false
     };
 
     function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}}
-    function getCourtLimit(){return 3+state.courtStarsCount;}
+    function getCourtLimit(){
+        const politikStars=state.court
+            .filter(c=>CD[c.id]&&CD[c.id].suit==='Politik')
+            .reduce((sum,c)=>sum+(CD[c.id].rank||0),0);
+        return 3+politikStars;
+    }
     function changeRupees(delta){ /* entfernt — Rupien werden physisch verwaltet */ }
     function checkWakhanFunds(cost, yesCallback, noCallback){
         showWizard(
@@ -1439,12 +1437,6 @@
                 skipFn: noCallback || (()=>{ toast('Aktion abgebrochen: nicht genug Rupien.'); processNextAction(); })
             }
         );
-    }
-    function updateCourtStars(delta){
-        state.courtStarsCount=Math.max(0,state.courtStarsCount+delta);
-        document.getElementById('courtStarsVal').textContent=state.courtStarsCount;
-        updateCourtUI();
-        toast('Hoflimit: '+(3+state.courtStarsCount)+' (3 + '+state.courtStarsCount+' lila ★)');
     }
     function calcWakLoy(){
         if(!state.currentCard) return 'Unbekannt';
@@ -2129,7 +2121,6 @@
         state.phase=5;updatePhaseIndicator();
         const limit=getCourtLimit(),over=state.court.length-limit;
         const hasLev=state.court.some(c=>CD[c.id]&&CD[c.id].leveraged);
-        // Base body: always show all 4 Verwaltungsschritte
         let body=`<div class="rule-hint" style="margin-bottom:10px;">
             <strong>Verwaltungsschritte (immer durch den Menschenspieler):</strong>
             <ol style="padding-left:18px;margin-top:5px;line-height:1.75;">
@@ -2143,17 +2134,216 @@
         </div>`;
         if(over<=0){
             body+=`<p>Wakhans Hofgröße: <strong>${state.court.length}/${limit}</strong> – im Rahmen. ✓</p>`;
+            showWizard('⚙ Verwaltungsphase',body,{back:false,next:true,nextLabel:'✓ Verwaltung erledigt',nextFn:finishTurn,skip:false});
         } else {
-            body+=`<p style="color:var(--warn);font-weight:700;">⚠ Hof zu groß: <strong>${state.court.length}/${limit}</strong> – <strong>${over} Karte(n)</strong> abwerfen!</p>
-            <div class="rule-hint" style="margin-top:8px;"><strong>Abwerfpriorität:</strong> Nicht-Politik → Kein Patriot → Nicht-fremdfinanziert → Meiste fremde Spione (mehr als Wakhan) → Wenigste Spione → Niedrigster Rang → Nicht bevorzugte Farbe → Niedrigste Nr.</div>`;
+            body+=`<p style="color:var(--warn);font-weight:700;">⚠ Hof zu groß: <strong>${state.court.length}/${limit}</strong> – <strong>${over} Karte(n)</strong> abwerfen!</p>`;
+            if(hasLev) body+=`<div class="lev-hint" style="margin-top:8px;">
+                <strong style="color:var(--lev);">① Fremdfinanzierte Karte(n) könnten abgeworfen werden:</strong><br>
+                Wakhan zahlt 2 Rupien pro Karte zurück an die Bank.<br>
+                <strong>Wakhan-Sonderregel:</strong> Kann sie nicht zahlen, entfällt die Schuld – keine Ersatzkarten nötig.
+            </div>`;
+            body+=`<p style="font-size:.88rem;color:var(--text2);margin-top:10px;">Die App führt dich jetzt Schritt für Schritt durch die Abwerfpriorität.</p>`;
+            showWizard('⚙ Verwaltungsphase',body,{back:false,next:true,nextLabel:'📋 Abwerfhilfe starten →',nextFn:()=>startDiscardFlow(over),skip:false});
         }
-        if(hasLev) body+=`<div class="lev-hint" style="margin-top:8px;">
-            <strong style="color:var(--lev);">① Fremdfinanzierte Karte(n) werden abgeworfen:</strong><br>
-            Wakhan zahlt 2 Rupien pro Karte zurück an die Bank.<br>
-            <strong>Wakhan-Sonderregel:</strong> Kann Wakhan die 2 Rupien nicht (vollständig) zahlen, muss sie <em>keine</em> Ersatzkarten abwerfen – die Schuld entfällt einfach!
+    }
+
+    // ──────────────────────────────────────
+    // DISCARD GUIDANCE FLOW
+    // ──────────────────────────────────────
+    let _ds = null;
+    let _discardSelections = [];
+
+    function startDiscardFlow(totalToDiscard) {
+        _ds = { needed: totalToDiscard, definite: [], candidates: [...state.court] };
+        _discardSelections = [];
+        discardAutoPhase(1);
+    }
+
+    function discardAutoPhase(phase) {
+        if (!_ds) return;
+        // Done – nothing more needed
+        if (_ds.needed <= 0) { showDiscardRecommendation(); return; }
+        // All remaining candidates must be discarded
+        if (_ds.candidates.length <= _ds.needed) {
+            _ds.definite.push(..._ds.candidates);
+            _ds.candidates = [];
+            _ds.needed = 0;
+            showDiscardRecommendation();
+            return;
+        }
+        // candidates.length > needed → narrow further by phase
+        if (phase === 4) { askDiscardPhase4(); return; }
+        if (phase === 5) { askDiscardPhase5(); return; }
+        if (phase === 7) {
+            // Lowest card number – deterministic
+            _ds.candidates.sort((a,b) => a.id - b.id);
+            _ds.definite.push(..._ds.candidates.slice(0, _ds.needed));
+            _ds.candidates = [];
+            _ds.needed = 0;
+            showDiscardRecommendation();
+            return;
+        }
+        // Auto phases 1, 2, 3, 6
+        let matchFn;
+        if      (phase === 1) matchFn = c =>  CD[c.id] && CD[c.id].suit !== 'Politik';
+        else if (phase === 2) matchFn = c => !CD[c.id] || !CD[c.id].patriot;
+        else if (phase === 3) matchFn = c => !CD[c.id] || !CD[c.id].leveraged;
+        else if (phase === 6) {
+            const minRank = Math.min(..._ds.candidates.map(c => CD[c.id] ? (CD[c.id].rank || 0) : 0));
+            matchFn = c => !CD[c.id] || (CD[c.id].rank || 0) === minRank;
+        } else { discardAutoPhase(phase + 1); return; }
+
+        const matches    = _ds.candidates.filter(c =>  matchFn(c));
+        const nonMatches = _ds.candidates.filter(c => !matchFn(c));
+
+        if (matches.length === 0) { discardAutoPhase(phase + 1); return; }
+
+        if (matches.length < _ds.needed) {
+            // All matches are definite discards; continue with non-matches for the rest
+            _ds.definite.push(...matches);
+            _ds.needed -= matches.length;
+            _ds.candidates = nonMatches;
+        } else {
+            // Enough matches – narrow candidate pool to them
+            _ds.candidates = matches;
+        }
+        discardAutoPhase(phase + 1);
+    }
+
+    function _discardCandidateListHTML(btnIdPrefix, onClickFnName) {
+        let html = '';
+        _ds.candidates.forEach((c, i) => {
+            const info = CD[c.id] || {};
+            const name = info.name || '#' + c.id;
+            const lev  = info.leveraged ? ' ①' : '';
+            const pat  = info.patriot   ? ` · ${info.patriot}` : '';
+            html += `<button id="${btnIdPrefix}${i}" class="btn-secondary btn-sm"
+                style="justify-content:flex-start;text-align:left;white-space:normal;width:100%;transition:background .15s,border-color .15s,color .15s;"
+                onclick="${onClickFnName}(${i})">
+                #${c.id} – <strong>${name}</strong>${lev}${pat} · ${info.suit||'?'} · Rg.${info.rank||'?'}
+            </button>`;
+        });
+        return html;
+    }
+
+    function _toggleDiscardBtn(idx, prefix) {
+        const btn = document.getElementById(prefix + idx);
+        if (!btn) return;
+        if (_discardSelections.includes(idx)) {
+            _discardSelections = _discardSelections.filter(i => i !== idx);
+            btn.style.background = ''; btn.style.borderColor = ''; btn.style.color = '';
+        } else {
+            _discardSelections.push(idx);
+            btn.style.background   = 'rgba(200,80,70,0.14)';
+            btn.style.borderColor  = 'rgba(200,80,70,0.60)';
+            btn.style.color        = '#e88878';
+        }
+    }
+
+    function discardToggle4(idx) { _toggleDiscardBtn(idx, 'dph4btn'); }
+    function discardToggle5(idx) { _toggleDiscardBtn(idx, 'dph5btn'); }
+
+    function _applyDiscardSelection(nextPhase) {
+        if (_discardSelections.length === 0) { discardAutoPhase(nextPhase); return; }
+        const selected    = _discardSelections.map(i => _ds.candidates[i]).filter(Boolean);
+        const nonSelected = _ds.candidates.filter((_, i) => !_discardSelections.includes(i));
+        _discardSelections = [];
+        if (selected.length < _ds.needed) {
+            _ds.definite.push(...selected);
+            _ds.needed -= selected.length;
+            _ds.candidates = nonSelected;
+        } else {
+            _ds.candidates = selected;
+        }
+        discardAutoPhase(nextPhase);
+    }
+
+    function confirmDiscardPhase4() { _applyDiscardSelection(5); }
+    function confirmDiscardPhase5() { _applyDiscardSelection(6); }
+
+    function askDiscardPhase4() {
+        _discardSelections = [];
+        const html = `<p style="margin-bottom:8px;">Noch <strong>${_ds.needed}</strong> Karte(n) abzuwerfen.</p>
+        <div class="rule-hint" style="margin-bottom:10px;">
+            <strong>Schritt 4 – Meiste fremde Spione (mehr als Wakhan)</strong><br>
+            Auf welchen Karten haben <em>Gegner</em> mehr Spione als Wakhans eigene Spione auf derselben Karte?<br>
+            <span style="font-size:.82rem;">Tippe auf die betroffenen Karten (Mehrfachauswahl möglich). Markierte Karten werden bevorzugt abgeworfen.</span>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:5px;margin-bottom:10px;">
+        ${_discardCandidateListHTML('dph4btn','discardToggle4')}
+        </div>
+        <p style="font-size:.82rem;color:var(--text3);">Keine Karte betroffen oder kein klarer Gewinner? → „Keine / Weiter zu Schritt 5" wählen.</p>`;
+        showWizard('🗑️ Abwurf – Schritt 4: Fremde Spione', html, {
+            back: false, next: true,
+            nextLabel: '✓ Auswahl bestätigen →',
+            nextFn: confirmDiscardPhase4,
+            skip: true,
+            skipLabel: '➡ Keine → weiter zu Schritt 5',
+            skipFn: () => { _discardSelections = []; discardAutoPhase(5); }
+        });
+    }
+
+    function askDiscardPhase5() {
+        _discardSelections = [];
+        const html = `<p style="margin-bottom:8px;">Noch <strong>${_ds.needed}</strong> Karte(n) abzuwerfen.</p>
+        <div class="rule-hint" style="margin-bottom:10px;">
+            <strong>Schritt 5 – Wenigste Spione insgesamt</strong><br>
+            Welche der folgenden Karten hat die <em>wenigsten</em> Spione (alle Spione auf der Karte, egal von wem)?<br>
+            <span style="font-size:.82rem;">Tippe auf die betroffenen Karten (Mehrfachauswahl bei Gleichstand).</span>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:5px;margin-bottom:10px;">
+        ${_discardCandidateListHTML('dph5btn','discardToggle5')}
+        </div>
+        <p style="font-size:.82rem;color:var(--text3);">Keine eindeutige Karte? → „Keine / Weiter zu Schritt 6" wählen.</p>`;
+        showWizard('🗑️ Abwurf – Schritt 5: Wenigste Spione', html, {
+            back: false, next: true,
+            nextLabel: '✓ Auswahl bestätigen →',
+            nextFn: confirmDiscardPhase5,
+            skip: true,
+            skipLabel: '➡ Keine → weiter zu Schritt 6',
+            skipFn: () => { _discardSelections = []; discardAutoPhase(6); }
+        });
+    }
+
+    function showDiscardRecommendation() {
+        const toDiscard = _ds ? _ds.definite : [];
+        // Remove discarded cards from court state
+        toDiscard.forEach(c => {
+            const idx = state.court.findIndex(cc => cc.id === c.id);
+            if (idx >= 0) state.court.splice(idx, 1);
+        });
+        updateCourtUI();
+
+        let html = '';
+        if (toDiscard.length > 0) {
+            html += `<p style="font-weight:700;color:var(--warn);margin-bottom:8px;">🗑️ Diese Karte(n) jetzt abwerfen:</p>
+            <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:12px;">`;
+            toDiscard.forEach(c => {
+                const info = CD[c.id] || {};
+                const name = info.name || '#' + c.id;
+                const lev  = info.leveraged ? ' ①' : '';
+                const pat  = info.patriot   ? ` · Patriot: ${info.patriot}` : '';
+                html += `<div style="background:rgba(200,80,70,0.08);border:1px solid rgba(200,80,70,0.28);border-radius:8px;padding:8px 12px;">
+                    <strong>#${c.id} – ${name}</strong>${lev}<br>
+                    <span style="font-size:.82rem;color:var(--text2);">${info.suit||'?'} · Rang ${info.rank||'?'}${pat}</span>
+                    ${info.leveraged ? `<div style="font-size:.80rem;color:var(--lev);margin-top:3px;">① 2 Rupien an Bank zurückzahlen (kann Wakhan nicht zahlen → Schuld entfällt)</div>` : ''}
+                </div>`;
+            });
+            html += `</div>`;
+        } else {
+            html += `<p style="color:var(--text2);margin-bottom:10px;">Keine Karten zum Abwerfen ermittelt. ✓</p>`;
+        }
+        html += `<div class="rule-hint">
+            <strong>Restliche Verwaltungsschritte:</strong>
+            <ol style="padding-left:18px;margin-top:5px;line-height:1.75;">
+                <li>Handkartenlimit prüfen (Wakhan hat keine Handkarten).</li>
+                <li><strong>Ereigniskarten links im Markt ausführen</strong> (Text „Wenn abgeworfen") und abwerfen.</li>
+                <li>Markt auffüllen: Karten nach links schieben, spaltenweise füllen.<br>
+                    <span style="font-size:.82rem;color:var(--warn);">2. Dominanzkarte erscheint → sofort Dominanzcheck, beide abwerfen!</span>
+                </li>
+            </ol>
         </div>`;
-        if(over>0) body+=`<p style="font-size:.85rem;color:var(--text3);margin-top:8px;font-style:italic;">✕-Button an der Hofkarte zum Abwerfen verwenden.</p>`;
-        showWizard('⚙ Verwaltungsphase',body,{back:false,next:true,nextLabel:'✓ Verwaltung erledigt',nextFn:finishTurn,skip:false});
+        showWizard('⚙ Verwaltung: Abwurf & Abschluss', html, {back:false, next:true, nextLabel:'✓ Verwaltung erledigt', nextFn:finishTurn, skip:false});
     }
 
     function finishTurn(){
@@ -2238,13 +2428,11 @@
     function setupPickLoy(idx,loy){tmpLoy[idx]=loy;setupStep=(idx===0&&tmpPC===2)?2:3;renderSetup();}
     function finishSetup(){
         state.playerCount=tmpPC;state.playerLoyalties=[...tmpLoy];
-        state.courtStarsCount=0;
         state.pile=WKC.map(c=>c.id);shuffle(state.pile);state.discard=[];state.court=[];state.events=[];
         state.currentCard=null;state.topCard=null;state.turnActive=false;state.phase=-1;
         state.radicalizedThisTurn=null;state.actionsCompleted=0;state.actionSkips=[false,false,false];state.currentActionIdx=0;
         showScreen('scrGame');updateTopBar();updateCourtUI();updateEventUI();updateStackUI();clearCurUI();hideWizard();
         document.getElementById('btnStartTurn')&&(document.getElementById('btnStartTurn').disabled=false);
-        document.getElementById('courtStarsVal').textContent='0';
         toast('Spiel gestartet! Viel Erfolg!');
     }
     function resetGame(){if(!confirm('Neues Spiel starten?'))return;setupStep=0;tmpPC=1;tmpLoy=[];state.turnActive=false;state.phase=-1;hideWizard();document.getElementById('btnStartTurn')&&(document.getElementById('btnStartTurn').disabled=false);showScreen('scrSetup');renderSetup();}
@@ -2266,7 +2454,6 @@
     window.askAmbition=askAmbition; window.askAmbDominance=askAmbDominance; window.executeAmbition=executeAmbition;
     window.proceedToActions=proceedToActions; window.finishStandardActions=finishStandardActions;
     window.showVerwaltung=showVerwaltung;
-    window.updateCourtStars=updateCourtStars;
     window.checkWakhanFunds=checkWakhanFunds;
     window.peekStart=peekStart; window.peekEnd=peekEnd; window.togglePeek=togglePeek;
 
