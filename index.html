@@ -2151,27 +2151,210 @@
         if(best){const idx=state.court.findIndex(cc=>cc.id===best.id&&!cc.usedThisTurn);if(idx>=0){state.court[idx].usedThisTurn=true;updateCourtUI();}}
     }
 
+    // ── Aktions-Hilfstexte für Bonusaktionen ──────────────────────────────
+    const BONUS_ACTION_INFO = {
+        battle: { icon:'⚔️', label:'Kampf',       hint:'Region mit mind. einer Wakhan-Armee und Feind-Einheiten (Regionen-Priorität). Zerstören: Stämme → Armeen → Straßen. Falls keine Region: Spione auf Hofkarte bekämpfen (Kartenpriorität).' },
+        build:  { icon:'🏗️', label:'Bauen',       hint:'Nur Armeen (keine Straßen!) in beherrschten Regionen. Kosten: 2/4/6 Rupien für 1/2/3 Armeen. So viel wie möglich ausgeben. Regionen-Priorität bei mehreren Optionen.' },
+        tax:    { icon:'💰', label:'Besteuerung', hint:'Spieler mit meisten Rupien zuerst. Kein Spieler möglich → linkste Marktkarten. Gleichstand → roter Pfeil.' },
+        move:   { icon:'🚶', label:'Bewegen',     hint:'Nur Armeen, keine Straßen nötig. Max. so viele in eine Region wie dort Stämme vorhanden sind. Keine Bewegung, die Herrschaft kostet. Regionen-Priorität.' },
+        betray: { icon:'🗡️', label:'Verrat',      hint:'Karte mit höchster Priorität + eigenem Spion + Loyalitäts-Beute. Darf auch eigene Hofkarten betreffen. Wakhan nimmt die Beute immer. Kosten: 2 Rupien.' },
+        gift:   { icon:'🎁', label:'Geschenk',    hint:'Billigstes Geschenk kaufen (2/4/6 R.), das auf Wakhans Spielhilfekarte passt. Zählt als Einfluss für alle drei Koalitionen!' }
+    };
+
     function finishStandardActions(){
-        state.phase=4;updatePhaseIndicator();
-        const bonusCards=[];
-        if(state.radicalizedThisTurn&&state.radicalizedThisTurn.id){
-            const info=CD[state.radicalizedThisTurn.id];
-            if(info&&info.suit===state.preferredSuit&&!state.radicalizedThisTurn.usedThisTurn) bonusCards.push(state.radicalizedThisTurn);
+        state.phase=4; updatePhaseIndicator();
+
+        // Alle Bonus-Karten: preferred suit + unbenutzt + nach Hofposition (links → rechts) sortiert
+        const allBonus = state.court
+            .map((c, idx) => ({ entry: c, courtIdx: idx }))
+            .filter(({ entry: c }) =>
+                !c.usedThisTurn &&
+                CD[c.id] &&
+                CD[c.id].suit === state.preferredSuit
+            )
+            .sort((a, b) => a.courtIdx - b.courtIdx)
+            .map(({ entry }) => entry);
+
+        // Erklärung, welche Karten durch Hauptaktionen verbraucht wurden
+        const usedByMain = state.court.filter(c =>
+            c.usedThisTurn && CD[c.id] && CD[c.id].suit === state.preferredSuit
+        );
+
+        if (!allBonus.length) {
+            let noBody = `<p>Keine unbenutzten <strong>${state.preferredSuit}</strong>-Karten im Hof.</p>`;
+            if (usedByMain.length) {
+                noBody += `<div class="rule-hint" style="margin-top:10px;">
+                    <strong>Bereits in der Hauptphase genutzt (nicht mehr verfügbar):</strong><br>
+                    <span style="color:var(--text3);">
+                    ${usedByMain.map(c => `#${c.id} – ${CD[c.id].name}`).join(', ')}
+                    </span>
+                </div>`;
+            }
+            showWizard('🌟 Bonusaktionen', noBody, {
+                back:false, next:true, nextLabel:'Weiter zur Verwaltung →', nextFn:showVerwaltung, skip:false
+            });
+            return;
         }
-        const otherBonus=state.court.filter(c=>!c.usedThisTurn&&CD[c.id]&&CD[c.id].suit===state.preferredSuit&&c!==state.radicalizedThisTurn);
-        const allBonus=[...bonusCards,...otherBonus];
-        if(!allBonus.length){
-            showWizard('Bonusaktionen',`<p>Keine unbenutzten Hofkarten der Farbe <strong>${state.preferredSuit}</strong>.</p>`,{back:false,next:true,nextLabel:'Weiter zur Verwaltung →',nextFn:showVerwaltung,skip:false});
-        } else {
-            let html=`<p style="margin-bottom:8px;">Folgende <strong>${state.preferredSuit}</strong>-Karten sind <strong>unbenutzt</strong>:</p><ol style="padding-left:20px;">`;
-            allBonus.forEach(c=>{const info=CD[c.id];if(!info)return;const lev=info.leveraged?' ①':'';html+=`<li style="margin-bottom:6px;"><strong>#${c.id} – ${info.name}</strong>${lev} (R${info.rank}) → <em>${info.actions&&info.actions.length?info.actions[0]:'keine'}</em></li>`;});
-            html+=`</ol>
-            <div class="rule-hint" style="margin-top:10px;">
-                <strong>Reihenfolge:</strong> Von <strong>links nach rechts</strong> durch den Hof. Pro Karte: die <strong>linkste gültige Aktion</strong> ausführen – ist sie nicht möglich, die nächste Aktion auf der Karte prüfen. Jede Karte nur 1× pro Zug. Die radikalisierte Karte darf genau <strong>eine</strong> Bonusaktion ausführen (sofern sie der bevorzugten Farbe entspricht und bisher unbenutzt ist).
+
+        // Queue starten
+        state._bonusQueue = [...allBonus];
+        state._bonusTotal = allBonus.length;
+        state._bonusUsedByMain = usedByMain;
+
+        // Übersichts-Screen vor dem ersten Karten-Schritt
+        const totalCardsInCourt = state.court.length;
+        let overviewHtml = `
+            <p style="margin-bottom:10px;">
+                <strong>${allBonus.length}</strong> unbenutzte
+                <strong>${state.preferredSuit}</strong>-Karte(n) führen Bonusaktionen durch
+                — in Hof-Reihenfolge von <strong>links nach rechts</strong>.
+            </p>
+            <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:12px;">`;
+
+        allBonus.forEach((c, i) => {
+            const info = CD[c.id] || {};
+            const courtPos = state.court.indexOf(c) + 1;
+            const isRad = state.radicalizedThisTurn && state.radicalizedThisTurn.id === c.id;
+            const lev = info.leveraged ? ' <span style="color:var(--lev);font-size:.78rem;">①</span>' : '';
+            const radBadge = isRad
+                ? '<span style="background:rgba(200,168,75,0.15);border:1px solid rgba(200,168,75,0.35);border-radius:4px;font-size:.70rem;padding:1px 5px;color:var(--gold2);margin-left:4px;">★ radikalisiert</span>'
+                : '';
+            const actChain = (info.actions || []).map((a,idx) => {
+                const ai = BONUS_ACTION_INFO[a];
+                return idx === 0
+                    ? `<strong>${ai ? ai.icon+' '+ai.label : a}</strong>`
+                    : `<span style="color:var(--text3);font-size:.82rem;">↳ ${ai ? ai.icon+' '+ai.label : a}</span>`;
+            }).join(' ');
+            overviewHtml += `
+                <div style="background:var(--card-bg);border:1px solid var(--border2);border-radius:8px;padding:9px 12px;">
+                    <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
+                        <span style="font-size:.62rem;color:var(--text3);background:var(--panel2);border-radius:4px;padding:2px 6px;font-weight:700;">
+                            ${i+1}. · Hofpos. ${courtPos}
+                        </span>
+                        <strong>#${c.id} – ${info.name}${lev}</strong>${radBadge}
+                        <span style="font-size:.80rem;color:var(--text3);">${info.region} · R${info.rank}</span>
+                    </div>
+                    <div style="margin-top:5px;font-size:.85rem;line-height:1.6;">${actChain}</div>
+                </div>`;
+        });
+        overviewHtml += `</div>`;
+
+        if (usedByMain.length) {
+            overviewHtml += `<div class="rule-hint">
+                <strong>Nicht verfügbar</strong> (in Hauptphase genutzt):
+                <span style="color:var(--text3);">
+                ${usedByMain.map(c => `#${c.id} – ${CD[c.id].name}`).join(', ')}
+                </span>
             </div>`;
-            showWizard('🌟 Bonusaktionen',html,{back:false,next:true,nextLabel:'✓ Bonus erledigt',nextFn:showVerwaltung,skip:false});
         }
+
+        showWizard('🌟 Bonusaktionen – Übersicht', overviewHtml, {
+            back: false, next: true,
+            nextLabel: `▶ Karte 1 von ${allBonus.length} starten →`,
+            nextFn: showNextBonusCard,
+            skip: true,
+            skipLabel: '✓ Alle überspringen → Verwaltung',
+            skipFn: showVerwaltung
+        });
     }
+
+    function showNextBonusCard(){
+        if (!state._bonusQueue || state._bonusQueue.length === 0){
+            showVerwaltung(); return;
+        }
+        const entry   = state._bonusQueue[0];
+        const info    = CD[entry.id] || {};
+        const courtIdx = state.court.indexOf(entry);  // 0 = ganz links
+        const doneNr  = state._bonusTotal - state._bonusQueue.length + 1;
+        const isRad   = state.radicalizedThisTurn && state.radicalizedThisTurn.id === entry.id;
+        const isLev   = info.leveraged || false;
+
+        // Aktionskette mit vollständigen Hinweistexten
+        const actions = info.actions || [];
+        let actionHtml = '';
+        if (actions.length === 0) {
+            actionHtml = '<p style="color:var(--text3);font-style:italic;">Keine Aktionen auf dieser Karte.</p>';
+        } else {
+            actionHtml = actions.map((a, i) => {
+                const ai = BONUS_ACTION_INFO[a] || { icon:'▶', label: a, hint: '' };
+                const isPrimary = i === 0;
+                return `<div style="
+                    background:${isPrimary ? 'rgba(200,168,75,0.07)' : 'transparent'};
+                    border-left:3px solid ${isPrimary ? 'var(--gold)' : 'var(--border2)'};
+                    border-radius:0 6px 6px 0;
+                    padding:8px 12px;
+                    margin-bottom:6px;
+                ">
+                    <div style="font-size:.80rem;color:${isPrimary ? 'var(--gold2)' : 'var(--text3)'};font-weight:700;margin-bottom:3px;">
+                        ${isPrimary ? 'Primäre Aktion' : `Fallback ${i}`}
+                    </div>
+                    <div style="font-weight:700;font-size:.95rem;">${ai.icon} ${ai.label}</div>
+                    ${ai.hint ? `<div style="font-size:.82rem;color:var(--text3);margin-top:3px;line-height:1.5;">${ai.hint}</div>` : ''}
+                </div>`;
+            }).join('');
+        }
+
+        const radNote = isRad
+            ? `<div style="background:rgba(200,168,75,0.08);border:1px solid rgba(200,168,75,0.25);border-radius:8px;padding:8px 12px;margin-top:8px;font-size:.85rem;color:var(--gold2);">
+                ★ Diese Karte wurde in diesem Zug radikalisiert — eine Bonusaktion ist laut Regel ausdrücklich erlaubt.
+               </div>`
+            : '';
+        const levNote = isLev
+            ? `<div class="lev-hint" style="margin-top:8px;font-size:.83rem;">① Fremdfinanziert – falls diese Karte jetzt durch Bonusaktion genutzt wird, zählt das als Benutzung.</div>`
+            : '';
+
+        const progressBar = state._bonusTotal > 1
+            ? `<div style="display:flex;gap:4px;margin-bottom:12px;">${
+                Array.from({length: state._bonusTotal}, (_,i) => {
+                    const done = i < doneNr - 1;
+                    const cur  = i === doneNr - 1;
+                    return `<div style="flex:1;height:4px;border-radius:2px;background:${done ? 'var(--gold)' : cur ? 'var(--gold2)' : 'var(--border2)'};opacity:${cur ? 1 : done ? 0.6 : 0.3};"></div>`;
+                }).join('')
+               }</div>`
+            : '';
+
+        const body = `
+            ${progressBar}
+            <p style="font-size:.78rem;color:var(--text3);margin-bottom:10px;">
+                Bonusaktion <strong>${doneNr} / ${state._bonusTotal}</strong>
+                · Hofposition: <strong>${courtIdx + 1}. von links</strong>
+            </p>
+            <div style="background:var(--card-bg);border:1px solid var(--border3);border-radius:10px;padding:12px 14px;margin-bottom:10px;">
+                <div style="font-size:1rem;font-weight:700;">#${entry.id} – ${info.name || '?'}${isLev ? ' <span style="color:var(--lev);">①</span>' : ''}</div>
+                <div style="font-size:.85rem;color:var(--text2);margin-top:2px;">${info.region || '?'} · ${info.suit} · Rang ${info.rank || '?'}</div>
+            </div>
+            <div style="margin-bottom:8px;">${actionHtml}</div>
+            ${radNote}${levNote}
+            <div class="rule-hint" style="margin-top:10px;font-size:.82rem;">
+                Führe die <strong>primäre Aktion</strong> aus, sofern gültig. Ist sie nicht möglich, prüfe Fallback 1, dann Fallback 2 usw. Sind alle ungültig → überspringen.
+            </div>`;
+
+        const remaining = state._bonusQueue.length - 1;
+        const nextLabel = remaining > 0
+            ? `✓ Aktion ausgeführt → Karte ${doneNr + 1}/${state._bonusTotal}`
+            : '✓ Letzte Bonusaktion erledigt → Verwaltung';
+        const skipLabel = remaining > 0
+            ? `✗ Alle Aktionen ungültig → Karte ${doneNr + 1}/${state._bonusTotal}`
+            : '✗ Alle Aktionen ungültig → Verwaltung';
+
+        showWizard(`🌟 Bonusaktion ${doneNr}/${state._bonusTotal}`, body, {
+            back: false, next: true,
+            nextLabel,
+            nextFn: () => {
+                entry.usedThisTurn = true;
+                updateCourtUI();
+                state._bonusQueue.shift();
+                showNextBonusCard();
+            },
+            skip: true,
+            skipLabel,
+            skipFn: () => {
+                state._bonusQueue.shift();
+                showNextBonusCard();
+            }
+        });
+    }
+    window.showNextBonusCard = showNextBonusCard;
 
     function showVerwaltung(){
         state.phase=5;updatePhaseIndicator();
