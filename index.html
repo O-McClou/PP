@@ -1104,7 +1104,7 @@
         <p style="font-size:.72rem;color:var(--text3);margin-top:6px;font-style:italic;">👤-Button: aktivieren wenn ein Mitspieler diese Karte im Hof hat → Wakhan bevorzugt diese Karte (Priorität #1).</p>
         <p style="font-size:.72rem;color:var(--warn);margin-top:3px;font-style:italic;">⚠ Geiselnahme: Hat ein Mitspieler mehr Spione auf einer Wakhan-Hofkarte als alle anderen einzeln, muss Wakhan bei Nutzung dieser Karte Bestechungsgeld zahlen.</p>
         <div class="row" style="margin-top:10px;gap:8px;">
-            <input type="number" class="input-num" id="courtIn" min="1" max="100" placeholder="Hof Nr. 1–100">
+            <input type="tel" inputmode="numeric" pattern="[0-9]*" class="input-num" id="courtIn" min="1" max="100" placeholder="Hof Nr. 1–100">
             <button class="btn-sm btn-secondary" onclick="addCourtManual()">+ Karte</button>
             <button class="btn-sm btn-destructive" onclick="clearCourt()">Leeren</button>
         </div>
@@ -1116,7 +1116,7 @@
         <h2>📋 Ereigniskarten <span style="font-size:.78rem;color:var(--text3);font-family:'Lato',sans-serif;font-style:italic;font-weight:400;" id="eventCnt">(0)</span></h2>
         <div class="event-row" id="eventRow"><span style="font-size:.88rem;color:var(--text3);font-style:italic;">Keine.</span></div>
         <div class="row" style="margin-top:8px;gap:8px;">
-            <input type="number" class="input-num" id="eventIn" min="101" max="116" placeholder="Nr. 101–116">
+            <input type="tel" inputmode="numeric" pattern="[0-9]*" class="input-num" id="eventIn" min="101" max="116" placeholder="Nr. 101–116">
             <button class="btn-sm btn-secondary" onclick="addEvent()">+ Ereignis</button>
         </div>
     </div>
@@ -1411,7 +1411,9 @@
         preferredSuit:'Politik', dominantCoalition:null,
         radicalizedThisTurn:null, radCardId:null, radBriber:null,
         actionsCompleted:0, actionSkips:[false,false,false], currentActionIdx:0,
-        loopedThisTurn:false
+        loopedThisTurn:false,
+        skippedActionLabels:[],
+        previousState:null
     };
 
     function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}}
@@ -1727,7 +1729,13 @@
 
         // Set body (banner first, then content) and scroll to top
         const bodyEl = document.getElementById('wizBody');
-        bodyEl.innerHTML = priorityBanner + body;
+        // Übersprungene Aktionen als kleinen grauen Hinweis ganz oben
+        let skippedHint = '';
+        if (state.skippedActionLabels && state.skippedActionLabels.length > 0) {
+            skippedHint = `<div style="color:var(--text3);font-size:.78rem;font-style:italic;margin-bottom:8px;line-height:1.5;">${state.skippedActionLabels.map(l=>`(${l})`).join('<br>')}</div>`;
+            state.skippedActionLabels = [];
+        }
+        bodyEl.innerHTML = skippedHint + priorityBanner + body;
         bodyEl.scrollTop = 0;
 
         // ── Configure navigation buttons ──────────────────────────────────
@@ -1785,6 +1793,11 @@
         if(state.turnActive) return;
         if(!state.pile.length&&!state.discard.length){toast('Kein KI-Stapel! Spiel vorbei.');return;}
         if(!state.pile.length){state.pile=[...state.discard];state.discard=[];shuffle(state.pile);toast('KI-Stapel neu gemischt!');}
+        // Undo-Snapshot: tiefer Klon des State VOR dem Kartenziehen
+        state.previousState = JSON.parse(JSON.stringify({
+            ...state,
+            previousState: null
+        }));
         const id=state.pile.pop(); state.currentCard=WKC_BY_ID[id]||null;
         if(!state.currentCard){toast('Fehler: KI-Karte nicht gefunden!');return;}
 
@@ -1838,40 +1851,75 @@
         state.phase=0;updatePhaseIndicator();
         const instr=getMarketInstruction();
         const body=`<p style="font-size:1rem;font-family:'Playfair Display',serif;color:var(--gold2);font-weight:700;margin-bottom:10px;">🌍 Wakhans Ambition</p>
-        <p>Liegt eine <strong>Dominanzkarte</strong> (Nr. 101–104) im Markt?</p>
+        <p>Liegt eine <strong>Dominanzkarte</strong> (Nr. 101–104) im Markt <strong>UND</strong> würde Wakhan dadurch die <strong>meisten Siegpunkte</strong> erzielen (oder gewinnen) <strong>UND</strong> hat sie genug Rupien?</p>
         <p style="font-size:.88rem;color:var(--text3);margin-top:4px;">Marktposition: <strong>${instr.row}</strong>-Reihe, Spalte <strong>${instr.col}</strong></p>
-        <div class="rule-hint" style="margin-top:8px;"><strong>Regel:</strong> Falls ja – und Wakhan dadurch <strong>gewinnt</strong> oder die <strong>meisten Siegpunkte</strong> erhält UND genug Rupien hat → sofort kaufen, kein normaler Zug.</div>`;
-        showWizard('Phase A: Ambition-Check',body,{back:false,next:true,nextLabel:'Nein – weiter zu Aktionen',nextFn:()=>askAmbDominance(false),skip:true,skipLabel:'Ja – Dominanzkarte vorhanden',skipFn:()=>askAmbDominance(true)});
-    }
-
-    function askAmbDominance(inMarket){
-        if(!inMarket){proceedToActions();return;}
-        const body=`<p>Erhält Wakhan durch den Dominanzcheck die <strong>meisten Siegpunkte</strong> (oder gewinnt sie) und hat sie genug Rupien?</p>
-        <div class="rule-hint" style="margin-top:8px;"><strong>Wichtig:</strong> Wakhan ist <em>allen drei Koalitionen</em> loyal! Ihre Punkte berechnen sich aus Einfluss auf die <em>dominierende</em> Koalition <strong>plus</strong> Geschenken, Patrioten und Beute aller Fraktionen. Vergleiche ihren Gesamteinfluss mit dem jedes Menschenspielers.<br><br>
+        <div class="rule-hint" style="margin-top:8px;"><strong>Berechnung:</strong> Wakhan ist <em>allen drei Koalitionen</em> loyal. Ihre Punkte berechnen sich aus Einfluss auf die <em>dominierende</em> Koalition <strong>plus</strong> Geschenken, Patrioten und Beute aller Fraktionen. Vergleiche ihren Gesamteinfluss mit dem jedes Menschenspielers.<br><br>
         <strong>Wenn ja:</strong> Wakhan kauft die Dominanzkarte als 1. Aktion. Der Zug endet danach.<br>
         <strong>Wenn nein:</strong> Normale Aktionen folgen.</div>`;
-        showWizard('Ambition: Entscheidung',body,{back:false,next:true,nextLabel:'Nein – normale Aktionen',nextFn:proceedToActions,skip:true,skipLabel:'Ja → Dominanz kaufen!',skipFn:executeAmbition});
+        showWizard('Phase A: Ambition-Check',body,{back:false,next:true,nextLabel:'Nein – weiter zu Aktionen',nextFn:proceedToActions,skip:true,skipLabel:'Ja → Dominanzkarte kaufen!',skipFn:executeAmbition});
     }
 
     function executeAmbition(){
         state.phase=0;updatePhaseIndicator();
         const body=`<div class="action-box"><p>✅ <strong>Wakhan kauft die Dominanzkarte.</strong></p><p style="margin-top:8px;">Führe den Dominanzcheck durch.</p></div>
         <div class="rule-hint" style="margin-top:10px;">
+            <strong style="color:var(--warn);">⚠ Alle Blöcke (Armeen &amp; Straßen) vom Spielplan entfernen!</strong><br><br>
             <strong>Erfolgreicher Dominanzcheck</strong> (eine Koalition hat ≥ 4 Blöcke mehr als jede andere):<br>
             Loyale Spieler erhalten <strong>5 / 3 / 1</strong> Punkte je nach Einfluss.<br>
-            ⚠ <strong>Instabiler Frieden:</strong> Alle Blöcke (Armeen &amp; Straßen) vom Spielplan entfernen!<br><br>
+            → Instabiler Frieden: alle Blöcke entfernen!<br><br>
             <strong>Nicht erfolgreicher Dominanzcheck:</strong><br>
             Spieler erhalten <strong>3 / 1</strong> Punkte nach Zylinderanzahl.<br><br>
             <strong>Gleichstand:</strong> Punkte addieren, durch Anzahl betroffener Spieler teilen, abrunden.<br>
             <strong>4. Dominanzcheck:</strong> Alle Punkte verdoppeln.<br>
             Wakhan ist <em>allen drei Koalitionen</em> loyal – sie kann bei jeder Wertung mitmischen.
         </div>`;
-        showWizard('Wakhans Ambition ausgeführt',body,{back:false,next:true,nextLabel:'✓ Dominanzcheck erledigt',nextFn:finishTurn});
+        showWizard('Wakhans Ambition ausgeführt',body,{back:false,next:true,nextLabel:'✓ Dominanzcheck erledigt → weiter',nextFn:askDominanceResult});
     }
+
+    function askDominanceResult(){
+        const body=`<p style="font-size:1rem;font-family:'Playfair Display',serif;color:var(--gold2);font-weight:700;margin-bottom:10px;">War der Dominanzcheck erfolgreich?</p>
+        <p>Hatte <strong>eine Koalition ≥ 4 Blöcke mehr</strong> als jede andere?</p>
+        <div class="rule-hint" style="margin-top:10px;">
+            <strong style="color:var(--warn);">⚠ Erinnerung: Alle Blöcke (Armeen &amp; Straßen) vom Spielplan entfernen!</strong>
+        </div>`;
+        showWizard('Dominanzcheck: Ergebnis',body,{
+            back:false,
+            next:true,
+            nextLabel:'Nein – kein Instabiler Frieden',
+            nextFn:finishTurn,
+            skip:true,
+            skipLabel:'Ja – Instabiler Frieden',
+            skipFn:askNewDominantCoalition
+        });
+    }
+
+    function askNewDominantCoalition(){
+        const body=`<p style="margin-bottom:10px;">Welche Koalition ist jetzt <strong>dominant</strong>?</p>
+        <div class="rule-hint" style="margin-bottom:12px;">
+            <strong style="color:var(--warn);">⚠ Alle Blöcke (Armeen &amp; Straßen) vom Spielplan entfernen!</strong>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+            <button class="btn-secondary" onclick="setNewDominant('Britisch')">🔵 Britisch</button>
+            <button class="btn-secondary" onclick="setNewDominant('Russisch')">🔴 Russisch</button>
+            <button class="btn-secondary" onclick="setNewDominant('Afghanisch')">🟢 Afghanisch</button>
+            <button class="btn-secondary" onclick="setNewDominant('Keine')">⬜ Keine Koalition dominant</button>
+        </div>`;
+        showWizard('Instabiler Frieden: Dominanz',body,{back:false,next:false,skip:false});
+    }
+
+    function setNewDominant(coalition){
+        state.dominantCoalition=coalition==='Keine'?null:coalition;
+        const domSel=document.getElementById('domCoalSel');
+        if(domSel) domSel.value=coalition==='Keine'?'Keine':coalition;
+        toast('Dominante Koalition → '+(coalition==='Keine'?'Keine':coalition));
+        finishTurn();
+    }
+    window.setNewDominant=setNewDominant;
 
     function proceedToActions(){
         state.phase=1;updatePhaseIndicator();
         state.actionsCompleted=0;state.currentActionIdx=0;state.actionSkips=[false,false,false];state.loopedThisTurn=false;
+        state.skippedActionLabels=[];
         processNextAction();
     }
 
@@ -1915,8 +1963,12 @@
             return;
         }
         if(can===false){
-            body+=`<div class="rule-hint" style="margin-top:8px;color:var(--warn);border-color:rgba(200,96,64,0.28);">❌ Keine gültige Hofkarte vorhanden – Aktion wird übersprungen.</div>`;
-            showWizard(`Aktion ${slotIdx+1}: Übersprungen`,body,{back:false,next:true,nextLabel:'Weiter →',nextFn:()=>{state.actionSkips[slotIdx]=true;state.currentActionIdx++;processNextAction();},skip:false});
+            // Lautlos überspringen – kein eigener Screen
+            state.actionSkips[slotIdx]=true;
+            const lbl2=actionLabel(actionText)||actionText;
+            state.skippedActionLabels.push(`Aktion ${slotIdx+1} übersprungen: ${lbl2} — keine Hofkarte verfügbar`);
+            state.currentActionIdx++;
+            processNextAction();
             return;
         }
         if(can==='conditional'){
@@ -1972,7 +2024,7 @@
         <div style="margin-top:12px;">
             <p>Welche Karte kauft Wakhan?</p>
             <div class="row ctr" style="margin-top:10px;gap:10px;">
-                <input type="number" class="input-num" id="radCardInput" min="1" max="116" placeholder="Nr. 1–116" style="max-width:130px;">
+                <input type="tel" inputmode="numeric" pattern="[0-9]*" class="input-num" id="radCardInput" min="1" max="116" placeholder="Nr. 1–116" style="max-width:130px;">
                 <button class="btn-secondary btn-sm" onclick="radCardPicked(${slotIdx})">✓ Auswählen</button>
             </div>
         </div>`;
@@ -2020,16 +2072,20 @@
         if(!info){toast('Kartennummer nicht gefunden.');return;}
         const isLev=info.leveraged||false;
         const levNote=isLev?` <span style="color:var(--lev);font-size:.85rem;">①</span>`:'';
-        let body=`<p style="font-size:1rem;font-weight:700;color:var(--text);">#${v} – ${info.name}${levNote}</p>
+        const body=`<p style="font-size:1rem;font-weight:700;color:var(--text);">#${v} – ${info.name}${levNote}</p>
         <p style="font-size:.90rem;color:var(--text2);margin-top:2px;">${info.region||'?'} · ${info.suit} · Rang ${info.rank||'?'}</p>
-        <p style="margin-top:12px;">Welcher Spieler beherrscht Region <em>${info.region||'?'}</em>?</p>
-        <div class="loy-pills" style="margin-top:10px;">
-            <button class="loy-pill brit" onclick="setBriber('Britisch',${slotIdx})">🔵 Britisch</button>
-            <button class="loy-pill rus" onclick="setBriber('Russisch',${slotIdx})">🔴 Russisch</button>
-            <button class="loy-pill afg" onclick="setBriber('Afghanisch',${slotIdx})">🟢 Afghanisch</button>
-            <button class="btn-secondary btn-sm" style="margin-top:6px;" onclick="setBriber('Keiner',${slotIdx})">Niemand / Wakhan selbst</button>
+        <div class="action-box" style="margin-top:12px;">
+            <p>Falls ein Mitspieler die Region <strong>${info.region||'?'}</strong> beherrscht, muss Wakhan Bestechungsgeld zahlen (= Anzahl seiner <strong>Stämme</strong> in der Region).</p>
+        </div>
+        <div class="rule-hint" style="margin-top:8px;">
+            ⚖️ <strong>Hinweis:</strong> Der herrschende Spieler darf einen Teil oder alle Kosten erlassen — verhandelt zuerst, bevor ihr die tatsächliche Summe festlegt.
+        </div>
+        <p style="margin-top:12px;font-weight:700;">Kann Wakhan die Karte (inkl. eventueller Bestechung) bezahlen?</p>
+        <div class="row ctr" style="margin-top:10px;gap:10px;">
+            <button class="btn-primary" style="flex:1;" onclick="playCard(${slotIdx})">✓ Ja – Karte ausspielen</button>
+            <button class="btn-destructive" style="flex:1;" onclick="discardCard(${slotIdx})">✗ Nein – abwerfen</button>
         </div>`;
-        showWizard('Radikalisierung: Bestechung?',body,{back:false,next:false,skip:false});
+        showWizard('Radikalisierung: Bezahlen?',body,{back:false,next:false,skip:false});
     }
 
     function radNoCard(slotIdx){
@@ -2174,7 +2230,7 @@
         // candidates.length > needed → narrow further by phase
         if (phase === 4) { askDiscardPhase4(); return; }
         if (phase === 5) { askDiscardPhase5(); return; }
-        if (phase === 7) {
+        if (phase === 8) {
             // Lowest card number – deterministic
             _ds.candidates.sort((a,b) => a.id - b.id);
             _ds.definite.push(..._ds.candidates.slice(0, _ds.needed));
@@ -2183,7 +2239,7 @@
             showDiscardRecommendation();
             return;
         }
-        // Auto phases 1, 2, 3, 6
+        // Auto phases 1, 2, 3, 6, 7
         let matchFn;
         if      (phase === 1) matchFn = c =>  CD[c.id] && CD[c.id].suit !== 'Politik';
         else if (phase === 2) matchFn = c => !CD[c.id] || !CD[c.id].patriot;
@@ -2191,6 +2247,8 @@
         else if (phase === 6) {
             const minRank = Math.min(..._ds.candidates.map(c => CD[c.id] ? (CD[c.id].rank || 0) : 0));
             matchFn = c => !CD[c.id] || (CD[c.id].rank || 0) === minRank;
+        } else if (phase === 7) {
+            matchFn = c => !CD[c.id] || CD[c.id].suit !== state.preferredSuit;
         } else { discardAutoPhase(phase + 1); return; }
 
         const matches    = _ds.candidates.filter(c =>  matchFn(c));
@@ -2346,6 +2404,20 @@
         showWizard('⚙ Verwaltung: Abwurf & Abschluss', html, {back:false, next:true, nextLabel:'✓ Verwaltung erledigt', nextFn:finishTurn, skip:false});
     }
 
+    function undoTurn() {
+        if (!state.previousState) { toast('Kein Zug zum Rückgängigmachen.'); return; }
+        if (!confirm('Wakhans letzten Zug rückgängig machen?')) return;
+        const prev = state.previousState;
+        Object.assign(state, prev);
+        state.previousState = null;
+        hideWizard();
+        updateTopBar(); updateCourtUI(); updateEventUI(); updateStackUI(); clearCurUI();
+        document.getElementById('btnStartTurn').disabled = false;
+        toast('↩ Zug rückgängig gemacht.');
+        showScreen('scrGame');
+    }
+    window.undoTurn = undoTurn;
+
     function finishTurn(){
         if(state.currentCard) state.discard.push(state.currentCard.id);
         state.turnActive=false;state.currentCard=null;state.radicalizedThisTurn=null;state.phase=-1;
@@ -2451,7 +2523,8 @@
     window.toggleSuitPicker=toggleSuitPicker; window.setPreferredSuit=setPreferredSuit;
     window.setDominantCoalition=setDominantCoalition; window.resetGame=resetGame;
     window.setupPickCount=setupPickCount; window.setupPickLoy=setupPickLoy; window.finishSetup=finishSetup;
-    window.askAmbition=askAmbition; window.askAmbDominance=askAmbDominance; window.executeAmbition=executeAmbition;
+    window.askAmbition=askAmbition; window.executeAmbition=executeAmbition;
+    window.askDominanceResult=askDominanceResult; window.askNewDominantCoalition=askNewDominantCoalition;
     window.proceedToActions=proceedToActions; window.finishStandardActions=finishStandardActions;
     window.showVerwaltung=showVerwaltung;
     window.checkWakhanFunds=checkWakhanFunds;
@@ -2475,6 +2548,14 @@
         const divider=scrGame.querySelector('.divider');
         if(divider&&divider.nextSibling) scrGame.insertBefore(btn,divider.nextSibling.nextSibling);
         else { const h1=scrGame.querySelector('h1'); if(h1) h1.insertAdjacentElement('afterend',btn); }
+        // Undo-Button unterhalb des Start-Buttons
+        const undoBtn=document.createElement('button');
+        undoBtn.className='btn-secondary btn-sm';
+        undoBtn.id='btnUndoTurn';
+        undoBtn.textContent='↩ Letzten Zug rückgängig';
+        undoBtn.onclick=undoTurn;
+        undoBtn.style.cssText='width:100%;opacity:0.65;margin-top:2px;';
+        btn.insertAdjacentElement('afterend',undoBtn);
     });
 
     document.addEventListener('keydown',e=>{if(e.key==='Escape')closeZoom();});
