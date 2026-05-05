@@ -963,6 +963,115 @@
             margin: 8px 0;
         }
 
+        /* ─────────────────────────────────────────
+           IN-APP CONFIRM DIALOG
+           ───────────────────────────────────────── */
+        .confirm-overlay {
+            position: fixed; inset: 0; z-index: 900;
+            display: none; align-items: center; justify-content: center;
+            background: rgba(10,6,14,0.88);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            padding: 20px;
+        }
+        .confirm-overlay.open { display: flex; }
+        .confirm-card {
+            background: var(--panel2);
+            border: 1px solid var(--border3);
+            border-radius: 18px;
+            padding: 24px 22px 20px;
+            max-width: 340px; width: 100%;
+            box-shadow: 0 24px 70px rgba(0,0,0,0.75);
+            animation: modalSlideIn 0.25s cubic-bezier(0.34,1.1,0.64,1) forwards;
+        }
+        .confirm-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.0rem; font-weight: 700;
+            color: var(--gold2); margin-bottom: 9px; line-height: 1.3;
+        }
+        .confirm-msg {
+            font-size: 0.88rem; color: var(--text2);
+            line-height: 1.58; margin-bottom: 18px;
+        }
+        .confirm-btns { display: flex; gap: 10px; }
+        .confirm-btns button { flex: 1; min-height: 44px; }
+
+        /* ─────────────────────────────────────────
+           COURT CARD WRAPPER + NAME LABEL
+           ───────────────────────────────────────── */
+        .court-card-wrap {
+            display: flex; flex-direction: column;
+            align-items: center; gap: 4px;
+            flex-shrink: 0;
+        }
+        .court-card-name {
+            font-size: 0.46rem; color: var(--text3);
+            text-align: center; width: 80px;
+            overflow: hidden; text-overflow: ellipsis;
+            white-space: nowrap;
+            font-family: 'Lato', sans-serif;
+            line-height: 1.2;
+        }
+
+        /* ─────────────────────────────────────────
+           PHASE NAME LABEL (unterhalb der Dots)
+           ───────────────────────────────────────── */
+        .phase-name-label {
+            font-size: 0.63rem; color: var(--gold);
+            font-family: 'Lato', sans-serif;
+            letter-spacing: 0.08em; text-transform: uppercase;
+            font-weight: 700; text-align: center;
+            min-height: 14px;
+            opacity: 0.85;
+        }
+
+        /* ─────────────────────────────────────────
+           ZOOM: Zwei-Bild-Layout mit Legende
+           ───────────────────────────────────────── */
+        .zoom-img-wrap {
+            display: flex; flex-direction: column;
+            align-items: center; gap: 6px;
+        }
+        .zoom-legend {
+            font-size: 0.62rem; color: var(--gold);
+            letter-spacing: 0.07em; font-weight: 700;
+            text-transform: uppercase;
+            font-family: 'Lato', sans-serif;
+            opacity: 0.80;
+        }
+
+        /* ─────────────────────────────────────────
+           COURT PLACEMENT BUTTONS
+           ───────────────────────────────────────── */
+        #courtPlaceBtns {
+            display: none;
+            flex-direction: column; gap: 6px;
+            margin-top: 10px;
+            padding: 10px 12px;
+            background: rgba(200,168,75,0.05);
+            border: 1px solid var(--gold-border);
+            border-radius: 10px;
+        }
+        .place-prompt {
+            font-size: 0.82rem; color: var(--gold2); font-weight: 700;
+            margin-bottom: 2px;
+        }
+
+        /* ─────────────────────────────────────────
+           REGION PRIORITY CARD
+           ───────────────────────────────────────── */
+        #regionPriorityCard { display: none; }
+        .market-info-badge {
+            font-size: .72rem; font-weight: 700;
+            color: var(--gold2);
+            background: var(--gold-dim);
+            border: 1px solid var(--gold-border);
+            border-radius: 6px;
+            padding: 3px 10px;
+            white-space: nowrap;
+            font-family: 'Lato', sans-serif;
+        }
+
         /* Scrollbar (global) */
         ::-webkit-scrollbar { width: 4px; height: 4px; }
         ::-webkit-scrollbar-track { background: transparent; }
@@ -1037,9 +1146,13 @@
 <!-- ══════════════════════ GAME ══════════════════════ -->
 <div class="screen" id="scrGame">
 
-    <!-- TOP BAR -->
+    <!-- TITEL -->
+    <h1>✦ WAKHAN KI ✦</h1>
+    <div class="divider"></div>
+
+    <!-- TOP BAR: Loyalität + Suit + Spieler + Dominante Koalition -->
     <div class="top-bar-card">
-        <div class="row spread" style="flex-wrap:wrap;gap:6px;">
+        <div class="row spread" style="flex-wrap:wrap;gap:6px;margin-bottom:8px;">
             <div class="tag-row">
                 <span class="info-tag tag-wak" id="wakLoyTag">–</span>
                 <div class="suit-picker-wrap">
@@ -1054,13 +1167,9 @@
             </div>
             <div class="tag-row" id="playerTags"></div>
         </div>
-    </div>
-
-    <!-- DOMINANT COALITION -->
-    <div class="card" style="padding:11px 14px;">
-        <div class="row spread" style="align-items:center;">
-            <span style="font-size:.85rem;color:var(--text2);font-style:italic;">Dominante Koalition:</span>
-            <select id="domCoalSel" onchange="setDominantCoalition(this.value)">
+        <div style="display:flex;align-items:center;gap:8px;border-top:1px solid var(--border);padding-top:8px;">
+            <span style="font-size:.78rem;color:var(--text3);white-space:nowrap;">Dominante Koalition:</span>
+            <select id="domCoalSel" onchange="setDominantCoalition(this.value)" style="flex:1;">
                 <option value="Keine">Keine</option>
                 <option value="Afghanisch">🟢 Afghanisch</option>
                 <option value="Britisch">🔵 Britisch</option>
@@ -1069,8 +1178,8 @@
         </div>
     </div>
 
-    <h1>✦ WAKHAN KI ✦</h1>
-    <div class="divider"></div>
+    <!-- ZUG-BUTTONS (werden per JS injiziert) -->
+    <div id="turnBtnArea" style="display:flex;flex-direction:column;gap:6px;"></div>
 
     <!-- KI CARD STAGE -->
     <div class="stage-row">
@@ -1094,13 +1203,20 @@
         </div>
     </div>
 
-    <!-- REGION PRIORITY PILLS -->
-    <div class="pill-row" id="priorityPills" style="display:none;"></div>
+    <!-- REGION PRIORITY + MARKTINFO (als Card mit Header) -->
+    <div class="card" id="regionPriorityCard" style="padding:11px 14px;">
+        <div class="row spread" style="align-items:center;margin-bottom:8px;">
+            <h2 style="margin:0;">🌐 Regionen-Priorität</h2>
+            <span class="market-info-badge" id="marketInfoBadge"></span>
+        </div>
+        <div class="pill-row" id="priorityPills"></div>
+    </div>
 
+    <!-- HOF -->
     <div class="card">
         <h2>⚔ Wakhans Hof <span style="font-size:.78rem;color:var(--text3);font-family:'Lato',sans-serif;font-style:italic;font-weight:400;" id="courtLimit">(0/3)</span></h2>
         <p style="font-size:.73rem;color:var(--text3);font-style:italic;margin-bottom:8px;">Hoflimit = 3 + Summe der lila Sterne (Ränge) aller Politik-Karten im Hof</p>
-        <div class="court-row" id="courtRow"><div style="font-size:.88rem;color:var(--text3);padding:22px;font-style:italic;">Noch keine Hofkarten.</div></div>
+        <div class="court-row" id="courtRow"><div style="font-size:.88rem;color:var(--text3);padding:22px;font-style:italic;">Noch keine Hofkarten. Gib unten eine Kartennummer ein, um zu beginnen.</div></div>
         <p style="font-size:.72rem;color:var(--text3);margin-top:6px;font-style:italic;">👤-Button: aktivieren wenn ein Mitspieler diese Karte im Hof hat → Wakhan bevorzugt diese Karte (Priorität #1).</p>
         <p style="font-size:.72rem;color:var(--warn);margin-top:3px;font-style:italic;">⚠ Geiselnahme: Hat ein Mitspieler mehr Spione auf einer Wakhan-Hofkarte als alle anderen einzeln, muss Wakhan bei Nutzung dieser Karte Bestechungsgeld zahlen.</p>
         <div class="row" style="margin-top:10px;gap:8px;">
@@ -1108,13 +1224,22 @@
             <button class="btn-sm btn-secondary" onclick="addCourtManual()">+ Karte</button>
             <button class="btn-sm btn-destructive" onclick="clearCourt()">Leeren</button>
         </div>
-        <p style="font-size:.72rem;color:var(--text3);margin-top:5px;font-style:italic;">Ereigniskarten (101–116) → im Ereignisbereich unten eintragen.</p>
+        <!-- Platzierungs-Buttons (erscheinen nach Karteneingabe) -->
+        <div id="courtPlaceBtns">
+            <p class="place-prompt">Wo soll <span id="courtPendingName">#?</span> im Hof platziert werden?</p>
+            <div style="display:flex;gap:8px;">
+                <button class="btn-secondary btn-sm" style="flex:1;" onclick="placeCourtCard('L')">← Links (außen)</button>
+                <button class="btn-secondary btn-sm" style="flex:1;" onclick="placeCourtCard('R')">Rechts (außen) →</button>
+            </div>
+            <button onclick="cancelCourtPlace()" style="background:none;border:none;color:var(--text3);font-size:.78rem;opacity:0.7;min-height:28px;margin-top:2px;">✕ Abbrechen</button>
+        </div>
+        <p style="font-size:.72rem;color:var(--text3);margin-top:8px;font-style:italic;">Ereigniskarten (101–116) → im Ereignisbereich unten eintragen.</p>
     </div>
 
     <!-- EVENTS -->
     <div class="card">
         <h2>📋 Ereigniskarten <span style="font-size:.78rem;color:var(--text3);font-family:'Lato',sans-serif;font-style:italic;font-weight:400;" id="eventCnt">(0)</span></h2>
-        <div class="event-row" id="eventRow"><span style="font-size:.88rem;color:var(--text3);font-style:italic;">Keine.</span></div>
+        <div class="event-row" id="eventRow"><span style="font-size:.88rem;color:var(--text3);font-style:italic;">Keine Ereigniskarten eingetragen.</span></div>
         <div class="row" style="margin-top:8px;gap:8px;">
             <input type="tel" inputmode="numeric" pattern="[0-9]*" class="input-num" id="eventIn" min="101" max="116" placeholder="Nr. 101–116">
             <button class="btn-sm btn-secondary" onclick="addEvent()">+ Ereignis</button>
@@ -1179,7 +1304,7 @@
         </div>
     </details>
 
-    <button class="btn-secondary btn-sm btn-full" style="margin-top:2px;" onclick="resetGame()">↺ Neues Spiel</button>
+    <button class="btn-secondary btn-sm btn-full" style="margin-top:2px;opacity:0.70;" onclick="resetGame()">↺ Neues Spiel</button>
 </div>
 
 <!-- ══════════════════════ WIZARD MODAL ══════════════════════
@@ -1194,18 +1319,19 @@
         <div class="modal-progress">
             <div class="modal-drag-pill"></div>
             <div class="progress-dots" id="modalPhaseDots">
-                <span class="pdot" data-p="0" title="Phase A: Ambition">A</span>
+                <span class="pdot" data-p="0">A</span>
                 <div class="pdot-line" id="pdLine0"></div>
-                <span class="pdot" data-p="1" title="Aktion 1">1</span>
+                <span class="pdot" data-p="1">1</span>
                 <div class="pdot-line" id="pdLine1"></div>
-                <span class="pdot" data-p="2" title="Aktion 2">2</span>
+                <span class="pdot" data-p="2">2</span>
                 <div class="pdot-line" id="pdLine2"></div>
-                <span class="pdot" data-p="3" title="Aktion 3">3</span>
+                <span class="pdot" data-p="3">3</span>
                 <div class="pdot-line" id="pdLine3"></div>
-                <span class="pdot" data-p="4" title="Phase B: Bonusaktionen">B</span>
+                <span class="pdot" data-p="4">B</span>
                 <div class="pdot-line" id="pdLine4"></div>
-                <span class="pdot" data-p="5" title="Phase V: Verwaltung">V</span>
+                <span class="pdot" data-p="5">V</span>
             </div>
+            <p class="phase-name-label" id="phaseNameLabel"></p>
         </div>
 
         <!-- Modal Header: Titel -->
@@ -1235,10 +1361,30 @@
 <!-- Floating Zurück-Button während Board sichtbar ist -->
 <button id="btnWizPeekBack" onclick="peekEnd()">↩ Zurück zum Wizard</button>
 
+<!-- ══════════════════════ CONFIRM DIALOG ══════════════════════ -->
+<div id="confirmModal" class="confirm-overlay" role="alertdialog">
+    <div class="confirm-card">
+        <p class="confirm-title" id="confirmTitle">Bestätigung</p>
+        <p class="confirm-msg"   id="confirmMsg"></p>
+        <div class="confirm-btns">
+            <button class="btn-secondary btn-sm" id="confirmNo">Abbrechen</button>
+            <button class="btn-destructive btn-sm" id="confirmYes">Bestätigen</button>
+        </div>
+    </div>
+</div>
+
 <!-- ══════════════════════ ZOOM OVERLAY ══════════════════════ -->
 <div class="zoom-ov" id="zoom" onclick="closeZoom()">
     <button class="zclose" onclick="closeZoom()">✕</button>
-    <div><img id="zimg" src="" alt=""><div style="font-size:.72rem;color:var(--text3);text-align:center;margin-top:6px;font-style:italic;" id="zlbl"></div></div>
+    <div class="zoom-img-wrap" id="zWrap1">
+        <span class="zoom-legend" id="zLbl1"></span>
+        <img id="zimg" src="" alt="">
+        <div style="font-size:.68rem;color:var(--text3);text-align:center;margin-top:4px;font-style:italic;" id="zlbl"></div>
+    </div>
+    <div class="zoom-img-wrap" id="zWrap2" style="display:none;">
+        <span class="zoom-legend" id="zLbl2"></span>
+        <img id="zimg2" src="" alt="">
+    </div>
 </div>
 
 <div class="toast" id="toast"></div>
@@ -1522,6 +1668,26 @@
     function toast(msg){const el=document.getElementById('toast');el.textContent=msg;el.className='toast on';clearTimeout(_t);_t=setTimeout(()=>el.className='toast',2800);}
 
     // ──────────────────────────────────────
+    // IN-APP CONFIRM (ersetzt alle confirm())
+    // ──────────────────────────────────────
+    function appConfirm(title, msg, yesLabel, noLabel, yesCb, noCb) {
+        const modal = document.getElementById('confirmModal');
+        document.getElementById('confirmTitle').textContent = title;
+        document.getElementById('confirmMsg').innerHTML = msg;
+        const yBtn = document.getElementById('confirmYes');
+        const nBtn = document.getElementById('confirmNo');
+        yBtn.textContent = yesLabel || 'Bestätigen';
+        nBtn.textContent = noLabel  || 'Abbrechen';
+        yBtn.onclick = () => { closeConfirm(); if (yesCb) yesCb(); };
+        nBtn.onclick = () => { closeConfirm(); if (noCb)  noCb();  };
+        modal.classList.add('open');
+    }
+    function closeConfirm() {
+        document.getElementById('confirmModal').classList.remove('open');
+    }
+    window.closeConfirm = closeConfirm;
+
+    // ──────────────────────────────────────
     // LEVERAGED MODAL
     // ──────────────────────────────────────
     function showLevModal(idx) {
@@ -1567,7 +1733,7 @@
         else{state.topCard=null;imgS.style.display='none';phS.style.display='flex';phS.textContent='Stapel leer';}
         updatePriorityPills();
     }
-    function clearCurUI(){['imgCur','arrCur','badgeCur'].forEach(id=>{const el=document.getElementById(id);if(el)el.style.display='none';});document.getElementById('phCur').style.display='flex';document.getElementById('phCur').textContent='Karte ziehen';document.getElementById('priorityPills').style.display='none';}
+    function clearCurUI(){['imgCur','arrCur','badgeCur'].forEach(id=>{const el=document.getElementById(id);if(el)el.style.display='none';});document.getElementById('phCur').style.display='flex';document.getElementById('phCur').textContent='Karte ziehen';document.getElementById('regionPriorityCard').style.display='none';}
     function showCurUI(card){
         const imgC=document.getElementById('imgCur'),phC=document.getElementById('phCur');
         phC.textContent='Lädt…';phC.style.display='flex';imgC.style.display='none';
@@ -1577,15 +1743,40 @@
         updatePriorityPills();
     }
     function updatePriorityPills(){
+        const card=document.getElementById('regionPriorityCard');
         const container=document.getElementById('priorityPills');
-        if(!state.topCard||!state.currentCard){container.style.display='none';return;}
-        container.style.display='flex';container.innerHTML='<span style="font-size:.62rem;color:var(--text3);font-family:\'Lato\',sans-serif;font-weight:700;letter-spacing:.06em;">Regionen-Priorität:</span>';
-        for(let i=1;i<=6;i++){const val=state.topCard.backArray[i];const reg=REGION_BY_IDX[val];if(!reg)continue;const activeMark=i===state.currentCard.blackArrow?' ●':'';const s=document.createElement('span');s.className='pill '+reg.c;s.textContent=i+'. '+reg.n+activeMark;s.title=activeMark?'Schwarzer Pfeil (Spalte '+val+')':'';container.appendChild(s);}
+        const badge=document.getElementById('marketInfoBadge');
+        if(!state.topCard||!state.currentCard){card.style.display='none';return;}
+        card.style.display='block';
+        // Marktinfo-Badge
+        const instr=getMarketInstruction();
+        if(badge) badge.textContent='Markt: '+instr.row+'-Reihe · Spalte '+instr.col;
+        // Pills
+        container.innerHTML='';
+        for(let i=1;i<=6;i++){
+            const val=state.topCard.backArray[i];
+            const reg=REGION_BY_IDX[val];
+            if(!reg) continue;
+            const isTarget=i===state.currentCard.blackArrow;
+            const s=document.createElement('span');
+            s.className='pill '+reg.c;
+            if(isTarget) s.style.cssText+='outline:2px solid var(--gold);outline-offset:1px;';
+            s.textContent=i+'. '+reg.n+(isTarget?' ●':'');
+            container.appendChild(s);
+        }
     }
 
     // ──────────────────────────────────────
     // PHASE INDICATOR (im Modal)
     // ──────────────────────────────────────
+    const PHASE_NAMES = {
+        0: 'Ambition-Check',
+        1: 'Aktion 1',
+        2: 'Aktion 2',
+        3: 'Aktion 3',
+        4: 'Bonusaktionen',
+        5: 'Verwaltung'
+    };
     function updatePhaseIndicator(){
         const dots=document.querySelectorAll('#modalPhaseDots .pdot');
         dots.forEach(d=>{
@@ -1599,18 +1790,27 @@
             const line=document.getElementById('pdLine'+i);
             if(line) line.className='pdot-line'+(i<state.phase?' done':'');
         }
+        // Update phase name label
+        const nameEl = document.getElementById('phaseNameLabel');
+        if (nameEl) nameEl.textContent = state.phase >= 0 ? (PHASE_NAMES[state.phase] || '') : '';
     }
 
     function updateCourtUI() {
         const row=document.getElementById('courtRow');
         const cnt=state.court.length, limit=getCourtLimit();
         document.getElementById('courtLimit').textContent='('+cnt+'/'+limit+')';
-        if(!cnt){row.innerHTML='<div style="font-size:.88rem;color:var(--text3);padding:22px;font-style:italic;">Noch keine Hofkarten.</div>';return;}
+        if(!cnt){row.innerHTML='<div style="font-size:.88rem;color:var(--text3);padding:22px;font-style:italic;">Noch keine Hofkarten. Gib oben eine Kartennummer ein, um zu beginnen.</div>';return;}
         row.innerHTML='';
         state.court.forEach((entry,idx)=>{
             const {id,usedThisTurn}=entry;
             const info=CD[id]||{name:'#'+id,rank:'?',leveraged:false};
             const isLev=info.leveraged||false;
+
+            // ── Wrapper (card + name label)
+            const wrap=document.createElement('div');
+            wrap.className='court-card-wrap';
+
+            // ── Karten-Div
             const div=document.createElement('div');
             div.className='court-card'+(usedThisTurn?' used':'')+(isLev?' leveraged-card':'');
             if(entry.opponentCard) div.style.borderColor='#d4884a';
@@ -1618,15 +1818,15 @@
             div.onclick=()=>zoomCard(id);
             div.oncontextmenu=e=>{e.preventDefault();toggleCourtUsed(idx);};
             if(usedThisTurn){const ov=document.createElement('div');ov.className='used-ov';ov.textContent='✓';div.appendChild(ov);}
-            // position dot
+            // Position dot
             const posDot=document.createElement('div');posDot.style.cssText='position:absolute;top:3px;left:3px;width:8px;height:8px;border-radius:50%;z-index:2;';
             if(idx===0)posDot.style.background='#5898d8';else if(idx===state.court.length-1)posDot.style.background='#c84848';else posDot.style.background='#666';
             div.appendChild(posDot);
-            // card nr
+            // Card nr
             const nrSpan=document.createElement('span');nrSpan.className='card-nr';nrSpan.textContent='#'+id;div.appendChild(nrSpan);
-            // leveraged badge
+            // Leveraged badge
             if(isLev){const lb=document.createElement('span');lb.className='lev-badge';lb.textContent='①';lb.title='Fremdfinanziert – keine Rückzahlung beim Abwerfen';div.appendChild(lb);}
-            // opponent btn
+            // Opponent btn
             const oppBtn=document.createElement('button');
             oppBtn.style.cssText='position:absolute;top:2px;left:50%;transform:translateX(-50%);background:'+(entry.opponentCard?'rgba(212,136,74,.88)':'rgba(0,0,0,.58)')+';border:none;color:'+(entry.opponentCard?'#fff':'#888')+';font-size:.5rem;cursor:pointer;border-radius:3px;padding:1px 4px;z-index:4;white-space:nowrap;min-height:0;';
             oppBtn.textContent=entry.opponentCard?'👥 Gegner':'👤';
@@ -1639,7 +1839,16 @@
             delBtn.textContent='✕';delBtn.title=isLev?'Entfernen (①fremdfinanziert – Hinweis erscheint)':'Entfernen';
             delBtn.onclick=e=>{e.stopPropagation();removeCourt(idx);};
             div.appendChild(delBtn);
-            row.appendChild(div);
+
+            wrap.appendChild(div);
+
+            // ── Kartenname unterhalb der Karte
+            const nameLabel=document.createElement('div');
+            nameLabel.className='court-card-name';
+            nameLabel.textContent=info.name||('#'+id);
+            wrap.appendChild(nameLabel);
+
+            row.appendChild(wrap);
         });
     }
 
@@ -1749,10 +1958,20 @@
         btnNext.style.display = buttons.next ? '' : 'none';
         btnNext.textContent   = buttons.nextLabel || 'Weiter →';
         btnNext.onclick       = buttons.nextFn || (()=>{});
+        // Optionaler Variant-Override für den Next-Button
+        const nextVariant = buttons.nextVariant || 'primary';
+        btnNext.className = nextVariant === 'destructive' ? 'btn-destructive' : nextVariant === 'secondary' ? 'btn-secondary' : 'btn-primary';
+        if (nextVariant === 'primary') btnNext.style.flex = '1';
 
         btnSkip.style.display = buttons.skip ? '' : 'none';
         btnSkip.textContent   = buttons.skipLabel || '✗ Überspringen';
         btnSkip.onclick       = buttons.skipFn || (()=>{});
+        // Variant-Override für den Skip-Button (default: secondary)
+        const skipVariant = buttons.skipVariant || 'secondary';
+        btnSkip.className = skipVariant === 'primary' ? 'btn-primary btn-skip'
+                          : skipVariant === 'destructive' ? 'btn-destructive btn-skip'
+                          : skipVariant === 'warn'        ? 'btn-warn btn-skip'
+                          : 'btn-secondary btn-skip';
 
         // ── Wire up Peek-Toggle button (single click, iOS-safe) ─────────────
         const peekBtn = document.getElementById('btnWizPeek');
@@ -1856,7 +2075,7 @@
         <div class="rule-hint" style="margin-top:8px;"><strong>Berechnung:</strong> Wakhan ist <em>allen drei Koalitionen</em> loyal. Ihre Punkte berechnen sich aus Einfluss auf die <em>dominierende</em> Koalition <strong>plus</strong> Geschenken, Patrioten und Beute aller Fraktionen. Vergleiche ihren Gesamteinfluss mit dem jedes Menschenspielers.<br><br>
         <strong>Wenn ja:</strong> Wakhan kauft die Dominanzkarte als 1. Aktion. Der Zug endet danach.<br>
         <strong>Wenn nein:</strong> Normale Aktionen folgen.</div>`;
-        showWizard('Phase A: Ambition-Check',body,{back:false,next:true,nextLabel:'Nein – weiter zu Aktionen',nextFn:proceedToActions,skip:true,skipLabel:'Ja → Dominanzkarte kaufen!',skipFn:executeAmbition});
+        showWizard('Phase A: Ambition-Check',body,{back:false,next:true,nextLabel:'Nein – weiter zu Aktionen',nextFn:proceedToActions,nextVariant:'secondary',skip:true,skipLabel:'Ja → Dominanzkarte kaufen!',skipFn:executeAmbition,skipVariant:'primary'});
     }
 
     function executeAmbition(){
@@ -1887,9 +2106,11 @@
             next:true,
             nextLabel:'Nein – kein Instabiler Frieden',
             nextFn:finishTurn,
+            nextVariant:'secondary',
             skip:true,
             skipLabel:'Ja – Instabiler Frieden',
-            skipFn:askNewDominantCoalition
+            skipFn:askNewDominantCoalition,
+            skipVariant:'warn'
         });
     }
 
@@ -2589,22 +2810,28 @@
 
     function undoTurn() {
         if (!state.previousState) { toast('Kein Zug zum Rückgängigmachen.'); return; }
-        if (!confirm('Wakhans letzten Zug rückgängig machen?')) return;
-        const prev = state.previousState;
-        Object.assign(state, prev);
-        state.previousState = null;
-        hideWizard();
-        updateTopBar(); updateCourtUI(); updateEventUI(); updateStackUI(); clearCurUI();
-        document.getElementById('btnStartTurn').disabled = false;
-        toast('↩ Zug rückgängig gemacht.');
-        showScreen('scrGame');
+        appConfirm(
+            'Zug rückgängig machen',
+            'Wakhans letzten Zug rückgängig machen? Alle Änderungen dieses Zuges gehen verloren.',
+            '↩ Ja – rückgängig', 'Abbrechen',
+            () => {
+                const prev = state.previousState;
+                Object.assign(state, prev);
+                state.previousState = null;
+                hideWizard();
+                updateTopBar(); updateCourtUI(); updateEventUI(); updateStackUI(); clearCurUI();
+                document.getElementById('btnStartTurn').disabled = false;
+                toast('↩ Zug rückgängig gemacht.');
+                showScreen('scrGame');
+            }
+        );
     }
     window.undoTurn = undoTurn;
 
     function finishTurn(){
         if(state.currentCard) state.discard.push(state.currentCard.id);
         state.turnActive=false;state.currentCard=null;state.radicalizedThisTurn=null;state.phase=-1;
-        hideWizard();clearCurUI();document.getElementById('priorityPills').style.display='none';
+        hideWizard();clearCurUI();document.getElementById('regionPriorityCard').style.display='none';
         document.getElementById('btnStartTurn')&&(document.getElementById('btnStartTurn').disabled=false);
         updateCourtUI();updateStackUI();toast('✅ Wakhans Zug abgeschlossen.');showScreen('scrGame');
     }
@@ -2612,9 +2839,48 @@
     // ──────────────────────────────────────
     // ZOOM
     // ──────────────────────────────────────
-    function zoomCard(id){const img=document.getElementById('zimg');img.style.display='none';document.getElementById('zlbl').textContent='Karte #'+id;document.getElementById('zoom').className='zoom-ov on';loadImg(img,URLS,id);}
-    function zoomStack(){if(!state.pile.length)return;const tid=state.pile[state.pile.length-1];const img=document.getElementById('zimg');img.style.display='none';document.getElementById('zlbl').textContent='KI-Stapel Rückseite #'+tid;document.getElementById('zoom').className='zoom-ov on';loadImg(img,BURLS,tid);}
-    function zoomCur(){if(!state.currentCard)return;const img=document.getElementById('zimg');img.style.display='none';document.getElementById('zlbl').textContent='KI-Karte #'+state.currentCard.id;document.getElementById('zoom').className='zoom-ov on';loadImg(img,URLS,state.currentCard.id);}
+    function _showZoom(frontId, backId, label1, label2) {
+        const zoom=document.getElementById('zoom');
+        const img1=document.getElementById('zimg');
+        const img2=document.getElementById('zimg2');
+        const wrap2=document.getElementById('zWrap2');
+        const lbl1El=document.getElementById('zLbl1');
+        const lbl2El=document.getElementById('zLbl2');
+        document.getElementById('zlbl').textContent='';
+        img1.style.display='none'; img2.style.display='none';
+        lbl1El.textContent=label1||'';
+        if (backId) {
+            wrap2.style.display='flex';
+            lbl2El.textContent=label2||'Rückseite';
+            loadImg(img2,BURLS,backId);
+        } else {
+            wrap2.style.display='none';
+        }
+        zoom.className='zoom-ov on';
+        loadImg(img1,frontId>=101?URLS:URLS,frontId);
+    }
+    function zoomCard(id){ _showZoom(id, null, 'Karte #'+id+' – '+(CD[id]?CD[id].name:''), null); }
+    function zoomStack(){
+        if(!state.pile.length)return;
+        const tid=state.pile[state.pile.length-1];
+        const zoom=document.getElementById('zoom');
+        const img1=document.getElementById('zimg');
+        const wrap2=document.getElementById('zWrap2');
+        document.getElementById('zLbl1').textContent='Rückseite (oben auf KI-Stapel)';
+        document.getElementById('zLbl2').textContent='';
+        document.getElementById('zlbl').textContent='';
+        wrap2.style.display='none'; img1.style.display='none';
+        zoom.className='zoom-ov on';
+        loadImg(img1,BURLS,tid);
+    }
+    function zoomCur(){
+        if(!state.currentCard)return;
+        const id=state.currentCard.id;
+        const backId=state.topCard?state.topCard.id:null;
+        document.getElementById('zLbl1').textContent='Vorderseite – Aktionen & Loyalität';
+        document.getElementById('zLbl2').textContent='Rückseite – Regionen-Priorität & Pfeile';
+        _showZoom(id, backId, 'Vorderseite – Aktionen & Loyalität', 'Rückseite – Regionen-Priorität & Pfeile');
+    }
     function closeZoom(){document.getElementById('zoom').className='zoom-ov';}
     function toggleSuitPicker(){document.getElementById('suitPicker').classList.toggle('show');}
     function setPreferredSuit(s){state.preferredSuit=s;updateTopBar();document.getElementById('suitPicker').classList.remove('show');toast('Bevorzugte Farbe: '+s);}
@@ -2630,12 +2896,17 @@
         else { state.court.splice(idx,1); updateCourtUI(); toast('Hofkarte entfernt.'); }
     }
     function toggleCourtUsed(idx){if(idx>=0&&idx<state.court.length){state.court[idx].usedThisTurn=!state.court[idx].usedThisTurn;updateCourtUI();}}
-    function clearCourt(){if(!state.court.length)return;if(!confirm('Hof leeren?'))return;state.court=[];updateCourtUI();toast('Hof geleert.');}
+    function clearCourt(){
+        if(!state.court.length) return;
+        appConfirm('Hof leeren', 'Alle Hofkarten von Wakhan entfernen?', 'Ja – leeren', 'Abbrechen', ()=>{
+            state.court=[]; updateCourtUI(); toast('Hof geleert.');
+        });
+    }
+    let _pendingCourtId = null;
     function addCourtManual(){
         const v=parseInt(document.getElementById('courtIn').value);
         if(isNaN(v)||v<1||v>100){
             if(!isNaN(v)&&v>=101&&v<=116){
-                // Ereigniskarte → in Ereignis-Bereich verschieben
                 document.getElementById('eventIn').value=v;
                 document.getElementById('courtIn').value='';
                 addEvent();
@@ -2646,15 +2917,30 @@
             return;
         }
         if(state.court.find(c=>c.id===v)){toast('Karte #'+v+' bereits im Hof.');return;}
-        const pos=confirm('An die LINKE Seite des Hofes? (Abbrechen = rechts)');
+        const info=CD[v];
+        if(!info){toast('Karte #'+v+' nicht in der Datenbank.');return;}
+        _pendingCourtId=v;
+        document.getElementById('courtIn').value='';
+        const pending=document.getElementById('courtPendingName');
+        if(pending) pending.textContent='#'+v+' – '+(info.name||'?');
+        document.getElementById('courtPlaceBtns').style.display='flex';
+    }
+    function placeCourtCard(side){
+        const v=_pendingCourtId; if(!v) return;
+        _pendingCourtId=null;
+        document.getElementById('courtPlaceBtns').style.display='none';
         const info=CD[v]; const isLev=info&&info.leveraged;
         const entry={id:v,usedThisTurn:false};
-        if(pos) state.court.unshift(entry); else state.court.push(entry);
-        document.getElementById('courtIn').value='';
+        if(side==='L') state.court.unshift(entry); else state.court.push(entry);
         updateCourtUI();
-        if(isLev) toast('① Fremdfinanzierte Hofkarte #'+v+' hinzugefügt.');
-        else toast('Hofkarte #'+v+' hinzugefügt.');
+        if(isLev) toast('① Fremdfinanzierte Hofkarte #'+v+' hinzugefügt ('+( side==='L'?'links':'rechts')+').');
+        else toast('Hofkarte #'+v+' hinzugefügt ('+(side==='L'?'links':'rechts')+').');
     }
+    function cancelCourtPlace(){
+        _pendingCourtId=null;
+        document.getElementById('courtPlaceBtns').style.display='none';
+    }
+    window.placeCourtCard=placeCourtCard; window.cancelCourtPlace=cancelCourtPlace;
     function addEvent(){const v=parseInt(document.getElementById('eventIn').value);if(isNaN(v)||v<101||v>116){toast('Bitte Nr. 101–116 eingeben.');return;}if(state.events.includes(v)){toast('Ereignis #'+v+' bereits vorhanden.');return;}state.events.push(v);document.getElementById('eventIn').value='';updateEventUI();toast('Ereignis #'+v+' hinzugefügt.');}
     function removeEvent(idx){if(idx>=0&&idx<state.events.length){state.events.splice(idx,1);updateEventUI();toast('Ereignis entfernt.');}}
 
@@ -2690,7 +2976,20 @@
         document.getElementById('btnStartTurn')&&(document.getElementById('btnStartTurn').disabled=false);
         toast('Spiel gestartet! Viel Erfolg!');
     }
-    function resetGame(){if(!confirm('Neues Spiel starten?'))return;setupStep=0;tmpPC=1;tmpLoy=[];state.turnActive=false;state.phase=-1;hideWizard();document.getElementById('btnStartTurn')&&(document.getElementById('btnStartTurn').disabled=false);showScreen('scrSetup');renderSetup();}
+    function resetGame(){
+        appConfirm(
+            'Neues Spiel starten',
+            'Den aktuellen Spielstand verwerfen und neu beginnen?',
+            '↺ Ja – neu starten', 'Abbrechen',
+            () => {
+                setupStep=0; tmpPC=1; tmpLoy=[];
+                state.turnActive=false; state.phase=-1;
+                hideWizard();
+                document.getElementById('btnStartTurn')&&(document.getElementById('btnStartTurn').disabled=false);
+                showScreen('scrSetup'); renderSetup();
+            }
+        );
+    }
     function showScreen(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');}
 
     // ──────────────────────────────────────
@@ -2712,6 +3011,9 @@
     window.showVerwaltung=showVerwaltung;
     window.checkWakhanFunds=checkWakhanFunds;
     window.peekStart=peekStart; window.peekEnd=peekEnd; window.togglePeek=togglePeek;
+    window.discardToggle4=discardToggle4; window.discardToggle5=discardToggle5;
+    window.confirmDiscardPhase4=confirmDiscardPhase4; window.confirmDiscardPhase5=confirmDiscardPhase5;
+    window.setNewDominant=setNewDominant; window.toggleCourtUsed=toggleCourtUsed;
 
     // Close suit-picker on outside click
     document.addEventListener('click', e => {
@@ -2719,26 +3021,25 @@
         if(wrap&&!wrap.contains(e.target)) document.getElementById('suitPicker').classList.remove('show');
     });
 
-    // Inject start-turn button
+    // Inject turn buttons into dedicated area
     document.addEventListener('DOMContentLoaded',()=>{
+        const area=document.getElementById('turnBtnArea');
+        if(!area) return;
+        // Start-Button
         const btn=document.createElement('button');
         btn.className='btn-primary';
         btn.id='btnStartTurn';
         btn.innerHTML='▶&nbsp;&nbsp;Wakhans Zug beginnen';
         btn.onclick=startTurn;
-        btn.style.cssText='margin:4px 0;';
-        const scrGame=document.getElementById('scrGame');
-        const divider=scrGame.querySelector('.divider');
-        if(divider&&divider.nextSibling) scrGame.insertBefore(btn,divider.nextSibling.nextSibling);
-        else { const h1=scrGame.querySelector('h1'); if(h1) h1.insertAdjacentElement('afterend',btn); }
-        // Undo-Button unterhalb des Start-Buttons
+        area.appendChild(btn);
+        // Undo-Button
         const undoBtn=document.createElement('button');
         undoBtn.className='btn-secondary btn-sm';
         undoBtn.id='btnUndoTurn';
         undoBtn.textContent='↩ Letzten Zug rückgängig';
         undoBtn.onclick=undoTurn;
-        undoBtn.style.cssText='width:100%;opacity:0.65;margin-top:2px;';
-        btn.insertAdjacentElement('afterend',undoBtn);
+        undoBtn.style.cssText='width:100%;opacity:0.65;';
+        area.appendChild(undoBtn);
     });
 
     document.addEventListener('keydown',e=>{if(e.key==='Escape')closeZoom();});
