@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="de">
 <head>
     <meta charset="UTF-8">
@@ -13,1123 +14,1127 @@
            PAX PAMIR 2E — WAKHAN KI — MIDNIGHT PAMIR (Dark Redesign)
            ═══════════════════════════════════════════════════════════ */
 
-        :root {
-            /* ── BACKGROUNDS (Midnight Pamir) ── */
-            --bg:       #1a151b;
-            --bg2:      #201820;
-            --panel:    #2d282e;
-            --panel2:   #332d34;
-            --card-bg:  #3a343c;
+    :root {
+        /* ── BACKGROUNDS (Midnight Pamir) ── */
+        --bg:       #1a151b;
+        --bg2:      #201820;
+        --panel:    #2d282e;
+        --panel2:   #332d34;
+        --card-bg:  #3a343c;
 
-            /* ── MATTE GOLD ACCENTS ── */
-            --gold:     #c8a84b;
-            --gold2:    #d4b85e;
-            --gold3:    #e8cc7a;
-            --gold-dim: rgba(200,168,75,0.10);
-            --gold-border: rgba(200,168,75,0.25);
+        /* ── MATTE GOLD ACCENTS ── */
+        --gold:     #c8a84b;
+        --gold2:    #d4b85e;
+        --gold3:    #e8cc7a;
+        --gold-dim: rgba(200,168,75,0.10);
+        --gold-border: rgba(200,168,75,0.25);
 
-            /* ── TEXT (warm off-white) ── */
-            --text:     #e4dcd0;
-            --text2:    #b8a888;
-            --text3:    #7a6e5c;
+        /* ── TEXT (warm off-white) ── */
+        --text:     #e4dcd0;
+        --text2:    #b8a888;
+        --text3:    #7a6e5c;
 
-            /* ── BORDERS (gold-tinted) ── */
-            --border:   rgba(200,168,75,0.10);
-            --border2:  rgba(200,168,75,0.22);
-            --border3:  rgba(200,168,75,0.40);
+        /* ── BORDERS (gold-tinted) ── */
+        --border:   rgba(200,168,75,0.10);
+        --border2:  rgba(200,168,75,0.22);
+        --border3:  rgba(200,168,75,0.40);
 
-            /* ── FACTION COLORS ── */
-            --brit:     #c89830;
-            --brit2:    #daa840;
-            --rus:      #5890b8;
-            --rus2:     #70a8cc;
-            --afg:      #bc6870;
-            --afg2:     #d07880;
+        /* ── FACTION COLORS ── */
+        --brit:     #c89830;
+        --brit2:    #daa840;
+        --rus:      #5890b8;
+        --rus2:     #70a8cc;
+        --afg:      #bc6870;
+        --afg2:     #d07880;
 
-            /* ── SPECIAL STATES ── */
-            --rad:          #d08838;
-            --warn:         #c86040;
-            --warn-bg:      rgba(200,96,64,0.08);
-            --info:         #5890b8;
-            --info-bg:      rgba(88,144,184,0.08);
-            --lev:          #a870c8;
-            --lev-bg:       rgba(168,112,200,0.08);
-            --lev-border:   rgba(168,112,200,0.28);
-            --success-bg:   rgba(72,140,88,0.10);
-            --success-border: rgba(72,140,88,0.30);
+        /* ── SPECIAL STATES ── */
+        --rad:          #d08838;
+        --warn:         #c86040;
+        --warn-bg:      rgba(200,96,64,0.08);
+        --info:         #5890b8;
+        --info-bg:      rgba(88,144,184,0.08);
+        --lev:          #a870c8;
+        --lev-bg:       rgba(168,112,200,0.08);
+        --lev-border:   rgba(168,112,200,0.28);
+        --success-bg:   rgba(72,140,88,0.10);
+        --success-border: rgba(72,140,88,0.30);
 
-            /* ── INTERACTIVE ── */
-            --focus-ring: rgba(200,168,75,0.40);
-        }
+        /* ── INTERACTIVE ── */
+        --focus-ring: rgba(200,168,75,0.40);
+    }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
-        body {
-            min-height: 100vh;
-            background-color: var(--bg);
-            background-image:
-                radial-gradient(ellipse 80% 50% at 50% 0%, rgba(60,30,70,0.55) 0%, transparent 65%),
-                radial-gradient(ellipse 60% 40% at 5%  95%, rgba(200,168,75,0.04) 0%, transparent 55%),
-                radial-gradient(ellipse 50% 35% at 95% 85%, rgba(88,144,184,0.03) 0%, transparent 50%);
-            color: var(--text);
-            font-family: 'Lato', system-ui, -apple-system, sans-serif;
-            font-size: 16px;
-            line-height: 1.6;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 0 0 env(safe-area-inset-bottom, 24px);
-            padding-bottom: max(100px, env(safe-area-inset-bottom));
-            -webkit-tap-highlight-color: transparent;
-            -webkit-user-select: none;
-            user-select: none;
-        }
+    body {
+        min-height: 100vh;
+        background-color: var(--bg);
+        background-image:
+            radial-gradient(ellipse 80% 50% at 50% 0%, rgba(60,30,70,0.55) 0%, transparent 65%),
+            radial-gradient(ellipse 60% 40% at 5%  95%, rgba(200,168,75,0.04) 0%, transparent 55%),
+            radial-gradient(ellipse 50% 35% at 95% 85%, rgba(88,144,184,0.03) 0%, transparent 50%);
+        color: var(--text);
+        font-family: 'Lato', system-ui, -apple-system, sans-serif;
+        font-size: 16px;
+        line-height: 1.6;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 0 0 env(safe-area-inset-bottom, 24px);
+        padding-bottom: max(100px, env(safe-area-inset-bottom));
+        -webkit-tap-highlight-color: transparent;
+        -webkit-user-select: none;
+        user-select: none;
+    }
 
-        .screen {
-            width: 100%;
-            max-width: 520px;
-            padding: 20px 14px;
-            display: none;
-            flex-direction: column;
-            gap: 14px;
-        }
-        .screen.active { display: flex; }
+    .screen {
+        width: 100%;
+        max-width: 520px;
+        padding: 20px 14px;
+        display: none;
+        flex-direction: column;
+        gap: 14px;
+    }
+    .screen.active { display: flex; }
 
-        /* ─────────────────────────────────────────
-           TYPOGRAPHY
-           ───────────────────────────────────────── */
-        h1 {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.65rem;
-            color: var(--gold2);
-            text-align: center;
-            letter-spacing: 0.14em;
-            font-weight: 700;
-            line-height: 1.2;
-            text-shadow: 0 2px 20px rgba(200,168,75,0.22);
-        }
-        h2 {
-            font-family: 'Playfair Display', serif;
-            font-size: 0.72rem;
-            color: var(--gold);
-            letter-spacing: 0.12em;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 7px;
-            text-transform: uppercase;
-        }
-        .subtitle {
-            font-size: 0.85rem;
-            color: var(--text3);
-            text-align: center;
-            font-style: italic;
-            margin-top: -6px;
-            letter-spacing: 0.12em;
-            font-family: 'Lato', sans-serif;
-            font-weight: 300;
-        }
+    /* ─────────────────────────────────────────
+       TYPOGRAPHY
+       ───────────────────────────────────────── */
+    h1 {
+        font-family: 'Playfair Display', serif;
+        font-size: 1.65rem;
+        color: var(--gold2);
+        text-align: center;
+        letter-spacing: 0.14em;
+        font-weight: 700;
+        line-height: 1.2;
+        text-shadow: 0 2px 20px rgba(200,168,75,0.22);
+    }
+    h2 {
+        font-family: 'Playfair Display', serif;
+        font-size: 0.72rem;
+        color: var(--gold);
+        letter-spacing: 0.12em;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        gap: 7px;
+        text-transform: uppercase;
+    }
+    .subtitle {
+        font-size: 0.85rem;
+        color: var(--text3);
+        text-align: center;
+        font-style: italic;
+        margin-top: -6px;
+        letter-spacing: 0.12em;
+        font-family: 'Lato', sans-serif;
+        font-weight: 300;
+    }
 
-        /* Gold divider */
-        .divider {
-            width: 120px;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, var(--gold), transparent);
-            margin: 6px auto;
-            position: relative;
-            opacity: 0.55;
-        }
-        .divider::before {
-            content: '◆';
-            position: absolute;
-            top: -5px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 0.45rem;
-            color: var(--gold2);
-            opacity: 0.7;
-        }
+    /* Gold divider */
+    .divider {
+        width: 120px;
+        height: 1px;
+        background: linear-gradient(90deg, transparent, var(--gold), transparent);
+        margin: 6px auto;
+        position: relative;
+        opacity: 0.55;
+    }
+    .divider::before {
+        content: '◆';
+        position: absolute;
+        top: -5px;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 0.45rem;
+        color: var(--gold2);
+        opacity: 0.7;
+    }
 
-        /* ─────────────────────────────────────────
-           CARDS / PANELS
-           ───────────────────────────────────────── */
-        .card {
-            background: var(--panel);
-            border: 1px solid var(--border2);
-            border-radius: 14px;
-            padding: 18px 16px;
-            position: relative;
-            overflow: hidden;
-            box-shadow:
-                0 2px 16px rgba(0,0,0,0.32),
-                0 1px 4px rgba(0,0,0,0.22),
-                inset 0 1px 0 rgba(200,168,75,0.06);
-        }
-        .card::after {
-            content: '';
-            position: absolute;
-            top: 0; left: 15%; right: 15%;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(200,168,75,0.30), transparent);
-        }
-        .card h2 { margin-bottom: 12px; }
+    /* ─────────────────────────────────────────
+       CARDS / PANELS
+       ───────────────────────────────────────── */
+    .card {
+        background: var(--panel);
+        border: 1px solid var(--border2);
+        border-radius: 14px;
+        padding: 18px 16px;
+        position: relative;
+        overflow: hidden;
+        box-shadow:
+            0 2px 16px rgba(0,0,0,0.32),
+            0 1px 4px rgba(0,0,0,0.22),
+            inset 0 1px 0 rgba(200,168,75,0.06);
+    }
+    .card::after {
+        content: '';
+        position: absolute;
+        top: 0; left: 15%; right: 15%;
+        height: 1px;
+        background: linear-gradient(90deg, transparent, rgba(200,168,75,0.30), transparent);
+    }
+    .card h2 { margin-bottom: 12px; }
 
-        .card-lev {
-            background: var(--panel);
-            border: 1px solid var(--lev-border);
-            border-radius: 12px;
-            padding: 14px 16px;
-            box-shadow: 0 2px 8px rgba(168,112,200,0.08);
-        }
+    .card-lev {
+        background: var(--panel);
+        border: 1px solid var(--lev-border);
+        border-radius: 12px;
+        padding: 14px 16px;
+        box-shadow: 0 2px 8px rgba(168,112,200,0.08);
+    }
 
-        /* ─────────────────────────────────────────
-           BUTTON SYSTEM — Three Classes
-           ───────────────────────────────────────── */
-        button {
-            font-family: 'Lato', system-ui, sans-serif;
-            cursor: pointer;
-            font-weight: 700;
-            border: none;
-            border-radius: 10px;
-            font-size: 0.95rem;
-            min-height: 44px;
-            padding: 0 18px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-            white-space: nowrap;
-            letter-spacing: 0.025em;
-            transition:
-                transform 0.18s cubic-bezier(0.34,1.2,0.64,1),
-                box-shadow 0.18s ease,
-                background 0.18s ease,
-                border-color 0.18s ease,
-                opacity 0.18s ease;
-            position: relative;
-            overflow: hidden;
-        }
-        button:not(:disabled):hover  { transform: translateY(-1px); }
-        button:not(:disabled):active { transform: scale(0.97) translateY(0); }
-        button:focus-visible {
-            outline: 2px solid var(--focus-ring);
-            outline-offset: 2px;
-        }
+    /* ─────────────────────────────────────────
+       BUTTON SYSTEM — Three Classes
+       ───────────────────────────────────────── */
+    button {
+        font-family: 'Lato', system-ui, sans-serif;
+        cursor: pointer;
+        font-weight: 700;
+        border: none;
+        border-radius: 10px;
+        font-size: 0.95rem;
+        min-height: 44px;
+        padding: 0 18px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        white-space: nowrap;
+        letter-spacing: 0.025em;
+        transition:
+            transform 0.18s cubic-bezier(0.34,1.2,0.64,1),
+            box-shadow 0.18s ease,
+            background 0.18s ease,
+            border-color 0.18s ease,
+            opacity 0.18s ease;
+        position: relative;
+        overflow: hidden;
+    }
+    button:not(:disabled):hover  { transform: translateY(-1px); }
+    button:not(:disabled):active { transform: scale(0.97) translateY(0); }
+    button:focus-visible {
+        outline: 2px solid var(--focus-ring);
+        outline-offset: 2px;
+    }
 
-        /* ① PRIMARY — Gold, prominent */
-        .btn-primary,
-        .btn-gold {
-            background: linear-gradient(145deg, var(--gold2) 0%, var(--gold) 100%);
-            color: #18100a;
-            box-shadow:
-                0 4px 18px rgba(200,168,75,0.25),
-                inset 0 1px 0 rgba(255,255,255,0.15);
-            font-family: 'Playfair Display', serif;
-            letter-spacing: 0.07em;
-            font-size: 1rem;
-            min-height: 52px;
-            width: 100%;
-        }
-        .btn-primary:not(:disabled):hover,
-        .btn-gold:not(:disabled):hover {
-            box-shadow:
-                0 8px 28px rgba(200,168,75,0.38),
-                inset 0 1px 0 rgba(255,255,255,0.22);
-        }
-        .btn-primary:disabled,
-        .btn-gold:disabled {
-            opacity: 0.35;
-            cursor: not-allowed;
-            transform: none;
-        }
+    /* ① PRIMARY — Gold, prominent */
+    .btn-primary,
+    .btn-gold {
+        background: linear-gradient(145deg, var(--gold2) 0%, var(--gold) 100%);
+        color: #18100a;
+        box-shadow:
+            0 4px 18px rgba(200,168,75,0.25),
+            inset 0 1px 0 rgba(255,255,255,0.15);
+        font-family: 'Playfair Display', serif;
+        letter-spacing: 0.07em;
+        font-size: 1rem;
+        min-height: 52px;
+        width: 100%;
+    }
+    .btn-primary:not(:disabled):hover,
+    .btn-gold:not(:disabled):hover {
+        box-shadow:
+            0 8px 28px rgba(200,168,75,0.38),
+            inset 0 1px 0 rgba(255,255,255,0.22);
+    }
+    .btn-primary:disabled,
+    .btn-gold:disabled {
+        opacity: 0.35;
+        cursor: not-allowed;
+        transform: none;
+    }
 
-        /* ② SECONDARY — Outline, subtle */
-        .btn-secondary,
-        .btn-outline,
-        .btn-ghost {
-            background: transparent;
-            border: 1.5px solid var(--border3);
-            color: var(--text2);
-        }
-        .btn-secondary:not(:disabled):hover,
-        .btn-outline:not(:disabled):hover,
-        .btn-ghost:not(:disabled):hover {
-            border-color: var(--gold);
-            color: var(--gold);
-            background: var(--gold-dim);
-        }
+    /* ② SECONDARY — Outline, subtle */
+    .btn-secondary,
+    .btn-outline,
+    .btn-ghost {
+        background: transparent;
+        border: 1.5px solid var(--border3);
+        color: var(--text2);
+    }
+    .btn-secondary:not(:disabled):hover,
+    .btn-outline:not(:disabled):hover,
+    .btn-ghost:not(:disabled):hover {
+        border-color: var(--gold);
+        color: var(--gold);
+        background: var(--gold-dim);
+    }
 
-        /* ③ DESTRUCTIVE — Muted red */
-        .btn-destructive,
-        .btn-danger,
-        .btn-warn {
-            background: transparent;
-            border: 1.5px solid rgba(200,80,70,0.35);
-            color: #d87068;
-        }
-        .btn-destructive:not(:disabled):hover,
-        .btn-danger:not(:disabled):hover,
-        .btn-warn:not(:disabled):hover {
-            background: rgba(200,80,70,0.10);
-            border-color: rgba(200,80,70,0.60);
-        }
+    /* ③ DESTRUCTIVE — Muted red */
+    .btn-destructive,
+    .btn-danger,
+    .btn-warn {
+        background: transparent;
+        border: 1.5px solid rgba(200,80,70,0.35);
+        color: #d87068;
+    }
+    .btn-destructive:not(:disabled):hover,
+    .btn-danger:not(:disabled):hover,
+    .btn-warn:not(:disabled):hover {
+        background: rgba(200,80,70,0.10);
+        border-color: rgba(200,80,70,0.60);
+    }
 
-        /* Leveraged variant (purple accent) */
-        .btn-lev {
-            background: var(--lev-bg);
-            border: 1.5px solid var(--lev-border);
-            color: var(--lev);
-        }
-        .btn-lev:not(:disabled):hover { background: rgba(168,112,200,0.14); }
+    /* Leveraged variant (purple accent) */
+    .btn-lev {
+        background: var(--lev-bg);
+        border: 1.5px solid var(--lev-border);
+        color: var(--lev);
+    }
+    .btn-lev:not(:disabled):hover { background: rgba(168,112,200,0.14); }
 
-        /* Sizing helpers */
-        .btn-sm  { min-height: 36px; font-size: 0.85rem; padding: 0 14px; }
-        .btn-full { width: 100%; }
-        .btn-auto { width: auto; }
+    /* Sizing helpers */
+    .btn-sm  { min-height: 36px; font-size: 0.85rem; padding: 0 14px; }
+    .btn-full { width: 100%; }
+    .btn-auto { width: auto; }
 
-        /* ─────────────────────────────────────────
-           LOYALTY PILLS
-           ───────────────────────────────────────── */
-        .loy-pills { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; }
-        .loy-pill {
-            min-height: 40px;
-            padding: 0 18px;
-            border-radius: 22px;
-            border: 2px solid;
-            font-size: 0.85rem;
-            font-weight: 700;
-            cursor: pointer;
-            background: transparent;
-            transition: all 0.22s cubic-bezier(0.34,1.2,0.64,1);
-            font-family: 'Playfair Display', serif;
-            letter-spacing: 0.04em;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .loy-pill:hover { transform: translateY(-2px); }
-        .loy-pill.brit { border-color: var(--brit); color: var(--brit); }
-        .loy-pill.brit.sel { background: rgba(200,152,48,0.15); box-shadow: 0 2px 12px rgba(200,152,48,0.18); }
-        .loy-pill.rus  { border-color: var(--rus); color: var(--rus); }
-        .loy-pill.rus.sel  { background: rgba(88,144,184,0.14); box-shadow: 0 2px 12px rgba(88,144,184,0.18); }
-        .loy-pill.afg  { border-color: var(--afg); color: var(--afg); }
-        .loy-pill.afg.sel  { background: rgba(188,104,112,0.14); box-shadow: 0 2px 12px rgba(188,104,112,0.18); }
+    /* ─────────────────────────────────────────
+       LOYALTY PILLS
+       ───────────────────────────────────────── */
+    .loy-pills { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; }
+    .loy-pill {
+        min-height: 40px;
+        padding: 0 18px;
+        border-radius: 22px;
+        border: 2px solid;
+        font-size: 0.85rem;
+        font-weight: 700;
+        cursor: pointer;
+        background: transparent;
+        transition: all 0.22s cubic-bezier(0.34,1.2,0.64,1);
+        font-family: 'Playfair Display', serif;
+        letter-spacing: 0.04em;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .loy-pill:hover { transform: translateY(-2px); }
+    .loy-pill.brit { border-color: var(--brit); color: var(--brit); }
+    .loy-pill.brit.sel { background: rgba(200,152,48,0.15); box-shadow: 0 2px 12px rgba(200,152,48,0.18); }
+    .loy-pill.rus  { border-color: var(--rus); color: var(--rus); }
+    .loy-pill.rus.sel  { background: rgba(88,144,184,0.14); box-shadow: 0 2px 12px rgba(88,144,184,0.18); }
+    .loy-pill.afg  { border-color: var(--afg); color: var(--afg); }
+    .loy-pill.afg.sel  { background: rgba(188,104,112,0.14); box-shadow: 0 2px 12px rgba(188,104,112,0.18); }
 
-        /* ─────────────────────────────────────────
-           INFO / TAG ROW
-           ───────────────────────────────────────── */
-        .tag-row { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
-        .info-tag {
-            display: inline-flex;
-            align-items: center;
-            font-size: 0.72rem;
-            padding: 5px 12px;
-            border-radius: 12px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.2s;
-            white-space: nowrap;
-            font-family: 'Lato', sans-serif;
-            letter-spacing: 0.04em;
-            min-height: 30px;
-        }
-        .tag-wak {
-            background: rgba(168,112,200,0.10);
-            border: 1.5px solid rgba(168,112,200,0.28);
-            color: var(--lev);
-        }
-        .tag-wak:hover { background: rgba(168,112,200,0.16); }
-        .tag-suit {
-            background: var(--gold-dim);
-            border: 1.5px solid var(--gold-border);
-            color: var(--gold2);
-        }
-        .tag-suit:hover { background: rgba(200,168,75,0.15); }
+    /* ─────────────────────────────────────────
+       INFO / TAG ROW
+       ───────────────────────────────────────── */
+    .tag-row { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
+    .info-tag {
+        display: inline-flex;
+        align-items: center;
+        font-size: 0.72rem;
+        padding: 5px 12px;
+        border-radius: 12px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.2s;
+        white-space: nowrap;
+        font-family: 'Lato', sans-serif;
+        letter-spacing: 0.04em;
+        min-height: 30px;
+    }
+    .tag-wak {
+        background: rgba(168,112,200,0.10);
+        border: 1.5px solid rgba(168,112,200,0.28);
+        color: var(--lev);
+    }
+    .tag-wak:hover { background: rgba(168,112,200,0.16); }
+    .tag-suit {
+        background: var(--gold-dim);
+        border: 1.5px solid var(--gold-border);
+        color: var(--gold2);
+    }
+    .tag-suit:hover { background: rgba(200,168,75,0.15); }
 
-        /* Suit picker dropdown */
-        .suit-picker-wrap { position: relative; display: inline-block; }
-        .suit-picker {
-            display: none;
-            position: absolute; top: calc(100% + 6px); left: 0;
-            background: var(--panel2);
-            border: 1px solid var(--border3);
-            border-radius: 12px;
-            flex-direction: column; gap: 1px;
-            z-index: 50; min-width: 190px;
-            box-shadow: 0 12px 40px rgba(0,0,0,0.55);
-            padding: 5px;
-        }
-        .suit-picker.show { display: flex; }
-        .suit-picker button {
-            background: transparent; border: none;
-            color: var(--text2); font-size: 0.88rem;
-            padding: 10px 14px; text-align: left;
-            width: 100%; border-radius: 7px;
-            font-family: 'Lato', sans-serif;
-            font-weight: 400;
-            min-height: 40px;
-            justify-content: flex-start;
-        }
-        .suit-picker button:hover {
-            background: var(--gold-dim);
-            color: var(--gold2);
-            transform: none;
-        }
+    /* Suit picker dropdown */
+    .suit-picker-wrap { position: relative; display: inline-block; }
+    .suit-picker {
+        display: none;
+        position: absolute; top: calc(100% + 6px); left: 0;
+        background: var(--panel2);
+        border: 1px solid var(--border3);
+        border-radius: 12px;
+        flex-direction: column; gap: 1px;
+        z-index: 50; min-width: 190px;
+        box-shadow: 0 12px 40px rgba(0,0,0,0.55);
+        padding: 5px;
+    }
+    .suit-picker.show { display: flex; }
+    .suit-picker button {
+        background: transparent; border: none;
+        color: var(--text2); font-size: 0.88rem;
+        padding: 10px 14px; text-align: left;
+        width: 100%; border-radius: 7px;
+        font-family: 'Lato', sans-serif;
+        font-weight: 400;
+        min-height: 40px;
+        justify-content: flex-start;
+    }
+    .suit-picker button:hover {
+        background: var(--gold-dim);
+        color: var(--gold2);
+        transform: none;
+    }
 
-        /* ─────────────────────────────────────────
-           STAGE / CARD FRAMES
-           ───────────────────────────────────────── */
-        .stage-row { display: flex; gap: 12px; align-items: center; justify-content: center; }
-        .slot { flex: 1; display: flex; flex-direction: column; gap: 5px; align-items: center; max-width: 140px; }
-        .slot-lbl {
-            font-size: 0.62rem;
-            color: var(--text3);
-            text-transform: uppercase;
-            letter-spacing: 0.10em;
-            text-align: center;
-            font-family: 'Lato', sans-serif;
-            font-weight: 700;
-        }
-        .frame {
-            width: 100%; aspect-ratio: 2/3;
-            border: 1.5px solid var(--border2);
-            border-radius: 10px;
-            background: var(--card-bg);
-            display: flex; align-items: center; justify-content: center;
-            overflow: hidden; position: relative; cursor: pointer;
-            transition: border-color 0.25s, box-shadow 0.25s;
-            box-shadow: 0 2px 12px rgba(0,0,0,0.30);
-        }
-        .frame.hl {
-            border-color: var(--gold);
-            box-shadow:
-                0 0 0 2px rgba(200,168,75,0.15),
-                0 4px 20px rgba(0,0,0,0.35);
-        }
-        .frame:hover { border-color: var(--gold2); }
-        .frame img { width: 100%; height: 100%; object-fit: contain; display: none; }
-        .frame .ph {
-            font-size: 0.72rem; color: var(--text3); text-align: center;
-            padding: 8px; line-height: 1.3;
-            display: flex; align-items: center; justify-content: center;
-            height: 100%; font-style: italic;
-            font-family: 'Lato', sans-serif;
-        }
-        .arr-tag {
-            position: absolute; top: 4px; right: 4px; font-size: 0.58rem;
-            font-weight: 700; border-radius: 4px; padding: 2px 5px;
-            display: none; z-index: 2;
-            font-family: 'Lato', sans-serif;
-        }
-        .arr-tag.top { background: rgba(72,160,96,0.90); color: #fff; }
-        .arr-tag.bot { background: rgba(180,80,60,0.90); color: #fff; }
-        .badge-nr {
-            position: absolute; bottom: 4px; right: 4px; font-size: 0.54rem;
-            background: rgba(26,18,30,0.90); color: var(--gold);
-            border-radius: 4px; padding: 2px 5px; display: none; z-index: 2;
-            font-family: 'Lato', sans-serif;
-        }
-        .cnt-stack {
-            position: absolute; top: 4px; left: 4px; font-size: 0.54rem;
-            background: rgba(26,18,30,0.88); color: var(--gold);
-            border-radius: 4px; padding: 2px 5px; z-index: 2;
-        }
-        .stage-arrow {
-            padding-top: 40px;
-            color: var(--gold);
-            font-size: 1.1rem;
-            opacity: 0.55;
-        }
+    /* ─────────────────────────────────────────
+       STAGE / CARD FRAMES
+       ───────────────────────────────────────── */
+    .stage-row { display: flex; gap: 12px; align-items: center; justify-content: center; }
+    .slot { flex: 1; display: flex; flex-direction: column; gap: 5px; align-items: center; max-width: 140px; }
+    .slot-lbl {
+        font-size: 0.62rem;
+        color: var(--text3);
+        text-transform: uppercase;
+        letter-spacing: 0.10em;
+        text-align: center;
+        font-family: 'Lato', sans-serif;
+        font-weight: 700;
+    }
+    .frame {
+        width: 100%; aspect-ratio: 2/3;
+        border: 1.5px solid var(--border2);
+        border-radius: 10px;
+        background: var(--card-bg);
+        display: flex; align-items: center; justify-content: center;
+        overflow: hidden; position: relative; cursor: pointer;
+        transition: border-color 0.25s, box-shadow 0.25s;
+        box-shadow: 0 2px 12px rgba(0,0,0,0.30);
+    }
+    .frame.hl {
+        border-color: var(--gold);
+        box-shadow:
+            0 0 0 2px rgba(200,168,75,0.15),
+            0 4px 20px rgba(0,0,0,0.35);
+    }
+    .frame:hover { border-color: var(--gold2); }
+    .frame img { width: 100%; height: 100%; object-fit: contain; display: none; }
+    .frame .ph {
+        font-size: 0.72rem; color: var(--text3); text-align: center;
+        padding: 8px; line-height: 1.3;
+        display: flex; align-items: center; justify-content: center;
+        height: 100%; font-style: italic;
+        font-family: 'Lato', sans-serif;
+    }
+    .arr-tag {
+        position: absolute; top: 4px; right: 4px; font-size: 0.58rem;
+        font-weight: 700; border-radius: 4px; padding: 2px 5px;
+        display: none; z-index: 2;
+        font-family: 'Lato', sans-serif;
+    }
+    .arr-tag.top { background: rgba(72,160,96,0.90); color: #fff; }
+    .arr-tag.bot { background: rgba(180,80,60,0.90); color: #fff; }
+    .badge-nr {
+        position: absolute; bottom: 4px; right: 4px; font-size: 0.54rem;
+        background: rgba(26,18,30,0.90); color: var(--gold);
+        border-radius: 4px; padding: 2px 5px; display: none; z-index: 2;
+        font-family: 'Lato', sans-serif;
+    }
+    .cnt-stack {
+        position: absolute; top: 4px; left: 4px; font-size: 0.54rem;
+        background: rgba(26,18,30,0.88); color: var(--gold);
+        border-radius: 4px; padding: 2px 5px; z-index: 2;
+    }
+    .stage-arrow {
+        padding-top: 40px;
+        color: var(--gold);
+        font-size: 1.1rem;
+        opacity: 0.55;
+    }
 
-        /* ─────────────────────────────────────────
-           COURT CARDS
-           ───────────────────────────────────────── */
-        .court-row {
-            display: flex; gap: 8px; overflow-x: auto;
-            padding: 8px 2px; flex-wrap: nowrap;
-            align-items: flex-start; min-height: 120px;
-        }
-        .court-card {
-            flex-shrink: 0; width: 80px; aspect-ratio: 2/3;
-            border: 1.5px solid var(--border2);
-            border-radius: 9px; background: var(--card-bg);
-            overflow: hidden; cursor: pointer; position: relative;
-            transition: border-color 0.22s, box-shadow 0.22s, transform 0.18s;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.25);
-        }
-        .court-card:hover {
-            border-color: var(--gold);
-            box-shadow: 0 4px 16px rgba(200,168,75,0.15);
-            transform: translateY(-2px);
-        }
-        .court-card.used { opacity: 0.38; border-style: dashed; }
-        .court-card.leveraged-card { border-color: var(--lev-border); border-width: 2px; }
-        .court-card img { width: 100%; height: 100%; object-fit: contain; display: none; }
-        .court-card .used-ov {
-            position: absolute; inset: 0;
-            background: rgba(26,18,30,0.60);
-            display: flex; align-items: center; justify-content: center;
-            font-size: 1.5rem; color: var(--gold); z-index: 3; pointer-events: none;
-        }
-        .court-card .card-nr {
-            position: absolute; bottom: 2px; right: 2px; font-size: 0.50rem;
-            background: rgba(26,18,30,0.90); color: var(--gold2);
-            border-radius: 3px; padding: 2px 4px; z-index: 2;
-            font-family: 'Lato', sans-serif;
-        }
-        .court-card .lev-badge {
-            position: absolute; bottom: 2px; left: 2px; font-size: 0.55rem;
-            background: rgba(168,112,200,0.90); color: #f0d8fc;
-            border-radius: 3px; padding: 2px 4px; z-index: 2;
-        }
+    /* ─────────────────────────────────────────
+       COURT CARDS
+       ───────────────────────────────────────── */
+    .court-row {
+        display: flex; gap: 8px; overflow-x: auto;
+        padding: 8px 2px; flex-wrap: nowrap;
+        align-items: flex-start; min-height: 120px;
+    }
+    .court-card {
+        flex-shrink: 0; width: 80px; aspect-ratio: 2/3;
+        border: 1.5px solid var(--border2);
+        border-radius: 9px; background: var(--card-bg);
+        overflow: hidden; cursor: pointer; position: relative;
+        transition: border-color 0.22s, box-shadow 0.22s, transform 0.18s;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+    }
+    .court-card:hover {
+        border-color: var(--gold);
+        box-shadow: 0 4px 16px rgba(200,168,75,0.15);
+        transform: translateY(-2px);
+    }
+    .court-card.used { opacity: 0.38; border-style: dashed; }
+    .court-card.leveraged-card { border-color: var(--lev-border); border-width: 2px; }
+    .court-card img { width: 100%; height: 100%; object-fit: contain; display: none; }
+    .court-card .used-ov {
+        position: absolute; inset: 0;
+        background: rgba(26,18,30,0.60);
+        display: flex; align-items: center; justify-content: center;
+        font-size: 1.5rem; color: var(--gold); z-index: 3; pointer-events: none;
+    }
+    .court-card .card-nr {
+        position: absolute; bottom: 2px; right: 2px; font-size: 0.50rem;
+        background: rgba(26,18,30,0.90); color: var(--gold2);
+        border-radius: 3px; padding: 2px 4px; z-index: 2;
+        font-family: 'Lato', sans-serif;
+    }
+    .court-card .lev-badge {
+        position: absolute; bottom: 2px; left: 2px; font-size: 0.55rem;
+        background: rgba(168,112,200,0.90); color: #f0d8fc;
+        border-radius: 3px; padding: 2px 4px; z-index: 2;
+    }
 
-        /* ─────────────────────────────────────────
-           EVENT CARDS
-           ───────────────────────────────────────── */
-        .event-row { display: flex; gap: 7px; flex-wrap: wrap; padding: 4px 0; }
-        .event-card {
-            width: 72px; aspect-ratio: 2/3;
-            border: 2px solid rgba(188,104,112,0.30);
-            border-radius: 8px; background: var(--card-bg);
-            overflow: hidden; cursor: pointer; position: relative; flex-shrink: 0;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.20);
-            transition: transform 0.18s;
-        }
-        .event-card:hover { transform: translateY(-2px); }
-        .event-card img { width: 100%; height: 100%; object-fit: contain; display: none; }
-        .event-card .evt-name {
-            position: absolute; bottom: 2px; left: 2px; right: 2px; font-size: 0.44rem;
-            background: rgba(26,18,30,0.92); color: var(--afg2);
-            text-align: center; padding: 2px; z-index: 2; line-height: 1.2; border-radius: 2px;
-        }
-        .event-card .del-btn {
-            position: absolute; top: 2px; right: 2px;
-            background: rgba(26,18,30,0.88); border: none; color: var(--text3);
-            font-size: 0.70rem; cursor: pointer; border-radius: 50%;
-            width: 20px; height: 20px; min-height: 20px;
-            display: flex; align-items: center; justify-content: center; z-index: 4;
-        }
+    /* ─────────────────────────────────────────
+       EVENT CARDS
+       ───────────────────────────────────────── */
+    .event-row { display: flex; gap: 7px; flex-wrap: wrap; padding: 4px 0; }
+    .event-card {
+        width: 72px; aspect-ratio: 2/3;
+        border: 2px solid rgba(188,104,112,0.30);
+        border-radius: 8px; background: var(--card-bg);
+        overflow: hidden; cursor: pointer; position: relative; flex-shrink: 0;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.20);
+        transition: transform 0.18s;
+    }
+    .event-card:hover { transform: translateY(-2px); }
+    .event-card img { width: 100%; height: 100%; object-fit: contain; display: none; }
+    .event-card .evt-name {
+        position: absolute; bottom: 2px; left: 2px; right: 2px; font-size: 0.44rem;
+        background: rgba(26,18,30,0.92); color: var(--afg2);
+        text-align: center; padding: 2px; z-index: 2; line-height: 1.2; border-radius: 2px;
+    }
+    .event-card .del-btn {
+        position: absolute; top: 2px; right: 2px;
+        background: rgba(26,18,30,0.88); border: none; color: var(--text3);
+        font-size: 0.70rem; cursor: pointer; border-radius: 50%;
+        width: 20px; height: 20px; min-height: 20px;
+        display: flex; align-items: center; justify-content: center; z-index: 4;
+    }
 
-        /* ─────────────────────────────────────────
-           INPUT
-           ───────────────────────────────────────── */
-        .input-num {
-            padding: 0.55em 0.80em; min-width: 78px;
-            font-family: 'Lato', sans-serif; font-size: 0.95rem;
-            background: var(--card-bg); color: var(--text);
-            border: 1.5px solid var(--border2); border-radius: 9px;
-            text-align: center;
-            box-shadow: inset 0 1px 4px rgba(0,0,0,0.20);
-            transition: border-color 0.2s;
-            min-height: 44px;
-        }
-        .input-num:focus {
-            outline: none;
-            border-color: var(--gold);
-            box-shadow: inset 0 1px 4px rgba(0,0,0,0.20), 0 0 0 2px var(--focus-ring);
-        }
+    /* ─────────────────────────────────────────
+       INPUT
+       ───────────────────────────────────────── */
+    .input-num {
+        padding: 0.55em 0.80em; min-width: 78px;
+        font-family: 'Lato', sans-serif; font-size: 0.95rem;
+        background: var(--card-bg); color: var(--text);
+        border: 1.5px solid var(--border2); border-radius: 9px;
+        text-align: center;
+        box-shadow: inset 0 1px 4px rgba(0,0,0,0.20);
+        transition: border-color 0.2s;
+        min-height: 44px;
+    }
+    .input-num:focus {
+        outline: none;
+        border-color: var(--gold);
+        box-shadow: inset 0 1px 4px rgba(0,0,0,0.20), 0 0 0 2px var(--focus-ring);
+    }
 
-        /* ─────────────────────────────────────────
-           ACTION BOX / RULE HINTS
-           ───────────────────────────────────────── */
-        .action-box {
-            background: rgba(200,168,75,0.06);
-            border-left: 3px solid var(--gold);
-            border-radius: 0 8px 8px 0;
-            padding: 12px 15px;
-            font-size: 0.95rem; line-height: 1.60;
-            color: var(--text);
-        }
-        .action-box p { margin: 0; }
-        .action-box.rad  { border-left-color: var(--rad); background: rgba(208,136,56,0.06); }
-        .action-box.lev  { border-left-color: var(--lev); background: var(--lev-bg); }
+    /* ─────────────────────────────────────────
+       ACTION BOX / RULE HINTS
+       ───────────────────────────────────────── */
+    .action-box {
+        background: rgba(200,168,75,0.06);
+        border-left: 3px solid var(--gold);
+        border-radius: 0 8px 8px 0;
+        padding: 12px 15px;
+        font-size: 0.95rem; line-height: 1.60;
+        color: var(--text);
+    }
+    .action-box p { margin: 0; }
+    .action-box.rad  { border-left-color: var(--rad); background: rgba(208,136,56,0.06); }
+    .action-box.lev  { border-left-color: var(--lev); background: var(--lev-bg); }
 
-        .rule-hint {
-            background: rgba(88,144,184,0.08);
-            border: 1px solid rgba(88,144,184,0.20);
-            border-radius: 8px; padding: 10px 13px;
-            font-size: 0.88rem; color: var(--rus2); margin-top: 8px; line-height: 1.55;
-        }
-        .rule-hint strong { color: var(--rus2); }
+    .rule-hint {
+        background: rgba(88,144,184,0.08);
+        border: 1px solid rgba(88,144,184,0.20);
+        border-radius: 8px; padding: 10px 13px;
+        font-size: 0.88rem; color: var(--rus2); margin-top: 8px; line-height: 1.55;
+    }
+    .rule-hint strong { color: var(--rus2); }
 
-        .lev-hint {
-            background: var(--lev-bg);
-            border: 1px solid var(--lev-border);
-            border-radius: 8px; padding: 10px 13px;
-            font-size: 0.88rem; color: var(--lev); margin-top: 8px; line-height: 1.55;
-        }
-        .lev-hint strong { color: var(--lev); }
+    .lev-hint {
+        background: var(--lev-bg);
+        border: 1px solid var(--lev-border);
+        border-radius: 8px; padding: 10px 13px;
+        font-size: 0.88rem; color: var(--lev); margin-top: 8px; line-height: 1.55;
+    }
+    .lev-hint strong { color: var(--lev); }
 
-        /* ─────────────────────────────────────────
-           REGION PRIORITY PILLS
-           ───────────────────────────────────────── */
-        .pill-row { display: flex; gap: 4px; flex-wrap: wrap; align-items: center; font-size: 0.62rem; }
-        .pill { font-size: 0.60rem; padding: 3px 8px; border-radius: 9px; border: 1px solid; font-weight: 700; white-space: nowrap; }
-        .pill.rT  { background: rgba(48,120,90,0.18);  border-color: rgba(60,150,110,0.40); color: #60c898; }
-        .pill.rK  { background: rgba(48,100,160,0.18); border-color: rgba(60,120,180,0.40); color: #70a8e0; }
-        .pill.rKa { background: rgba(160,80,60,0.18);  border-color: rgba(180,90,70,0.40);  color: #e09080; }
-        .pill.rPu { background: rgba(160,128,30,0.18); border-color: rgba(200,160,40,0.40); color: #d4aa40; }
-        .pill.rH  { background: rgba(70,130,40,0.18);  border-color: rgba(90,150,50,0.40);  color: #80c050; }
-        .pill.rP  { background: rgba(100,80,180,0.18); border-color: rgba(120,100,200,0.40);color: #a090d8; }
+    /* ─────────────────────────────────────────
+       REGION PRIORITY PILLS
+       ───────────────────────────────────────── */
+    .pill-row { display: flex; gap: 4px; flex-wrap: wrap; align-items: center; font-size: 0.62rem; }
+    .pill { font-size: 0.60rem; padding: 3px 8px; border-radius: 9px; border: 1px solid; font-weight: 700; white-space: nowrap; }
+    .pill.rT  { background: rgba(48,120,90,0.18);  border-color: rgba(60,150,110,0.40); color: #60c898; }
+    .pill.rK  { background: rgba(48,100,160,0.18); border-color: rgba(60,120,180,0.40); color: #70a8e0; }
+    .pill.rKa { background: rgba(160,80,60,0.18);  border-color: rgba(180,90,70,0.40);  color: #e09080; }
+    .pill.rPu { background: rgba(160,128,30,0.18); border-color: rgba(200,160,40,0.40); color: #d4aa40; }
+    .pill.rH  { background: rgba(70,130,40,0.18);  border-color: rgba(90,150,50,0.40);  color: #80c050; }
+    .pill.rP  { background: rgba(100,80,180,0.18); border-color: rgba(120,100,200,0.40);color: #a090d8; }
 
-        /* ─────────────────────────────────────────
-           PLACEMENT BOX
-           ───────────────────────────────────────── */
-        .placement-box {
-            background: rgba(88,144,184,0.07);
-            border: 1px solid rgba(88,144,184,0.20);
-            border-radius: 9px; padding: 13px 15px;
-            font-size: 0.88rem; color: var(--rus2); line-height: 1.58; margin-top: 10px;
-        }
-        .placement-box strong { color: var(--rus2); }
-        .placement-box ul { padding-left: 18px; margin-top: 6px; }
-        .placement-box li { margin-bottom: 5px; }
+    /* ─────────────────────────────────────────
+       PLACEMENT BOX
+       ───────────────────────────────────────── */
+    .placement-box {
+        background: rgba(88,144,184,0.07);
+        border: 1px solid rgba(88,144,184,0.20);
+        border-radius: 9px; padding: 13px 15px;
+        font-size: 0.88rem; color: var(--rus2); line-height: 1.58; margin-top: 10px;
+    }
+    .placement-box strong { color: var(--rus2); }
+    .placement-box ul { padding-left: 18px; margin-top: 6px; }
+    .placement-box li { margin-bottom: 5px; }
 
-        /* ─────────────────────────────────────────
-           LEVERAGED BOX
-           ───────────────────────────────────────── */
-        .lev-action-box {
-            background: linear-gradient(135deg, rgba(168,112,200,0.08), rgba(140,80,180,0.05));
-            border: 1px solid var(--lev-border);
-            border-radius: 10px;
-            padding: 13px 15px;
-            margin-top: 8px;
-        }
-        .lev-action-box .lev-title {
-            font-family: 'Playfair Display', serif;
-            font-size: 0.74rem; letter-spacing: 0.07em;
-            color: var(--lev); font-weight: 700;
-            margin-bottom: 8px;
-            display: flex; align-items: center; gap: 6px;
-            text-transform: uppercase;
-        }
-        .lev-action-box p { font-size: 0.88rem; color: var(--text2); line-height: 1.55; }
-        .lev-action-box .lev-rule {
-            font-size: 0.82rem; color: var(--text3); margin-top: 6px;
-            padding-top: 6px; border-top: 1px solid var(--lev-border);
-        }
+    /* ─────────────────────────────────────────
+       LEVERAGED BOX
+       ───────────────────────────────────────── */
+    .lev-action-box {
+        background: linear-gradient(135deg, rgba(168,112,200,0.08), rgba(140,80,180,0.05));
+        border: 1px solid var(--lev-border);
+        border-radius: 10px;
+        padding: 13px 15px;
+        margin-top: 8px;
+    }
+    .lev-action-box .lev-title {
+        font-family: 'Playfair Display', serif;
+        font-size: 0.74rem; letter-spacing: 0.07em;
+        color: var(--lev); font-weight: 700;
+        margin-bottom: 8px;
+        display: flex; align-items: center; gap: 6px;
+        text-transform: uppercase;
+    }
+    .lev-action-box p { font-size: 0.88rem; color: var(--text2); line-height: 1.55; }
+    .lev-action-box .lev-rule {
+        font-size: 0.82rem; color: var(--text3); margin-top: 6px;
+        padding-top: 6px; border-top: 1px solid var(--lev-border);
+    }
 
-        /* ─────────────────────────────────────────
-           ★★★ WIZARD MODAL OVERLAY ★★★
-           The modal prevents ALL layout shifts.
-           Background content stays completely static.
-           ───────────────────────────────────────── */
-        .modal-overlay {
-            position: fixed;
-            inset: 0;
-            z-index: 600;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            background: rgba(10,6,14,0.80);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            padding: 16px;
-            padding-bottom: max(16px, env(safe-area-inset-bottom));
-            /* Smooth peek transition */
-            transition: background 0.2s ease, backdrop-filter 0.2s ease, -webkit-backdrop-filter 0.2s ease;
-        }
-        .modal-overlay.open {
-            display: flex;
-            animation: modalBgFade 0.28s ease forwards;
-        }
-        @keyframes modalBgFade {
-            from { opacity: 0; }
-            to   { opacity: 1; }
-        }
+    /* ─────────────────────────────────────────
+       ★★★ WIZARD MODAL OVERLAY ★★★
+       The modal prevents ALL layout shifts.
+       Background content stays completely static.
+       ───────────────────────────────────────── */
+    .modal-overlay {
+        position: fixed;
+        inset: 0;
+        z-index: 600;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        background: rgba(10,6,14,0.80);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        padding: 16px;
+        padding-bottom: max(16px, env(safe-area-inset-bottom));
+        /* Smooth peek transition */
+        transition: background 0.2s ease, backdrop-filter 0.2s ease, -webkit-backdrop-filter 0.2s ease;
+    }
+    .modal-overlay.open {
+        display: flex;
+        animation: modalBgFade 0.28s ease forwards;
+    }
+    @keyframes modalBgFade {
+        from { opacity: 0; }
+        to   { opacity: 1; }
+    }
 
 
-        .modal-card {
-            width: 100%;
-            max-width: 520px;
-            /* Fixed min-height: card NEVER resizes when text changes */
-            min-height: 460px;
-            max-height: 88vh;
-            background: var(--panel);
-            border: 1px solid var(--border3);
-            border-radius: 20px;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-            box-shadow:
-                0 28px 80px rgba(0,0,0,0.75),
-                0 0 0 1px rgba(200,168,75,0.07),
-                inset 0 1px 0 rgba(200,168,75,0.07);
-            animation: modalSlideIn 0.32s cubic-bezier(0.34,1.1,0.64,1) forwards;
-            /* Smooth peek transition */
-            transition: opacity 0.2s ease, transform 0.2s ease;
-        }
-        @keyframes modalSlideIn {
-            from { transform: translateY(24px) scale(0.98); opacity: 0.7; }
-            to   { transform: translateY(0)    scale(1.00); opacity: 1;   }
-        }
+    .modal-card {
+        width: 100%;
+        max-width: 520px;
+        /* Fixed min-height: card NEVER resizes when text changes */
+        min-height: 460px;
+        max-height: 88vh;
+        background: var(--panel);
+        border: 1px solid var(--border3);
+        border-radius: 20px;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        box-shadow:
+            0 28px 80px rgba(0,0,0,0.75),
+            0 0 0 1px rgba(200,168,75,0.07),
+            inset 0 1px 0 rgba(200,168,75,0.07);
+        animation: modalSlideIn 0.32s cubic-bezier(0.34,1.1,0.64,1) forwards;
+        /* Smooth peek transition */
+        transition: opacity 0.2s ease, transform 0.2s ease;
+    }
+    @keyframes modalSlideIn {
+        from { transform: translateY(24px) scale(0.98); opacity: 0.7; }
+        to   { transform: translateY(0)    scale(1.00); opacity: 1;   }
+    }
 
-        /* Modal top progress bar area */
-        .modal-progress {
-            padding: 16px 24px 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 10px;
-        }
-        .modal-drag-pill {
-            width: 36px; height: 3px;
-            background: rgba(200,168,75,0.22);
-            border-radius: 2px;
-        }
+    /* Modal top progress bar area */
+    .modal-progress {
+        padding: 16px 24px 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
+    .modal-drag-pill {
+        width: 36px; height: 3px;
+        background: rgba(200,168,75,0.22);
+        border-radius: 2px;
+    }
 
-        /* Progress dots */
-        .progress-dots {
-            display: flex;
-            gap: 6px;
-            align-items: center;
-        }
-        .pdot {
-            width: 28px; height: 28px;
-            border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 0.62rem; font-weight: 700;
-            border: 1.5px solid var(--border2);
-            color: var(--text3); flex-shrink: 0;
-            transition: all 0.30s ease;
-            font-family: 'Lato', sans-serif;
-            letter-spacing: 0;
-            background: var(--card-bg);
-        }
-        .pdot + .pdot::before {
-            content: '';
-            position: absolute;
-        }
-        .pdot.done {
-            background: rgba(200,168,75,0.08);
-            border-color: rgba(200,168,75,0.35);
-            color: rgba(200,168,75,0.55);
-        }
-        .pdot.active {
-            background: var(--gold);
-            border-color: var(--gold2);
-            color: #18100a;
-            box-shadow: 0 0 16px rgba(200,168,75,0.38);
-            animation: dotPulse 2s ease-in-out infinite;
-        }
-        @keyframes dotPulse {
-            0%,100% { box-shadow: 0 0 8px rgba(200,168,75,0.25); }
-            50%      { box-shadow: 0 0 22px rgba(200,168,75,0.55); }
-        }
-        .pdot-line {
-            width: 18px; height: 1px;
-            background: var(--border2);
-            flex-shrink: 0;
-        }
-        .pdot-line.done { background: rgba(200,168,75,0.35); }
+    /* Progress dots */
+    .progress-dots {
+        display: flex;
+        gap: 6px;
+        align-items: center;
+    }
+    .pdot {
+        width: 28px; height: 28px;
+        border-radius: 50%;
+        display: flex; align-items: center; justify-content: center;
+        font-size: 0.62rem; font-weight: 700;
+        border: 1.5px solid var(--border2);
+        color: var(--text3); flex-shrink: 0;
+        transition: all 0.30s ease;
+        font-family: 'Lato', sans-serif;
+        letter-spacing: 0;
+        background: var(--card-bg);
+    }
+    .pdot + .pdot::before {
+        content: '';
+        position: absolute;
+    }
+    .pdot.done {
+        background: rgba(200,168,75,0.08);
+        border-color: rgba(200,168,75,0.35);
+        color: rgba(200,168,75,0.55);
+    }
+    .pdot.active {
+        background: var(--gold);
+        border-color: var(--gold2);
+        color: #18100a;
+        box-shadow: 0 0 16px rgba(200,168,75,0.38);
+        animation: dotPulse 2s ease-in-out infinite;
+    }
+    @keyframes dotPulse {
+        0%,100% { box-shadow: 0 0 8px rgba(200,168,75,0.25); }
+        50%      { box-shadow: 0 0 22px rgba(200,168,75,0.55); }
+    }
+    .pdot-line {
+        width: 18px; height: 1px;
+        background: var(--border2);
+        flex-shrink: 0;
+    }
+    .pdot-line.done { background: rgba(200,168,75,0.35); }
 
-        /* Modal header */
-        .modal-header {
-            padding: 12px 24px 0;
-        }
-        .modal-title {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.1rem;
-            color: var(--gold2);
-            font-weight: 700;
-            letter-spacing: 0.05em;
-            line-height: 1.25;
-            text-align: left;
-            display: block;
-            text-transform: none;
-        }
+    /* Modal header */
+    .modal-header {
+        padding: 12px 24px 0;
+    }
+    .modal-title {
+        font-family: 'Playfair Display', serif;
+        font-size: 1.1rem;
+        color: var(--gold2);
+        font-weight: 700;
+        letter-spacing: 0.05em;
+        line-height: 1.25;
+        text-align: left;
+        display: block;
+        text-transform: none;
+    }
 
-        /* Modal scrollable body — fixed height, content scrolls */
-        .modal-body {
-            flex: 1;
-            overflow-y: auto;
-            padding: 16px 24px;
-            min-height: 0;
-            font-size: 1rem;
-            line-height: 1.65;
-            color: var(--text);
-            -webkit-overflow-scrolling: touch;
-        }
-        .modal-body::-webkit-scrollbar { width: 3px; }
-        .modal-body::-webkit-scrollbar-track { background: transparent; }
-        .modal-body::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 2px; }
+    /* Modal scrollable body — fixed height, content scrolls */
+    .modal-body {
+        flex: 1;
+        overflow-y: auto;
+        padding: 16px 24px;
+        min-height: 0;
+        font-size: 1rem;
+        line-height: 1.65;
+        color: var(--text);
+        -webkit-overflow-scrolling: touch;
+    }
+    .modal-body::-webkit-scrollbar { width: 3px; }
+    .modal-body::-webkit-scrollbar-track { background: transparent; }
+    .modal-body::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 2px; }
 
-        /* Modal sticky footer — always visible at bottom */
-        .modal-footer {
-            padding: 14px 20px 20px;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            border-top: 1px solid var(--border);
-            background: linear-gradient(to top, rgba(0,0,0,0.08), transparent);
-            flex-shrink: 0;
-        }
-        .modal-footer-main {
-            display: flex;
-            gap: 10px;
-            align-items: stretch;
-        }
-        #btnWizBack {
-            flex: 0 0 auto;
-            min-width: 100px;
-        }
-        #btnWizNext {
-            flex: 1;
-        }
-        #btnWizSkip {
-            width: 100%;
-            font-size: 0.88rem;
-            min-height: 42px;
-        }
+    /* Modal sticky footer — always visible at bottom */
+    .modal-footer {
+        padding: 14px 20px 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        border-top: 1px solid var(--border);
+        background: linear-gradient(to top, rgba(0,0,0,0.08), transparent);
+        flex-shrink: 0;
+    }
+    .modal-footer-main {
+        display: flex;
+        gap: 10px;
+        align-items: stretch;
+    }
+    #btnWizBack {
+        flex: 0 0 auto;
+        min-width: 100px;
+    }
+    #btnWizNext {
+        flex: 1;
+    }
+    #btnWizSkip {
+        width: 100%;
+        font-size: 0.88rem;
+        min-height: 42px;
+    }
 
-        /* ── BRETT ANSEHEN: TOGGLE BUTTON ── */
-        #btnWizPeek {
-            width: 100%;
-            min-height: 40px;
-            font-size: 0.82rem;
-            background: transparent;
-            border: 1px solid rgba(200,168,75,0.18);
-            color: var(--text3);
-            letter-spacing: 0.04em;
-            -webkit-user-select: none;
-            user-select: none;
-            transition: background 0.15s, color 0.15s, border-color 0.15s;
-        }
-        #btnWizPeek:hover { background: rgba(200,168,75,0.06); color: var(--text2); }
+    /* ── BRETT ANSEHEN: TOGGLE BUTTON ── */
+    #btnWizPeek {
+        width: 100%;
+        min-height: 44px;
+        font-size: 0.88rem;
+        font-weight: 700;
+        background: rgba(200,168,75,0.06);
+        border: 1.5px solid rgba(200,168,75,0.30);
+        color: var(--gold2);
+        letter-spacing: 0.04em;
+        -webkit-user-select: none;
+        user-select: none;
+        transition: background 0.15s, color 0.15s, border-color 0.15s;
+        border-radius: 10px;
+    }
+    #btnWizPeek:hover { background: rgba(200,168,75,0.13); border-color: rgba(200,168,75,0.55); }
 
-        /* Floating "Zurück zum Wizard" Button – erscheint wenn Brett sichtbar */
-        #btnWizPeekBack {
-            position: fixed;
-            bottom: calc(18px + env(safe-area-inset-bottom));
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 10010;
-            display: none;
-            white-space: nowrap;
-            background: linear-gradient(135deg, var(--gold) 0%, #b8960a 100%);
-            color: #0a060e;
-            border: none;
-            border-radius: 30px;
-            padding: 13px 32px;
-            font-size: 0.96rem;
-            font-weight: 800;
-            letter-spacing: 0.03em;
-            box-shadow:
-                0 6px 24px rgba(0,0,0,0.65),
-                0 0 0 2px rgba(200,168,75,0.35),
-                inset 0 1px 0 rgba(255,255,255,0.18);
-            cursor: pointer;
-            min-height: 52px;
-            min-width: 220px;
-            text-align: center;
-            /* iOS tap highlight */
-            -webkit-tap-highlight-color: transparent;
-        }
-        #btnWizPeekBack.visible { display: block; }
-        #btnWizPeekBack:active {
-            transform: translateX(-50%) scale(0.97);
-            box-shadow: 0 3px 12px rgba(0,0,0,0.55);
-        }
+    /* Floating "Zurück zum Wizard" Button – erscheint wenn Brett sichtbar */
+    #btnWizPeekBack {
+        position: fixed;
+        bottom: calc(18px + env(safe-area-inset-bottom));
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 10010;
+        display: none;
+        white-space: nowrap;
+        background: linear-gradient(135deg, var(--gold) 0%, #b8960a 100%);
+        color: #0a060e;
+        border: none;
+        border-radius: 30px;
+        padding: 13px 32px;
+        font-size: 0.96rem;
+        font-weight: 800;
+        letter-spacing: 0.03em;
+        box-shadow:
+            0 6px 24px rgba(0,0,0,0.65),
+            0 0 0 2px rgba(200,168,75,0.35),
+            inset 0 1px 0 rgba(255,255,255,0.18);
+        cursor: pointer;
+        min-height: 52px;
+        min-width: 220px;
+        text-align: center;
+        /* iOS tap highlight */
+        -webkit-tap-highlight-color: transparent;
+    }
+    #btnWizPeekBack.visible { display: block; }
+    #btnWizPeekBack:active {
+        transform: translateX(-50%) scale(0.97);
+        box-shadow: 0 3px 12px rgba(0,0,0,0.55);
+    }
 
-        /* ── NEXT-CARD PRIORITY BANNER (inside .modal-body) ── */
-        .next-priority-banner {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            background: rgba(200,168,75,0.06);
-            border: 1px solid var(--gold-border);
-            border-radius: 12px;
-            padding: 10px 14px;
-            margin-bottom: 14px;
-        }
-        .next-priority-icon {
-            font-size: 1.8rem;
-            line-height: 1;
-            flex-shrink: 0;
-        }
-        .next-priority-text {
-            display: flex;
-            flex-direction: column;
-            gap: 2px;
-        }
-        .next-priority-label {
-            font-size: 0.60rem;
-            color: var(--text3);
-            text-transform: uppercase;
-            letter-spacing: 0.10em;
-            font-family: 'Lato', sans-serif;
-            font-weight: 700;
-        }
-        .next-priority-value {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.0rem;
-            font-weight: 700;
-            color: var(--gold2);
-            line-height: 1.2;
-        }
-        .next-priority-sub {
-            font-size: 0.78rem;
-            color: var(--text3);
-            font-style: italic;
-        }
+    /* ── NEXT-CARD PRIORITY BANNER (inside .modal-body) ── */
+    .next-priority-banner {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        background: rgba(200,168,75,0.06);
+        border: 1px solid var(--gold-border);
+        border-radius: 12px;
+        padding: 10px 14px;
+        margin-bottom: 14px;
+    }
+    .next-priority-icon {
+        font-size: 1.8rem;
+        line-height: 1;
+        flex-shrink: 0;
+    }
+    .next-priority-text {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+    }
+    .next-priority-label {
+        font-size: 0.60rem;
+        color: var(--text3);
+        text-transform: uppercase;
+        letter-spacing: 0.10em;
+        font-family: 'Lato', sans-serif;
+        font-weight: 700;
+    }
+    .next-priority-value {
+        font-family: 'Playfair Display', serif;
+        font-size: 1.0rem;
+        font-weight: 700;
+        color: var(--gold2);
+        line-height: 1.2;
+    }
+    .next-priority-sub {
+        font-size: 0.78rem;
+        color: var(--text3);
+        font-style: italic;
+    }
 
-        /* ─────────────────────────────────────────
-           ZOOM OVERLAY
-           ───────────────────────────────────────── */
-        .zoom-ov {
-            position: fixed; inset: 0;
-            background: rgba(10,6,14,0.95);
-            display: none; align-items: center; justify-content: center;
-            gap: 14px; z-index: 9999; padding: 14px; flex-wrap: wrap;
-            backdrop-filter: blur(4px);
-        }
-        .zoom-ov.on { display: flex; }
-        .zoom-ov img {
-            max-width: min(320px, 44vw); max-height: 76vh;
-            border-radius: 12px; border: 1px solid var(--gold-border);
-            object-fit: contain;
-            box-shadow: 0 0 60px rgba(200,168,75,0.14);
-        }
-        .zclose {
-            position: fixed; top: 14px; right: 16px;
-            background: rgba(200,168,75,0.10);
-            border: 1px solid var(--gold-border);
-            color: var(--gold2); border-radius: 50%;
-            width: 40px; height: 40px; min-height: 40px;
-            font-size: 0.88rem; cursor: pointer; z-index: 10000;
-            display: flex; align-items: center; justify-content: center;
-            transition: background 0.18s;
-        }
-        .zclose:hover { background: rgba(200,168,75,0.20); transform: none; }
+    /* ─────────────────────────────────────────
+       ZOOM OVERLAY
+       ───────────────────────────────────────── */
+    .zoom-ov {
+        position: fixed; inset: 0;
+        background: rgba(10,6,14,0.95);
+        display: none; align-items: center; justify-content: center;
+        gap: 14px; z-index: 9999; padding: 14px; flex-wrap: wrap;
+        backdrop-filter: blur(4px);
+    }
+    .zoom-ov.on { display: flex; }
+    .zoom-ov img {
+        max-width: min(320px, 44vw); max-height: 76vh;
+        border-radius: 12px; border: 1px solid var(--gold-border);
+        object-fit: contain;
+        box-shadow: 0 0 60px rgba(200,168,75,0.14);
+    }
+    .zclose {
+        position: fixed; top: 14px; right: 16px;
+        background: rgba(200,168,75,0.10);
+        border: 1px solid var(--gold-border);
+        color: var(--gold2); border-radius: 50%;
+        width: 40px; height: 40px; min-height: 40px;
+        font-size: 0.88rem; cursor: pointer; z-index: 10000;
+        display: flex; align-items: center; justify-content: center;
+        transition: background 0.18s;
+    }
+    .zclose:hover { background: rgba(200,168,75,0.20); transform: none; }
 
-        /* ─────────────────────────────────────────
-           TOAST
-           ───────────────────────────────────────── */
-        .toast {
-            position: fixed; bottom: 24px; left: 50%;
-            transform: translateX(-50%) translateY(70px);
-            background: var(--panel2);
-            border: 1px solid var(--gold-border);
-            color: var(--text); padding: 10px 22px;
-            border-radius: 12px; font-size: 0.88rem;
-            z-index: 9998;
-            transition: transform 0.30s cubic-bezier(0.34,1.4,0.64,1);
-            pointer-events: none; white-space: nowrap;
-            max-width: 92vw; text-align: center;
-            font-style: italic; font-family: 'Lato', sans-serif;
-            box-shadow: 0 6px 28px rgba(0,0,0,0.45);
-        }
-        .toast.on { transform: translateX(-50%) translateY(0); }
+    /* ─────────────────────────────────────────
+       TOAST
+       ───────────────────────────────────────── */
+    .toast {
+        position: fixed; bottom: 24px; left: 50%;
+        transform: translateX(-50%) translateY(70px);
+        background: var(--panel2);
+        border: 1px solid var(--gold-border);
+        color: var(--text); padding: 10px 22px;
+        border-radius: 12px; font-size: 0.88rem;
+        z-index: 9998;
+        transition: transform 0.30s cubic-bezier(0.34,1.4,0.64,1);
+        pointer-events: none; white-space: nowrap;
+        max-width: 92vw; text-align: center;
+        font-style: italic; font-family: 'Lato', sans-serif;
+        box-shadow: 0 6px 28px rgba(0,0,0,0.45);
+    }
+    .toast.on { transform: translateX(-50%) translateY(0); }
 
-        /* ─────────────────────────────────────────
-           DETAILS / RULES
-           ───────────────────────────────────────── */
-        details { cursor: default; }
-        details summary {
-            cursor: pointer;
-            font-family: 'Playfair Display', serif;
-            font-weight: 600; color: var(--text2);
-            font-size: 0.82rem; padding: 8px 0;
-            letter-spacing: 0.06em; text-transform: uppercase;
-            user-select: none; transition: color 0.18s;
-            min-height: 40px; display: flex; align-items: center;
-        }
-        details summary:hover { color: var(--gold2); }
-        .rules-block { font-size: 0.88rem; color: var(--text2); line-height: 1.62; }
-        .rules-block h4 {
-            color: var(--gold);
-            font-family: 'Playfair Display', serif;
-            font-size: 0.75rem; letter-spacing: 0.07em;
-            margin: 12px 0 5px; text-transform: uppercase;
-        }
-        .rules-block ul, .rules-block ol { padding-left: 18px; }
-        .rules-block li { margin-bottom: 4px; }
-        .rules-block .lev-rule-item { color: var(--lev); }
+    /* ─────────────────────────────────────────
+       DETAILS / RULES
+       ───────────────────────────────────────── */
+    details { cursor: default; }
+    details summary {
+        cursor: pointer;
+        font-family: 'Playfair Display', serif;
+        font-weight: 600; color: var(--text2);
+        font-size: 0.82rem; padding: 8px 0;
+        letter-spacing: 0.06em; text-transform: uppercase;
+        user-select: none; transition: color 0.18s;
+        min-height: 40px; display: flex; align-items: center;
+    }
+    details summary:hover { color: var(--gold2); }
+    .rules-block { font-size: 0.88rem; color: var(--text2); line-height: 1.62; }
+    .rules-block h4 {
+        color: var(--gold);
+        font-family: 'Playfair Display', serif;
+        font-size: 0.75rem; letter-spacing: 0.07em;
+        margin: 12px 0 5px; text-transform: uppercase;
+    }
+    .rules-block ul, .rules-block ol { padding-left: 18px; }
+    .rules-block li { margin-bottom: 4px; }
+    .rules-block .lev-rule-item { color: var(--lev); }
 
-        /* ─────────────────────────────────────────
-           MISC UTILITIES
-           ───────────────────────────────────────── */
-        .row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
-        .row.ctr { justify-content: center; }
-        .row.spread { justify-content: space-between; }
-        .highlight { color: var(--gold2); font-weight: 700; }
-        .warn-text  { color: var(--warn);  font-weight: 700; }
-        .info-text  { color: var(--info);  font-weight: 500; }
-        .lev-text   { color: var(--lev);   font-weight: 700; }
+    /* ─────────────────────────────────────────
+       MISC UTILITIES
+       ───────────────────────────────────────── */
+    .row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+    .row.ctr { justify-content: center; }
+    .row.spread { justify-content: space-between; }
+    .highlight { color: var(--gold2); font-weight: 700; }
+    .warn-text  { color: var(--warn);  font-weight: 700; }
+    .info-text  { color: var(--info);  font-weight: 500; }
+    .lev-text   { color: var(--lev);   font-weight: 700; }
 
-        .sep {
-            width: 100%; height: 1px;
-            background: linear-gradient(90deg, transparent, var(--border2), transparent);
-            margin: 8px 0;
-        }
+    .sep {
+        width: 100%; height: 1px;
+        background: linear-gradient(90deg, transparent, var(--border2), transparent);
+        margin: 8px 0;
+    }
 
-        /* ─────────────────────────────────────────
-           IN-APP CONFIRM DIALOG
-           ───────────────────────────────────────── */
-        .confirm-overlay {
-            position: fixed; inset: 0; z-index: 900;
-            display: none; align-items: center; justify-content: center;
-            background: rgba(10,6,14,0.88);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            padding: 20px;
-        }
-        .confirm-overlay.open { display: flex; }
-        .confirm-card {
-            background: var(--panel2);
-            border: 1px solid var(--border3);
-            border-radius: 18px;
-            padding: 24px 22px 20px;
-            max-width: 340px; width: 100%;
-            box-shadow: 0 24px 70px rgba(0,0,0,0.75);
-            animation: modalSlideIn 0.25s cubic-bezier(0.34,1.1,0.64,1) forwards;
-        }
-        .confirm-title {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.0rem; font-weight: 700;
-            color: var(--gold2); margin-bottom: 9px; line-height: 1.3;
-        }
-        .confirm-msg {
-            font-size: 0.88rem; color: var(--text2);
-            line-height: 1.58; margin-bottom: 18px;
-        }
-        .confirm-btns { display: flex; gap: 10px; }
-        .confirm-btns button { flex: 1; min-height: 44px; }
+    /* ─────────────────────────────────────────
+       IN-APP CONFIRM DIALOG
+       ───────────────────────────────────────── */
+    .confirm-overlay {
+        position: fixed; inset: 0; z-index: 900;
+        display: none; align-items: center; justify-content: center;
+        background: rgba(10,6,14,0.88);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        padding: 20px;
+    }
+    .confirm-overlay.open { display: flex; }
+    .confirm-card {
+        background: var(--panel2);
+        border: 1px solid var(--border3);
+        border-radius: 18px;
+        padding: 24px 22px 20px;
+        max-width: 340px; width: 100%;
+        box-shadow: 0 24px 70px rgba(0,0,0,0.75);
+        animation: modalSlideIn 0.25s cubic-bezier(0.34,1.1,0.64,1) forwards;
+    }
+    .confirm-title {
+        font-family: 'Playfair Display', serif;
+        font-size: 1.0rem; font-weight: 700;
+        color: var(--gold2); margin-bottom: 9px; line-height: 1.3;
+    }
+    .confirm-msg {
+        font-size: 0.88rem; color: var(--text2);
+        line-height: 1.58; margin-bottom: 18px;
+    }
+    .confirm-btns { display: flex; gap: 10px; }
+    .confirm-btns button { flex: 1; min-height: 44px; }
 
-        /* ─────────────────────────────────────────
-           COURT CARD WRAPPER + NAME LABEL
-           ───────────────────────────────────────── */
-        .court-card-wrap {
-            display: flex; flex-direction: column;
-            align-items: center; gap: 4px;
-            flex-shrink: 0;
-        }
-        .court-card-name {
-            font-size: 0.46rem; color: var(--text3);
-            text-align: center; width: 80px;
-            overflow: hidden; text-overflow: ellipsis;
-            white-space: nowrap;
-            font-family: 'Lato', sans-serif;
-            line-height: 1.2;
-        }
+    /* ─────────────────────────────────────────
+       COURT CARD WRAPPER + NAME LABEL
+       ───────────────────────────────────────── */
+    .court-card-wrap {
+        display: flex; flex-direction: column;
+        align-items: center; gap: 4px;
+        flex-shrink: 0;
+    }
+    .court-card-name {
+        font-size: 0.46rem; color: var(--text3);
+        text-align: center; width: 80px;
+        overflow: hidden; text-overflow: ellipsis;
+        white-space: nowrap;
+        font-family: 'Lato', sans-serif;
+        line-height: 1.2;
+    }
 
-        /* ─────────────────────────────────────────
-           PHASE NAME LABEL (unterhalb der Dots)
-           ───────────────────────────────────────── */
-        .phase-name-label {
-            font-size: 0.63rem; color: var(--gold);
-            font-family: 'Lato', sans-serif;
-            letter-spacing: 0.08em; text-transform: uppercase;
-            font-weight: 700; text-align: center;
-            min-height: 14px;
-            opacity: 0.85;
-        }
+    /* ─────────────────────────────────────────
+       PHASE NAME LABEL (unterhalb der Dots)
+       ───────────────────────────────────────── */
+    .phase-name-label {
+        font-size: 0.63rem; color: var(--gold);
+        font-family: 'Lato', sans-serif;
+        letter-spacing: 0.08em; text-transform: uppercase;
+        font-weight: 700; text-align: center;
+        min-height: 14px;
+        opacity: 0.85;
+    }
 
-        /* ─────────────────────────────────────────
-           ZOOM: Zwei-Bild-Layout mit Legende
-           ───────────────────────────────────────── */
-        .zoom-img-wrap {
-            display: flex; flex-direction: column;
-            align-items: center; gap: 6px;
-        }
-        .zoom-legend {
-            font-size: 0.62rem; color: var(--gold);
-            letter-spacing: 0.07em; font-weight: 700;
-            text-transform: uppercase;
-            font-family: 'Lato', sans-serif;
-            opacity: 0.80;
-        }
+    /* ─────────────────────────────────────────
+       ZOOM: Zwei-Bild-Layout mit Legende
+       ───────────────────────────────────────── */
+    .zoom-img-wrap {
+        display: flex; flex-direction: column;
+        align-items: center; gap: 6px;
+    }
+    .zoom-legend {
+        font-size: 0.62rem; color: var(--gold);
+        letter-spacing: 0.07em; font-weight: 700;
+        text-transform: uppercase;
+        font-family: 'Lato', sans-serif;
+        opacity: 0.80;
+    }
 
-        /* ─────────────────────────────────────────
-           COURT PLACEMENT BUTTONS
-           ───────────────────────────────────────── */
-        #courtPlaceBtns {
-            display: none;
-            flex-direction: column; gap: 6px;
-            margin-top: 10px;
-            padding: 10px 12px;
-            background: rgba(200,168,75,0.05);
-            border: 1px solid var(--gold-border);
-            border-radius: 10px;
-        }
-        .place-prompt {
-            font-size: 0.82rem; color: var(--gold2); font-weight: 700;
-            margin-bottom: 2px;
-        }
+    /* ─────────────────────────────────────────
+       COURT PLACEMENT BUTTONS
+       ───────────────────────────────────────── */
+    #courtPlaceBtns {
+        display: none;
+        flex-direction: column; gap: 6px;
+        margin-top: 10px;
+        padding: 10px 12px;
+        background: rgba(200,168,75,0.05);
+        border: 1px solid var(--gold-border);
+        border-radius: 10px;
+    }
+    .place-prompt {
+        font-size: 0.82rem; color: var(--gold2); font-weight: 700;
+        margin-bottom: 2px;
+    }
 
-        /* ─────────────────────────────────────────
-           REGION PRIORITY CARD
-           ───────────────────────────────────────── */
-        #regionPriorityCard { display: none; }
-        .market-info-badge {
-            font-size: .72rem; font-weight: 700;
-            color: var(--gold2);
-            background: var(--gold-dim);
-            border: 1px solid var(--gold-border);
-            border-radius: 6px;
-            padding: 3px 10px;
-            white-space: nowrap;
-            font-family: 'Lato', sans-serif;
-        }
+    /* ─────────────────────────────────────────
+       REGION PRIORITY CARD
+       ───────────────────────────────────────── */
+    #regionPriorityCard { display: none; }
+    .market-info-badge {
+        font-size: .72rem; font-weight: 700;
+        color: var(--gold2);
+        background: var(--gold-dim);
+        border: 1px solid var(--gold-border);
+        border-radius: 6px;
+        padding: 3px 10px;
+        white-space: nowrap;
+        font-family: 'Lato', sans-serif;
+    }
 
-        /* Scrollbar (global) */
-        ::-webkit-scrollbar { width: 4px; height: 4px; }
-        ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 2px; }
+    /* Scrollbar (global) */
+    ::-webkit-scrollbar { width: 4px; height: 4px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 2px; }
 
-        /* Select */
-        select {
-            background: var(--card-bg); color: var(--text);
-            border: 1.5px solid var(--border2); border-radius: 9px;
-            padding: 6px 12px;
-            font-family: 'Lato', sans-serif; font-size: 0.90rem;
-            cursor: pointer;
-            box-shadow: inset 0 1px 3px rgba(0,0,0,0.20);
-            transition: border-color 0.2s;
-            min-height: 40px;
-        }
-        select:focus { outline: none; border-color: var(--gold); }
+    /* Select */
+    select {
+        background: var(--card-bg); color: var(--text);
+        border: 1.5px solid var(--border2); border-radius: 9px;
+        padding: 6px 12px;
+        font-family: 'Lato', sans-serif; font-size: 0.90rem;
+        cursor: pointer;
+        box-shadow: inset 0 1px 3px rgba(0,0,0,0.20);
+        transition: border-color 0.2s;
+        min-height: 40px;
+    }
+    select:focus { outline: none; border-color: var(--gold); }
 
-        /* ─────────────────────────────────────────
-           SETUP SCREEN
-           ───────────────────────────────────────── */
-        .setup-hero {
-            text-align: center;
-            padding: 16px 0 4px;
-        }
-        .setup-hero .ornament {
-            font-size: 0.60rem;
-            letter-spacing: 0.55em;
-            color: var(--gold);
-            opacity: 0.60;
-            display: block;
-            margin-bottom: 8px;
-        }
+    /* ─────────────────────────────────────────
+       SETUP SCREEN
+       ───────────────────────────────────────── */
+    .setup-hero {
+        text-align: center;
+        padding: 16px 0 4px;
+    }
+    .setup-hero .ornament {
+        font-size: 0.60rem;
+        letter-spacing: 0.55em;
+        color: var(--gold);
+        opacity: 0.60;
+        display: block;
+        margin-bottom: 8px;
+    }
 
-        /* ─────────────────────────────────────────
-           GAME SCREEN — TOP BAR
-           ───────────────────────────────────────── */
-        .top-bar-card {
-            background: var(--panel);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 11px 14px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.25);
-        }
+    /* ─────────────────────────────────────────
+       GAME SCREEN — TOP BAR
+       ───────────────────────────────────────── */
+    .top-bar-card {
+        background: var(--panel);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 11px 14px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+    }
 
-        /* Ensure body text in wizard is readable */
-        .modal-body p { margin-bottom: 8px; }
-        .modal-body p:last-child { margin-bottom: 0; }
-        .modal-body strong { color: var(--text); font-weight: 700; }
-        .modal-body em { color: var(--text2); font-style: italic; }
-        .modal-body ol, .modal-body ul { padding-left: 20px; }
-        .modal-body li { margin-bottom: 5px; line-height: 1.6; }
+    /* Ensure body text in wizard is readable */
+    .modal-body p { margin-bottom: 8px; }
+    .modal-body p:last-child { margin-bottom: 0; }
+    .modal-body strong { color: var(--text); font-weight: 700; }
+    .modal-body em { color: var(--text2); font-style: italic; }
+    .modal-body ol, .modal-body ul { padding-left: 20px; }
+    .modal-body li { margin-bottom: 5px; line-height: 1.6; }
 
-    </style>
+</style>
+
 </head>
 <body>
 
 <!-- ══════════════════════ SETUP ══════════════════════ -->
+
 <div class="screen active" id="scrSetup">
     <div class="setup-hero">
         <span class="ornament">✦ ✦ ✦</span>
@@ -1144,167 +1149,169 @@
 </div>
 
 <!-- ══════════════════════ GAME ══════════════════════ -->
+
 <div class="screen" id="scrGame">
 
-    <!-- TITEL -->
-    <h1>✦ WAKHAN KI ✦</h1>
-    <div class="divider"></div>
+<!-- TITEL -->
+<h1>✦ WAKHAN KI ✦</h1>
+<div class="divider"></div>
 
-    <!-- TOP BAR: Loyalität + Suit + Spieler + Dominante Koalition -->
-    <div class="top-bar-card">
-        <div class="row spread" style="flex-wrap:wrap;gap:6px;margin-bottom:8px;">
-            <div class="tag-row">
-                <span class="info-tag tag-wak" id="wakLoyTag">–</span>
-                <div class="suit-picker-wrap">
-                    <span class="info-tag tag-suit" id="prefSuitTag" onclick="toggleSuitPicker()">–</span>
-                    <div class="suit-picker" id="suitPicker">
-                        <button onclick="setPreferredSuit('Politik')">⚔ Politik</button>
-                        <button onclick="setPreferredSuit('Wirtschaft')">💰 Wirtschaft</button>
-                        <button onclick="setPreferredSuit('Militär')">🛡 Militär</button>
-                        <button onclick="setPreferredSuit('Geheimdienst')">🕵️ Geheimdienst</button>
-                    </div>
+<!-- TOP BAR: Loyalität + Suit + Spieler + Dominante Koalition -->
+<div class="top-bar-card">
+    <div class="row spread" style="flex-wrap:wrap;gap:6px;margin-bottom:8px;">
+        <div class="tag-row">
+            <span class="info-tag tag-wak" id="wakLoyTag">–</span>
+            <div class="suit-picker-wrap">
+                <span class="info-tag tag-suit" id="prefSuitTag" onclick="toggleSuitPicker()">–</span>
+                <div class="suit-picker" id="suitPicker">
+                    <button onclick="setPreferredSuit('Politik')">⚔ Politik</button>
+                    <button onclick="setPreferredSuit('Wirtschaft')">💰 Wirtschaft</button>
+                    <button onclick="setPreferredSuit('Militär')">🛡 Militär</button>
+                    <button onclick="setPreferredSuit('Geheimdienst')">🕵️ Geheimdienst</button>
                 </div>
             </div>
-            <div class="tag-row" id="playerTags"></div>
         </div>
-        <div style="display:flex;align-items:center;gap:8px;border-top:1px solid var(--border);padding-top:8px;">
-            <span style="font-size:.78rem;color:var(--text3);white-space:nowrap;">Dominante Koalition:</span>
-            <select id="domCoalSel" onchange="setDominantCoalition(this.value)" style="flex:1;">
-                <option value="Keine">Keine</option>
-                <option value="Afghanisch">🟢 Afghanisch</option>
-                <option value="Britisch">🔵 Britisch</option>
-                <option value="Russisch">🔴 Russisch</option>
-            </select>
+        <div class="tag-row" id="playerTags"></div>
+    </div>
+    <div style="display:flex;align-items:center;gap:8px;border-top:1px solid var(--border);padding-top:8px;">
+        <span style="font-size:.78rem;color:var(--text3);white-space:nowrap;">Dominante Koalition:</span>
+        <select id="domCoalSel" onchange="setDominantCoalition(this.value)" style="flex:1;">
+            <option value="Keine">Keine</option>
+            <option value="Afghanisch">🟢 Afghanisch</option>
+            <option value="Britisch">🔵 Britisch</option>
+            <option value="Russisch">🔴 Russisch</option>
+        </select>
+    </div>
+</div>
+
+<!-- ZUG-BUTTONS (werden per JS injiziert) -->
+<div id="turnBtnArea" style="display:flex;flex-direction:column;gap:6px;"></div>
+
+<!-- KI CARD STAGE -->
+<div class="stage-row">
+    <div class="slot">
+        <div class="slot-lbl">KI-Stapel</div>
+        <div class="frame" id="fStack" onclick="zoomStack()">
+            <img id="imgStack" alt="">
+            <div class="ph" id="phStack">leer</div>
+            <div class="cnt-stack" id="cntStack">0</div>
         </div>
     </div>
-
-    <!-- ZUG-BUTTONS (werden per JS injiziert) -->
-    <div id="turnBtnArea" style="display:flex;flex-direction:column;gap:6px;"></div>
-
-    <!-- KI CARD STAGE -->
-    <div class="stage-row">
-        <div class="slot">
-            <div class="slot-lbl">KI-Stapel</div>
-            <div class="frame" id="fStack" onclick="zoomStack()">
-                <img id="imgStack" alt="">
-                <div class="ph" id="phStack">leer</div>
-                <div class="cnt-stack" id="cntStack">0</div>
-            </div>
-        </div>
-        <div class="stage-arrow">→</div>
-        <div class="slot">
-            <div class="slot-lbl">Gezogene KI-Karte</div>
-            <div class="frame hl" id="fCur" onclick="zoomCur()">
-                <img id="imgCur" alt="">
-                <div class="ph" id="phCur">Karte ziehen</div>
-                <div class="arr-tag" id="arrCur"></div>
-                <div class="badge-nr" id="badgeCur"></div>
-            </div>
+    <div class="stage-arrow">→</div>
+    <div class="slot">
+        <div class="slot-lbl">Gezogene KI-Karte</div>
+        <div class="frame hl" id="fCur" onclick="zoomCur()">
+            <img id="imgCur" alt="">
+            <div class="ph" id="phCur">Karte ziehen</div>
+            <div class="arr-tag" id="arrCur"></div>
+            <div class="badge-nr" id="badgeCur"></div>
         </div>
     </div>
+</div>
 
-    <!-- REGION PRIORITY + MARKTINFO (als Card mit Header) -->
-    <div class="card" id="regionPriorityCard" style="padding:11px 14px;">
-        <div class="row spread" style="align-items:center;margin-bottom:8px;">
-            <h2 style="margin:0;">🌐 Regionen-Priorität</h2>
-            <span class="market-info-badge" id="marketInfoBadge"></span>
-        </div>
-        <div class="pill-row" id="priorityPills"></div>
+<!-- REGION PRIORITY + MARKTINFO (als Card mit Header) -->
+<div class="card" id="regionPriorityCard" style="padding:11px 14px;">
+    <div class="row spread" style="align-items:center;margin-bottom:8px;">
+        <h2 style="margin:0;">🌐 Regionen-Priorität</h2>
+        <span class="market-info-badge" id="marketInfoBadge"></span>
     </div>
+    <div class="pill-row" id="priorityPills"></div>
+</div>
 
-    <!-- HOF -->
-    <div class="card">
-        <h2>⚔ Wakhans Hof <span style="font-size:.78rem;color:var(--text3);font-family:'Lato',sans-serif;font-style:italic;font-weight:400;" id="courtLimit">(0/3)</span></h2>
-        <p style="font-size:.73rem;color:var(--text3);font-style:italic;margin-bottom:8px;">Hoflimit = 3 + Summe der lila Sterne (Ränge) aller Politik-Karten im Hof</p>
-        <div class="court-row" id="courtRow"><div style="font-size:.88rem;color:var(--text3);padding:22px;font-style:italic;">Noch keine Hofkarten. Gib unten eine Kartennummer ein, um zu beginnen.</div></div>
-        <p style="font-size:.72rem;color:var(--text3);margin-top:6px;font-style:italic;">👤-Button: aktivieren wenn ein Mitspieler diese Karte im Hof hat → Wakhan bevorzugt diese Karte (Priorität #1).</p>
-        <p style="font-size:.72rem;color:var(--warn);margin-top:3px;font-style:italic;">⚠ Geiselnahme: Hat ein Mitspieler mehr Spione auf einer Wakhan-Hofkarte als alle anderen einzeln, muss Wakhan bei Nutzung dieser Karte Bestechungsgeld zahlen.</p>
-        <div class="row" style="margin-top:10px;gap:8px;">
-            <input type="tel" inputmode="numeric" pattern="[0-9]*" class="input-num" id="courtIn" min="1" max="100" placeholder="Hof Nr. 1–100">
-            <button class="btn-sm btn-secondary" onclick="addCourtManual()">+ Karte</button>
-            <button class="btn-sm btn-destructive" onclick="clearCourt()">Leeren</button>
-        </div>
-        <!-- Platzierungs-Buttons (erscheinen nach Karteneingabe) -->
-        <div id="courtPlaceBtns">
-            <p class="place-prompt">Wo soll <span id="courtPendingName">#?</span> im Hof platziert werden?</p>
-            <div style="display:flex;gap:8px;">
-                <button class="btn-secondary btn-sm" style="flex:1;" onclick="placeCourtCard('L')">← Links (außen)</button>
-                <button class="btn-secondary btn-sm" style="flex:1;" onclick="placeCourtCard('R')">Rechts (außen) →</button>
-            </div>
-            <button onclick="cancelCourtPlace()" style="background:none;border:none;color:var(--text3);font-size:.78rem;opacity:0.7;min-height:28px;margin-top:2px;">✕ Abbrechen</button>
-        </div>
-        <p style="font-size:.72rem;color:var(--text3);margin-top:8px;font-style:italic;">Ereigniskarten (101–116) → im Ereignisbereich unten eintragen.</p>
+<!-- HOF -->
+<div class="card">
+    <h2>⚔ Wakhans Hof <span style="font-size:.78rem;color:var(--text3);font-family:'Lato',sans-serif;font-style:italic;font-weight:400;" id="courtLimit">(0/3)</span></h2>
+    <p style="font-size:.73rem;color:var(--text3);font-style:italic;margin-bottom:8px;">Hoflimit = 3 + Summe der lila Sterne (Ränge) aller Politik-Karten im Hof</p>
+    <div class="court-row" id="courtRow"><div style="font-size:.88rem;color:var(--text3);padding:22px;font-style:italic;">Noch keine Hofkarten. Gib unten eine Kartennummer ein, um zu beginnen.</div></div>
+    <p style="font-size:.72rem;color:var(--text3);margin-top:6px;font-style:italic;">👤-Button: aktivieren wenn ein Mitspieler diese Karte im Hof hat → Wakhan bevorzugt diese Karte (Priorität #1).</p>
+    <p style="font-size:.72rem;color:var(--warn);margin-top:3px;font-style:italic;">⚠ Geiselnahme: Hat ein Mitspieler mehr Spione auf einer Wakhan-Hofkarte als alle anderen einzeln, muss Wakhan bei Nutzung dieser Karte Bestechungsgeld zahlen.</p>
+    <div class="row" style="margin-top:10px;gap:8px;">
+        <input type="tel" inputmode="numeric" pattern="[0-9]*" class="input-num" id="courtIn" min="1" max="100" placeholder="Hof Nr. 1–100">
+        <button class="btn-sm btn-secondary" onclick="addCourtManual()">+ Karte</button>
+        <button class="btn-sm btn-destructive" onclick="clearCourt()">Leeren</button>
     </div>
-
-    <!-- EVENTS -->
-    <div class="card">
-        <h2>📋 Ereigniskarten <span style="font-size:.78rem;color:var(--text3);font-family:'Lato',sans-serif;font-style:italic;font-weight:400;" id="eventCnt">(0)</span></h2>
-        <div class="event-row" id="eventRow"><span style="font-size:.88rem;color:var(--text3);font-style:italic;">Keine Ereigniskarten eingetragen.</span></div>
-        <div class="row" style="margin-top:8px;gap:8px;">
-            <input type="tel" inputmode="numeric" pattern="[0-9]*" class="input-num" id="eventIn" min="101" max="116" placeholder="Nr. 101–116">
-            <button class="btn-sm btn-secondary" onclick="addEvent()">+ Ereignis</button>
+    <!-- Platzierungs-Buttons (erscheinen nach Karteneingabe) -->
+    <div id="courtPlaceBtns">
+        <p class="place-prompt">Wo soll <span id="courtPendingName">#?</span> im Hof platziert werden?</p>
+        <div style="display:flex;gap:8px;">
+            <button class="btn-secondary btn-sm" style="flex:1;" onclick="placeCourtCard('L')">← Links (außen)</button>
+            <button class="btn-secondary btn-sm" style="flex:1;" onclick="placeCourtCard('R')">Rechts (außen) →</button>
         </div>
+        <button onclick="cancelCourtPlace()" style="background:none;border:none;color:var(--text3);font-size:.78rem;opacity:0.7;min-height:28px;margin-top:2px;">✕ Abbrechen</button>
     </div>
+    <p style="font-size:.72rem;color:var(--text3);margin-top:8px;font-style:italic;">Ereigniskarten (101–116) → im Ereignisbereich unten eintragen.</p>
+</div>
 
-    <!-- RULES REFERENCE -->
-    <details style="background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:13px 16px;overflow:hidden;">
-        <summary>📜 Regelreferenz</summary>
-        <div class="rules-block" style="margin-top:12px;">
-            <h4>Kartenprioritäten – 8-stufige Hierarchie</h4>
-            <ol>
-                <li><strong style="color:var(--brit);">👥 Karte eines Mitspielers</strong> (→ 👤-Button aktivieren!)</li>
-                <li>Entspricht <strong>bevorzugter Farbe</strong></li>
-                <li><strong>Patriot</strong> der dominanten Koalition</li>
-                <li>Hat <strong>Beute</strong>, die der dominanten Koalition entspricht</li>
-                <li>Ein anderer <strong>Patriot</strong></li>
-                <li class="lev-rule-item"><strong>① Fremdfinanziert</strong></li>
-                <li>Höchster <strong>Rang</strong></li>
-                <li>Höchste <strong>Kartennummer</strong></li>
-            </ol>
-            <h4>① Fremdfinanzierung – Regeln für Wakhan</h4>
-            <div style="background:var(--lev-bg);border:1px solid var(--lev-border);border-radius:8px;padding:11px 13px;margin-top:5px;">
-                <p style="color:var(--lev);font-size:0.88rem;line-height:1.58;">
-                    <strong style="color:var(--lev);">Beim Ausspielen:</strong> Wakhan nimmt sofort <strong>2 Rupien</strong> aus der Bank.<br>
-                    <strong style="color:var(--lev);">Beim Abwerfen:</strong> 2 Rupien zurückzahlen.<br>
-                    <strong style="color:var(--lev);">Wakhan-Ausnahme:</strong> Kann Wakhan die 2 Rupien nicht zahlen, entfällt die Schuld – <em>keine</em> Ersatzkarten abwerfen!
-                </p>
-            </div>
-            <h4>Pragmatische Loyalität</h4>
-            <p>Erste Koalition der KI-Karte (von links), die <em>kein</em> Menschenspieler besitzt. Wird <strong>jede Runde neu</strong> ermittelt. Für Regionenbeherrschung gilt die Koalition mit den meisten Armeen in der jeweiligen Region.</p>
-            <h4>Wakhans Ambition (Interrupt)</h4>
-            <p>Dom.-Karte im Markt + Wakhan gewinnt/meiste Punkte + genug Rupien → sofort kaufen als 1. Aktion.<br>Wakhan ist <em>allen drei Koalitionen</em> loyal und kann bei jeder Wertung mitmischen!</p>
-            <h4>Dominanzcheck – Wertung</h4>
-            <ul>
-                <li><strong>Erfolgreich</strong> (≥4 Blöcke Vorsprung): Loyale Spieler erhalten 5/3/1 Punkte nach Einfluss. → <strong>Instabiler Frieden: alle Blöcke entfernen!</strong></li>
-                <li><strong>Nicht erfolgreich:</strong> 3/1 Punkte nach Zylinderanzahl.</li>
-                <li><strong>4. Dominanzcheck:</strong> Alle Punkte verdoppeln.</li>
-                <li><strong>Gleichstand:</strong> Punkte addieren, durch Spieleranzahl teilen, abrunden.</li>
-            </ul>
-            <h4>Kampf</h4>
-            <p>Region mit Wakhans Armee + Feind-Einheiten. Zerstörung: <strong>Stämme → Armeen → Straßen</strong>. Kein direkter Angriff auf Spieler gleicher Loyalität!</p>
-            <h4>Bewegen</h4>
-            <p>Nur Armeen, keine Straßen erforderlich. Max. so viele Armeen in eine Region, wie dort Stämme vorhanden sind. Keine Bewegung, die zur Herrschaftsverlust führt.</p>
-            <h4>Bauen (Hof-Aktion)</h4>
-            <p>Wakhan baut <strong>ausschließlich Armeen</strong> (keine Straßen!) in beherrschten Regionen. Kosten: 2/4/6 Rupien. Straßen nur via Symbol-Aktion bei Radikalisierung.</p>
-            <h4>Radikalisierungs-Fallback</h4>
-            <ol>
-                <li>Dom.-Karte kaufen → nur wenn Wakhan dadurch meiste Punkte/Sieg erhält.</li>
-                <li>Dom.-Karte da, nicht gekauft: a) Günstigster Patriot der dom. Koalition · b) Karte mit meisten Armeen/Straßen der dom. Koalition · c) Günstigste mit meisten Spion-/Stammsymbolen.</li>
-                <li>Sonst: Pfeil-System (rot = Reihe, schwarz = Spalte).</li>
-                <li>Bestechung nicht möglich → Karte abwerfen.</li>
-            </ol>
-            <h4>Erschöpfte Spielsteine</h4>
-            <p>Keine Zylinder/Blöcke mehr: vom Spielplan/Hofkarten zurücknehmen in der Reihenfolge <strong>Stämme → Armeen → Straßen → Spione</strong> (Regionen-Priorität).</p>
-            <h4>Geiselnahme durch Mitspieler</h4>
-            <p>Hält ein Mitspieler eine Wakhan-Hofkarte als Geisel (mehr Spione als alle anderen einzeln), muss Wakhan bei Aktionsnutzung Bestechungsgeld in Höhe der Geisel-Spione zahlen.</p>
-            <h4>Hoflimit</h4>
-            <p>3 + <strong>Summe der Ränge</strong> aller Politik-Karten (lila) in Wakhans Hof. Rang 1 = +1, Rang 2 = +2, Rang 3 = +3. Wird automatisch berechnet.</p>
-            <h4>Hofkarten-Legende</h4>
-            <p>🟠 Rand = Mitspieler-Karte · <span style="color:var(--lev)">①</span> = Fremdfinanziert · ✓ = benutzt · Blau = ganz links · Rot = ganz rechts im Hof</p>
+<!-- EVENTS -->
+<div class="card">
+    <h2>📋 Ereigniskarten <span style="font-size:.78rem;color:var(--text3);font-family:'Lato',sans-serif;font-style:italic;font-weight:400;" id="eventCnt">(0)</span></h2>
+    <div class="event-row" id="eventRow"><span style="font-size:.88rem;color:var(--text3);font-style:italic;">Keine Ereigniskarten eingetragen.</span></div>
+    <div class="row" style="margin-top:8px;gap:8px;">
+        <input type="tel" inputmode="numeric" pattern="[0-9]*" class="input-num" id="eventIn" min="101" max="116" placeholder="Nr. 101–116">
+        <button class="btn-sm btn-secondary" onclick="addEvent()">+ Ereignis</button>
+    </div>
+</div>
+
+<!-- RULES REFERENCE -->
+<details style="background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:13px 16px;overflow:hidden;">
+    <summary>📜 Regelreferenz</summary>
+    <div class="rules-block" style="margin-top:12px;">
+        <h4>Kartenprioritäten – 8-stufige Hierarchie</h4>
+        <ol>
+            <li><strong style="color:var(--brit);">👥 Karte eines Mitspielers</strong> (→ 👤-Button aktivieren!)</li>
+            <li>Entspricht <strong>bevorzugter Farbe</strong></li>
+            <li><strong>Patriot</strong> der dominanten Koalition</li>
+            <li>Hat <strong>Beute</strong>, die der dominanten Koalition entspricht</li>
+            <li>Ein anderer <strong>Patriot</strong></li>
+            <li class="lev-rule-item"><strong>① Fremdfinanziert</strong></li>
+            <li>Höchster <strong>Rang</strong></li>
+            <li>Höchste <strong>Kartennummer</strong></li>
+        </ol>
+        <h4>① Fremdfinanzierung – Regeln für Wakhan</h4>
+        <div style="background:var(--lev-bg);border:1px solid var(--lev-border);border-radius:8px;padding:11px 13px;margin-top:5px;">
+            <p style="color:var(--lev);font-size:0.88rem;line-height:1.58;">
+                <strong style="color:var(--lev);">Beim Ausspielen:</strong> Wakhan nimmt sofort <strong>2 Rupien</strong> aus der Bank.<br>
+                <strong style="color:var(--lev);">Beim Abwerfen:</strong> 2 Rupien zurückzahlen.<br>
+                <strong style="color:var(--lev);">Wakhan-Ausnahme:</strong> Kann Wakhan die 2 Rupien nicht zahlen, entfällt die Schuld – <em>keine</em> Ersatzkarten abwerfen!
+            </p>
         </div>
-    </details>
+        <h4>Pragmatische Loyalität</h4>
+        <p>Erste Koalition der KI-Karte (von links), die <em>kein</em> Menschenspieler besitzt. Wird <strong>jede Runde neu</strong> ermittelt. Für Regionenbeherrschung gilt die Koalition mit den meisten Armeen in der jeweiligen Region.</p>
+        <h4>Wakhans Ambition (Interrupt)</h4>
+        <p>Dom.-Karte im Markt + Wakhan gewinnt/meiste Punkte + genug Rupien → sofort kaufen als 1. Aktion.<br>Wakhan ist <em>allen drei Koalitionen</em> loyal und kann bei jeder Wertung mitmischen!</p>
+        <h4>Dominanzcheck – Wertung</h4>
+        <ul>
+            <li><strong>Erfolgreich</strong> (≥4 Blöcke Vorsprung): Loyale Spieler erhalten 5/3/1 Punkte nach Einfluss. → <strong>Instabiler Frieden: alle Blöcke entfernen!</strong></li>
+            <li><strong>Nicht erfolgreich:</strong> 3/1 Punkte nach Zylinderanzahl.</li>
+            <li><strong>4. Dominanzcheck:</strong> Alle Punkte verdoppeln.</li>
+            <li><strong>Gleichstand:</strong> Punkte addieren, durch Spieleranzahl teilen, abrunden.</li>
+        </ul>
+        <h4>Kampf</h4>
+        <p>Region mit Wakhans Armee + Feind-Einheiten. Zerstörung: <strong>Stämme → Armeen → Straßen</strong>. Kein direkter Angriff auf Spieler gleicher Loyalität!</p>
+        <h4>Bewegen</h4>
+        <p>Nur Armeen, keine Straßen erforderlich. Max. so viele Armeen in eine Region, wie dort Stämme vorhanden sind. Keine Bewegung, die zur Herrschaftsverlust führt.</p>
+        <h4>Bauen (Hof-Aktion)</h4>
+        <p>Wakhan baut <strong>ausschließlich Armeen</strong> (keine Straßen!) in beherrschten Regionen. Kosten: 2/4/6 Rupien. Straßen nur via Symbol-Aktion bei Radikalisierung.</p>
+        <h4>Radikalisierungs-Fallback</h4>
+        <ol>
+            <li>Dom.-Karte kaufen → nur wenn Wakhan dadurch meiste Punkte/Sieg erhält.</li>
+            <li>Dom.-Karte da, nicht gekauft: a) Günstigster Patriot der dom. Koalition · b) Karte mit meisten Armeen/Straßen der dom. Koalition · c) Günstigste mit meisten Spion-/Stammsymbolen.</li>
+            <li>Sonst: Pfeil-System (rot = Reihe, schwarz = Spalte).</li>
+            <li>Bestechung nicht möglich → Karte abwerfen.</li>
+        </ol>
+        <h4>Erschöpfte Spielsteine</h4>
+        <p>Keine Zylinder/Blöcke mehr: vom Spielplan/Hofkarten zurücknehmen in der Reihenfolge <strong>Stämme → Armeen → Straßen → Spione</strong> (Regionen-Priorität).</p>
+        <h4>Geiselnahme durch Mitspieler</h4>
+        <p>Hält ein Mitspieler eine Wakhan-Hofkarte als Geisel (mehr Spione als alle anderen einzeln), muss Wakhan bei Aktionsnutzung Bestechungsgeld in Höhe der Geisel-Spione zahlen.</p>
+        <h4>Hoflimit</h4>
+        <p>3 + <strong>Summe der Ränge</strong> aller Politik-Karten (lila) in Wakhans Hof. Rang 1 = +1, Rang 2 = +2, Rang 3 = +3. Wird automatisch berechnet.</p>
+        <h4>Hofkarten-Legende</h4>
+        <p>🟠 Rand = Mitspieler-Karte · <span style="color:var(--lev)">①</span> = Fremdfinanziert · ✓ = benutzt · Blau = ganz links · Rot = ganz rechts im Hof</p>
+    </div>
+</details>
 
-    <button class="btn-secondary btn-sm btn-full" style="margin-top:2px;opacity:0.70;" onclick="resetGame()">↺ Neues Spiel</button>
+<button class="btn-secondary btn-sm btn-full" style="margin-top:2px;opacity:0.70;" onclick="resetGame()">↺ Neues Spiel</button>
+
 </div>
 
 <!-- ══════════════════════ WIZARD MODAL ══════════════════════
@@ -1312,56 +1319,77 @@
      Karte hat min-height → kein Größenwechsel beim Textwechsel.
      Buttons sind sticky am unteren Rand.
      ══════════════════════════════════════════════════════════ -->
+
 <div id="wizardModal" class="modal-overlay" role="dialog" aria-modal="true">
     <div class="modal-card">
 
-        <!-- Fortschrittsanzeige (Phase Dots) -->
-        <div class="modal-progress">
-            <div class="modal-drag-pill"></div>
-            <div class="progress-dots" id="modalPhaseDots">
-                <span class="pdot" data-p="0">A</span>
-                <div class="pdot-line" id="pdLine0"></div>
-                <span class="pdot" data-p="1">1</span>
-                <div class="pdot-line" id="pdLine1"></div>
-                <span class="pdot" data-p="2">2</span>
-                <div class="pdot-line" id="pdLine2"></div>
-                <span class="pdot" data-p="3">3</span>
-                <div class="pdot-line" id="pdLine3"></div>
-                <span class="pdot" data-p="4">B</span>
-                <div class="pdot-line" id="pdLine4"></div>
-                <span class="pdot" data-p="5">V</span>
-            </div>
-            <p class="phase-name-label" id="phaseNameLabel"></p>
+    <!-- Fortschrittsanzeige (Phase Dots) -->
+    <div class="modal-progress">
+        <div class="modal-drag-pill"></div>
+        <div class="progress-dots" id="modalPhaseDots">
+            <span class="pdot" data-p="0">A</span>
+            <div class="pdot-line" id="pdLine0"></div>
+            <span class="pdot" data-p="1">1</span>
+            <div class="pdot-line" id="pdLine1"></div>
+            <span class="pdot" data-p="2">2</span>
+            <div class="pdot-line" id="pdLine2"></div>
+            <span class="pdot" data-p="3">3</span>
+            <div class="pdot-line" id="pdLine3"></div>
+            <span class="pdot" data-p="4">B</span>
+            <div class="pdot-line" id="pdLine4"></div>
+            <span class="pdot" data-p="5">V</span>
         </div>
-
-        <!-- Modal Header: Titel -->
-        <div class="modal-header">
-            <span class="modal-title" id="wizTitle">Aktion</span>
-        </div>
-
-        <!-- Scrollbarer Inhalt (feste Größe, kein Layout-Shift) -->
-        <div class="modal-body" id="wizBody"></div>
-
-        <!-- Sticky Footer mit Buttons (immer sichtbar) -->
-        <div class="modal-footer">
-            <!-- Haupt-Navigation: Zurück + Weiter -->
-            <div class="modal-footer-main" id="wizButtons">
-                <button class="btn-secondary" id="btnWizBack" style="display:none;">← Zurück</button>
-                <button class="btn-primary" id="btnWizNext">Weiter →</button>
-            </div>
-            <!-- Überspringen / Alternative (optional) -->
-            <button class="btn-secondary btn-skip" id="btnWizSkip" style="display:none;">✗ Überspringen</button>
-            <!-- TOGGLE: Klick = Brett sichtbar, nochmal Klick = zurück -->
-            <button id="btnWizPeek" title="Klicken: Brett ansehen / Zurück zum Wizard">👁 Brett ansehen</button>
-        </div>
-
+        <p class="phase-name-label" id="phaseNameLabel"></p>
     </div>
+
+    <!-- ── LOYALITÄTS-BANNER ── prominent, farbig, immer sichtbar während Zug -->
+    <div id="wizLoyaltyBanner" style="padding:9px 20px;display:none;align-items:center;justify-content:space-between;gap:10px;border-bottom:1px solid var(--border);flex-shrink:0;">
+        <div style="display:flex;flex-direction:column;gap:1px;">
+            <span id="wizLoyLabel" style="font-size:.58rem;text-transform:uppercase;letter-spacing:.13em;opacity:.65;font-family:'Lato',sans-serif;font-weight:700;">Pragmatische Loyalität</span>
+            <span id="wizLoyValue" style="font-size:1.05rem;font-weight:700;font-family:'Playfair Display',serif;letter-spacing:.04em;">–</span>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:1px;text-align:right;">
+            <span style="font-size:.58rem;text-transform:uppercase;letter-spacing:.13em;opacity:.65;font-family:'Lato',sans-serif;font-weight:700;">Bevorzugte Farbe</span>
+            <span id="wizSuitValue" style="font-size:.92rem;font-weight:700;font-family:'Lato',sans-serif;color:var(--gold2);">–</span>
+        </div>
+    </div>
+
+    <!-- Modal Header: Titel -->
+    <div class="modal-header">
+        <span class="modal-title" id="wizTitle">Aktion</span>
+    </div>
+
+    <!-- Scrollbarer Inhalt (feste Größe, kein Layout-Shift) -->
+    <div class="modal-body" id="wizBody"></div>
+
+    <!-- Sticky Footer mit Buttons (immer sichtbar) -->
+    <div class="modal-footer">
+        <!-- Haupt-Navigation: Zurück + Weiter -->
+        <div class="modal-footer-main" id="wizButtons">
+            <button class="btn-secondary" id="btnWizBack" style="display:none;">← Zurück</button>
+            <button class="btn-primary" id="btnWizNext">Weiter →</button>
+        </div>
+        <!-- Überspringen / Alternative (optional) -->
+        <button class="btn-secondary btn-skip" id="btnWizSkip" style="display:none;">✗ Überspringen</button>
+        <!-- TOGGLE: Klick = Brett sichtbar, nochmal Klick = zurück -->
+        <div style="display:flex;align-items:center;gap:8px;margin-top:2px;">
+            <div style="flex:1;height:1px;background:var(--border);opacity:.5;"></div>
+            <span style="font-size:.62rem;color:var(--text3);white-space:nowrap;letter-spacing:.08em;text-transform:uppercase;">Brett ansehen</span>
+            <div style="flex:1;height:1px;background:var(--border);opacity:.5;"></div>
+        </div>
+        <button id="btnWizPeek" title="Brett ansehen – Wizard bleibt im Hintergrund, floatender Zurück-Button erscheint">🗺 Brett ansehen & Wizard verbergen</button>
+    </div>
+
+</div>
+
 </div>
 
 <!-- Floating Zurück-Button während Board sichtbar ist -->
+
 <button id="btnWizPeekBack" onclick="peekEnd()">↩ Zurück zum Wizard</button>
 
 <!-- ══════════════════════ CONFIRM DIALOG ══════════════════════ -->
+
 <div id="confirmModal" class="confirm-overlay" role="alertdialog">
     <div class="confirm-card">
         <p class="confirm-title" id="confirmTitle">Bestätigung</p>
@@ -1374,6 +1402,7 @@
 </div>
 
 <!-- ══════════════════════ ZOOM OVERLAY ══════════════════════ -->
+
 <div class="zoom-ov" id="zoom" onclick="closeZoom()">
     <button class="zclose" onclick="closeZoom()">✕</button>
     <div class="zoom-img-wrap" id="zWrap1">
@@ -1559,10 +1588,86 @@
         actionsCompleted:0, actionSkips:[false,false,false], currentActionIdx:0,
         loopedThisTurn:false,
         skippedActionLabels:[],
-        previousState:null
+        undoStack:[]          // Array of up to 5 deep-cloned snapshots
     };
 
     function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}}
+
+    // ──────────────────────────────────────
+    // PERSISTENZ (localStorage)
+    // ──────────────────────────────────────
+    const SAVE_KEY = 'wakhan_state_v2';
+    const HINT_OPPONENT_KEY = 'wakhan_hint_opponent_v1';
+
+    function saveState() {
+        try {
+            // Snapshot ohne zirkuläre Daten (Blob-URLs etc.)
+            const toSave = JSON.parse(JSON.stringify({
+                ...state,
+                undoStack: state.undoStack.slice(-3)  // max 3 Snapshots im Speicher
+            }));
+            localStorage.setItem(SAVE_KEY, JSON.stringify(toSave));
+        } catch(e) { console.warn('Speichern fehlgeschlagen:', e); }
+    }
+
+    function loadSavedState() {
+        try {
+            const raw = localStorage.getItem(SAVE_KEY);
+            if (!raw) return null;
+            return JSON.parse(raw);
+        } catch(e) { return null; }
+    }
+
+    function clearSavedState() {
+        try { localStorage.removeItem(SAVE_KEY); } catch(e) {}
+    }
+
+    function hasSavedGame() {
+        const s = loadSavedState();
+        return s && (s.pile.length > 0 || s.discard.length > 0 || s.court.length > 0);
+    }
+
+    function restoreSavedGame() {
+        const saved = loadSavedState();
+        if (!saved) return;
+        Object.assign(state, saved);
+        // Gespeicherte Züge waren aktiv → sauber zurücksetzen
+        state.turnActive = false; state.phase = -1;
+        hideWizard();
+        showScreen('scrGame');
+        updateTopBar(); updateCourtUI(); updateEventUI(); updateStackUI(); clearCurUI();
+        document.getElementById('btnStartTurn').disabled = false;
+        updateUndoBtn();
+        toast('✅ Spielstand geladen – ' + state.court.length + ' Hofkarten, ' + state.pile.length + ' KI-Karten im Stapel.');
+    }
+
+    // ──────────────────────────────────────
+    // UNDO-STACK (bis zu 5 Schritte)
+    // ──────────────────────────────────────
+    function pushUndo() {
+        const snap = JSON.parse(JSON.stringify({
+            ...state,
+            undoStack: []        // keine Verschachtelung der History
+        }));
+        state.undoStack.push(snap);
+        if (state.undoStack.length > 5) state.undoStack.shift();
+        updateUndoBtn();
+    }
+
+    function updateUndoBtn() {
+        const btn = document.getElementById('btnUndoTurn');
+        if (!btn) return;
+        const n = state.undoStack.length;
+        if (n === 0) {
+            btn.textContent = '↩ Rückgängig';
+            btn.style.opacity = '0.35';
+            btn.disabled = true;
+        } else {
+            btn.textContent = `↩ Rückgängig (${n})`;
+            btn.style.opacity = '0.80';
+            btn.disabled = false;
+        }
+    }
     function getCourtLimit(){
         const politikStars=state.court
             .filter(c=>CD[c.id]&&CD[c.id].suit==='Politik')
@@ -1915,6 +2020,27 @@
 
         updatePhaseIndicator();
 
+        // ── Loyalitäts-Banner aktualisieren ──────────────────────────────────
+        (function() {
+            const banner = document.getElementById('wizLoyaltyBanner');
+            if (!banner) return;
+            if (!state.turnActive) { banner.style.display = 'none'; return; }
+            const loy = calcWakLoy();
+            const colorMap = { 'Britisch': 'var(--brit2)', 'Russisch': 'var(--rus2)', 'Afghanisch': 'var(--afg2)' };
+            const bgMap   = { 'Britisch': 'rgba(200,152,48,0.11)', 'Russisch': 'rgba(88,144,184,0.11)', 'Afghanisch': 'rgba(188,104,112,0.11)' };
+            const borderMap = { 'Britisch': 'rgba(200,152,48,0.35)', 'Russisch': 'rgba(88,144,184,0.35)', 'Afghanisch': 'rgba(188,104,112,0.35)' };
+            const color  = colorMap[loy] || 'var(--gold2)';
+            const bg     = bgMap[loy]    || 'rgba(200,168,75,0.08)';
+            const border = borderMap[loy] || 'rgba(200,168,75,0.25)';
+            banner.style.display      = 'flex';
+            banner.style.background   = bg;
+            banner.style.borderBottomColor = border;
+            const loyEl  = document.getElementById('wizLoyValue');
+            const suitEl = document.getElementById('wizSuitValue');
+            if (loyEl)  { loyEl.textContent = loy; loyEl.style.color = color; }
+            if (suitEl) suitEl.textContent = state.preferredSuit || '–';
+        })();
+
         // ── Build next-card priority banner ──────────────────────────────
         let priorityBanner = '';
         if (state.nextCardPriority) {
@@ -2013,10 +2139,7 @@
         if(!state.pile.length&&!state.discard.length){toast('Kein KI-Stapel! Spiel vorbei.');return;}
         if(!state.pile.length){state.pile=[...state.discard];state.discard=[];shuffle(state.pile);toast('KI-Stapel neu gemischt!');}
         // Undo-Snapshot: tiefer Klon des State VOR dem Kartenziehen
-        state.previousState = JSON.parse(JSON.stringify({
-            ...state,
-            previousState: null
-        }));
+        pushUndo();
         const id=state.pile.pop(); state.currentCard=WKC_BY_ID[id]||null;
         if(!state.currentCard){toast('Fehler: KI-Karte nicht gefunden!');return;}
 
@@ -2293,20 +2416,33 @@
         if(!info){toast('Kartennummer nicht gefunden.');return;}
         const isLev=info.leveraged||false;
         const levNote=isLev?` <span style="color:var(--lev);font-size:.85rem;">①</span>`:'';
-        const body=`<p style="font-size:1rem;font-weight:700;color:var(--text);">#${v} – ${info.name}${levNote}</p>
-        <p style="font-size:.90rem;color:var(--text2);margin-top:2px;">${info.region||'?'} · ${info.suit} · Rang ${info.rank||'?'}</p>
-        <div class="action-box" style="margin-top:12px;">
-            <p>Falls ein Mitspieler die Region <strong>${info.region||'?'}</strong> beherrscht, muss Wakhan Bestechungsgeld zahlen (= Anzahl seiner <strong>Stämme</strong> in der Region).</p>
+
+        // Schritt 1: Wer beherrscht die Region?
+        let playerBtns = `<button class="btn-secondary btn-full" style="justify-content:flex-start;gap:10px;" onclick="openBribeStepper(${slotIdx},0)">
+            <span style="font-size:.80rem;color:var(--text3);">S1</span>
+            <strong>${state.playerLoyalties[0]||'Spieler 1'}</strong>
+        </button>`;
+        if(state.playerCount>=2){
+            playerBtns+=`<button class="btn-secondary btn-full" style="justify-content:flex-start;gap:10px;" onclick="openBribeStepper(${slotIdx},1)">
+                <span style="font-size:.80rem;color:var(--text3);">S2</span>
+                <strong>${state.playerLoyalties[1]||'Spieler 2'}</strong>
+            </button>`;
+        }
+
+        const body=`
+        <div style="background:var(--card-bg);border:1px solid var(--border3);border-radius:10px;padding:11px 14px;margin-bottom:12px;">
+            <div style="font-size:1rem;font-weight:700;">#${v} – ${info.name}${levNote}</div>
+            <div style="font-size:.85rem;color:var(--text2);margin-top:2px;">${info.region||'?'} · ${info.suit} · Rang ${info.rank||'?'}</div>
         </div>
-        <div class="rule-hint" style="margin-top:8px;">
-            ⚖️ <strong>Hinweis:</strong> Der herrschende Spieler darf einen Teil oder alle Kosten erlassen — verhandelt zuerst, bevor ihr die tatsächliche Summe festlegt.
+        <div class="action-box" style="margin-bottom:12px;">
+            <p>Wer beherrscht die Region <strong>${info.region||'?'}</strong>?</p>
+            <p style="font-size:.82rem;color:var(--text3);margin-top:4px;">Die herrschende Partei erhält Bestechungsgeld in Höhe der eigenen Stämme in dieser Region.</p>
         </div>
-        <p style="margin-top:12px;font-weight:700;">Kann Wakhan die Karte (inkl. eventueller Bestechung) bezahlen?</p>
-        <div class="row ctr" style="margin-top:10px;gap:10px;">
-            <button class="btn-primary" style="flex:1;" onclick="playCard(${slotIdx})">✓ Ja – Karte ausspielen</button>
-            <button class="btn-destructive" style="flex:1;" onclick="discardCard(${slotIdx})">✗ Nein – abwerfen</button>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+            ${playerBtns}
+            <button class="btn-primary" onclick="setBriber('Keiner',${slotIdx})">✓ Niemand beherrscht – keine Bestechung</button>
         </div>`;
-        showWizard('Radikalisierung: Bezahlen?',body,{back:false,next:false,skip:false});
+        showWizard('Radikalisierung: Region kontrolliert?',body,{back:false,next:false,skip:true,skipLabel:'✗ Karte abwerfen (kein Kauf möglich)',skipFn:()=>discardCard(slotIdx)});
     }
 
     function radNoCard(slotIdx){
@@ -2315,21 +2451,67 @@
         processNextAction();
     }
 
+    // Stepper-Variablen (nicht im State, da kein Undo-Relevanz)
+    let _bribeSlotIdx=0, _bribePlayerIdx=0, _bribeTribes=0;
+
+    function openBribeStepper(slotIdx, playerIdx) {
+        _bribeSlotIdx=slotIdx; _bribePlayerIdx=playerIdx; _bribeTribes=0;
+        renderBribeStepper();
+    }
+
+    function renderBribeStepper() {
+        const info=CD[state.radCardId]||{};
+        const loy=state.playerLoyalties[_bribePlayerIdx]||'Spieler '+(_bribePlayerIdx+1);
+        const tribes=_bribeTribes;
+        const colorMap={'Britisch':'var(--brit2)','Russisch':'var(--rus2)','Afghanisch':'var(--afg2)'};
+        const lc=colorMap[loy]||'var(--gold2)';
+        const body=`
+        <div style="background:var(--card-bg);border:1px solid var(--border3);border-radius:10px;padding:10px 14px;margin-bottom:12px;">
+            <div style="font-size:.92rem;font-weight:700;">#${state.radCardId} – ${info.name||'?'}</div>
+            <div style="font-size:.80rem;color:var(--text2);margin-top:1px;">${info.region||'?'} · Region beherrscht von <strong style="color:${lc};">Spieler ${_bribePlayerIdx+1} (${loy})</strong></div>
+        </div>
+        <div class="action-box" style="margin-bottom:4px;">
+            <p style="font-size:.88rem;">Wie viele <strong style="color:${lc};">${loy}e Stämme</strong> hat Spieler ${_bribePlayerIdx+1} in Region <em>${info.region||'?'}</em>?</p>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:center;gap:20px;padding:18px 0 10px;">
+            <button class="btn-secondary" style="width:54px;height:54px;font-size:1.6rem;border-radius:50%;min-height:54px;padding:0;flex-shrink:0;" onclick="changeBribeTribe(-1)">−</button>
+            <div style="text-align:center;min-width:60px;">
+                <div id="bribeTribesDisplay" style="font-size:2.8rem;font-family:'Playfair Display',serif;color:var(--gold2);font-weight:700;line-height:1;">${tribes}</div>
+                <div style="font-size:.72rem;color:var(--text3);margin-top:3px;text-transform:uppercase;letter-spacing:.08em;">Stämme</div>
+            </div>
+            <button class="btn-secondary" style="width:54px;height:54px;font-size:1.6rem;border-radius:50%;min-height:54px;padding:0;flex-shrink:0;" onclick="changeBribeTribe(1)">+</button>
+        </div>
+        <div style="background:rgba(200,168,75,0.09);border:1px solid rgba(200,168,75,0.28);border-radius:10px;padding:12px 16px;text-align:center;margin-bottom:10px;">
+            <div style="font-size:.65rem;color:var(--text3);text-transform:uppercase;letter-spacing:.12em;margin-bottom:4px;">Bestechungsgeld an Spieler ${_bribePlayerIdx+1}</div>
+            <div id="bribeAmountDisplay" style="font-size:1.7rem;font-family:'Playfair Display',serif;color:var(--gold2);font-weight:700;">${tribes} Rupie${tribes===1?'':'n'}</div>
+            ${tribes===0?'<div style="font-size:.78rem;color:var(--text3);margin-top:3px;">Keine Stämme = keine Bestechung</div>':''}
+        </div>
+        <div class="rule-hint" style="margin-bottom:12px;font-size:.82rem;">
+            ⚖️ Spieler ${_bribePlayerIdx+1} darf einen Teil oder alle Kosten erlassen — verhandelt zuerst!
+        </div>
+        <div style="display:flex;gap:10px;">
+            <button class="btn-primary" style="flex:1;" onclick="confirmBribeStepper()">✓ Wakhan zahlt – ausspielen</button>
+            <button class="btn-destructive" style="flex:1;" onclick="discardCard(${_bribeSlotIdx})">✗ Kann nicht zahlen</button>
+        </div>`;
+        showWizard('Radikalisierung: Bestechung berechnen',body,{back:false,next:false,skip:false});
+    }
+
+    function changeBribeTribe(delta) {
+        _bribeTribes=Math.max(0,Math.min(15,_bribeTribes+delta));
+        const el=document.getElementById('bribeTribesDisplay');
+        const el2=document.getElementById('bribeAmountDisplay');
+        if(el) el.textContent=_bribeTribes;
+        if(el2) el2.innerHTML=_bribeTribes+' Rupie'+(_bribeTribes===1?'':'n')+
+            (_bribeTribes===0?'<div style="font-size:.78rem;color:var(--text3);margin-top:3px;">Keine Stämme = keine Bestechung</div>':'');
+    }
+
+    function confirmBribeStepper() { playCard(_bribeSlotIdx); }
+
     function setBriber(coalition,slotIdx){
         state.radBriber=coalition;
         if(coalition==='Keiner'){ playCard(slotIdx); return; }
-        const info=CD[state.radCardId]||{};
-        const body=`<div class="action-box">
-            <p>💰 <strong>Bestechungsgeld:</strong><br>
-            Zähle die <strong>${coalition.toLowerCase()}en Stämme</strong> in Region <em>${info.region||'?'}</em>.<br>
-            Diese Anzahl = Rupien die Wakhan zahlen muss.</p>
-        </div>
-        <p style="margin-top:12px;">Kann Wakhan das Bestechungsgeld bezahlen?</p>
-        <div class="row ctr" style="margin-top:10px;gap:10px;">
-            <button class="btn-primary" style="min-width:130px;flex:1;" onclick="playCard(${slotIdx})">✓ Ja – gezahlt</button>
-            <button class="btn-destructive" style="min-width:130px;flex:1;" onclick="discardCard(${slotIdx})">✗ Nein – abwerfen</button>
-        </div>`;
-        showWizard('Radikalisierung: Bestechung',body,{back:false,next:false,skip:false});
+        // Legacy-Fallback (falls direkt aufgerufen)
+        openBribeStepper(slotIdx, state.playerCount>=2 && coalition===state.playerLoyalties[1] ? 1 : 0);
     }
 
     function playCard(slotIdx){
@@ -2809,19 +2991,22 @@
     }
 
     function undoTurn() {
-        if (!state.previousState) { toast('Kein Zug zum Rückgängigmachen.'); return; }
+        if (!state.undoStack.length) { toast('Kein Rückgängig-Schritt verfügbar.'); return; }
+        const remaining = [...state.undoStack];
+        const prev = remaining.pop();
         appConfirm(
             'Zug rückgängig machen',
-            'Wakhans letzten Zug rückgängig machen? Alle Änderungen dieses Zuges gehen verloren.',
+            `Wakhans letzten Zug rückgängig machen?<br><span style="font-size:.85rem;color:var(--text3);">${remaining.length} weitere Schritte danach noch möglich.</span>`,
             '↩ Ja – rückgängig', 'Abbrechen',
             () => {
-                const prev = state.previousState;
                 Object.assign(state, prev);
-                state.previousState = null;
+                state.undoStack = remaining;   // Reststack ohne den gerade genutzten
                 hideWizard();
                 updateTopBar(); updateCourtUI(); updateEventUI(); updateStackUI(); clearCurUI();
                 document.getElementById('btnStartTurn').disabled = false;
-                toast('↩ Zug rückgängig gemacht.');
+                updateUndoBtn();
+                saveState();
+                toast('↩ Rückgängig gemacht' + (remaining.length > 0 ? ` – noch ${remaining.length} weitere(r) Schritt(e).` : '.'));
                 showScreen('scrGame');
             }
         );
@@ -2833,7 +3018,9 @@
         state.turnActive=false;state.currentCard=null;state.radicalizedThisTurn=null;state.phase=-1;
         hideWizard();clearCurUI();document.getElementById('regionPriorityCard').style.display='none';
         document.getElementById('btnStartTurn')&&(document.getElementById('btnStartTurn').disabled=false);
-        updateCourtUI();updateStackUI();toast('✅ Wakhans Zug abgeschlossen.');showScreen('scrGame');
+        updateCourtUI();updateStackUI();
+        saveState();
+        toast('✅ Wakhans Zug abgeschlossen.');showScreen('scrGame');
     }
 
     // ──────────────────────────────────────
@@ -2933,8 +3120,27 @@
         const entry={id:v,usedThisTurn:false};
         if(side==='L') state.court.unshift(entry); else state.court.push(entry);
         updateCourtUI();
-        if(isLev) toast('① Fremdfinanzierte Hofkarte #'+v+' hinzugefügt ('+( side==='L'?'links':'rechts')+').');
+        if(isLev) toast('① Fremdfinanzierte Hofkarte #'+v+' hinzugefügt ('+(side==='L'?'links':'rechts')+').');
         else toast('Hofkarte #'+v+' hinzugefügt ('+(side==='L'?'links':'rechts')+').');
+        saveState();
+        // ── Einmaliger Hinweis zum 👥-Button (Mitspieler-Markierung) ──────────
+        if(!localStorage.getItem(HINT_OPPONENT_KEY)) {
+            localStorage.setItem(HINT_OPPONENT_KEY,'1');
+            setTimeout(()=>{
+                appConfirm(
+                    '💡 Tipp: Mitspieler-Karte markieren',
+                    'Hat ein Mitspieler dieselbe Hofkarte in seinem Hof?<br><br>' +
+                    'Tippe auf den kleinen <strong>👤-Button</strong> oben auf der Karte im Hof, ' +
+                    'um sie als <strong>„Karte eines Mitspielers"</strong> zu markieren.<br><br>' +
+                    'Das gibt ihr <strong>Priorität #1</strong> bei allen Aktionen — Wakhan versucht dann bevorzugt diese Karte zu nutzen, um Kontrolle zu gewinnen.',
+                    'Verstanden!', '',
+                    ()=>{}, null
+                );
+                // Nur den Ja-Button zeigen
+                const noBtn=document.getElementById('confirmNo');
+                if(noBtn) noBtn.style.display='none';
+            }, 600);
+        }
     }
     function cancelCourtPlace(){
         _pendingCourtId=null;
@@ -2950,7 +3156,14 @@
     let setupStep=0,tmpPC=1,tmpLoy=[];
     function renderSetup(){
         const el=document.getElementById('setupContent');
-        if(setupStep===0) el.innerHTML=`<p style="font-size:1rem;margin-bottom:14px;">Wie viele <strong>menschliche</strong> Spieler?</p><div class="loy-pills"><button class="loy-pill brit" onclick="setupPickCount(1)">Solo (1)</button><button class="loy-pill afg" onclick="setupPickCount(2)">Duo (2)</button></div>`;
+        if(setupStep===0){
+            const hasSave=hasSavedGame();
+            el.innerHTML=`<p style="font-size:1rem;margin-bottom:14px;">Wie viele <strong>menschliche</strong> Spieler?</p><div class="loy-pills"><button class="loy-pill brit" onclick="setupPickCount(1)">Solo (1)</button><button class="loy-pill afg" onclick="setupPickCount(2)">Duo (2)</button></div>`
+            +(hasSave?`<div style="margin-top:18px;border-top:1px solid var(--border);padding-top:14px;">
+                <p style="font-size:.88rem;color:var(--text2);margin-bottom:10px;">…oder laufendes Spiel fortsetzen:</p>
+                <button class="btn-secondary btn-full" onclick="restoreSavedGame()">📂 Gespeichertes Spiel laden</button>
+            </div>`:'');
+        }
         else if(setupStep===1) el.innerHTML=`<p style="font-size:1rem;margin-bottom:14px;">Loyalität <strong>Spieler 1</strong>:</p><div class="loy-pills"><button class="loy-pill brit" onclick="setupPickLoy(0,'Britisch')">Britisch</button><button class="loy-pill rus" onclick="setupPickLoy(0,'Russisch')">Russisch</button><button class="loy-pill afg" onclick="setupPickLoy(0,'Afghanisch')">Afghanisch</button></div>`;
         else if(setupStep===2) el.innerHTML=`<p style="font-size:1rem;margin-bottom:14px;">Loyalität <strong>Spieler 2</strong>:</p><div class="loy-pills"><button class="loy-pill brit" onclick="setupPickLoy(1,'Britisch')">Britisch</button><button class="loy-pill rus" onclick="setupPickLoy(1,'Russisch')">Russisch</button><button class="loy-pill afg" onclick="setupPickLoy(1,'Afghanisch')">Afghanisch</button></div>`;
         else el.innerHTML=`
@@ -2972,8 +3185,11 @@
         state.pile=WKC.map(c=>c.id);shuffle(state.pile);state.discard=[];state.court=[];state.events=[];
         state.currentCard=null;state.topCard=null;state.turnActive=false;state.phase=-1;
         state.radicalizedThisTurn=null;state.actionsCompleted=0;state.actionSkips=[false,false,false];state.currentActionIdx=0;
+        state.undoStack=[];
         showScreen('scrGame');updateTopBar();updateCourtUI();updateEventUI();updateStackUI();clearCurUI();hideWizard();
         document.getElementById('btnStartTurn')&&(document.getElementById('btnStartTurn').disabled=false);
+        updateUndoBtn();
+        saveState();
         toast('Spiel gestartet! Viel Erfolg!');
     }
     function resetGame(){
@@ -2982,8 +3198,9 @@
             'Den aktuellen Spielstand verwerfen und neu beginnen?',
             '↺ Ja – neu starten', 'Abbrechen',
             () => {
+                clearSavedState();
                 setupStep=0; tmpPC=1; tmpLoy=[];
-                state.turnActive=false; state.phase=-1;
+                state.turnActive=false; state.phase=-1; state.undoStack=[];
                 hideWizard();
                 document.getElementById('btnStartTurn')&&(document.getElementById('btnStartTurn').disabled=false);
                 showScreen('scrSetup'); renderSetup();
@@ -3014,6 +3231,36 @@
     window.discardToggle4=discardToggle4; window.discardToggle5=discardToggle5;
     window.confirmDiscardPhase4=confirmDiscardPhase4; window.confirmDiscardPhase5=confirmDiscardPhase5;
     window.setNewDominant=setNewDominant; window.toggleCourtUsed=toggleCourtUsed;
+    // Neue Funktionen: Persistenz + Undo + Bribe-Stepper
+    window.restoreSavedGame=restoreSavedGame;
+    window.openBribeStepper=openBribeStepper;
+    window.changeBribeTribe=changeBribeTribe;
+    window.confirmBribeStepper=confirmBribeStepper;
+
+    // ── PWA Manifest (inline Blob – kein separater Server nötig) ─────────
+    (function() {
+        const m = {
+            name: 'Wakhan KI – Pax Pamir 2E',
+            short_name: 'Wakhan KI',
+            description: 'Wakhan KI-Assistent für Pax Pamir 2. Edition',
+            start_url: './',
+            display: 'standalone',
+            orientation: 'portrait-primary',
+            background_color: '#1a151b',
+            theme_color: '#1a151b',
+            icons: [
+                { src: 'https://cdn.jsdelivr.net/gh/O-McClou/PP@3e8bc12b57fae22301e28250a1351dd677360f60/Cards/card_117.jpg', sizes: '192x192', type: 'image/jpeg' },
+                { src: 'https://cdn.jsdelivr.net/gh/O-McClou/PP@3e8bc12b57fae22301e28250a1351dd677360f60/Cards/card_117.jpg', sizes: '512x512', type: 'image/jpeg' }
+            ]
+        };
+        try {
+            const blob = new Blob([JSON.stringify(m)], { type: 'application/manifest+json' });
+            const url  = URL.createObjectURL(blob);
+            const link = document.createElement('link');
+            link.rel   = 'manifest'; link.href = url;
+            document.head.appendChild(link);
+        } catch(e) {}
+    })();
 
     // Close suit-picker on outside click
     document.addEventListener('click', e => {
@@ -3036,15 +3283,19 @@
         const undoBtn=document.createElement('button');
         undoBtn.className='btn-secondary btn-sm';
         undoBtn.id='btnUndoTurn';
-        undoBtn.textContent='↩ Letzten Zug rückgängig';
+        undoBtn.textContent='↩ Rückgängig';
         undoBtn.onclick=undoTurn;
-        undoBtn.style.cssText='width:100%;opacity:0.65;';
+        undoBtn.style.cssText='width:100%;opacity:0.35;';
+        undoBtn.disabled=true;
         area.appendChild(undoBtn);
+        // Undo-Status initial setzen
+        updateUndoBtn();
     });
 
     document.addEventListener('keydown',e=>{if(e.key==='Escape')closeZoom();});
     renderSetup();updateTopBar();
 })();
 </script>
+
 </body>
 </html>
