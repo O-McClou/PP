@@ -1698,10 +1698,17 @@
         return state.currentCard.loyaltyOrder[0];
     }
     function getMarketInstruction() {
-        if (!state.currentCard||!state.topCard) return {row:'?',col:'?',colIdx:-1};
-        const redLabel = state.currentCard.redArrow==='top'?'OBEN':'UNTEN';
+        if (!state.currentCard||!state.topCard) return {row:'?',col:'?',colIdx:-1,arrowDir:'?'};
+        // Pfeilrichtung der aktuellen Karte (fuer Besteuerung-Tiebreaker)
+        const arrowDir = state.currentCard.redArrow === 'top' ? 'OBEN' : 'UNTEN';
+        // Tatsaechliches Label auf der Rueckseite der Nachziehkarte (Index 0 = oben, Index 7 = unten)
+        const targetText = state.currentCard.redArrow === 'top'
+            ? state.topCard.backArray[0]
+            : state.topCard.backArray[7];
+        // "Top (...)" -> OBEN-Reihe, "Bottom (...)" -> UNTEN-Reihe
+        const row = targetText.toLowerCase().includes('top') ? 'OBEN' : 'UNTEN';
         const colIdx = state.currentCard.blackArrow>=1&&state.currentCard.blackArrow<=6 ? state.topCard.backArray[state.currentCard.blackArrow] : -1;
-        return { row:redLabel, col:colIdx>=0?''+colIdx:'?', colIdx };
+        return { row, col:colIdx>=0?''+colIdx:'?', colIdx, arrowDir };
     }
     function getRegionPriorities() { return !state.topCard?[0,1,2,3,4,5]:state.topCard.backArray.slice(1,7); }
 
@@ -1755,7 +1762,17 @@
         }
         return state.court.some(c=>!c.usedThisTurn&&CD[c.id]&&CD[c.id].actions&&CD[c.id].actions.includes(lbl));
     }
-    function getMarketSide() { return state.currentCard&&state.currentCard.redArrow==='top'?'L':'R'; }
+    function getMarketSide() {
+        // Fallback, falls keine Karten vorhanden sind
+        if (!state.currentCard || !state.topCard) return 'L';
+        // Pfeil oben → lies oberes Label der Rückseite (Index 0)
+        // Pfeil unten → lies unteres Label der Rückseite (Index 7)
+        const targetText = state.currentCard.redArrow === 'top'
+            ? state.topCard.backArray[0]
+            : state.topCard.backArray[7];
+        // Enthält der Text "left" → Karte kommt nach links ('L'), sonst rechts ('R')
+        return targetText.toLowerCase().includes('left') ? 'L' : 'R';
+    }
 
     // ──────────────────────────────────────
     // IMAGE LOADING
@@ -2336,7 +2353,7 @@
         const lbl=actionLabel(actionText);
         const instr=getMarketInstruction();
         let body='';
-        if(lbl==='tax') body=`<div class="action-box"><p>💰 <strong>Besteuerung:</strong><br>1. Spieler mit meisten Rupien zuerst (Rupien auf wirtschaftl. Karten schützen sich via gelbe Sterne).<br>2. Kein Spieler möglich → Marktkarten (ganz links).<br>3. Gleichstand → roter Pfeil (<strong>${instr.row}</strong>).</p></div>`;
+        if(lbl==='tax') body=`<div class="action-box"><p>💰 <strong>Besteuerung:</strong><br>1. Spieler mit meisten Rupien zuerst (Rupien auf wirtschaftl. Karten schützen sich via gelbe Sterne).<br>2. Kein Spieler möglich → Marktkarten (ganz links).<br>3. Gleichstand → roter Pfeil (<strong>${instr.arrowDir}</strong>).</p></div>`;
         else if(lbl==='battle') body=`<div class="action-box"><p>⚔️ <strong>Kampf:</strong><br>Region mit <em>mindestens einer Wakhan-Armee</em> und Feind-Einheiten (Regionen-Priorität).<br>Zerstören: <strong>1. Stämme → 2. Armeen → 3. Straßen</strong>.<br>Kein direkter Angriff auf Spieler mit gleicher Loyalität wie Wakhan!<br>Falls keine Region wählbar: Spione auf Hofkarte bekämpfen (Kartenpriorität).</p></div>`;
         else if(lbl==='build') body=`<div class="action-box"><p>🏗️ <strong>Bauen (Hof-Aktion):</strong><br>Wakhan baut <em>ausschließlich Armeen</em> (keine Straßen!) in Regionen, die sie beherrscht.<br>Kosten: 2/4/6 Rupien für 1/2/3 Armeen. So viel Geld wie möglich ausgeben.<br>Bei mehreren beherrschten Regionen: Regionen-Priorität nutzen.<br><span style="font-size:.85rem;color:var(--text3);font-style:italic;">Straßen werden nur durch Symbol-Aktionen auf Karten platziert (bei Radikalisierung).</span></p></div>`;
         else if(lbl==='move') body=`<div class="action-box"><p>🚶 <strong>Bewegen:</strong><br>Nur Armeen bewegen (keine Spione), keine Straßen erforderlich.<br>Ziel: Regionen mit Feind-Stämmen (Regionen-Priorität).<br><strong>Mengenbeschränkung:</strong> Nur so viele Armeen in eine Region ziehen, dass ihre Anzahl dort <em>maximal der Anzahl der dort vorhandenen Stämme</em> entspricht.<br>Keine Bewegung, wenn Wakhan dadurch die Herrschaft über eine Region verliert!</p></div>`;
