@@ -1761,8 +1761,8 @@
     // IMAGE LOADING
     // ──────────────────────────────────────
     const blobCache = {};
-    const URLS  = [id=>`Cards/card_${id}.jpg`,id=>`Cards/card_${id}.png`,id=>`https://cdn.jsdelivr.net/gh/O-McClou/PP@3e8bc12b57fae22301e28250a1351dd677360f60/Cards/card_${id}.jpg`,id=>`https://cdn.jsdelivr.net/gh/O-McClou/PP@3e8bc12b57fae22301e28250a1351dd677360f60/Cards/card_${id}.png`];
-    const BURLS = [id=>`Cards/card_back_${id}.jpg`,id=>`Cards/card_back_${id}.png`,id=>`https://cdn.jsdelivr.net/gh/O-McClou/PP@3e8bc12b57fae22301e28250a1351dd677360f60/Cards/card_back_${id}.jpg`,id=>`https://cdn.jsdelivr.net/gh/O-McClou/PP@3e8bc12b57fae22301e28250a1351dd677360f60/Cards/card_back_${id}.png`];
+    const URLS  = [id=>`Cards/card_${id}.jpg`,id=>`Cards/card_${id}.png`,id=>`https://cdn.jsdelivr.net/gh/tmpillbox/rtt-pax-pamir@d8419e9d825ab2f5cfc729f64babea8135b7d5b7/cards/card_${id}.jpg`,id=>`https://cdn.jsdelivr.net/gh/tmpillbox/rtt-pax-pamir@d8419e9d825ab2f5cfc729f64babea8135b7d5b7/cards/card_${id}.png`];
+    const BURLS = [id=>`Cards/card_back_${id}.jpg`,id=>`Cards/card_back_${id}.png`,id=>`https://cdn.jsdelivr.net/gh/tmpillbox/rtt-pax-pamir@d8419e9d825ab2f5cfc729f64babea8135b7d5b7/cards/card_back_${id}.jpg`,id=>`https://cdn.jsdelivr.net/gh/tmpillbox/rtt-pax-pamir@d8419e9d825ab2f5cfc729f64babea8135b7d5b7/cards/card_back_${id}.png`];
     async function tryFetch(u) { if(blobCache[u])return blobCache[u]; const r=await fetch(u,{mode:'cors',cache:'force-cache'}); if(!r.ok)throw 0; const b=await r.blob(); if(!b.type.startsWith('image/'))throw 0; const o=URL.createObjectURL(b); blobCache[u]=o; return o; }
     async function tryImgSrc(u) { return new Promise((res,rej)=>{const i=new Image();i.crossOrigin='anonymous';i.onload=()=>res(u);i.onerror=rej;i.src=u;}); }
     async function loadImg(el,fns,id) { el.style.display='none'; for(const f of fns){const u=f(id);try{const s=await tryFetch(u);el.src=s;el.style.display='block';return true;}catch{}try{const s=await tryImgSrc(u);el.src=s;el.style.display='block';return true;}catch{}}return false; }
